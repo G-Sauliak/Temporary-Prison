@@ -8,6 +8,18 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Temporary-Prison.Domain", "Temporary-Prison.Domain\Temporary-Prison.Domain.csproj", "{9F3C4F0D-0FAC-4888-89D6-4E446E274006}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Temporary-Prison.Business", "Temporary-Prison.Business\Temporary-Prison.Business.csproj", "{7BD5314E-B8C3-4636-8048-FD6C6194D886}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6CF831B5-7EA4-4686-9380-C98441F0F492} = {6CF831B5-7EA4-4686-9380-C98441F0F492}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Temporary-Prison.Common", "Temporary-Prison.Common\Temporary-Prison.Common.csproj", "{F226AF5B-CEB7-461A-9F1E-694A5676FA05}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SqlScripts", "SqlScripts", "{EB95C97D-AD89-4847-B9B3-46F9D18DE50D}"
+	ProjectSection(SolutionItems) = preProject
+		Deploy.sql = Deploy.sql
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Temporary-Prison.Service", "Temporary-Prison.Service\Temporary-Prison.Service.csproj", "{6CF831B5-7EA4-4686-9380-C98441F0F492}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +39,14 @@ Global
 		{7BD5314E-B8C3-4636-8048-FD6C6194D886}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7BD5314E-B8C3-4636-8048-FD6C6194D886}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7BD5314E-B8C3-4636-8048-FD6C6194D886}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F226AF5B-CEB7-461A-9F1E-694A5676FA05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F226AF5B-CEB7-461A-9F1E-694A5676FA05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F226AF5B-CEB7-461A-9F1E-694A5676FA05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F226AF5B-CEB7-461A-9F1E-694A5676FA05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CF831B5-7EA4-4686-9380-C98441F0F492}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CF831B5-7EA4-4686-9380-C98441F0F492}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CF831B5-7EA4-4686-9380-C98441F0F492}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CF831B5-7EA4-4686-9380-C98441F0F492}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

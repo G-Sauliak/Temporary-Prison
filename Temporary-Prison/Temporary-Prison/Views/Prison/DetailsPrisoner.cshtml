@@ -1,0 +1,84 @@
+﻿@model Temporary_Prison.Common.Models.PrisonerProfile
+
+<div>
+    <h4>PrisonerProfile</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Patronymic)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Patronymic)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RelationshipStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RelationshipStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PlaceOfWork)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PlaceOfWork)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BirthDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BirthDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Avatar)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Avatar)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PlaceOfResidence)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PlaceOfResidence)
+        </dd>
+
+    </dl>
+  
+</div>
+<p>
+    @Html.ActionLink("Back to List", "ListOfPrisoners")
+</p>

@@ -127,6 +127,7 @@
     <Compile Include="App_Start\StructuremapMvc.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PrisonController.cs" />
     <Compile Include="DependencyResolution\ControllerConvention.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
@@ -147,6 +148,8 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Prison\ListOfPrisoners.cshtml" />
+    <Content Include="Views\Prison\DetailsPrisoner.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -163,6 +166,18 @@
     <ProjectReference Include="..\Temporary-Prison.Business\Temporary-Prison.Business.csproj">
       <Project>{7bd5314e-b8c3-4636-8048-fd6c6194d886}</Project>
       <Name>Temporary-Prison.Business</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Temporary-Prison.Common\Temporary-Prison.Common.csproj">
+      <Project>{f226af5b-ceb7-461a-9f1e-694a5676fa05}</Project>
+      <Name>Temporary-Prison.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Temporary-Prison.Domain\Temporary-Prison.Domain.csproj">
+      <Project>{9f3c4f0d-0fac-4888-89d6-4e446e274006}</Project>
+      <Name>Temporary-Prison.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Temporary-Prison.Service\Temporary-Prison.Service.csproj">
+      <Project>{6cf831b5-7ea4-4686-9380-c98441f0f492}</Project>
+      <Name>Temporary-Prison.Service</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -19,14 +19,15 @@
 namespace Temporary_Prison.DependencyResolution {
     using StructureMap;
     using Temporary_Prison.Business;
+    using Temporary_Prison.Domain.Repositories;
+    using Temporary_Prison.Service;
 
     public static class IoC {
-        public static IContainer Initialize()
-        {
-
+        public static IContainer Initialize() {
             return new Container(c =>
             {
                 c.AddRegistry<DefaultRegistry>();
+                c.For<IPrisonerRepository>().Use<PrisonerRepository>();
                 c.For<IPrisonProvider>().Use<PrisonProvider>();
             });
         }

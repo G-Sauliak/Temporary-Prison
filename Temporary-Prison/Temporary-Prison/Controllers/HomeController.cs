@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Temporary_Prison.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         // GET: Home
         public ActionResult Index()
