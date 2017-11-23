@@ -1,1 +1,1 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="Temporary_Prison.Service.PrisonService" CodeBehind="PrisonService.svc" %>
+﻿<%@ ServiceHost Service="Temporary_Prison.Service.Contracts.Contracts.PrisonService" %>

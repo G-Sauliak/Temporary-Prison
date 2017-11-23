@@ -120,7 +120,9 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -171,13 +173,9 @@
       <Project>{f226af5b-ceb7-461a-9f1e-694a5676fa05}</Project>
       <Name>Temporary-Prison.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Temporary-Prison.Domain\Temporary-Prison.Domain.csproj">
-      <Project>{9f3c4f0d-0fac-4888-89d6-4e446e274006}</Project>
-      <Name>Temporary-Prison.Domain</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Temporary-Prison.Service\Temporary-Prison.Service.csproj">
-      <Project>{6cf831b5-7ea4-4686-9380-c98441f0f492}</Project>
-      <Name>Temporary-Prison.Service</Name>
+    <ProjectReference Include="..\Temporary-Prison.Dependencies\Temporary-Prison.Dependencies.csproj">
+      <Project>{bf2fad9e-19e4-46d2-b580-f0844f7ef0ad}</Project>
+      <Name>Temporary-Prison.Dependencies</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

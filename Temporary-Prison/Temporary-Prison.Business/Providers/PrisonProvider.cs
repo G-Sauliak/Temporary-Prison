@@ -1,23 +1,23 @@
 ﻿using System.Collections.Generic;
-using Temporary_Prison.Business.PrisonServices;
 using Temporary_Prison.Common.Models;
-using Temporary_Prison.Domain.Repositories;
+using Temporary_Prison.Data.Services;
+
 
 namespace Temporary_Prison.Business
 {
     public class PrisonProvider : IPrisonProvider
     {
-        private readonly IPrisonerRepository prisonerRepository;
+        private readonly IDataService dataService;
 
-        public PrisonProvider(IPrisonerRepository prisonerRepository)
+        public PrisonProvider(IDataService dataService)
         {
-            this.prisonerRepository = prisonerRepository;
+            this.dataService = dataService;
         }
 
         public IReadOnlyList<PrisonerProfile> GetPrisoner()
         {
-         
-            return prisonerRepository.GetPrisoners();
+
+            return dataService.GetPrisoners();
         }
     }
 }
