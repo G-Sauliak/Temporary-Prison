@@ -68,8 +68,8 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Container\DataRegistry.cs" />
-    <Compile Include="Converters\ConvertPrisoners.cs" />
-    <Compile Include="Converters\IConvertPrisoners.cs" />
+    <Compile Include="Converters\PrisonServiceConvert.cs" />
+    <Compile Include="Converters\IPrisonServiceConvert.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DataService.cs" />
     <Compile Include="Services\IDataService.cs" />
@@ -78,7 +78,9 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\PrisonService\PrisonService.wsdl" />
     <None Include="Connected Services\PrisonService\PrisonService.xsd">
       <SubType>Designer</SubType>
@@ -89,8 +91,13 @@
     <None Include="Connected Services\PrisonService\PrisonService2.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\PrisonService\PrisonService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\Temporary_Prison.Service.Contracts.Dto.PrisonerDto.datasource" />
     <None Include="Properties\DataSources\Temporary_Prison.Service.Contracts.Dto.PrisonerProfileDto.datasource" />
+    <None Include="Properties\DataSources\Temporary_Prison.Service.Contracts.Dto.PrisonerProfileDto1.datasource" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Temporary-Prison.Common\Temporary-Prison.Common.csproj">

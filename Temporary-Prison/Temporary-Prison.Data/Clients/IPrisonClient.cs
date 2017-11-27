@@ -5,6 +5,6 @@ namespace Temporary_Prison.Data.Clients
 {
     public interface IPrisonClient
     {
-        IReadOnlyList<PrisonerProfileDto> GetPrisoners();
+        IReadOnlyList<PrisonerDto> GetPrisoners();
     }
 }

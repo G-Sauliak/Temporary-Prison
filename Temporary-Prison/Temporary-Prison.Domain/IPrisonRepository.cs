@@ -3,8 +3,8 @@ using Temporary_Prison.Common.Models;
 
 namespace Temporary_Prison.Domain.Repositories
 {
-    public interface IPrisonerRepository
+    public interface IPrisonRepository
     {
-        IReadOnlyList<PrisonerProfile> GetPrisoners();
+        IReadOnlyList<Prisoner> GetPrisoners();
     }
 }

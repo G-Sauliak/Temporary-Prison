@@ -9,7 +9,19 @@
   <xs:element name="GetPrisonersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" minOccurs="0" name="GetPrisonersResult" nillable="true" type="q1:ArrayOfPrisonerProfileDto" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" minOccurs="0" name="GetPrisonersResult" nillable="true" type="q1:ArrayOfPrisonerDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPrisonerById">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPrisonerByIdResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" minOccurs="0" name="GetPrisonerByIdResult" nillable="true" type="q2:ArrayOfPrisonerDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

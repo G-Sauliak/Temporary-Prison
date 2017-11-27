@@ -6,9 +6,7 @@ namespace Temporary_Prison.Business.Container
     {
         public BusinessRegistry()
         {
-     
             For<IPrisonProvider>().Use<PrisonProvider>();
         }
     }
-
 }

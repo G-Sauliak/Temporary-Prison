@@ -8,6 +8,10 @@ namespace Temporary_Prison.Service.Contracts.Contracts
     public interface IPrisonService
     {
         [OperationContract]
-        List<PrisonerProfileDto> GetPrisoners();
+        List<PrisonerDto> GetPrisoners();
+
+        [OperationContract]
+        List<PrisonerDto> GetPrisonerById();
+
     }
 }

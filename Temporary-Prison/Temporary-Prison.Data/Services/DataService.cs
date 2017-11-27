@@ -9,24 +9,26 @@ namespace Temporary_Prison.Data.Services
     public class DataService : IDataService
     {
         private readonly IPrisonClient prisonClient;
-        private readonly IConvertPrisoners convertPrisoners;
+        private readonly IPrisonServiceConvert prisonServiceConvert;
    
 
-        public DataService(IPrisonClient prisonClient, IConvertPrisoners convertPrisoners)
+        public DataService(IPrisonClient prisonClient, IPrisonServiceConvert convertPrisoners)
         {
             this.prisonClient = prisonClient;
-            this.convertPrisoners = convertPrisoners;
+            this.prisonServiceConvert = convertPrisoners;
   
         }
 
-        IReadOnlyList<PrisonerProfile> IDataService.GetPrisoners()
+        IReadOnlyList<Prisoner> IDataService.GetPrisoners()
         {
-            var prisonersProfileDto = prisonClient.GetPrisoners();
-            if (prisonersProfileDto != null)
+            var prisonerDto = prisonClient.GetPrisoners();
+
+            if (prisonerDto != null)
             {
-                return convertPrisoners.ToListPrisonProfile(prisonersProfileDto);
+                return prisonServiceConvert.ToListPrisoners(prisonerDto);
             }
-            return new List<PrisonerProfile>() { new PrisonerProfile { FirstName = "default" } };
+
+            return new List<Prisoner>() { new Prisoner { FirstName = "oops TODO..." } };
         }
     }
 }

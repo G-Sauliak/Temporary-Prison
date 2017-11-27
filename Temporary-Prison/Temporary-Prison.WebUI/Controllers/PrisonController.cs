@@ -16,23 +16,26 @@ namespace Temporary_Prison.Controllers
         // GET: Prison
         public ActionResult ListOfPrisoners()
         {
-            return View(prisonProvider.GetPrisoner());
+
+            var listPrisoners = prisonProvider.GetPrisoner();
+
+            return View(listPrisoners);
         }
 
         public ActionResult DetailsPrisoner(int? id)
         {
-        
+
             if (!id.HasValue)
             {
                 RedirectToAction("ListPrisoner");
             }
 
-            PrisonerProfile prisoner = prisonProvider.GetPrisoner().FirstOrDefault(p => p.UserId == id);
+            Prisoner prisoner = prisonProvider.GetPrisoner().FirstOrDefault(p => p.PrisonerId == id);
 
             return View(prisoner);
         }
 
-        
+
 
 
     }

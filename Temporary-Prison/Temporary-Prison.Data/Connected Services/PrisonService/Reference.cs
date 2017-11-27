@@ -16,10 +16,16 @@ namespace Temporary_Prison.Data.PrisonService {
     public interface IPrisonService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonService/GetPrisoners", ReplyAction="http://tempuri.org/IPrisonService/GetPrisonersResponse")]
-        Temporary_Prison.Service.Contracts.Dto.PrisonerProfileDto[] GetPrisoners();
+        Temporary_Prison.Service.Contracts.Dto.PrisonerDto[] GetPrisoners();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonService/GetPrisoners", ReplyAction="http://tempuri.org/IPrisonService/GetPrisonersResponse")]
-        System.Threading.Tasks.Task<Temporary_Prison.Service.Contracts.Dto.PrisonerProfileDto[]> GetPrisonersAsync();
+        System.Threading.Tasks.Task<Temporary_Prison.Service.Contracts.Dto.PrisonerDto[]> GetPrisonersAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonService/GetPrisonerById", ReplyAction="http://tempuri.org/IPrisonService/GetPrisonerByIdResponse")]
+        Temporary_Prison.Service.Contracts.Dto.PrisonerDto[] GetPrisonerById();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonService/GetPrisonerById", ReplyAction="http://tempuri.org/IPrisonService/GetPrisonerByIdResponse")]
+        System.Threading.Tasks.Task<Temporary_Prison.Service.Contracts.Dto.PrisonerDto[]> GetPrisonerByIdAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -49,12 +55,20 @@ namespace Temporary_Prison.Data.PrisonService {
                 base(binding, remoteAddress) {
         }
         
-        public Temporary_Prison.Service.Contracts.Dto.PrisonerProfileDto[] GetPrisoners() {
+        public Temporary_Prison.Service.Contracts.Dto.PrisonerDto[] GetPrisoners() {
             return base.Channel.GetPrisoners();
         }
         
-        public System.Threading.Tasks.Task<Temporary_Prison.Service.Contracts.Dto.PrisonerProfileDto[]> GetPrisonersAsync() {
+        public System.Threading.Tasks.Task<Temporary_Prison.Service.Contracts.Dto.PrisonerDto[]> GetPrisonersAsync() {
             return base.Channel.GetPrisonersAsync();
+        }
+        
+        public Temporary_Prison.Service.Contracts.Dto.PrisonerDto[] GetPrisonerById() {
+            return base.Channel.GetPrisonerById();
+        }
+        
+        public System.Threading.Tasks.Task<Temporary_Prison.Service.Contracts.Dto.PrisonerDto[]> GetPrisonerByIdAsync() {
+            return base.Channel.GetPrisonerByIdAsync();
         }
     }
 }

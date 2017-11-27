@@ -7,9 +7,9 @@ namespace Temporary_Prison.Data.Clients
     public class PrisonClient : IPrisonClient
     {
       
-        public IReadOnlyList<PrisonerProfileDto> GetPrisoners()
+        public IReadOnlyList<PrisonerDto> GetPrisoners()
         {
-            IReadOnlyList<PrisonerProfileDto> result = null;
+            IReadOnlyList<PrisonerDto> result = null;
             using (var client = new PrisonServiceClient())
             {
                 client.Open();

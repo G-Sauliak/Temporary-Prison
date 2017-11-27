@@ -73,6 +73,14 @@
       <Project>{89156652-fa00-4856-88b0-d16b00e450c0}</Project>
       <Name>Temporary-Prison.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Temporary-Prison.Domain\Temporary-Prison.Domain.csproj">
+      <Project>{9f3c4f0d-0fac-4888-89d6-4e446e274006}</Project>
+      <Name>Temporary-Prison.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Temporary-Prison.Service.Contracts\Temporary-Prison.Service.Contracts.csproj">
+      <Project>{7af6d9c5-d316-41f9-b944-f055debbc151}</Project>
+      <Name>Temporary-Prison.Service.Contracts</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

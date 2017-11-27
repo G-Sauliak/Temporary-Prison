@@ -5,6 +5,6 @@ namespace Temporary_Prison.Business
 {
     public interface IPrisonProvider
     {
-        IReadOnlyList<PrisonerProfile> GetPrisoner();
+        IReadOnlyList<Prisoner> GetPrisoner();
     }
 }

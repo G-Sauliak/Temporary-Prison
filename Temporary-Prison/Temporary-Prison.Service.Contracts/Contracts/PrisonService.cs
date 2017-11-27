@@ -1,33 +1,26 @@
 ﻿using System.Collections.Generic;
 using Temporary_Prison.Service.Contracts.Dto;
+using Temporary_Prison.Service.Contracts.Repository;
 
 namespace Temporary_Prison.Service.Contracts.Contracts
 {
     public class PrisonService : IPrisonService
     {
-        public List<PrisonerProfileDto> GetPrisoners()
+        private readonly PrisonDBContext context;
+
+        public PrisonService()
         {
-            List<PrisonerProfileDto> listProfiles = new List<PrisonerProfileDto>();
+            context = new PrisonDBContext();
+        }
 
-            listProfiles.Add(
-                new PrisonerProfileDto
-                {
-                    UserId = 1,
-                    FirstName = "Petya",
-                    Patronymic = "Vladimirovich",
-                    LastName = "Lomonosov"
-                });
-            listProfiles.Add(
-                new PrisonerProfileDto
-                {
-                    UserId =2,
-                    FirstName = "Grisha",
-                    Patronymic = "Ptrivich",
-                    LastName = "Soveliev"
+        public List<PrisonerDto> GetPrisonerById()
+        {
+            throw new System.NotImplementedException();
+        }
 
-                });
-
-            return listProfiles;
+        public List<PrisonerDto> GetPrisoners()
+        {
+            return context.GetPrisoners();
         }
     }
 }

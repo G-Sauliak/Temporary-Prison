@@ -9,7 +9,7 @@ namespace Temporary_Prison.Data.Container
     {
         public DataRegistry()
         {
-            For<IConvertPrisoners>().Use<ConvertPrisoners>();
+            For<IPrisonServiceConvert>().Use<PrisonServiceConvert>();
             For<IDataService>().Use<DataService>();
             For<IPrisonClient>().Use<PrisonClient>();
         }

@@ -14,9 +14,8 @@ namespace Temporary_Prison.Business
             this.dataService = dataService;
         }
 
-        public IReadOnlyList<PrisonerProfile> GetPrisoner()
+        public IReadOnlyList<Prisoner> GetPrisoner()
         {
-
             return dataService.GetPrisoners();
         }
     }

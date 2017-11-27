@@ -1,4 +1,4 @@
-﻿@model Temporary_Prison.Common.Models.PrisonerProfile
+﻿@model Temporary_Prison.Common.Models.Prisoner
 
 <div>
     <h4>PrisonerProfile</h4>
@@ -13,11 +13,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Patronymic)
+            @Html.DisplayNameFor(model => model.Surname)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Patronymic)
+            @Html.DisplayFor(model => model.Surname)
         </dd>
 
         <dt>
@@ -45,36 +45,20 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.BirthDate)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.BirthDate)
+            @Html.DisplayFor(model => model.BirthDate.Value.Date)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Avatar)
+        <!--<dt>
+            Html.DisplayNameFor(model => model.PlaceOfResidence)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Avatar)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PlaceOfResidence)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PlaceOfResidence)
-        </dd>
+           Html.DisplayFor(model => model.PlaceOfResidence)
+        </dd>-->
 
     </dl>
   

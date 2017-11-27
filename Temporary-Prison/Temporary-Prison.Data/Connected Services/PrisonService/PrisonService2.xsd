@@ -1,18 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:complexType name="ArrayOfPrisonerProfileDto">
+  <xs:import schemaLocation="http://localhost:49365/PrisonService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="ArrayOfPrisonerDto">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="PrisonerProfileDto" nillable="true" type="tns:PrisonerProfileDto" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PrisonerDto" nillable="true" type="tns:PrisonerDto" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfPrisonerProfileDto" nillable="true" type="tns:ArrayOfPrisonerProfileDto" />
-  <xs:complexType name="PrisonerProfileDto">
+  <xs:element name="ArrayOfPrisonerDto" nillable="true" type="tns:ArrayOfPrisonerDto" />
+  <xs:complexType name="PrisonerDto">
     <xs:sequence>
+      <xs:element minOccurs="0" name="AdditionalInformation" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="BirthDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Patronymic" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="UserId" type="xs:int" />
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="PhoneNumbers" nillable="true" type="q1:ArrayOfstring" />
+      <xs:element minOccurs="0" name="PlaceOfWork" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PrisonerId" type="xs:int" />
+      <xs:element minOccurs="0" name="RelationshipStatus" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Surname" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="placeOfResidence" nillable="true" type="tns:PlaceOfResidence" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="PrisonerProfileDto" nillable="true" type="tns:PrisonerProfileDto" />
+  <xs:element name="PrisonerDto" nillable="true" type="tns:PrisonerDto" />
+  <xs:complexType name="PlaceOfResidence">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ApartmentNumber" type="xs:int" />
+      <xs:element minOccurs="0" name="City" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="County" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="HouseNumber" type="xs:int" />
+      <xs:element minOccurs="0" name="Street" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PlaceOfResidence" nillable="true" type="tns:PlaceOfResidence" />
 </xs:schema>

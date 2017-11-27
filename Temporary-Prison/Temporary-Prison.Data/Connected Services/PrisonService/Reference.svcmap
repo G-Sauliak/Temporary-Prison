@@ -22,11 +22,12 @@
     <MetadataSource Address="http://localhost:49365/PrisonService.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="PrisonService.xsd" MetadataType="Schema" ID="e7aecb47-fd7d-44e1-9110-2675909464ee" SourceId="1" SourceUrl="http://localhost:49365/PrisonService.svc?xsd=xsd0" />
     <MetadataFile FileName="PrisonService.disco" MetadataType="Disco" ID="8c7d6a32-08b3-4229-8a9f-b4a9405252ff" SourceId="1" SourceUrl="http://localhost:49365/PrisonService.svc?disco" />
-    <MetadataFile FileName="PrisonService1.xsd" MetadataType="Schema" ID="a7158db9-438f-49c3-8f12-41fe87ef19ea" SourceId="1" SourceUrl="http://localhost:49365/PrisonService.svc?xsd=xsd1" />
-    <MetadataFile FileName="PrisonService2.xsd" MetadataType="Schema" ID="6b4177fb-2061-4156-b69b-bce3ced95026" SourceId="1" SourceUrl="http://localhost:49365/PrisonService.svc?xsd=xsd2" />
     <MetadataFile FileName="PrisonService.wsdl" MetadataType="Wsdl" ID="11c6b150-daaf-48a0-b8fa-ea9c7c8df6c0" SourceId="1" SourceUrl="http://localhost:49365/PrisonService.svc?wsdl" />
+    <MetadataFile FileName="PrisonService2.xsd" MetadataType="Schema" ID="6b4177fb-2061-4156-b69b-bce3ced95026" SourceId="1" SourceUrl="http://localhost:49365/PrisonService.svc?xsd=xsd2" />
+    <MetadataFile FileName="PrisonService3.xsd" MetadataType="Schema" ID="a471ce08-55ac-4461-bb3b-b9c84e95e63d" SourceId="1" SourceUrl="http://localhost:49365/PrisonService.svc?xsd=xsd3" />
+    <MetadataFile FileName="PrisonService.xsd" MetadataType="Schema" ID="e7aecb47-fd7d-44e1-9110-2675909464ee" SourceId="1" SourceUrl="http://localhost:49365/PrisonService.svc?xsd=xsd0" />
+    <MetadataFile FileName="PrisonService1.xsd" MetadataType="Schema" ID="a7158db9-438f-49c3-8f12-41fe87ef19ea" SourceId="1" SourceUrl="http://localhost:49365/PrisonService.svc?xsd=xsd1" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

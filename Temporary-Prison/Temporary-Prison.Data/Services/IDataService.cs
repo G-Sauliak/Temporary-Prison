@@ -5,6 +5,6 @@ namespace Temporary_Prison.Data.Services
 {
     public interface IDataService
     {
-        IReadOnlyList<PrisonerProfile> GetPrisoners();
+        IReadOnlyList<Prisoner> GetPrisoners();
     }
 }

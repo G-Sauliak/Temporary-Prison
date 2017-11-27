@@ -3,16 +3,16 @@ using Temporary_Prison.Common.Models;
 
 namespace Temporary_Prison.Domain.Repositories
 {
-    public class PrisonerRepository : IPrisonerRepository
+    public class PrisonRepository : IPrisonRepository
     {
 
-        public IReadOnlyList<PrisonerProfile> GetPrisoners()
+        public IReadOnlyList<Prisoner> GetPrisoners()
         {
-            List<PrisonerProfile> listProfiles = new List<PrisonerProfile>();
+            List<Prisoner> listProfiles = new List<Prisoner>();
             listProfiles.Add(
-                new PrisonerProfile {
+                new Prisoner {
                     FirstName = "Petya",
-                    Patronymic = "Vladimirovich",
+                    Surname = "Vladimirovich",
                     LastName = "Lomonosov"
                 });
 
