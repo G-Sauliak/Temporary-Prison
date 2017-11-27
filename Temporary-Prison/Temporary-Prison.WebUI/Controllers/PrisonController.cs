@@ -5,14 +5,14 @@ using Temporary_Prison.Common.Models;
 
 namespace Temporary_Prison.Controllers
 {
-    public class PrisonController : Controller
+    public class PrisonersController : BaseController
     {
-        private readonly IPrisonProvider prisonProvider;
+       /* private readonly IPrisonProvider prisonProvider;
 
-        public PrisonController(IPrisonProvider prisonProvider)
+        public PrisonersController(IPrisonProvider prisonProvider)
         {
             this.prisonProvider = prisonProvider;
-        }
+        }*/
         // GET: Prison
         public ActionResult ListOfPrisoners()
         {

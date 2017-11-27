@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
 using Temporary_Prison.Common.Models;
@@ -20,7 +21,7 @@ namespace Temporary_Prison.Service.Contracts.Repository
         public List<PrisonerDto> GetPrisoners()
         {
             var listPrisoners = new List<PrisonerDto>();
-            var phoneNumbers = new List<string>();
+
             using (var sqlConnection = new SqlConnection(connectionString))
             {
                 sqlConnection.Open();
@@ -29,18 +30,17 @@ namespace Temporary_Prison.Service.Contracts.Repository
                 {
                     try
                     {
-                        sqlCommand.CommandType = System.Data.CommandType.StoredProcedure;
                         using (SqlDataReader dataReader = sqlCommand.ExecuteReader())
                         {
                             if (dataReader.HasRows)
                             {
-                            
+
                                 while (dataReader.Read())
                                 {
                                     var id = (int)dataReader["PrisonerId"];
 
                                     var prisoner = listPrisoners.Where(p => p.PrisonerId == id).FirstOrDefault();
-
+                                  
                                     if (prisoner == null)
                                     {
                                         prisoner = new PrisonerDto()
@@ -55,7 +55,6 @@ namespace Temporary_Prison.Service.Contracts.Repository
                                             RelationshipStatus = dataReader["RelationshipStatus"].ToString(),
                                             placeOfResidence = new PlaceOfResidence()
                                             {
-
                                                 County = dataReader["County"].ToString(),
                                                 City = dataReader["City"].ToString(),
                                                 Street = dataReader["Street"].ToString(),
@@ -77,7 +76,7 @@ namespace Temporary_Prison.Service.Contracts.Repository
 
                         }
                     }
-                    catch (SqlException e)
+                    catch (DbException e)
                     {
                         //TODO
                     }

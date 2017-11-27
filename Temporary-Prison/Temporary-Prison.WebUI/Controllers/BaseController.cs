@@ -7,16 +7,16 @@ namespace Temporary_Prison.Controllers
 {
     public class BaseController : Controller
     {
-       
-          //  protected IPrisonProvider prisonProvider { get; set; }
 
-           // [SetterProperty]
-           /* public IPrisonProvider Provider
-            {
-                set { prisonProvider = value; }
-            }
-            */
-           protected readonly ILog log = LogManager.GetLogger("LOGGER");
-        
+        protected IPrisonProvider prisonProvider { get; set; }
+
+        [SetterProperty]
+        public IPrisonProvider Provider
+        {
+            set { prisonProvider = value; }
+        }
+
+        protected readonly ILog log = LogManager.GetLogger("LOGGER");
+
     }
 }
