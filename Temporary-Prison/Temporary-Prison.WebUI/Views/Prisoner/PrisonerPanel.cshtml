@@ -3,8 +3,6 @@
 @{
     ViewBag.Title = "list of prisoners";
 }
-
-<h2>List Prisoner</h2>
 <style>
     i {
         vertical-align: middle;
@@ -20,12 +18,12 @@
     }
 
     .user_panel {
-        width: 50%;
+        width: 100%;
     }
 </style>
-<div class="container">
+<div class="container ">
     <div class="row">
-        <div class="panel panel-default user_panel">
+        <div class="panel panel-default user_panel ">
             <div class="panel-heading">
                 <h3 class="panel-title">List Prisoners</h3>
             </div>
@@ -46,7 +44,7 @@
                                         @Html.DisplayFor(modelItem => item.BirthDate.Value)
                                     </td>
                                     <td align="center">
-                                        @Html.ActionLink("Details", "DetailsPrisoner", new { id = item.PrisonerId })
+                                        @Html.ActionLink("Details", "DetailsOfPrisoner", new { id = item.PrisonerId })
                                     </td>
                                 </tr>
                             }
@@ -57,4 +55,4 @@
         </div>
     </div>
 </div>
-@Html.ActionLink("Back to Home", "Index", "Home")
+

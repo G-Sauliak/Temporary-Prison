@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Temporary_Prison.Common.Models.Prisoner>
+
+@{
+    ViewBag.Title = "list of prisoners";
+}
+
+<div class="form-group">
+    <div class="col-md-8 col-sm-offset-1">
+        <div class="row" id="UserListBox">
+            @Html.Partial("PrisonerPanel", Model)
+        </div>
+    </div>
+</div>
+
+
+@using (Html.BeginForm("ListUsers", "User", FormMethod.Get))
+{
+    <div class="form-horizontal ">
+        <div class="form-group">
+            <div class="col-md-10">
+                @Html.Label("Find by name:", new { @class = "control-label" })
+                @Html.TextBox("search", ViewBag.CurrentFilter as string, new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-10">
+                <input class="btn btn-group " type="submit" value="Search" />
+            </div>
+        </div>
+    </div>
+}
+@Html.ActionLink("Back to Home", "Index", "Home")

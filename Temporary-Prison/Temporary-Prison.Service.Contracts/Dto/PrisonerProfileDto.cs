@@ -25,10 +25,10 @@ namespace Temporary_Prison.Service.Contracts.Dto
         [DataMember]
         public DateTime? BirthDate { get; set; }
         [DataMember]
-        public PlaceOfResidence placeOfResidence { get; set; }
+        public Address address { get; set; }
         [DataMember]
         public string AdditionalInformation { get; set; }
-
+        [DataMember]
         public string Avatar { get; set; }
 
     }

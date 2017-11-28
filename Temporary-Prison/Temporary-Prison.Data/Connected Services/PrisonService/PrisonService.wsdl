@@ -3,9 +3,10 @@
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:49365/PrisonService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
-      <xsd:import schemaLocation="http://localhost:49365/PrisonService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:49365/PrisonService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" />
+      <xsd:import schemaLocation="http://localhost:49365/PrisonService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:49365/PrisonService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://localhost:49365/PrisonService.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Common.Models" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IPrisonService_GetPrisoners_InputMessage">
@@ -13,6 +14,9 @@
   </wsdl:message>
   <wsdl:message name="IPrisonService_GetPrisoners_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetPrisonersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPrisonService_GetPrisoners_ServiceDataDtoFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q1:ServiceDataDto" />
   </wsdl:message>
   <wsdl:message name="IPrisonService_GetPrisonerById_InputMessage">
     <wsdl:part name="parameters" element="tns:GetPrisonerById" />
@@ -24,6 +28,7 @@
     <wsdl:operation name="GetPrisoners">
       <wsdl:input wsaw:Action="http://tempuri.org/IPrisonService/GetPrisoners" message="tns:IPrisonService_GetPrisoners_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPrisonService/GetPrisonersResponse" message="tns:IPrisonService_GetPrisoners_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IPrisonService/GetPrisonersServiceDataDtoFault" name="ServiceDataDtoFault" message="tns:IPrisonService_GetPrisoners_ServiceDataDtoFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetPrisonerById">
       <wsdl:input wsaw:Action="http://tempuri.org/IPrisonService/GetPrisonerById" message="tns:IPrisonService_GetPrisonerById_InputMessage" />
@@ -40,6 +45,9 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
+      <wsdl:fault name="ServiceDataDtoFault">
+        <soap:fault use="literal" name="ServiceDataDtoFault" namespace="" />
+      </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="GetPrisonerById">
       <soap:operation soapAction="http://tempuri.org/IPrisonService/GetPrisonerById" style="document" />

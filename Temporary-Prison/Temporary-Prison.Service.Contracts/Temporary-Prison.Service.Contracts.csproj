@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\IPrisonService.cs" />
+    <Compile Include="Dto\ServiceDataDto.cs" />
     <Compile Include="Repository\PrisonDBContext.cs" />
     <Compile Include="Contracts\PrisonService.cs" />
     <Compile Include="Dto\PrisonerProfileDto.cs" />

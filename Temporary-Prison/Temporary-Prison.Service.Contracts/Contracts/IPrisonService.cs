@@ -8,6 +8,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
     public interface IPrisonService
     {
         [OperationContract]
+        [FaultContract(typeof(DataErrorDto))]
         List<PrisonerDto> GetPrisoners();
 
         [OperationContract]

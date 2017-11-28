@@ -1,0 +1,66 @@
+﻿@model Temporary_Prison.Common.Models.Prisoner
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-7 ">
+            <div class="panel panel-default">
+                <div class="panel-heading"> <h4>Prisoner profile</h4> </div>
+                <div class="panel-body">
+                    <div class="box box-info">
+                        <div class="box-body">
+                            <div class="col-sm-6">
+                                <div align="center">
+                                    <img src="@Model.Avatar" class="img-rounded img-responsive" />
+                                    <input id="profile-image-upload" class="hidden" type="file">
+                                </div>
+
+                                <br>
+                            </div>
+
+                            <div class="col-sm-6"> <h4 style="color:#000000;">Address:</h4></div>
+
+                            <div class="col-sm-6 col-lg-4">Country:</div>
+                            <div class="col-sm-6 col-lg-offset-0 col-lg-2">@Html.DisplayFor(model => model.address.County)</div>
+
+                            <div class="col-sm-6 col-lg-4">City:</div>
+                            <div class="col-sm-6 col-lg-offset-0 col-lg-2">@Html.DisplayFor(model => model.address.City)</div>
+
+                            <div class="col-sm-6 col-lg-4">Street:</div>
+                            <div class="col-sm-6 col-lg-offset-0 col-lg-2">@Html.DisplayFor(model => model.address.Street)</div>
+
+                            <div class="col-sm-6 col-lg-4">House Number:</div>
+                            <div class="col-sm-6 col-lg-offset-0 col-lg-2">@Html.DisplayFor(model => model.address.HouseNumber)</div>
+
+                            <div class="col-sm-6 col-lg-4">Apartament Number:</div>
+                            <div class="col-sm-6 col-lg-offset-0 col-lg-2">@Html.DisplayFor(model => model.address.ApartmentNumber)</div>
+
+
+                            <div class="clearfix"></div>
+                            <hr style="margin:10px 0 5px 0;">
+                            <div class="col-sm-5 col-xs-6">First Name:</div><div class="col-sm-7 ">@Html.DisplayFor(model => model.address.County)</div>
+                            <div class="clearfix"></div>
+                            <div class="bot-border"></div>
+                            <div class="col-sm-5 col-xs-6 tital ">Last Name:</div><div class="col-sm-7">@Html.DisplayFor(model => model.LastName)</div>
+                            <div class="clearfix"></div>
+                            <div class="bot-border"></div>
+                            <div class="col-sm-5 col-xs-6 tital ">Surname:</div><div class="col-sm-7">@Html.DisplayFor(model => model.Surname)</div>
+                            <div class="clearfix"></div>
+                            <div class="col-sm-5 col-xs-6 tital ">Relationship Status:</div><div class="col-sm-7">@Html.DisplayFor(model => model.RelationshipStatus)</div>
+                            <div class="bot-border"></div>
+                            <div class="col-sm-5 col-xs-6 tital ">Date Of Birth:</div><div class="col-sm-7">@Html.DisplayFor(model => model.BirthDate.Value.Date)</div>
+                            <div class="clearfix"></div>
+                            <div class="bot-border"></div>
+                            <div class="col-sm-5 col-xs-6 tital ">Place Of Work:</div><div class="col-sm-7">@Html.DisplayFor(model => model.PlaceOfWork)</div>
+                            <div class="clearfix"></div>
+                            <div class="col-sm-5 col-xs-6 tital ">Relationship Status:</div><div class="col-sm-7">@Html.DisplayFor(model => model.RelationshipStatus)</div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "ListOfPrisoners")
+</p>

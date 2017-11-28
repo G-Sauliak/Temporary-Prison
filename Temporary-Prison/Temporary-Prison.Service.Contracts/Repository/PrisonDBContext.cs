@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq;
 using Temporary_Prison.Common.Models;
@@ -12,10 +11,12 @@ namespace Temporary_Prison.Service.Contracts.Repository
     class PrisonDBContext
     {
         private string connectionString;
+        private DataErrorDto serviceData;
 
         public PrisonDBContext()
         {
             connectionString = ConfigurationManager.ConnectionStrings["PrisonDataBase"].ConnectionString;
+            serviceData = new DataErrorDto();
         }
 
         public List<PrisonerDto> GetPrisoners()
@@ -28,62 +29,48 @@ namespace Temporary_Prison.Service.Contracts.Repository
 
                 using (SqlCommand sqlCommand = new SqlCommand("GetPrisoners", sqlConnection))
                 {
-                    try
+
+                    using (SqlDataReader dataReader = sqlCommand.ExecuteReader())
                     {
-                        using (SqlDataReader dataReader = sqlCommand.ExecuteReader())
+
+                        while (dataReader.Read())
                         {
-                            if (dataReader.HasRows)
-                            {
+                            var id = (int)dataReader["PrisonerId"];
 
-                                while (dataReader.Read())
+                            var prisoner = listPrisoners.Where(p => p.PrisonerId == id).FirstOrDefault();
+
+                            if (prisoner == null)
+                            {
+                                prisoner = new PrisonerDto()
                                 {
-                                    var id = (int)dataReader["PrisonerId"];
-
-                                    var prisoner = listPrisoners.Where(p => p.PrisonerId == id).FirstOrDefault();
-                                  
-                                    if (prisoner == null)
+                                    PrisonerId = (int)dataReader["PrisonerId"],
+                                    FirstName = dataReader["FirstName"].ToString(),
+                                    LastName = dataReader["LastName"].ToString(),
+                                    Surname = dataReader["Surname"].ToString(),
+                                    PlaceOfWork = dataReader["PlaceOfWork"].ToString(),
+                                    AdditionalInformation = dataReader["AdditionalInformation"].ToString(),
+                                    BirthDate = (DateTime)dataReader["BirthDate"],
+                                    RelationshipStatus = dataReader["RelationshipStatus"].ToString(),
+                                    Avatar = dataReader["Photo"].ToString(),
+                                    address = new Address()
                                     {
-                                        prisoner = new PrisonerDto()
-                                        {
-                                            PrisonerId = (int)dataReader["PrisonerId"],
-                                            FirstName = dataReader["FirstName"].ToString(),
-                                            LastName = dataReader["LastName"].ToString(),
-                                            Surname = dataReader["Surname"].ToString(),
-                                            PlaceOfWork = dataReader["PlaceOfWork"].ToString(),
-                                            AdditionalInformation = dataReader["AdditionalInformation"].ToString(),
-                                            BirthDate = (DateTime)dataReader["BirthDate"],
-                                            RelationshipStatus = dataReader["RelationshipStatus"].ToString(),
-                                            placeOfResidence = new PlaceOfResidence()
-                                            {
-                                                County = dataReader["County"].ToString(),
-                                                City = dataReader["City"].ToString(),
-                                                Street = dataReader["Street"].ToString(),
-                                                HouseNumber = (int)dataReader["HouseNumber"],
-                                                ApartmentNumber = (int)dataReader["ApartmentNumber"],
+                                        County = dataReader["County"].ToString(),
+                                        City = dataReader["City"].ToString(),
+                                        Street = dataReader["Street"].ToString(),
+                                        HouseNumber = (int)dataReader["HouseNumber"],
+                                        ApartmentNumber = (int)dataReader["ApartmentNumber"],
 
-                                            },
-                                            PhoneNumbers = new List<string>()
-                                        };
-                                        listPrisoners.Add(prisoner);
-                                    }
-                                    listPrisoners.Find(p => p.PrisonerId == id).PhoneNumbers.Add(dataReader["PhoneNumber"].ToString());
-                                }
+                                    },
+                                    PhoneNumbers = new List<string>()
+                                };
+                                listPrisoners.Add(prisoner);
                             }
-                            else
-                            {
-                                //TODO 
-                            }
-
+                            listPrisoners.Find(p => p.PrisonerId == id).PhoneNumbers.Add(dataReader["PhoneNumber"].ToString());
                         }
-                    }
-                    catch (DbException e)
-                    {
-                        //TODO
                     }
                 }
             }
             return listPrisoners;
         }
-
     }
 }

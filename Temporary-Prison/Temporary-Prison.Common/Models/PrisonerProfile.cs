@@ -15,10 +15,10 @@ namespace Temporary_Prison.Common.Models
         public DateTime? BirthDate { get; set; }
         public string AdditionalInformation { get; set; }
         public string Avatar { get; set; }
-        public PlaceOfResidence placeOfResidence { get; set; }
+        public Address address { get; set; }
     }
 
-    public class PlaceOfResidence
+    public class Address
     {
         public string County { get; set; }
         public string City { get; set; }

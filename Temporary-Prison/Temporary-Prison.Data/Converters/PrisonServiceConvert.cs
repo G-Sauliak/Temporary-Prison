@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using AutoMapper;
+using System.Collections.Generic;
 using Temporary_Prison.Common.Models;
 using Temporary_Prison.Service.Contracts.Dto;
 
@@ -11,6 +12,9 @@ namespace Temporary_Prison.Data.Converters
 
             List<Prisoner> listPrisoners = new List<Prisoner>();
 
+          //  Mapper.Initialize(cfg => cfg.CreateMap<Prisoner, PrisonerDto>());
+
+           /// var prisoner = Mapper.Map<IReadOnlyList<PrisonerDto>, IReadOnlyList<Prisoner>>(prisonersDto);
             foreach (var prisonerDto in prisonersDto)
             {
                 listPrisoners.Add(
@@ -24,6 +28,8 @@ namespace Temporary_Prison.Data.Converters
                         PlaceOfWork = prisonerDto.PlaceOfWork,
                         RelationshipStatus = prisonerDto.RelationshipStatus,
                         PhoneNumbers = prisonerDto.PhoneNumbers,
+                        address = prisonerDto.address,
+                        Avatar = prisonerDto.Avatar,
                     }
                     );
             }

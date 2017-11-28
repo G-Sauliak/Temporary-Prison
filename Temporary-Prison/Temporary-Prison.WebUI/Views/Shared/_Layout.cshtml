@@ -21,15 +21,30 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="@Url.Action("Prisoners", "ListOfPrisoners")">List Of Prisoners</a></li>
-                    <li><a href="#">Contact</a></li>
+
                 </ul>
             </div>
         </div>
     </div>
 
     <div class="container body-content">
+        <div class="well col-lg-3">
+            <h3 class="text-left">Navigation</h3>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <a href="@Url.Action("ListOfPrisoners", "Prisoner")">List Of Prisoners</a>
+                </div>
+                <div class="form-group">
+                    <a href="#">Find prisoner</a>
+                </div>
+                <div class="form-group">
+                    <a href="#">Date</a>
+                    <div class="input-group"> </div>
+                </div>
+            </form>
+        </div>
         @RenderBody()
+       
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - Temporary Prison</p>

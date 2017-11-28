@@ -12,10 +12,10 @@ namespace Temporary_Prison.Data.Services
         private readonly IPrisonServiceConvert prisonServiceConvert;
    
 
-        public DataService(IPrisonClient prisonClient, IPrisonServiceConvert convertPrisoners)
+        public DataService(IPrisonClient prisonClient, IPrisonServiceConvert prisonServiceConvert)
         {
             this.prisonClient = prisonClient;
-            this.prisonServiceConvert = convertPrisoners;
+            this.prisonServiceConvert = prisonServiceConvert;
   
         }
 
