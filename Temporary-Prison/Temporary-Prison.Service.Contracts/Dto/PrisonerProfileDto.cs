@@ -21,7 +21,7 @@ namespace Temporary_Prison.Service.Contracts.Dto
         [DataMember]
         public string PlaceOfWork { get; set; }
         [DataMember]
-        public List<string> PhoneNumbers { get; set; }
+        public string[] PhoneNumbers { get; set; }
         [DataMember]
         public DateTime? BirthDate { get; set; }
         [DataMember]

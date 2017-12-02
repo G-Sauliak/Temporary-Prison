@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Temporary_Prison.Dependencies.MapperRegistry;
 
 namespace Temporary_Prison
 {
@@ -13,6 +14,8 @@ namespace Temporary_Prison
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            MapperProfiles.InitialiseMappers();
+
         }
     }
 }

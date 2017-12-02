@@ -8,33 +8,40 @@ using Temporary_Prison.Service.Contracts.Dto;
 
 namespace Temporary_Prison.Service.Contracts.Repository
 {
-    class PrisonDBContext
+    class PrisonRepository
     {
-        private string connectionString;
-        private DataErrorDto serviceData;
-
-        public PrisonDBContext()
+        private string GetConnectionString
         {
-            connectionString = ConfigurationManager.ConnectionStrings["PrisonDataBase"].ConnectionString;
-            serviceData = new DataErrorDto();
+            get
+            {
+                var ConStrSettings = ConfigurationManager.ConnectionStrings["PrisonDataBase"];
+
+                if (ConStrSettings == null)
+                {
+                    throw new NullReferenceException("Connection string is null");
+                }
+
+                return ConStrSettings.ConnectionString;
+            }
         }
 
         public List<PrisonerDto> GetPrisoners()
         {
+
             var listPrisoners = new List<PrisonerDto>();
 
-            using (var sqlConnection = new SqlConnection(connectionString))
+            using (var sqlConnection = new SqlConnection(GetConnectionString))
             {
                 sqlConnection.Open();
 
-                using (SqlCommand sqlCommand = new SqlCommand("GetPrisoners", sqlConnection))
+                using (var sqlCommand = new SqlCommand("GetPrisoners", sqlConnection))
                 {
 
-                    using (SqlDataReader dataReader = sqlCommand.ExecuteReader())
+                    using (var dataReader = sqlCommand.ExecuteReader())
                     {
-
-                        while (dataReader.Read())
+                        for (int i = 0; dataReader.Read(); i++)
                         {
+
                             var id = (int)dataReader["PrisonerId"];
 
                             var prisoner = listPrisoners.Where(p => p.PrisonerId == id).FirstOrDefault();
@@ -61,11 +68,11 @@ namespace Temporary_Prison.Service.Contracts.Repository
                                         ApartmentNumber = (int)dataReader["ApartmentNumber"],
 
                                     },
-                                    PhoneNumbers = new List<string>()
+                                    PhoneNumbers = new string[dataReader.FieldCount]
                                 };
                                 listPrisoners.Add(prisoner);
                             }
-                            listPrisoners.Find(p => p.PrisonerId == id).PhoneNumbers.Add(dataReader["PhoneNumber"].ToString());
+                            listPrisoners.Find(p => p.PrisonerId == id).PhoneNumbers[i] = dataReader["PhoneNumber"].ToString();
                         }
                     }
                 }

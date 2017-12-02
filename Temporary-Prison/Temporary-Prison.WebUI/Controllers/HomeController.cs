@@ -2,7 +2,7 @@
 
 namespace Temporary_Prison.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeController : Controller
     {
         // GET: Home
         public ActionResult Index()

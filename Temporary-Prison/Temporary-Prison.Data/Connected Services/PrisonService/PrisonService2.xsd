@@ -24,11 +24,11 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="PrisonerDto" nillable="true" type="tns:PrisonerDto" />
-  <xs:complexType name="ServiceDataDto">
+  <xs:complexType name="DataErrorDto">
     <xs:sequence>
       <xs:element minOccurs="0" name="ErrorDetails" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ErrorMessage" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ServiceDataDto" nillable="true" type="tns:ServiceDataDto" />
+  <xs:element name="DataErrorDto" nillable="true" type="tns:DataErrorDto" />
 </xs:schema>

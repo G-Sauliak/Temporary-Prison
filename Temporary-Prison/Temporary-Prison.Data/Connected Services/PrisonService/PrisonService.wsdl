@@ -15,8 +15,8 @@
   <wsdl:message name="IPrisonService_GetPrisoners_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetPrisonersResponse" />
   </wsdl:message>
-  <wsdl:message name="IPrisonService_GetPrisoners_ServiceDataDtoFault_FaultMessage">
-    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q1:ServiceDataDto" />
+  <wsdl:message name="IPrisonService_GetPrisoners_DataErrorDtoFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q1:DataErrorDto" />
   </wsdl:message>
   <wsdl:message name="IPrisonService_GetPrisonerById_InputMessage">
     <wsdl:part name="parameters" element="tns:GetPrisonerById" />
@@ -28,7 +28,7 @@
     <wsdl:operation name="GetPrisoners">
       <wsdl:input wsaw:Action="http://tempuri.org/IPrisonService/GetPrisoners" message="tns:IPrisonService_GetPrisoners_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPrisonService/GetPrisonersResponse" message="tns:IPrisonService_GetPrisoners_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IPrisonService/GetPrisonersServiceDataDtoFault" name="ServiceDataDtoFault" message="tns:IPrisonService_GetPrisoners_ServiceDataDtoFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IPrisonService/GetPrisonersDataErrorDtoFault" name="DataErrorDtoFault" message="tns:IPrisonService_GetPrisoners_DataErrorDtoFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetPrisonerById">
       <wsdl:input wsaw:Action="http://tempuri.org/IPrisonService/GetPrisonerById" message="tns:IPrisonService_GetPrisonerById_InputMessage" />
@@ -45,8 +45,8 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="ServiceDataDtoFault">
-        <soap:fault use="literal" name="ServiceDataDtoFault" namespace="" />
+      <wsdl:fault name="DataErrorDtoFault">
+        <soap:fault use="literal" name="DataErrorDtoFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="GetPrisonerById">

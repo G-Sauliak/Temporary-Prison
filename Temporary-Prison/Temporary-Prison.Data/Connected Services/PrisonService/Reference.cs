@@ -16,7 +16,7 @@ namespace Temporary_Prison.Data.PrisonService {
     public interface IPrisonService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonService/GetPrisoners", ReplyAction="http://tempuri.org/IPrisonService/GetPrisonersResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Service.Contracts.Dto.DataErrorDto), Action="http://tempuri.org/IPrisonService/GetPrisonersServiceDataDtoFault", Name="ServiceDataDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Service.Contracts.Dto.DataErrorDto), Action="http://tempuri.org/IPrisonService/GetPrisonersDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
         Temporary_Prison.Service.Contracts.Dto.PrisonerDto[] GetPrisoners();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonService/GetPrisoners", ReplyAction="http://tempuri.org/IPrisonService/GetPrisonersResponse")]
