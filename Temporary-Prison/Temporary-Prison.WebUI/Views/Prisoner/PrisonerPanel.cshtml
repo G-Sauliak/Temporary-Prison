@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<Temporary_Prison.Common.Models.Prisoner>
+@using X.PagedList
+@using X.PagedList.Mvc
 
 @{
     ViewBag.Title = "list of prisoners";
@@ -50,6 +52,21 @@
                             }
                         </tbody>
                     </table>
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>
+                                Total Count: <span class="label label-info" id="total-count">@ViewBag.CountPrisoners</span>
+                            </h6>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="pagination pagination-sm pull-right">
+
+                                @Html.PagedListPager(Model as IPagedList, page => Url.Action("ListOfPrisoners", new { page, sort = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }), PagedListRenderOptions.MinimalWithPageCountText)
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

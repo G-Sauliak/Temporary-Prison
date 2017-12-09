@@ -5,14 +5,15 @@ using Temporary_Prison.Service.Contracts.Dto;
 namespace Temporary_Prison.Service.Contracts.Contracts
 {
     [ServiceContract]
-    public interface IPrisonService
+    public interface IPrisonerService
     {
         [OperationContract]
         [FaultContract(typeof(DataErrorDto))]
         List<PrisonerDto> GetPrisoners();
 
         [OperationContract]
-        List<PrisonerDto> GetPrisonerById();
+        [FaultContract(typeof(DataErrorDto))]
+        PrisonerDto GetPrisonerById(int Id);
 
     }
 }

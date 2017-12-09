@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Service="Temporary_Prison.Service.Contracts.Contracts.UserService" %>

@@ -12,47 +12,48 @@ namespace Temporary_Prison.Data.PrisonService {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="PrisonService.IPrisonService")]
-    public interface IPrisonService {
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="PrisonService.IPrisonerService")]
+    public interface IPrisonerService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonService/GetPrisoners", ReplyAction="http://tempuri.org/IPrisonService/GetPrisonersResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Service.Contracts.Dto.DataErrorDto), Action="http://tempuri.org/IPrisonService/GetPrisonersDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/GetPrisoners", ReplyAction="http://tempuri.org/IPrisonerService/GetPrisonersResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Service.Contracts.Dto.DataErrorDto), Action="http://tempuri.org/IPrisonerService/GetPrisonersDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
         Temporary_Prison.Service.Contracts.Dto.PrisonerDto[] GetPrisoners();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonService/GetPrisoners", ReplyAction="http://tempuri.org/IPrisonService/GetPrisonersResponse")]
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/GetPrisoners", ReplyAction="http://tempuri.org/IPrisonerService/GetPrisonersResponse")]
         System.Threading.Tasks.Task<Temporary_Prison.Service.Contracts.Dto.PrisonerDto[]> GetPrisonersAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonService/GetPrisonerById", ReplyAction="http://tempuri.org/IPrisonService/GetPrisonerByIdResponse")]
-        Temporary_Prison.Service.Contracts.Dto.PrisonerDto[] GetPrisonerById();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/GetPrisonerById", ReplyAction="http://tempuri.org/IPrisonerService/GetPrisonerByIdResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Service.Contracts.Dto.DataErrorDto), Action="http://tempuri.org/IPrisonerService/GetPrisonerByIdDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        Temporary_Prison.Service.Contracts.Dto.PrisonerDto GetPrisonerById(int Id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonService/GetPrisonerById", ReplyAction="http://tempuri.org/IPrisonService/GetPrisonerByIdResponse")]
-        System.Threading.Tasks.Task<Temporary_Prison.Service.Contracts.Dto.PrisonerDto[]> GetPrisonerByIdAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/GetPrisonerById", ReplyAction="http://tempuri.org/IPrisonerService/GetPrisonerByIdResponse")]
+        System.Threading.Tasks.Task<Temporary_Prison.Service.Contracts.Dto.PrisonerDto> GetPrisonerByIdAsync(int Id);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IPrisonServiceChannel : Temporary_Prison.Data.PrisonService.IPrisonService, System.ServiceModel.IClientChannel {
+    public interface IPrisonerServiceChannel : Temporary_Prison.Data.PrisonService.IPrisonerService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class PrisonServiceClient : System.ServiceModel.ClientBase<Temporary_Prison.Data.PrisonService.IPrisonService>, Temporary_Prison.Data.PrisonService.IPrisonService {
+    public partial class PrisonerServiceClient : System.ServiceModel.ClientBase<Temporary_Prison.Data.PrisonService.IPrisonerService>, Temporary_Prison.Data.PrisonService.IPrisonerService {
         
-        public PrisonServiceClient() {
+        public PrisonerServiceClient() {
         }
         
-        public PrisonServiceClient(string endpointConfigurationName) : 
+        public PrisonerServiceClient(string endpointConfigurationName) : 
                 base(endpointConfigurationName) {
         }
         
-        public PrisonServiceClient(string endpointConfigurationName, string remoteAddress) : 
+        public PrisonerServiceClient(string endpointConfigurationName, string remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public PrisonServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public PrisonerServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public PrisonServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public PrisonerServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
         }
         
@@ -64,12 +65,12 @@ namespace Temporary_Prison.Data.PrisonService {
             return base.Channel.GetPrisonersAsync();
         }
         
-        public Temporary_Prison.Service.Contracts.Dto.PrisonerDto[] GetPrisonerById() {
-            return base.Channel.GetPrisonerById();
+        public Temporary_Prison.Service.Contracts.Dto.PrisonerDto GetPrisonerById(int Id) {
+            return base.Channel.GetPrisonerById(Id);
         }
         
-        public System.Threading.Tasks.Task<Temporary_Prison.Service.Contracts.Dto.PrisonerDto[]> GetPrisonerByIdAsync() {
-            return base.Channel.GetPrisonerByIdAsync();
+        public System.Threading.Tasks.Task<Temporary_Prison.Service.Contracts.Dto.PrisonerDto> GetPrisonerByIdAsync(int Id) {
+            return base.Channel.GetPrisonerByIdAsync(Id);
         }
     }
 }

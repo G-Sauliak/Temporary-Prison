@@ -7,7 +7,10 @@ namespace Temporary_Prison.Dependencies.MapperRegistry
     {
         public static void InitialiseMappers()
         {
-            Mapper.Initialize(cfg => cfg.AddProfiles(new[] { typeof(DataMapper) }));
+            Mapper.Initialize(cfg => cfg.AddProfiles(new[]
+            {
+                typeof(DataMapper),
+            }));
         }
     }
 }

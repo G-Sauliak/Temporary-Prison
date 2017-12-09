@@ -3,8 +3,10 @@ using Temporary_Prison.Service.Contracts.Dto;
 
 namespace Temporary_Prison.Data.Clients
 {
-    public interface IPrisonClient
+    public interface IPrisonerClient
     {
         IReadOnlyList<PrisonerDto> GetPrisoners();
+
+        PrisonerDto GetPrisonerById(int id);
     }
 }

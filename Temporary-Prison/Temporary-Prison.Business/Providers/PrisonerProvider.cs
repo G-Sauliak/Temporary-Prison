@@ -4,13 +4,13 @@ using Temporary_Prison.Data.Services;
 using System.Runtime.Caching;
 
 
-namespace Temporary_Prison.Business
+namespace Temporary_Prison.Business.Providers
 {
-    public class PrisonProvider : IPrisonProvider
+    public class PrisonerProvider : IPrisonerProvider
     {
-        private readonly IDataService dataService;
+        private readonly IPrisonerDataService dataService;
 
-        public PrisonProvider(IDataService dataService)
+        public PrisonerProvider(IPrisonerDataService dataService)
         {
             this.dataService = dataService;
         }
@@ -18,6 +18,11 @@ namespace Temporary_Prison.Business
         public IReadOnlyList<Prisoner> GetPrisoner()
         {
             return dataService.GetPrisoners();
+        }
+
+        public Prisoner GetPrisonerById(int id)
+        {
+            return dataService.GetPrisonerById(id);
         }
     }
 }

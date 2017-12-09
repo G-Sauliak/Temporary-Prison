@@ -9,7 +9,7 @@ namespace Temporary_Prison.Data.MapperProfile
         public DataMapper()
         {
             CreateMap<Prisoner, PrisonerDto>();
+            CreateMap<User, UserDto>();
         }
     }
-
 }

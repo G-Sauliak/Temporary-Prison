@@ -21,11 +21,11 @@ namespace Temporary_Prison.Service.Contracts.Dto
         [DataMember]
         public string PlaceOfWork { get; set; }
         [DataMember]
-        public string[] PhoneNumbers { get; set; }
+        public List<string> PhoneNumbers { get; set; }
         [DataMember]
         public DateTime? BirthDate { get; set; }
         [DataMember]
-        public Address address { get; set; }
+        public Address Address { get; set; }
         [DataMember]
         public string AdditionalInformation { get; set; }
         [DataMember]

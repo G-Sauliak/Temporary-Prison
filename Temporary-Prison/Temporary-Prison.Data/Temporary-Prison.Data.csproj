@@ -66,20 +66,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Clients\IPrisonClient.cs" />
-    <Compile Include="Clients\PrisonClient.cs" />
+    <Compile Include="Clients\IPrisonerClient.cs" />
+    <Compile Include="Clients\IUserClient.cs" />
+    <Compile Include="Clients\PrisonerClient.cs" />
+    <Compile Include="Clients\UserClient.cs" />
     <Compile Include="Connected Services\PrisonService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\UserService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Container\DataRegistry.cs" />
-    <Compile Include="Converters\PrisonServiceConvert.cs" />
-    <Compile Include="Converters\IPrisonServiceConvert.cs" />
     <Compile Include="MapperProfile\DataMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\DataService.cs" />
-    <Compile Include="Services\IDataService.cs" />
+    <Compile Include="Services\IUserDataService.cs" />
+    <Compile Include="Services\PrisonerDataService.cs" />
+    <Compile Include="Services\IPrisonerDataService.cs" />
+    <Compile Include="Services\UserDataService.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
@@ -104,10 +111,30 @@
     <None Include="Connected Services\PrisonService\PrisonService4.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\UserService\UserService.wsdl" />
+    <None Include="Connected Services\UserService\UserService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UserService\UserService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UserService\UserService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\UserService\UserService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\Temporary_Prison.Common.Models.Membership.datasource" />
+    <None Include="Properties\DataSources\Temporary_Prison.Common.Models.Membership1.datasource" />
+    <None Include="Properties\DataSources\Temporary_Prison.Service.Contracts.Dto.MembershipDto.datasource" />
     <None Include="Properties\DataSources\Temporary_Prison.Service.Contracts.Dto.PrisonerDto.datasource" />
     <None Include="Properties\DataSources\Temporary_Prison.Service.Contracts.Dto.PrisonerProfileDto.datasource" />
     <None Include="Properties\DataSources\Temporary_Prison.Service.Contracts.Dto.PrisonerProfileDto1.datasource" />
+    <None Include="Properties\DataSources\Temporary_Prison.Service.Contracts.Dto.RoleDto.datasource" />
+    <None Include="Properties\DataSources\Temporary_Prison.Service.Contracts.Dto.UserDto.datasource" />
+    <None Include="Properties\DataSources\Temporary_Prison.Service.Contracts.Dto.UserRoleDto.datasource" />
+    <None Include="Properties\DataSources\Temporary_Prison.Service.Contracts.Dto.UserRoleDto1.datasource" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Temporary-Prison.Common\Temporary-Prison.Common.csproj">
@@ -121,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\PrisonService\" />
+    <WCFMetadataStorage Include="Connected Services\UserService\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\PrisonService\PrisonService.disco" />
@@ -137,6 +165,20 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Connected Services\UserService\UserService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\UserService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\UserService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\UserService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

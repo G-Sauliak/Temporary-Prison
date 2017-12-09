@@ -24,7 +24,6 @@ namespace Temporary_Prison.DependencyResolution {
         public static IContainer Initialize() {
             return new Container(c =>
             {
-             // c.AddRegistry<DefaultRegistry>();
               c.AddRegistry<CommonRegistry>();
             });
         }
