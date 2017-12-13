@@ -10,6 +10,7 @@ namespace Temporary_Prison.Data.MapperProfile
         {
             CreateMap<Prisoner, PrisonerDto>();
             CreateMap<User, UserDto>();
+            CreateMap<PrisonerDto, Prisoner>();
         }
     }
 }

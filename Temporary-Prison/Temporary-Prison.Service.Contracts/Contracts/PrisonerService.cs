@@ -29,7 +29,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             catch (Exception ex)
             {
                 var serviceData = new DataErrorDto();
-                serviceData.ErrorMessage = "Error Exceprion. GetPriosnerById";
+                serviceData.ErrorMessage = "Error Exception. GetPriosnerById";
                 serviceData.ErrorDetails = ex.ToString();
                 log.Error($"Type Error: {serviceData.ErrorMessage}\n ErrorDetails {ex.ToString()}");
                 throw new FaultException<DataErrorDto>(serviceData, ex.ToString());
@@ -49,12 +49,31 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             catch (Exception ex)
             {
                 var serviceData = new DataErrorDto();
-                serviceData.ErrorMessage = "Error Exceprion. GetPriosners";
+                serviceData.ErrorMessage = "Error Exception. GetPriosners";
                 serviceData.ErrorDetails = ex.ToString();
                 log.Error($"Type Error: {serviceData.ErrorMessage}\n ErrorDetails {ex.ToString()}");
                 throw new FaultException<DataErrorDto>(serviceData, ex.ToString());
             }
             return prisoners as List<PrisonerDto>;
+        }
+
+        public bool TryAddPrisoner(PrisonerDto prisoner, out int newId)
+        {
+            bool result = false;
+            try
+            {
+                result = prisonerContext.TryAddPrisoner(prisoner, out newId);
+            }
+
+            catch (Exception ex)
+            {
+                var serviceData = new DataErrorDto();
+                serviceData.ErrorMessage = "Error Exception. GetPriosners";
+                serviceData.ErrorDetails = ex.ToString();
+                log.Error($"Type Error: {serviceData.ErrorMessage}\n ErrorDetails {ex.ToString()}");
+                throw new FaultException<DataErrorDto>(serviceData, ex.ToString());
+            }
+            return result;
         }
     }
 }

@@ -51,41 +51,7 @@ namespace Temporary_Prison.Data.Clients
 
         public bool IsValidLogin(string userName, string password)
         {
-            var userClient = new UserServiceClient();
-            bool result = false;
-
-            try
-            {
-                userClient.Open();
-
-                result = userClient.IsValidLogin(userName, password);
-
-                if (!result)
-                {
-                    log.Error("Login is not valid");
-                    return default(bool);
-                    //TODO
-
-                }
-
-                userClient.Close();
-            }
-            catch (FaultException<DataErrorDto> ex)
-            {
-                //TODO
-            }
-            finally
-            {
-                if (userClient.State == CommunicationState.Faulted)
-                {
-                    userClient.Abort();
-                }
-                else
-                {
-                    userClient.Close();
-                }
-            }
-            return result;
+            return new UserServiceClient().GetResult(clinet => clinet.IsValidLogin(userName, password));
         }
     }
 }

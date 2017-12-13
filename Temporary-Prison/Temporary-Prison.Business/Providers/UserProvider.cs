@@ -1,5 +1,4 @@
-﻿using System;
-using Temporary_Prison.Common.Models;
+﻿using Temporary_Prison.Common.Models;
 using Temporary_Prison.Data.Services;
 
 namespace Temporary_Prison.Business.Providers

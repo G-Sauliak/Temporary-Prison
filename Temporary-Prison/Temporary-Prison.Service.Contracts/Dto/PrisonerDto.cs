@@ -23,13 +23,13 @@ namespace Temporary_Prison.Service.Contracts.Dto
         [DataMember]
         public List<string> PhoneNumbers { get; set; }
         [DataMember]
-        public DateTime? BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
         [DataMember]
-        public Address Address { get; set; }
+        public string Address { get; set; }
         [DataMember]
         public string AdditionalInformation { get; set; }
         [DataMember]
-        public string Avatar { get; set; }
+        public string Photo { get; set; }
 
     }
 }

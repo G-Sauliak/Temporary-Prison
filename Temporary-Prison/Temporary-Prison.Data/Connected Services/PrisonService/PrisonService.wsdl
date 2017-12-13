@@ -5,8 +5,7 @@
       <xsd:import schemaLocation="http://localhost:49365/PrisonService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:49365/PrisonService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" />
       <xsd:import schemaLocation="http://localhost:49365/PrisonService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost:49365/PrisonService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Common.Models" />
-      <xsd:import schemaLocation="http://localhost:49365/PrisonService.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://localhost:49365/PrisonService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IPrisonerService_GetPrisoners_InputMessage">
@@ -27,6 +26,15 @@
   <wsdl:message name="IPrisonerService_GetPrisonerById_DataErrorDtoFault_FaultMessage">
     <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q2:DataErrorDto" />
   </wsdl:message>
+  <wsdl:message name="IPrisonerService_TryAddPrisoner_InputMessage">
+    <wsdl:part name="parameters" element="tns:TryAddPrisoner" />
+  </wsdl:message>
+  <wsdl:message name="IPrisonerService_TryAddPrisoner_OutputMessage">
+    <wsdl:part name="parameters" element="tns:TryAddPrisonerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPrisonerService_TryAddPrisoner_DataErrorDtoFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q3:DataErrorDto" />
+  </wsdl:message>
   <wsdl:portType name="IPrisonerService">
     <wsdl:operation name="GetPrisoners">
       <wsdl:input wsaw:Action="http://tempuri.org/IPrisonerService/GetPrisoners" message="tns:IPrisonerService_GetPrisoners_InputMessage" />
@@ -37,6 +45,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IPrisonerService/GetPrisonerById" message="tns:IPrisonerService_GetPrisonerById_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPrisonerService/GetPrisonerByIdResponse" message="tns:IPrisonerService_GetPrisonerById_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IPrisonerService/GetPrisonerByIdDataErrorDtoFault" name="DataErrorDtoFault" message="tns:IPrisonerService_GetPrisonerById_DataErrorDtoFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="TryAddPrisoner">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPrisonerService/TryAddPrisoner" message="tns:IPrisonerService_TryAddPrisoner_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPrisonerService/TryAddPrisonerResponse" message="tns:IPrisonerService_TryAddPrisoner_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IPrisonerService/TryAddPrisonerDataErrorDtoFault" name="DataErrorDtoFault" message="tns:IPrisonerService_TryAddPrisoner_DataErrorDtoFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IPrisonerService" type="tns:IPrisonerService">
@@ -55,6 +68,18 @@
     </wsdl:operation>
     <wsdl:operation name="GetPrisonerById">
       <soap:operation soapAction="http://tempuri.org/IPrisonerService/GetPrisonerById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataErrorDtoFault">
+        <soap:fault use="literal" name="DataErrorDtoFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="TryAddPrisoner">
+      <soap:operation soapAction="http://tempuri.org/IPrisonerService/TryAddPrisoner" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

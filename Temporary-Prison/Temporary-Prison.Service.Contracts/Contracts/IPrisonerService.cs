@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ServiceModel;
+using Temporary_Prison.Common.Models;
 using Temporary_Prison.Service.Contracts.Dto;
 
 namespace Temporary_Prison.Service.Contracts.Contracts
@@ -15,5 +16,8 @@ namespace Temporary_Prison.Service.Contracts.Contracts
         [FaultContract(typeof(DataErrorDto))]
         PrisonerDto GetPrisonerById(int Id);
 
+        [OperationContract]
+        [FaultContract(typeof(DataErrorDto))]
+        bool TryAddPrisoner(PrisonerDto prisoner, out int newId);
     }
 }

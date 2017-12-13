@@ -21,32 +21,41 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                   
+                    @if (User.IsInRole("Editor"))
+                    {
+                        <li>@Html.ActionLink("Add prisoner", "AddPrisoner", "Editor")</li>
+                    }
+
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
-
+   
     <div class="container body-content">
-        <div class="well col-lg-2">
-            <h3 class="text-left">Navigation</h3>
-            <form class="form-horizontal">
-                <div class="form-group">
-                    <a href="@Url.Action("ListOfPrisoners", "Prisoner")">List Of Prisoners</a>
-                </div>
-                <div class="form-group">
-                    <a href="#">Find prisoner</a>
-                </div>
-                <div class="form-group">
-                    <a href="#">Date</a>
-                    <div class="input-group"> </div>
-                </div>
-            </form>
-        </div>
-    
+        @if (Request.IsAuthenticated)
+        {
+            <div class="well col-lg-2">
+                <h3 class="text-left">Navigation</h3>
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <a href="@Url.Action("ListOfPrisoners", "Prisoner")">List Of Prisoners</a>
+                    </div>
+                    <div class="form-group">
+                        <a href="#">Find prisoner</a>
+                    </div>
+                    <div class="form-group">
+                        <a href="#">Date</a>
+                        <div class="input-group"> </div>
+                    </div>
+                </form>
+            </div>
+        }
+        else
+        {
+        }
         @RenderBody()
-       
+
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - Temporary Prison</p>

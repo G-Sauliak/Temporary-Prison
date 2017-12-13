@@ -85,10 +85,10 @@
     <Compile Include="Dto\PrisonerDto.cs" />
     <Compile Include="Dto\UserDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\IPrisonerRepository.cs" />
-    <Compile Include="Repository\IUserRepository.cs" />
-    <Compile Include="Repository\PrisonerRepository.cs" />
-    <Compile Include="Repository\UserRepository.cs" />
+    <Compile Include="Repositories\IPrisonerRepository.cs" />
+    <Compile Include="Repositories\IUserRepository.cs" />
+    <Compile Include="Repositories\PrisonerRepository.cs" />
+    <Compile Include="Repositories\UserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

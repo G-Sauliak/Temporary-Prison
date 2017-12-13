@@ -43,7 +43,7 @@
                                         @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.BirthDate.Value)
+                                        @Html.DisplayFor(modelItem => item.BirthDate)
                                     </td>
                                     <td align="center">
                                         @Html.ActionLink("Details", "DetailsOfPrisoner", new { id = item.PrisonerId })

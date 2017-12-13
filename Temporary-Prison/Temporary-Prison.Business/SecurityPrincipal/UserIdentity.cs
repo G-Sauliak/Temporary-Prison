@@ -11,6 +11,7 @@ namespace Temporary_Prison.Business.SecurityPrincipal
         public UserIdentity(User user)
         {
             Identity = new GenericIdentity(user.UserName);
+
             User = user;
         }
 

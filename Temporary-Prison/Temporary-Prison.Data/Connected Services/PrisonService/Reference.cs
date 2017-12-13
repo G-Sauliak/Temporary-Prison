@@ -28,6 +28,50 @@ namespace Temporary_Prison.Data.PrisonService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/GetPrisonerById", ReplyAction="http://tempuri.org/IPrisonerService/GetPrisonerByIdResponse")]
         System.Threading.Tasks.Task<Temporary_Prison.Service.Contracts.Dto.PrisonerDto> GetPrisonerByIdAsync(int Id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/TryAddPrisoner", ReplyAction="http://tempuri.org/IPrisonerService/TryAddPrisonerResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Service.Contracts.Dto.DataErrorDto), Action="http://tempuri.org/IPrisonerService/TryAddPrisonerDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        Temporary_Prison.Data.PrisonService.TryAddPrisonerResponse TryAddPrisoner(Temporary_Prison.Data.PrisonService.TryAddPrisonerRequest request);
+        
+        // CODEGEN: Generating message contract since the operation has multiple return values.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/TryAddPrisoner", ReplyAction="http://tempuri.org/IPrisonerService/TryAddPrisonerResponse")]
+        System.Threading.Tasks.Task<Temporary_Prison.Data.PrisonService.TryAddPrisonerResponse> TryAddPrisonerAsync(Temporary_Prison.Data.PrisonService.TryAddPrisonerRequest request);
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="TryAddPrisoner", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class TryAddPrisonerRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public Temporary_Prison.Service.Contracts.Dto.PrisonerDto prisoner;
+        
+        public TryAddPrisonerRequest() {
+        }
+        
+        public TryAddPrisonerRequest(Temporary_Prison.Service.Contracts.Dto.PrisonerDto prisoner) {
+            this.prisoner = prisoner;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="TryAddPrisonerResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class TryAddPrisonerResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public bool TryAddPrisonerResult;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        public int newId;
+        
+        public TryAddPrisonerResponse() {
+        }
+        
+        public TryAddPrisonerResponse(bool TryAddPrisonerResult, int newId) {
+            this.TryAddPrisonerResult = TryAddPrisonerResult;
+            this.newId = newId;
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -71,6 +115,23 @@ namespace Temporary_Prison.Data.PrisonService {
         
         public System.Threading.Tasks.Task<Temporary_Prison.Service.Contracts.Dto.PrisonerDto> GetPrisonerByIdAsync(int Id) {
             return base.Channel.GetPrisonerByIdAsync(Id);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Temporary_Prison.Data.PrisonService.TryAddPrisonerResponse Temporary_Prison.Data.PrisonService.IPrisonerService.TryAddPrisoner(Temporary_Prison.Data.PrisonService.TryAddPrisonerRequest request) {
+            return base.Channel.TryAddPrisoner(request);
+        }
+        
+        public bool TryAddPrisoner(Temporary_Prison.Service.Contracts.Dto.PrisonerDto prisoner, out int newId) {
+            Temporary_Prison.Data.PrisonService.TryAddPrisonerRequest inValue = new Temporary_Prison.Data.PrisonService.TryAddPrisonerRequest();
+            inValue.prisoner = prisoner;
+            Temporary_Prison.Data.PrisonService.TryAddPrisonerResponse retVal = ((Temporary_Prison.Data.PrisonService.IPrisonerService)(this)).TryAddPrisoner(inValue);
+            newId = retVal.newId;
+            return retVal.TryAddPrisonerResult;
+        }
+        
+        public System.Threading.Tasks.Task<Temporary_Prison.Data.PrisonService.TryAddPrisonerResponse> TryAddPrisonerAsync(Temporary_Prison.Data.PrisonService.TryAddPrisonerRequest request) {
+            return base.Channel.TryAddPrisonerAsync(request);
         }
     }
 }

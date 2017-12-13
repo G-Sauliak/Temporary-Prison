@@ -42,5 +42,17 @@ namespace Temporary_Prison.Data.Services
 
             return default(IReadOnlyList<Prisoner>);
         }
+
+        public bool TryAddPrisoner(Prisoner prisoner, out int newId)
+        {
+            if (prisoner != null)
+            {
+                var prisonerDto = Mapper.Map<Prisoner, PrisonerDto>(prisoner);
+
+                return prisonerClient.TryAddPrisoner(prisonerDto, out newId);
+            }
+            newId = default(int);
+            return default(bool);
+        }
     }
 }

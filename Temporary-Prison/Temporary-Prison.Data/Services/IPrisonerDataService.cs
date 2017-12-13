@@ -7,6 +7,8 @@ namespace Temporary_Prison.Data.Services
     {
         IReadOnlyList<Prisoner> GetPrisoners();
 
+        bool TryAddPrisoner(Prisoner prisoner, out int newId);
+
         Prisoner GetPrisonerById(int id);
     }
 }

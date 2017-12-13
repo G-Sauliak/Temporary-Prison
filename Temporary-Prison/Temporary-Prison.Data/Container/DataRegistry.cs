@@ -1,6 +1,8 @@
 ﻿using StructureMap.Configuration.DSL;
 using Temporary_Prison.Data.Clients;
+using Temporary_Prison.Data.PrisonService;
 using Temporary_Prison.Data.Services;
+
 
 namespace Temporary_Prison.Data.Container
 {

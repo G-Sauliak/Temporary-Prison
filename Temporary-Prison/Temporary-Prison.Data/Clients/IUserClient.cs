@@ -2,7 +2,7 @@
 
 namespace Temporary_Prison.Data.Clients
 {
-    public interface IUserClient
+    public interface IUserClient 
     {
         UserDto GetUserByName(string userName);
         bool IsValidLogin(string userName, string password);

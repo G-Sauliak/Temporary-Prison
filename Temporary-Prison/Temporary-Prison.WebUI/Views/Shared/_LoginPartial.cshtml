@@ -1,14 +1,13 @@
-﻿@using Temporary_Prison.Business.SecurityPrincipal;
-@if (Request.IsAuthenticated)
+﻿@if (Request.IsAuthenticated)
 {
-    var identity = (HttpContext.Current.User as UserPrincipal).Identity as UserIdentity;
+    var identity = User.Identity;
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
         @Html.AntiForgeryToken()
 
         <ul class="nav navbar-nav navbar-right">
             <li>
-                @Html.ActionLink($"Hello {identity.Name}", "Index", "Home", routeValues: null, htmlAttributes: new { title = "Manage" })
+                @Html.ActionLink($"Hello {identity.Name}", "Index", "Home", htmlAttributes: new { title = "Manage" })
             </li>
             @using (Html.BeginForm("LogOff", "Account", FormMethod.Post,new{ id = "logoutForm"}))
             {

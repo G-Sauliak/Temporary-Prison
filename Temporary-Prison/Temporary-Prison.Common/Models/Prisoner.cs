@@ -12,18 +12,19 @@ namespace Temporary_Prison.Common.Models
         public IReadOnlyList<string> PhoneNumbers { get; set; }
         public string RelationshipStatus { get; set; }
         public string PlaceOfWork { get; set; }
-        public DateTime? BirthDate { get; set; }
+        public DateTime BirthDate { get; set; }
         public string AdditionalInformation { get; set; }
-        public string Avatar { get; set; }
-        public Address address { get; set; }
+        public string Photo { get; set; }
+        public string Address { get; set; }
     }
 
-    public class Address
+    public class ListOfDetentions
     {
-        public string County { get; set; }
-        public string City { get; set; }
-        public string Street { get; set; }
-        public int HouseNumber { get; set; }
-        public int ApartmentNumber { get; set; }
+        public DateTime DateOfDetention { get; set; }
+        public DateTime DateOfArrival { get; set; }
+        public DateTime DateOfRelease { get; set; }
+        public double AccruedAmount { get; set; }
+        public double PaidAmount { get; set; }
+        public string PlaceofDetention { get; set; }
     }
 }

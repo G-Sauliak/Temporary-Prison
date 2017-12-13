@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using AutoMapper;
+using Newtonsoft.Json;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -6,6 +7,7 @@ using System.Web.Security;
 using Temporary_Prison.Business.SecurityPrincipal;
 using Temporary_Prison.Common.Models;
 using Temporary_Prison.Dependencies.MapperRegistry;
+using Temporary_Prison.MapperProfile;
 
 namespace Temporary_Prison
 {
@@ -15,6 +17,7 @@ namespace Temporary_Prison
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            MapperProfiles.Configuration.AddProfile(new WebMapper());
             MapperProfiles.InitialiseMappers();
         }
 

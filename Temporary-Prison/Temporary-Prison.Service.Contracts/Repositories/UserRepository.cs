@@ -100,7 +100,6 @@ namespace Temporary_Prison.Service.Contracts.Repository
                     result = (bool)sqlCommand.ExecuteScalar();
                 }
             }
-
             return result;
         }
     }

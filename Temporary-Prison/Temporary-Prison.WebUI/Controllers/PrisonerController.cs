@@ -1,9 +1,7 @@
 ﻿using log4net;
 using System.Linq;
 using System.Web.Mvc;
-using Temporary_Prison.Business;
 using Temporary_Prison.Business.Providers;
-using Temporary_Prison.Common.Models;
 using X.PagedList;
 
 namespace Temporary_Prison.Controllers
@@ -17,7 +15,9 @@ namespace Temporary_Prison.Controllers
         {
             this.prisonProvider = prisonProvider;
         }
-        [Authorize(Roles = "Admin")]
+
+        [HttpGet]
+        [Authorize]
         public ActionResult ListOfPrisoners(int? page, string sort, string currentFilter, string search)
         {
             var listPrisoners = prisonProvider.GetPrisoner();

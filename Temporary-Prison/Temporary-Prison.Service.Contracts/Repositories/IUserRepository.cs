@@ -1,4 +1,5 @@
-﻿using Temporary_Prison.Service.Contracts.Dto;
+﻿using System.Collections;
+using Temporary_Prison.Service.Contracts.Dto;
 
 namespace Temporary_Prison.Service.Contracts.Repository
 {

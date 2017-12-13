@@ -27,4 +27,19 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="TryAddPrisoner">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" minOccurs="0" name="prisoner" nillable="true" type="q3:PrisonerDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="TryAddPrisonerResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="TryAddPrisonerResult" type="xs:boolean" />
+        <xs:element minOccurs="0" name="newId" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

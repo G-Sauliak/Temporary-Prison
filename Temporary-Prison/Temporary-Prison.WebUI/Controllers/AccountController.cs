@@ -42,6 +42,7 @@ namespace Temporary_Prison.Controllers
             {
                 case LogInStatus.Success:
                     return RedirectToLocal(returnUrl);
+
                 case LogInStatus.Failure:
                     ModelState.AddModelError(string.Empty, "Unable to log in");
                     break;
