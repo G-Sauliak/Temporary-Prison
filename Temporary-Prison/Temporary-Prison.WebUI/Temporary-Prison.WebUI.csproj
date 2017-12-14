@@ -155,6 +155,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\MvcApplication.Auth.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\StructuremapMvc.cs" />
     <Compile Include="Attributes\PhoneNumberAttribute.cs" />
@@ -175,7 +176,8 @@
     <Compile Include="HtmlHelpers\PhotoHelper.cs" />
     <Compile Include="MapperProfile\WebMapper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\EditorViewModel.cs" />
+    <Compile Include="Models\AdminViewModels.cs" />
+    <Compile Include="Models\EditorViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -196,6 +198,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Editor\AddPrisoner.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -208,7 +211,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Admin\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Temporary-Prison.Business\Temporary-Prison.Business.csproj">

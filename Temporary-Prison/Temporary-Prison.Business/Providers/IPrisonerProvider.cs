@@ -8,5 +8,6 @@ namespace Temporary_Prison.Business.Providers
         IReadOnlyList<Prisoner> GetPrisoner();
         Prisoner GetPrisonerById(int id);
         bool TryAddPrisoner(Prisoner prisoner, out int newId);
+        IReadOnlyList<Prisoner> GetPrisonerForPagedList(int skip, int rowSize, ref int totalCount);
     }
 }

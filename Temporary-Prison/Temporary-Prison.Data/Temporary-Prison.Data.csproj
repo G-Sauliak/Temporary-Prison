@@ -109,6 +109,9 @@
     <None Include="Connected Services\PrisonService\PrisonService3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\PrisonService\Temporary_Prison.Data.PrisonService.GetPrisonersForPagedListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\PrisonService\Temporary_Prison.Data.PrisonService.TryAddPrisonerResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

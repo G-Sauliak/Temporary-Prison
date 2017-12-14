@@ -7,9 +7,8 @@ using Temporary_Prison.Service.Contracts.Dto;
 
 namespace Temporary_Prison.Service.Contracts.Repositories
 {
-    class PrisonerRepository : IPrisonerRepository
+    public class PrisonerRepository : IPrisonerRepository
     {
-
         private string GetConnectionString
         {
             get
@@ -73,6 +72,55 @@ namespace Temporary_Prison.Service.Contracts.Repositories
             return prisoner;
         }
 
+        public IReadOnlyList<PrisonerDto> GetPrisonersForPagedList(int skip, int rowSize, out int totalCount)
+        {
+            var listPrisoners = new List<PrisonerDto>();
+
+            using (var sqlConnection = new SqlConnection(GetConnectionString))
+            {
+                sqlConnection.Open();
+
+                using (var sqlCommand = new SqlCommand("GetPrisonersToPagedList", sqlConnection))
+                {
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                    var param = new SqlParameter[]
+                     {
+                        new SqlParameter(@"skip",skip),
+                        new SqlParameter(@"rowSize",rowSize),
+                     };
+
+                    var returnVal = sqlCommand.Parameters.Add("@return_value", SqlDbType.Int);
+
+                    returnVal.Direction = ParameterDirection.ReturnValue;
+
+                    sqlCommand.Parameters.AddRange(param);
+
+                    using (var dataReader = sqlCommand.ExecuteReader())
+                    {
+                        
+                        while (dataReader.Read())
+                        {
+                            var prisoner = new PrisonerDto()
+                            {
+                                PrisonerId = (int)dataReader["PrisonerId"],
+                                FirstName = dataReader["FirstName"].ToString(),
+                                LastName = dataReader["LastName"].ToString(),
+                                Surname = dataReader["Surname"].ToString(),
+                                BirthDate = (DateTime)dataReader["BirthDate"],
+                            };
+                            listPrisoners.Add(prisoner);
+                        }
+
+                        dataReader.NextResult();
+                       
+                        totalCount = (int)returnVal.Value;
+                    }
+                }
+            }
+            return listPrisoners;
+        }
+
         public IReadOnlyList<PrisonerDto> GetPrisoners()
         {
             var listPrisoners = new List<PrisonerDto>();
@@ -129,7 +177,6 @@ namespace Temporary_Prison.Service.Contracts.Repositories
                      };
 
                     var returnVal = sqlCommand.Parameters.Add("@return_value", SqlDbType.Int);
-
                     returnVal.Direction = ParameterDirection.ReturnValue;
 
                     sqlCommand.Parameters.AddRange(param);

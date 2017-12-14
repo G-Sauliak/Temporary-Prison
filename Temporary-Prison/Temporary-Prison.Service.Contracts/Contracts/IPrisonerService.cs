@@ -14,6 +14,10 @@ namespace Temporary_Prison.Service.Contracts.Contracts
 
         [OperationContract]
         [FaultContract(typeof(DataErrorDto))]
+        List<PrisonerDto> GetPrisonersForPagedList(int skip, int rowSize, out int totalCount);
+
+        [OperationContract]
+        [FaultContract(typeof(DataErrorDto))]
         PrisonerDto GetPrisonerById(int Id);
 
         [OperationContract]

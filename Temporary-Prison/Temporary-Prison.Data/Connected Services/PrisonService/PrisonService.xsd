@@ -13,6 +13,22 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetPrisonersForPagedList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="skip" type="xs:int" />
+        <xs:element minOccurs="0" name="rowSize" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPrisonersForPagedListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" minOccurs="0" name="GetPrisonersForPagedListResult" nillable="true" type="q2:ArrayOfPrisonerDto" />
+        <xs:element minOccurs="0" name="totalCount" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetPrisonerById">
     <xs:complexType>
       <xs:sequence>
@@ -23,14 +39,14 @@
   <xs:element name="GetPrisonerByIdResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" minOccurs="0" name="GetPrisonerByIdResult" nillable="true" type="q2:PrisonerDto" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" minOccurs="0" name="GetPrisonerByIdResult" nillable="true" type="q3:PrisonerDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="TryAddPrisoner">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" minOccurs="0" name="prisoner" nillable="true" type="q3:PrisonerDto" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" minOccurs="0" name="prisoner" nillable="true" type="q4:PrisonerDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

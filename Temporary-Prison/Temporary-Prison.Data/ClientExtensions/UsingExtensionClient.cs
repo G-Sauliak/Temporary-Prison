@@ -15,6 +15,7 @@ namespace Temporary_Prison.Data.Clients
             try
             {
                 log.Info($"ServiceClent: {typeof(TServiceClient)}, GetResponce: {typeof(TResult)} ");
+
                 var result = clientFunction(client);
 
                 client.Close();
@@ -25,7 +26,6 @@ namespace Temporary_Prison.Data.Clients
             {
                 log.Error(e.Message);
                 client.Abort();
-                throw;
             }
             catch (CommunicationException e)
             {

@@ -1,4 +1,5 @@
-﻿using Temporary_Prison.Common.Models;
+﻿using System.Collections.Generic;
+using Temporary_Prison.Common.Models;
 
 namespace Temporary_Prison.Business.Providers
 {
@@ -6,5 +7,6 @@ namespace Temporary_Prison.Business.Providers
     {
         bool IsValidUser(string userName, string password);
         User GetUserByName(string userName);
+        IReadOnlyList<User> GetUsers();
     }
 }

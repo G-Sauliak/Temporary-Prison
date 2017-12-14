@@ -9,5 +9,6 @@ namespace Temporary_Prison.Data.Clients
         IReadOnlyList<PrisonerDto> GetPrisoners();
         PrisonerDto GetPrisonerById(int id);
         bool TryAddPrisoner(PrisonerDto prisoner, out int newId);
+        IReadOnlyList<PrisonerDto> GetPrisonersForPagedList(int skip, int rowSize, out int totalCount);
     }
 }

@@ -25,13 +25,16 @@
                     {
                         <li>@Html.ActionLink("Add prisoner", "AddPrisoner", "Editor")</li>
                     }
-
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li>@Html.ActionLink("Administration", "Index", "Admin")</li>
+                    }
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
-   
+
     <div class="container body-content">
         @if (Request.IsAuthenticated)
         {

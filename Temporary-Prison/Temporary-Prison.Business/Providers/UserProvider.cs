@@ -1,4 +1,5 @@
-﻿using Temporary_Prison.Common.Models;
+﻿using System.Collections.Generic;
+using Temporary_Prison.Common.Models;
 using Temporary_Prison.Data.Services;
 
 namespace Temporary_Prison.Business.Providers
@@ -15,6 +16,11 @@ namespace Temporary_Prison.Business.Providers
         public User GetUserByName(string userName)
         {
             return userDataService.GetUserByName(userName);
+        }
+
+        public IReadOnlyList<User> GetUsers()
+        {
+            throw new System.NotImplementedException();
         }
 
         public bool IsValidUser(string userName, string password)

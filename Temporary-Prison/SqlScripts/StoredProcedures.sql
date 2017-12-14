@@ -47,7 +47,7 @@ BEGIN
 	DECLARE @LastId int = SCOPE_IDENTITY()
 RETURN @lastID
 END
----------------------GetPrisonerById--------------------------
+---------------------GetPrisonerById---------------------------
 ---------------------------------------------------------------
 GO
 CREATE PROCEDURE [dbo].[GetPrisonerById]
@@ -57,12 +57,21 @@ SELECT * FROM Prisoners p WHERE  p.PrisonerId = @ID
 
 SELECT PhoneNumber FROM PhoneNumbers ph, Prisoners pr
 WHERE ph.PrisonerID = pr.PrisonerId AND ph.PrisonerID = @ID
----------------------GetPrisoners------------------------------
+---------------------GetPrisonersForPageList--------------------
 ---------------------------------------------------------------
 GO
-CREATE PROC [dbo].[GetPrisoners]
+CREATE PROC [dbo].[GetPrisonersToPageList]
+@skip int,
+@rowSize int
 AS
 SELECT * FROM Prisoners p
+ORDER BY p.FirstName 
+OFFSET @skip ROWS 
+FETCH NEXT @rowSize ROWS ONLY;
+DECLARE @TotalCount int
+SET @Totalcount = (SELECT COUNT(*) FROM Prisoners p)
+
+RETURN @Totalcount
 GO
 ---------------------GetRoles----------------------------------
 ---------------------------------------------------------------

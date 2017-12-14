@@ -22,6 +22,14 @@ namespace Temporary_Prison.Data.PrisonService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/GetPrisoners", ReplyAction="http://tempuri.org/IPrisonerService/GetPrisonersResponse")]
         System.Threading.Tasks.Task<Temporary_Prison.Service.Contracts.Dto.PrisonerDto[]> GetPrisonersAsync();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/GetPrisonersForPagedList", ReplyAction="http://tempuri.org/IPrisonerService/GetPrisonersForPagedListResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Service.Contracts.Dto.DataErrorDto), Action="http://tempuri.org/IPrisonerService/GetPrisonersForPagedListDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        Temporary_Prison.Data.PrisonService.GetPrisonersForPagedListResponse GetPrisonersForPagedList(Temporary_Prison.Data.PrisonService.GetPrisonersForPagedListRequest request);
+        
+        // CODEGEN: Generating message contract since the operation has multiple return values.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/GetPrisonersForPagedList", ReplyAction="http://tempuri.org/IPrisonerService/GetPrisonersForPagedListResponse")]
+        System.Threading.Tasks.Task<Temporary_Prison.Data.PrisonService.GetPrisonersForPagedListResponse> GetPrisonersForPagedListAsync(Temporary_Prison.Data.PrisonService.GetPrisonersForPagedListRequest request);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/GetPrisonerById", ReplyAction="http://tempuri.org/IPrisonerService/GetPrisonerByIdResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Service.Contracts.Dto.DataErrorDto), Action="http://tempuri.org/IPrisonerService/GetPrisonerByIdDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
         Temporary_Prison.Service.Contracts.Dto.PrisonerDto GetPrisonerById(int Id);
@@ -36,6 +44,46 @@ namespace Temporary_Prison.Data.PrisonService {
         // CODEGEN: Generating message contract since the operation has multiple return values.
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/TryAddPrisoner", ReplyAction="http://tempuri.org/IPrisonerService/TryAddPrisonerResponse")]
         System.Threading.Tasks.Task<Temporary_Prison.Data.PrisonService.TryAddPrisonerResponse> TryAddPrisonerAsync(Temporary_Prison.Data.PrisonService.TryAddPrisonerRequest request);
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetPrisonersForPagedList", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class GetPrisonersForPagedListRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public int skip;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        public int rowSize;
+        
+        public GetPrisonersForPagedListRequest() {
+        }
+        
+        public GetPrisonersForPagedListRequest(int skip, int rowSize) {
+            this.skip = skip;
+            this.rowSize = rowSize;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetPrisonersForPagedListResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class GetPrisonersForPagedListResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public Temporary_Prison.Service.Contracts.Dto.PrisonerDto[] GetPrisonersForPagedListResult;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        public int totalCount;
+        
+        public GetPrisonersForPagedListResponse() {
+        }
+        
+        public GetPrisonersForPagedListResponse(Temporary_Prison.Service.Contracts.Dto.PrisonerDto[] GetPrisonersForPagedListResult, int totalCount) {
+            this.GetPrisonersForPagedListResult = GetPrisonersForPagedListResult;
+            this.totalCount = totalCount;
+        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -107,6 +155,24 @@ namespace Temporary_Prison.Data.PrisonService {
         
         public System.Threading.Tasks.Task<Temporary_Prison.Service.Contracts.Dto.PrisonerDto[]> GetPrisonersAsync() {
             return base.Channel.GetPrisonersAsync();
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Temporary_Prison.Data.PrisonService.GetPrisonersForPagedListResponse Temporary_Prison.Data.PrisonService.IPrisonerService.GetPrisonersForPagedList(Temporary_Prison.Data.PrisonService.GetPrisonersForPagedListRequest request) {
+            return base.Channel.GetPrisonersForPagedList(request);
+        }
+        
+        public Temporary_Prison.Service.Contracts.Dto.PrisonerDto[] GetPrisonersForPagedList(int skip, int rowSize, out int totalCount) {
+            Temporary_Prison.Data.PrisonService.GetPrisonersForPagedListRequest inValue = new Temporary_Prison.Data.PrisonService.GetPrisonersForPagedListRequest();
+            inValue.skip = skip;
+            inValue.rowSize = rowSize;
+            Temporary_Prison.Data.PrisonService.GetPrisonersForPagedListResponse retVal = ((Temporary_Prison.Data.PrisonService.IPrisonerService)(this)).GetPrisonersForPagedList(inValue);
+            totalCount = retVal.totalCount;
+            return retVal.GetPrisonersForPagedListResult;
+        }
+        
+        public System.Threading.Tasks.Task<Temporary_Prison.Data.PrisonService.GetPrisonersForPagedListResponse> GetPrisonersForPagedListAsync(Temporary_Prison.Data.PrisonService.GetPrisonersForPagedListRequest request) {
+            return base.Channel.GetPrisonersForPagedListAsync(request);
         }
         
         public Temporary_Prison.Service.Contracts.Dto.PrisonerDto GetPrisonerById(int Id) {

@@ -38,6 +38,27 @@ namespace Temporary_Prison.Service.Contracts.Contracts
 
         }
 
+        public List<PrisonerDto> GetPrisonersForPagedList(int skip, int rowSize, out int totalCount)
+        {
+            IReadOnlyList<PrisonerDto> prisoners = null;
+
+            try
+            {
+                prisoners = prisonerContext.GetPrisonersForPagedList(skip,rowSize,out totalCount);
+            }
+
+            catch (Exception ex)
+            {
+                var serviceData = new DataErrorDto();
+                serviceData.ErrorMessage = "Error Exception. GetPrisonersForPageList";
+                serviceData.ErrorDetails = ex.ToString();
+                log.Error($"Type Error: {serviceData.ErrorMessage}\n ErrorDetails {ex.ToString()}");
+                throw new FaultException<DataErrorDto>(serviceData, ex.ToString());
+            }
+
+            return prisoners as List<PrisonerDto>;
+        }
+
         public List<PrisonerDto> GetPrisoners()
         {
             IReadOnlyList<PrisonerDto> prisoners = null;
