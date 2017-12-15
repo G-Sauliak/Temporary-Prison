@@ -35,7 +35,6 @@ namespace Temporary_Prison.Service.Contracts.Repositories
                 using (var sqlCommand = new SqlCommand("GetPrisonerById", sqlConnection))
                 {
                     sqlCommand.CommandType = CommandType.StoredProcedure;
-
                     sqlCommand.Parameters.AddWithValue("ID", Id);
 
                     using (var dataReader = sqlCommand.ExecuteReader())
@@ -57,7 +56,6 @@ namespace Temporary_Prison.Service.Contracts.Repositories
                                 PhoneNumbers = new List<string>()
                             };
                         }
-
                         if (dataReader.NextResult())
                         {
                             while (dataReader.Read())
@@ -79,7 +77,6 @@ namespace Temporary_Prison.Service.Contracts.Repositories
             using (var sqlConnection = new SqlConnection(GetConnectionString))
             {
                 sqlConnection.Open();
-
                 using (var sqlCommand = new SqlCommand("GetPrisonersToPagedList", sqlConnection))
                 {
                     sqlCommand.CommandType = CommandType.StoredProcedure;
@@ -89,13 +86,11 @@ namespace Temporary_Prison.Service.Contracts.Repositories
                         new SqlParameter(@"skip",skip),
                         new SqlParameter(@"rowSize",rowSize),
                      };
-
                     var returnVal = sqlCommand.Parameters.Add("@return_value", SqlDbType.Int);
 
                     returnVal.Direction = ParameterDirection.ReturnValue;
 
                     sqlCommand.Parameters.AddRange(param);
-
                     using (var dataReader = sqlCommand.ExecuteReader())
                     {
                         

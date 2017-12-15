@@ -4,7 +4,6 @@ using System.ServiceModel;
 using Temporary_Prison.Service.Contracts.Dto;
 using Temporary_Prison.Service.Contracts.Repository;
 
-
 namespace Temporary_Prison.Service.Contracts.Contracts
 {
     public class UserService : IUserService
@@ -38,7 +37,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
 
         public UserDto GetUserByName(string userName)
         {
-            UserDto userDto = null;
+            UserDto userDto = default(UserDto);
             try
             {
                 userDto = userRepository.GetUserByName(userName);
@@ -56,7 +55,25 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             return userDto;
         }
 
-        public bool IsValidLogin(string userName, string password)
+        public UserDto[] GetUsersForPagedList(int skip, int rowSize, out int totalCountUsers)
+        {
+            var usersDto = default(UserDto[]);
+            try
+            {
+                usersDto = userRepository.GetUsersForPagedList(skip, rowSize, out totalCountUsers);
+            }
+            catch (Exception ex)
+            {
+                var serviceDataError = new DataErrorDto();
+                serviceDataError.ErrorMessage = "Error. GetUsersForPagedList";
+                serviceDataError.ErrorDetails = ex.ToString();
+                log.Error($"Type Error: {serviceDataError.ErrorMessage}\n ErrorDetails {ex.ToString()}");
+                throw new FaultException<DataErrorDto>(serviceDataError, ex.ToString());
+            }
+            return usersDto;
+        }
+
+    public bool IsValidLogin(string userName, string password)
         {
             bool result = false;
             try
@@ -74,7 +91,6 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             }
             return result;
         }
-
-
     }
+
 }

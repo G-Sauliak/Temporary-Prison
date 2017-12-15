@@ -7,6 +7,6 @@ namespace Temporary_Prison.Business.Providers
     {
         bool IsValidUser(string userName, string password);
         User GetUserByName(string userName);
-        IReadOnlyList<User> GetUsers();
+        IReadOnlyList<User> GetUsersForPagedList(int skip, int rowSize, ref int totalCount);
     }
 }

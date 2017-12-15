@@ -11,21 +11,19 @@
 <br />
 @using (Html.BeginForm("Index", "Admin", FormMethod.Get))
 {
-
     <div class="form-group">
         Search: @Html.TextBox("search", ViewBag.CurrentFilter as string)
         <input type="submit" value="Search" />
     </div>
 }
 <br />
-
 <table class="table">
     <tr>
         <th>
-            Email
+            @Html.DisplayNameFor(model => model.UserName)
         </th>
         <th>
-            Locked Out
+            @Html.DisplayNameFor(model => model.Email)
         </th>
         <th></th>
     </tr>
@@ -34,23 +32,27 @@
     {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Html.ActionLink("Edit", "EditUser", new { UserName = item.UserName }) |
+                @Html.ActionLink("Edit", "EditUser", new { UserName = item.UserName, redirectUrl = ViewBag.RedirectUrl })
+                
                 @if ((item.UserName.ToLower() != this.User.Identity.Name.ToLower()))
                 {
-                    @Html.ActionLink("Delete", "DeleteUser", new { UserName = item.UserName },
-                    new { onclick = "" })
+                 @Html.ActionLink("Delete", "Delete", new { UserName = item.UserName, redirectUrl = ViewBag.RedirectUrl })
                 }
             </td>
         </tr>
-    }
-
-
+                }
 </table>
+
 <br />
-@Html.PagedListPager(Model as IPagedList, page => Url.Action("Index", new { page,
+@Html.PagedListPager(Model as IPagedList, page => Url.Action("Index", new
+{
+    page,
     search = ViewBag.searc,
     currentFilter = ViewBag.CurrentFilter
 }), PagedListRenderOptions.MinimalWithPageCountText)

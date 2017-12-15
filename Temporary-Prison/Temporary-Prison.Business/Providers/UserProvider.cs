@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using log4net;
+using System;
+using System.Collections.Generic;
+using Temporary_Prison.Business.CacheManager;
 using Temporary_Prison.Common.Models;
 using Temporary_Prison.Data.Services;
 
@@ -7,9 +10,12 @@ namespace Temporary_Prison.Business.Providers
     public class UserProvider : IUserProvider
     {
         private readonly IUserDataService userDataService;
+        private readonly ICacheService cacheService;
+        private readonly ILog log = LogManager.GetLogger("LOGGER");
 
-        public UserProvider(IUserDataService userDataService)
+        public UserProvider(IUserDataService userDataService, ICacheService cacheService)
         {
+            this.cacheService = cacheService;
             this.userDataService = userDataService;
         }
 
@@ -18,9 +24,27 @@ namespace Temporary_Prison.Business.Providers
             return userDataService.GetUserByName(userName);
         }
 
-        public IReadOnlyList<User> GetUsers()
+        public IReadOnlyList<User> GetUsersForPagedList(int skip, int rowSize, ref int totalCount)
         {
-            throw new System.NotImplementedException();
+            var cacheKeyForPageList = $"usersForPagelist_s_{skip}_r_{rowSize}_t_{totalCount}";
+            var outTotalCount = default(int);
+            var users = default(IReadOnlyList<User>);
+            try
+            {
+                users = cacheService.GetOrSet(cacheKeyForPageList,
+                    () => userDataService.GetUsersForPagedList(skip, rowSize, out outTotalCount));
+
+                if (totalCount == default(int))
+                {
+                    cacheService.Remove(cacheKeyForPageList);
+                }
+                totalCount = outTotalCount;
+            }
+            catch (Exception ex)
+            {
+                log.Fatal(ex.Message);
+            }
+            return users;
         }
 
         public bool IsValidUser(string userName, string password)

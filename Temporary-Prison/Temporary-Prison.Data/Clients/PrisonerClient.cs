@@ -16,7 +16,6 @@ namespace Temporary_Prison.Data.Clients
             int totalCountPrisoners = default(int);
          
             var prisoners = new PrisonerServiceClient().GetResult(client => client.GetPrisonersForPagedList(skip, rowSize, out totalCountPrisoners));
-
             totalCount = totalCountPrisoners;
 
             return prisoners;
@@ -29,10 +28,9 @@ namespace Temporary_Prison.Data.Clients
 
         public bool TryAddPrisoner(PrisonerDto prisoner, out int newId)
         {
-            var _newId = default(int);
+            int _newId = default(int);
 
             var result = new PrisonerServiceClient().GetResult(client => client.TryAddPrisoner(prisoner, out _newId));
-
             newId = _newId;
 
             return result;

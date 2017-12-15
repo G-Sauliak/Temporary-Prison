@@ -1,4 +1,5 @@
-﻿using System.ServiceModel;
+﻿using System.Collections.Generic;
+using System.ServiceModel;
 using Temporary_Prison.Service.Contracts.Dto;
 
 namespace Temporary_Prison.Service.Contracts.Contracts
@@ -14,5 +15,8 @@ namespace Temporary_Prison.Service.Contracts.Contracts
         [FaultContract(typeof(DataErrorDto))]
         UserDto GetUserByName(string userName);
 
+        [OperationContract]
+        [FaultContract(typeof(DataErrorDto))]
+        UserDto[] GetUsersForPagedList(int skip, int rowSize, out int totalCountUsers);
     }
 }

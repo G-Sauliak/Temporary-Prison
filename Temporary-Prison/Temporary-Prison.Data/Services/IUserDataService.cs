@@ -1,4 +1,5 @@
-﻿using Temporary_Prison.Common.Models;
+﻿using System.Collections.Generic;
+using Temporary_Prison.Common.Models;
 
 namespace Temporary_Prison.Data.Services
 {
@@ -6,5 +7,6 @@ namespace Temporary_Prison.Data.Services
     {
         User GetUserByName(string userName);
         bool IsValidLogin(string userName, string password);
+        IReadOnlyList<User> GetUsersForPagedList(int skip, int rowSize, out int totalCountUsers);
     }
 }

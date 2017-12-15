@@ -9,6 +9,7 @@ namespace Temporary_Prison.MapperProfile
         public WebMapper()
         {
             CreateMap<Prisoner, AddPrisonerViewModel>();
+            CreateMap<User, UserViewModel>();
         }
     }
 

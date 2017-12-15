@@ -59,6 +59,7 @@
     <Compile Include="MoqExtension.cs" />
     <Compile Include="TestsADORepositories\TestPrisonerRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestsADORepositories\TestUserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -28,6 +28,54 @@ namespace Temporary_Prison.Data.UserService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetUserByName", ReplyAction="http://tempuri.org/IUserService/GetUserByNameResponse")]
         System.Threading.Tasks.Task<Temporary_Prison.Service.Contracts.Dto.UserDto> GetUserByNameAsync(string userName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetUsersForPagedList", ReplyAction="http://tempuri.org/IUserService/GetUsersForPagedListResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Service.Contracts.Dto.DataErrorDto), Action="http://tempuri.org/IUserService/GetUsersForPagedListDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        Temporary_Prison.Data.UserService.GetUsersForPagedListResponse GetUsersForPagedList(Temporary_Prison.Data.UserService.GetUsersForPagedListRequest request);
+        
+        // CODEGEN: Generating message contract since the operation has multiple return values.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetUsersForPagedList", ReplyAction="http://tempuri.org/IUserService/GetUsersForPagedListResponse")]
+        System.Threading.Tasks.Task<Temporary_Prison.Data.UserService.GetUsersForPagedListResponse> GetUsersForPagedListAsync(Temporary_Prison.Data.UserService.GetUsersForPagedListRequest request);
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetUsersForPagedList", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class GetUsersForPagedListRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public int skip;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        public int rowSize;
+        
+        public GetUsersForPagedListRequest() {
+        }
+        
+        public GetUsersForPagedListRequest(int skip, int rowSize) {
+            this.skip = skip;
+            this.rowSize = rowSize;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetUsersForPagedListResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class GetUsersForPagedListResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public Temporary_Prison.Service.Contracts.Dto.UserDto[] GetUsersForPagedListResult;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        public int totalCountUsers;
+        
+        public GetUsersForPagedListResponse() {
+        }
+        
+        public GetUsersForPagedListResponse(Temporary_Prison.Service.Contracts.Dto.UserDto[] GetUsersForPagedListResult, int totalCountUsers) {
+            this.GetUsersForPagedListResult = GetUsersForPagedListResult;
+            this.totalCountUsers = totalCountUsers;
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -71,6 +119,24 @@ namespace Temporary_Prison.Data.UserService {
         
         public System.Threading.Tasks.Task<Temporary_Prison.Service.Contracts.Dto.UserDto> GetUserByNameAsync(string userName) {
             return base.Channel.GetUserByNameAsync(userName);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Temporary_Prison.Data.UserService.GetUsersForPagedListResponse Temporary_Prison.Data.UserService.IUserService.GetUsersForPagedList(Temporary_Prison.Data.UserService.GetUsersForPagedListRequest request) {
+            return base.Channel.GetUsersForPagedList(request);
+        }
+        
+        public Temporary_Prison.Service.Contracts.Dto.UserDto[] GetUsersForPagedList(int skip, int rowSize, out int totalCountUsers) {
+            Temporary_Prison.Data.UserService.GetUsersForPagedListRequest inValue = new Temporary_Prison.Data.UserService.GetUsersForPagedListRequest();
+            inValue.skip = skip;
+            inValue.rowSize = rowSize;
+            Temporary_Prison.Data.UserService.GetUsersForPagedListResponse retVal = ((Temporary_Prison.Data.UserService.IUserService)(this)).GetUsersForPagedList(inValue);
+            totalCountUsers = retVal.totalCountUsers;
+            return retVal.GetUsersForPagedListResult;
+        }
+        
+        public System.Threading.Tasks.Task<Temporary_Prison.Data.UserService.GetUsersForPagedListResponse> GetUsersForPagedListAsync(Temporary_Prison.Data.UserService.GetUsersForPagedListRequest request) {
+            return base.Channel.GetUsersForPagedListAsync(request);
         }
     }
 }

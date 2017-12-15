@@ -26,6 +26,15 @@
   <wsdl:message name="IUserService_GetUserByName_DataErrorDtoFault_FaultMessage">
     <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q2:DataErrorDto" />
   </wsdl:message>
+  <wsdl:message name="IUserService_GetUsersForPagedList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetUsersForPagedList" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_GetUsersForPagedList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetUsersForPagedListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_GetUsersForPagedList_DataErrorDtoFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q3:DataErrorDto" />
+  </wsdl:message>
   <wsdl:portType name="IUserService">
     <wsdl:operation name="IsValidLogin">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/IsValidLogin" message="tns:IUserService_IsValidLogin_InputMessage" />
@@ -36,6 +45,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/GetUserByName" message="tns:IUserService_GetUserByName_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUserService/GetUserByNameResponse" message="tns:IUserService_GetUserByName_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IUserService/GetUserByNameDataErrorDtoFault" name="DataErrorDtoFault" message="tns:IUserService_GetUserByName_DataErrorDtoFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersForPagedList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/GetUsersForPagedList" message="tns:IUserService_GetUsersForPagedList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/GetUsersForPagedListResponse" message="tns:IUserService_GetUsersForPagedList_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IUserService/GetUsersForPagedListDataErrorDtoFault" name="DataErrorDtoFault" message="tns:IUserService_GetUsersForPagedList_DataErrorDtoFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IUserService" type="tns:IUserService">
@@ -54,6 +68,18 @@
     </wsdl:operation>
     <wsdl:operation name="GetUserByName">
       <soap:operation soapAction="http://tempuri.org/IUserService/GetUserByName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataErrorDtoFault">
+        <soap:fault use="literal" name="DataErrorDtoFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetUsersForPagedList">
+      <soap:operation soapAction="http://tempuri.org/IUserService/GetUsersForPagedList" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

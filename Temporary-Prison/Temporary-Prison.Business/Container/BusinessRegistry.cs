@@ -1,4 +1,5 @@
 ﻿using StructureMap.Configuration.DSL;
+using Temporary_Prison.Business.CacheManager;
 using Temporary_Prison.Business.Providers;
 using Temporary_Prison.Business.Services;
 
@@ -11,6 +12,7 @@ namespace Temporary_Prison.Business.Container
             For<ILoginService>().Use<LoginService>();
             For<IPrisonerProvider>().Use<PrisonerProvider>();
             For<IUserProvider>().Use<UserProvider>();
+            For<ICacheService>().Use<CacheService>();
         }
     }
 }

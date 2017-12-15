@@ -45,6 +45,5 @@ namespace Temporary_Prison.Data.Clients
             }
             return default(TResult);
         }
-
     }
 }

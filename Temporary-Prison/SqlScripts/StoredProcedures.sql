@@ -81,9 +81,25 @@ AS
 SELECT w_R.RoleName FROM web_UserRoles w_UR, web_Roles w_R, web_Users w_U 
 WHERE w_UR.RoleID = w_R.RoleID AND w_UR.UserID = w_U.UserID AND w_U.UserName = @userName
 GO
----------------------GetUserByName----------------------------------
--------------------------------------------------------------------
+---------------------GetUserByName-----------------------------
+---------------------------------------------------------------
 CREATE PROCEDURE [dbo].[GetUserByName]
 	@userName nvarchar(50)
 AS
   SELECT * FROM  web_Users u WHERE  u.UserName = @userName
+GO
+---------------------GetUsersForPagedList--------------------------
+-------------------------------------------------------------------
+CREATE PROC [dbo].[GetUsersForPagedList]
+@skip int,
+@rowSize int
+AS
+SELECT UserName,Email FROM web_Users u
+ORDER BY u.UserName 
+OFFSET @skip ROWS 
+FETCH NEXT @rowSize ROWS ONLY;
+DECLARE @TotalCount int
+SET @Totalcount = (SELECT COUNT(*) FROM web_Users)
+
+RETURN @Totalcount
+GO

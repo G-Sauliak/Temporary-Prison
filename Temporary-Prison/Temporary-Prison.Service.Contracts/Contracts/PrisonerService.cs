@@ -10,7 +10,6 @@ namespace Temporary_Prison.Service.Contracts.Contracts
     public class PrisonerService : IPrisonerService
     {
         private readonly IPrisonerRepository prisonerContext;
-
         private readonly ILog log = LogManager.GetLogger("LOGGER");
 
         public PrisonerService()
@@ -35,13 +34,11 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                 throw new FaultException<DataErrorDto>(serviceData, ex.ToString());
             }
             return prisoner;
-
         }
 
         public List<PrisonerDto> GetPrisonersForPagedList(int skip, int rowSize, out int totalCount)
         {
             IReadOnlyList<PrisonerDto> prisoners = null;
-
             try
             {
                 prisoners = prisonerContext.GetPrisonersForPagedList(skip,rowSize,out totalCount);
@@ -55,18 +52,16 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                 log.Error($"Type Error: {serviceData.ErrorMessage}\n ErrorDetails {ex.ToString()}");
                 throw new FaultException<DataErrorDto>(serviceData, ex.ToString());
             }
-
             return prisoners as List<PrisonerDto>;
         }
 
         public List<PrisonerDto> GetPrisoners()
         {
-            IReadOnlyList<PrisonerDto> prisoners = null;
+            IReadOnlyList<PrisonerDto> prisoners = default(IReadOnlyList<PrisonerDto>);
             try
             {
                 prisoners = prisonerContext.GetPrisoners();
             }
-   
             catch (Exception ex)
             {
                 var serviceData = new DataErrorDto();
@@ -85,7 +80,6 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             {
                 result = prisonerContext.TryAddPrisoner(prisoner, out newId);
             }
-
             catch (Exception ex)
             {
                 var serviceData = new DataErrorDto();

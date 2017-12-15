@@ -115,6 +115,9 @@
     <None Include="Connected Services\PrisonService\Temporary_Prison.Data.PrisonService.TryAddPrisonerResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\UserService\Temporary_Prison.Data.UserService.GetUsersForPagedListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\UserService\UserService.wsdl" />
     <None Include="Connected Services\UserService\UserService.xsd">
       <SubType>Designer</SubType>

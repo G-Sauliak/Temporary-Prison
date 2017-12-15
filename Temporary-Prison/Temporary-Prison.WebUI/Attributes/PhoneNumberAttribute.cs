@@ -29,17 +29,17 @@ namespace Temporary_Prison.Business.Attributes
                 return true;
             }
 
-            string[] phones = value as string[];
+            string[] phoneNumbers = value as string[];
 
-            if (phones == null)
+            if (phoneNumbers == null)
             {
                 return false;
             }
 
-            foreach (string phone in phones)
+            foreach (string number in phoneNumbers)
             {
-                phone.Replace("+", string.Empty).TrimEnd();
-                if (!regex.IsMatch(phone))
+                number.Replace("+", string.Empty).TrimEnd();
+                if (!regex.IsMatch(number))
                 {
                     return false;
                 }

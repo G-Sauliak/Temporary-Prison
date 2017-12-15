@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using AutoMapper;
+using System.Collections.Generic;
 using System.Web.Mvc;
 using Temporary_Prison.Business.Providers;
 using Temporary_Prison.Common.Models;
+using Temporary_Prison.Models;
 using X.PagedList;
 
 namespace Temporary_Prison.Controllers
@@ -9,6 +11,7 @@ namespace Temporary_Prison.Controllers
     public class AdminController : Controller
     {
         private readonly IUserProvider userProvider;
+
         public AdminController(IUserProvider userProvider)
         {
             this.userProvider = userProvider;
@@ -16,36 +19,60 @@ namespace Temporary_Prison.Controllers
 
         // GET: Admin/index
         [Authorize(Roles = "Admin")]
-        public ActionResult Index(int? page, string search, string currentFilter)
+        public ActionResult Index(int? page, string search, string currentFilter,int? currentTotal)
         {
-         
-                int pageNum = 1;
-                int pageSize= 5;
+            const int pageSize = 4;
+            var totalCount = default(int);
+            int _currentTotal = currentTotal ?? default(int);
+            ViewBag.RedirectUrl = Url.Action("Index","Admin");
 
-                if (search != null)
-                {
-                    pageNum = 1;
-                }
-                else
-                {
-                    if (currentFilter != null)
-                    {
-                        search = currentFilter;
-                        pageNum = page ?? 1;
-                    }
-                    else
-                    {
-                        search = "";
-                        pageNum = page ?? 1;
-                    }
-                }
 
-                ViewBag.CurrentFilter = search;
+            if (_currentTotal != default(int))
+            {
+                totalCount = _currentTotal;
+            }
+            if (search != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                search = currentFilter;
+            }
+            var pageNum = page ?? 1;
+            int skip = (pageNum - 1) * pageSize;
 
-                List<User> listUsers = new List<User>() { new User {UserName = "gen" } };
-                
-                return View(listUsers.ToPagedList(pageNum,pageSize));
-           
+            ViewBag.CurrentFilter = search;
+
+            var listUsers = userProvider.GetUsersForPagedList(skip, pageSize, ref totalCount);
+            var usersPagedList = new StaticPagedList<User>(listUsers, pageNum, pageSize, totalCount);
+
+            return View(usersPagedList);
+        }
+
+        // GET: /Admin/EditUser
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public ActionResult EditUser(string userName,string redirectUrl)
+        {
+            var userModel = default(UserViewModel);
+            var user = userProvider.GetUserByName(userName);
+            if (user == null)
+            {
+                RedirectToLocal(redirectUrl);
+            }
+            userModel = Mapper.Map<User, UserViewModel>(user);
+
+            return View(userModel);
+        }
+
+        private ActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            return RedirectToAction("Index", "Home");
         }
     }
 }

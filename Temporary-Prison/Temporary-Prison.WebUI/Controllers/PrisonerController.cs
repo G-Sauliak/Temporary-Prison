@@ -11,12 +11,12 @@ namespace Temporary_Prison.Controllers
 {
     public class PrisonerController : Controller
     {
-        private readonly IPrisonerProvider prisonProvider;
+        private readonly IPrisonerProvider prisonerProvider;
         private readonly ILog log = LogManager.GetLogger("LOGGER");
 
-        public PrisonerController(IPrisonerProvider prisonProvider)
+        public PrisonerController(IPrisonerProvider prisonerProvider)
         {
-            this.prisonProvider = prisonProvider;
+            this.prisonerProvider = prisonerProvider;
         }
 
         // GET: Prisoner/ListOfPrisoners
@@ -28,15 +28,12 @@ namespace Temporary_Prison.Controllers
             var totalCount = default(int);
             var _currentTotal = currentTotal ?? default(int);
 
-
             ViewBag.CurrentSort = sort;
             ViewBag.NameSortParam = string.IsNullOrEmpty(sort) ? "name_desc" : "";
-
             if (_currentTotal != default(int))
             {
                 totalCount = _currentTotal;
             }
-            
             if (search != null)
             {
                 page = 1;
@@ -45,30 +42,27 @@ namespace Temporary_Prison.Controllers
             {
                 search = currentFilter;
             }
-
             var pageNum = page ?? 1;
-
             int skip = (pageNum - 1) * pageSize;
-
-            var listPrisoners = prisonProvider.GetPrisonerForPagedList(skip, pageSize, ref totalCount);
 
             ViewBag.TotalCountPrisoners = totalCount;
 
-            var staticPageList = new StaticPagedList<Prisoner>(listPrisoners, pageNum, pageSize, totalCount);
+            var listPrisoners = prisonerProvider.GetPrisonerForPagedList(skip, pageSize, ref totalCount);
+            var prisonersPagedList = new StaticPagedList<Prisoner>(listPrisoners, pageNum, pageSize, totalCount);
 
-            return View(staticPageList);
+            return View(prisonersPagedList);
         }
 
+        // Prisoner: DetailsOfPrisoner
+        [HttpGet]
         [Authorize]
         public ActionResult DetailsOfPrisoner(int? id)
         {
-
             if (!id.HasValue)
             {
                 RedirectToAction("ListPrisoner");
             }
-
-            var prisoner = prisonProvider.GetPrisonerById(id.Value);
+            var prisoner = prisonerProvider.GetPrisonerById(id.Value);
 
             return View(prisoner);
         }
