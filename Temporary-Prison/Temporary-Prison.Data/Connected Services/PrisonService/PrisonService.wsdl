@@ -35,13 +35,13 @@
   <wsdl:message name="IPrisonerService_GetPrisonerById_DataErrorDtoFault_FaultMessage">
     <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q3:DataErrorDto" />
   </wsdl:message>
-  <wsdl:message name="IPrisonerService_TryAddPrisoner_InputMessage">
-    <wsdl:part name="parameters" element="tns:TryAddPrisoner" />
+  <wsdl:message name="IPrisonerService_AddPrisoner_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddPrisoner" />
   </wsdl:message>
-  <wsdl:message name="IPrisonerService_TryAddPrisoner_OutputMessage">
-    <wsdl:part name="parameters" element="tns:TryAddPrisonerResponse" />
+  <wsdl:message name="IPrisonerService_AddPrisoner_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddPrisonerResponse" />
   </wsdl:message>
-  <wsdl:message name="IPrisonerService_TryAddPrisoner_DataErrorDtoFault_FaultMessage">
+  <wsdl:message name="IPrisonerService_AddPrisoner_DataErrorDtoFault_FaultMessage">
     <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q4:DataErrorDto" />
   </wsdl:message>
   <wsdl:portType name="IPrisonerService">
@@ -60,10 +60,10 @@
       <wsdl:output wsaw:Action="http://tempuri.org/IPrisonerService/GetPrisonerByIdResponse" message="tns:IPrisonerService_GetPrisonerById_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IPrisonerService/GetPrisonerByIdDataErrorDtoFault" name="DataErrorDtoFault" message="tns:IPrisonerService_GetPrisonerById_DataErrorDtoFault_FaultMessage" />
     </wsdl:operation>
-    <wsdl:operation name="TryAddPrisoner">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPrisonerService/TryAddPrisoner" message="tns:IPrisonerService_TryAddPrisoner_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPrisonerService/TryAddPrisonerResponse" message="tns:IPrisonerService_TryAddPrisoner_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IPrisonerService/TryAddPrisonerDataErrorDtoFault" name="DataErrorDtoFault" message="tns:IPrisonerService_TryAddPrisoner_DataErrorDtoFault_FaultMessage" />
+    <wsdl:operation name="AddPrisoner">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPrisonerService/AddPrisoner" message="tns:IPrisonerService_AddPrisoner_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPrisonerService/AddPrisonerResponse" message="tns:IPrisonerService_AddPrisoner_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IPrisonerService/AddPrisonerDataErrorDtoFault" name="DataErrorDtoFault" message="tns:IPrisonerService_AddPrisoner_DataErrorDtoFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IPrisonerService" type="tns:IPrisonerService">
@@ -104,8 +104,8 @@
         <soap:fault use="literal" name="DataErrorDtoFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
-    <wsdl:operation name="TryAddPrisoner">
-      <soap:operation soapAction="http://tempuri.org/IPrisonerService/TryAddPrisoner" style="document" />
+    <wsdl:operation name="AddPrisoner">
+      <soap:operation soapAction="http://tempuri.org/IPrisonerService/AddPrisoner" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

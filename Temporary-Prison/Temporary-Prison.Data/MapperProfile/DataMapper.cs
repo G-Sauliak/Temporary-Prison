@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using System.Collections.Generic;
 using Temporary_Prison.Common.Models;
-using Temporary_Prison.Service.Contracts.Dto;
+using Temporary_Prison.Data.PrisonService;
+using Temporary_Prison.Data.UserService;
 
 namespace Temporary_Prison.Data.MapperProfile
 {
@@ -9,7 +9,7 @@ namespace Temporary_Prison.Data.MapperProfile
     {
         public DataMapper()
         {
-            CreateMap<Prisoner, PrisonerDto>();
+            CreateMap<Prisoner,PrisonerDto>();
             CreateMap<User, UserDto>();
             CreateMap<PrisonerDto, Prisoner>();
             CreateMap<UserDto, User>();

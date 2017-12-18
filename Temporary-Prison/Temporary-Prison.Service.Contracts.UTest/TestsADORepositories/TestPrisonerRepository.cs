@@ -22,5 +22,12 @@ namespace Temporary_Prison.Service.Contracts.UTest
             Assert.IsTrue(outResult > 0);
             Assert.IsNotNull(result);
         }
+        [TestMethod]
+        public void PrisonerRepository_GetPrisonerById()
+        {
+            int outResult;
+            var result = prisonerRepository.GetPrisonerById(1);
+            Assert.IsNotNull(result);
+        }
     }
 }

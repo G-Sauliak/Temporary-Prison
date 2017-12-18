@@ -11,5 +11,7 @@ namespace Temporary_Prison.Service.Contracts.Dto
         public string Email { get; set; }
         [DataMember]
         public string[] Roles { get; set; }
+        [DataMember]
+        public string Password { get; set; }
     }
 }

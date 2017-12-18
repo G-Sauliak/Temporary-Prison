@@ -64,9 +64,9 @@ namespace Temporary_Prison.Business.Providers
             return prisoners;
         }
 
-        public bool TryAddPrisoner(Prisoner prisoner, out int newId)
+        public void AddPrisoner(Prisoner prisoner, out int newId)
         {
-            return dataService.TryAddPrisoner(prisoner, out newId);
+            dataService.AddPrisoner(prisoner, out newId);
         }
     }
 }

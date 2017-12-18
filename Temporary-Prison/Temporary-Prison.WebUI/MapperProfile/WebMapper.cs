@@ -10,6 +10,7 @@ namespace Temporary_Prison.MapperProfile
         {
             CreateMap<Prisoner, AddPrisonerViewModel>();
             CreateMap<User, UserViewModel>();
+            CreateMap<UserViewModel, User>();
         }
     }
 

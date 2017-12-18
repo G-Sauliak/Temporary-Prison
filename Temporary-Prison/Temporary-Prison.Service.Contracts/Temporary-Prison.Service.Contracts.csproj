@@ -84,6 +84,7 @@
     <Compile Include="Contracts\PrisonerService.cs" />
     <Compile Include="Dto\PrisonerDto.cs" />
     <Compile Include="Dto\UserDto.cs" />
+    <Compile Include="Extensions\DataTableExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IPrisonerRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />

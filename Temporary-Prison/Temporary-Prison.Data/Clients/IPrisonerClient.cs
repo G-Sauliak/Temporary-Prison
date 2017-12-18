@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
-using Temporary_Prison.Common.Models;
-using Temporary_Prison.Service.Contracts.Dto;
+using Temporary_Prison.Data.PrisonService;
 
 namespace Temporary_Prison.Data.Clients
 {
@@ -8,7 +7,7 @@ namespace Temporary_Prison.Data.Clients
     {
         IReadOnlyList<PrisonerDto> GetPrisoners();
         PrisonerDto GetPrisonerById(int id);
-        bool TryAddPrisoner(PrisonerDto prisoner, out int newId);
+        void AddPrisoner(PrisonerDto prisoner, out int newId);
         IReadOnlyList<PrisonerDto> GetPrisonersForPagedList(int skip, int rowSize, out int totalCount);
     }
 }

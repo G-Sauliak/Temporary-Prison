@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using System;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 using Temporary_Prison.Business.Providers;
 using Temporary_Prison.Common.Models;
 using Temporary_Prison.Enums;
+using Temporary_Prison.Extensions;
 using Temporary_Prison.Models;
 
 namespace Temporary_Prison.Controllers
@@ -34,34 +36,37 @@ namespace Temporary_Prison.Controllers
         [Authorize(Roles = "Editor")]
         public ActionResult AddPrisoner(AddPrisonerViewModel model, string RedirectUrl)
         {
-           
-           if (!ModelState.IsValid || Request.Files[0] == null)
+            var photo = Request.Files[0];
+
+            if (!ModelState.IsValid)
             {
-                ModelState.AddModelError(string.Empty, "The prisoner cannot be added");
                 ViewBag.RelationshipStatus = Enum.GetValues(typeof(RelationshipStatus)).Cast<RelationshipStatus>();
                 return View(model);
             }
 
-            var file = Request.Files[0];
-
-            var fileName = Path.GetFileName(file.FileName);
-
-            var path = Path.Combine(Server.MapPath("~/Content/PhotosOfPrisoners"), fileName);
-
-            file.SaveAs(path);
-
-            model.Photo = $"/Content/PhotosOfPrisoners/{fileName}";
-
-            var prisoner = Mapper.Map<AddPrisonerViewModel, Prisoner>(model);
-
-            int newID;
-
-            if (prisonerProvider.TryAddPrisoner(prisoner,out newID))
+            if (photo != null && PhotosExtensions.SupportedFormat(photo) && PhotosExtensions.CheckSize(photo))
             {
-                //TODO
+                var fileName = Path.GetFileName(photo.FileName);
+                var photoSavePath = Path.Combine(Server.MapPath("~/Content/PhotosOfPrisoners"), fileName);
+
+                Image.FromStream(photo.InputStream).SaveToFolder(photoSavePath);
+
+                model.Photo = $"/Content/PhotosOfPrisoners/{fileName}";
+
+                var prisoner = Mapper.Map<AddPrisonerViewModel, Prisoner>(model);
+
+                int newID;
+                prisonerProvider.AddPrisoner(prisoner, out newID);
+                
+                    //TODO
+                
+                return Redirect(RedirectUrl);
             }
-            return Redirect(RedirectUrl);
-            //TODO
+
+            ViewBag.RelationshipStatus = Enum.GetValues(typeof(RelationshipStatus)).Cast<RelationshipStatus>();
+
+            return View(model);
+
         }
     }
 }

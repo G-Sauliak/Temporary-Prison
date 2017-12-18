@@ -6,7 +6,7 @@ namespace Temporary_Prison.Data.Services
     public interface IPrisonerDataService
     {
         IReadOnlyList<Prisoner> GetPrisoners();
-        bool TryAddPrisoner(Prisoner prisoner, out int newId);
+        bool AddPrisoner(Prisoner prisoner, out int newId);
         Prisoner GetPrisonerById(int id);
         IReadOnlyList<Prisoner> GetPrisonersForPageList(int skip, int rowSize, out int totalCount);
     }

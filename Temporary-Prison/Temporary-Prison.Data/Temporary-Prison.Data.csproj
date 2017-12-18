@@ -109,13 +109,19 @@
     <None Include="Connected Services\PrisonService\PrisonService3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\PrisonService\Temporary_Prison.Data.PrisonService.AddPrisonerResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\PrisonService\Temporary_Prison.Data.PrisonService.GetPrisonersForPagedListResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Connected Services\PrisonService\Temporary_Prison.Data.PrisonService.TryAddPrisonerResponse.datasource">
+    <None Include="Connected Services\PrisonService\Temporary_Prison.Data.PrisonService.PrisonerDto.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\UserService\Temporary_Prison.Data.UserService.GetUsersForPagedListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\UserService\Temporary_Prison.Data.UserService.UserDto.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\UserService\UserService.wsdl" />

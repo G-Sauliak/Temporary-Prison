@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Temporary_Prison.Common.Models;
 using Temporary_Prison.Data.Clients;
-using Temporary_Prison.Service.Contracts.Dto;
+using Temporary_Prison.Data.PrisonService;
 
 namespace Temporary_Prison.Data.Services
 {
@@ -51,13 +51,19 @@ namespace Temporary_Prison.Data.Services
             return default(IReadOnlyList<Prisoner>);
         }
 
-        public bool TryAddPrisoner(Prisoner prisoner, out int newId)
+        public bool AddPrisoner(Prisoner prisoner, out int newId)
         {
+            var result = false;
             if (prisoner != null)
             {
                 var prisonerDto = Mapper.Map<Prisoner, PrisonerDto>(prisoner);
+                int _newId = default(int);
+                result = new PrisonerServiceClient().
+                    Execute(client => 
+                    client.AddPrisoner(prisonerDto, out _newId));
+                newId = _newId;
 
-                return prisonerClient.TryAddPrisoner(prisonerDto, out newId);
+                return result;
             }
             newId = default(int);
             return default(bool);

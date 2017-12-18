@@ -69,13 +69,13 @@ ORDER BY p.FirstName
 OFFSET @skip ROWS 
 FETCH NEXT @rowSize ROWS ONLY;
 DECLARE @TotalCount int
-SET @Totalcount = (SELECT COUNT(*) FROM Prisoners p)
+SET @Totalcount = (SELECT COUNT(*) FROM Prisoners)
 
 RETURN @Totalcount
 GO
 ---------------------GetRoles----------------------------------
 ---------------------------------------------------------------
-CREATE PROCEDURE [dbo].[GetRoles]
+CREATE PROCEDURE [dbo].[GetRolesByUserName]
 @userName nvarchar(50)
 AS
 SELECT w_R.RoleName FROM web_UserRoles w_UR, web_Roles w_R, web_Users w_U 
@@ -103,3 +103,73 @@ SET @Totalcount = (SELECT COUNT(*) FROM web_Users)
 
 RETURN @Totalcount
 GO
+---------------------GETALLROLES-----------------------------------
+-------------------------------------------------------------------
+CREATE PROC [dbo].[GetAllRoles]
+AS
+BEGIN
+SELECT RoleName FROM web_Roles
+END
+GO
+---------------------ADD USER--------------------------------------
+-------------------------------------------------------------------
+CREATE PROC [dbo].[AddUser]
+@UserName nvarchar(50),
+@Email nvarchar(max),
+@Password nvarchar(max)
+ 
+AS
+BEGIN
+    INSERT INTO web_Users(
+	UserName,
+	Email,
+	Password
+	)
+	VALUES(
+	@UserName,
+	@Email,
+	@Password
+	)
+END
+	DECLARE @LastId int = SCOPE_IDENTITY()
+RETURN @lastID
+GO
+---------------------ADD TO ROLES---------------------------------------
+------------------------------------------------------------------------
+GO
+CREATE PROCEDURE [dbo].[AddToRoles]
+	@RoleName nvarchar(50),
+	@UserId int
+AS
+DECLARE @RoleId int
+set @RoleId = (SELECT RoleID FROM web_Roles w_R WHERE w_R.RoleName = @RoleName)
+	INSERT INTO web_UserRoles(UserID,RoleID) VALUES (@UserId,@RoleId)
+GO
+---------------------DELETE USER--------------------------------------
+----------------------------------------------------------------------
+CREATE PROC [dbo].[DeleteUser]
+@userName nvarchar(50)
+AS
+BEGIN
+DELETE FROM web_UserRoles WHERE web_UserRoles.UserID IN 
+(SELECT UserID FROM web_Users w WHERE w.UserName = @userName )
+
+DELETE FROM web_Users WHERE web_Users.UserName = @userName 
+END
+GO
+---------------------UPDATE USER--------------------------------------
+----------------------------------------------------------------------
+CREATE PROC [dbo].[UpdateUser]
+@userName nvarchar(50),
+@email nvarchar(max),
+@password nvarchar(max)
+AS
+BEGIN
+UPDATE
+    web_Users
+SET
+    Email = @email,
+    Password= @password
+FROM web_Users w
+WHERE w.UserName = @userName
+END

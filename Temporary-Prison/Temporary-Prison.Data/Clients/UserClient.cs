@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using log4net;
 using Temporary_Prison.Data.UserService;
-using Temporary_Prison.Service.Contracts.Dto;
+
 
 namespace Temporary_Prison.Data.Clients
 {
@@ -13,7 +13,7 @@ namespace Temporary_Prison.Data.Clients
         {
             int totalCountUsers = default(int);
 
-            var users = new UserServiceClient().GetResult(client => client.GetUsersForPagedList(skip, rowSize, out totalCountUsers));
+            var users = new UserServiceClient().Execute(client => client.GetUsersForPagedList(skip, rowSize, out totalCountUsers));
             totalCount = totalCountUsers;
 
             return users;
@@ -21,12 +21,12 @@ namespace Temporary_Prison.Data.Clients
 
         public UserDto GetUserByName(string userName)
         {
-            return new UserServiceClient().GetResult(client => client.GetUserByName(userName));
+            return new UserServiceClient().Execute(client => client.GetUserByName(userName));
         }
 
         public bool IsValidLogin(string userName, string password)
         {
-            return new UserServiceClient().GetResult(clinet => clinet.IsValidLogin(userName, password));
+            return new UserServiceClient().Execute(clinet => clinet.IsValidLogin(userName, password));
         }
     }
 }

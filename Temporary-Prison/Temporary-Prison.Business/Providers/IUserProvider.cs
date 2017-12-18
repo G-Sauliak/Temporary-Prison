@@ -8,5 +8,8 @@ namespace Temporary_Prison.Business.Providers
         bool IsValidUser(string userName, string password);
         User GetUserByName(string userName);
         IReadOnlyList<User> GetUsersForPagedList(int skip, int rowSize, ref int totalCount);
+        IReadOnlyList<string> GetAllRoles();
+        bool IsExistsByLogin(string userName);
+        bool IsExistsByEmail(string userName);
     }
 }

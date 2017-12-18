@@ -9,33 +9,231 @@
 //------------------------------------------------------------------------------
 
 namespace Temporary_Prison.Data.UserService {
+    using System.Runtime.Serialization;
+    using System;
     
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+    [System.SerializableAttribute()]
+    public partial class DataErrorDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ErrorDetailsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ErrorMessageField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ErrorDetails {
+            get {
+                return this.ErrorDetailsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ErrorDetailsField, value) != true)) {
+                    this.ErrorDetailsField = value;
+                    this.RaisePropertyChanged("ErrorDetails");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ErrorMessage {
+            get {
+                return this.ErrorMessageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ErrorMessageField, value) != true)) {
+                    this.ErrorMessageField = value;
+                    this.RaisePropertyChanged("ErrorMessage");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="UserDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+    [System.SerializableAttribute()]
+    public partial class UserDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmailField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PasswordField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string[] RolesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UserNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Email {
+            get {
+                return this.EmailField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EmailField, value) != true)) {
+                    this.EmailField = value;
+                    this.RaisePropertyChanged("Email");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Password {
+            get {
+                return this.PasswordField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PasswordField, value) != true)) {
+                    this.PasswordField = value;
+                    this.RaisePropertyChanged("Password");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string[] Roles {
+            get {
+                return this.RolesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RolesField, value) != true)) {
+                    this.RolesField = value;
+                    this.RaisePropertyChanged("Roles");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UserName {
+            get {
+                return this.UserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UserNameField, value) != true)) {
+                    this.UserNameField = value;
+                    this.RaisePropertyChanged("UserName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="UserService.IUserService")]
     public interface IUserService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/IsValidLogin", ReplyAction="http://tempuri.org/IUserService/IsValidLoginResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Service.Contracts.Dto.DataErrorDto), Action="http://tempuri.org/IUserService/IsValidLoginDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.UserService.DataErrorDto), Action="http://tempuri.org/IUserService/IsValidLoginDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
         bool IsValidLogin(string userName, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/IsValidLogin", ReplyAction="http://tempuri.org/IUserService/IsValidLoginResponse")]
         System.Threading.Tasks.Task<bool> IsValidLoginAsync(string userName, string password);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetUserByName", ReplyAction="http://tempuri.org/IUserService/GetUserByNameResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Service.Contracts.Dto.DataErrorDto), Action="http://tempuri.org/IUserService/GetUserByNameDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
-        Temporary_Prison.Service.Contracts.Dto.UserDto GetUserByName(string userName);
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.UserService.DataErrorDto), Action="http://tempuri.org/IUserService/GetUserByNameDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        Temporary_Prison.Data.UserService.UserDto GetUserByName(string userName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetUserByName", ReplyAction="http://tempuri.org/IUserService/GetUserByNameResponse")]
-        System.Threading.Tasks.Task<Temporary_Prison.Service.Contracts.Dto.UserDto> GetUserByNameAsync(string userName);
+        System.Threading.Tasks.Task<Temporary_Prison.Data.UserService.UserDto> GetUserByNameAsync(string userName);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetUsersForPagedList", ReplyAction="http://tempuri.org/IUserService/GetUsersForPagedListResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Service.Contracts.Dto.DataErrorDto), Action="http://tempuri.org/IUserService/GetUsersForPagedListDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.UserService.DataErrorDto), Action="http://tempuri.org/IUserService/GetUsersForPagedListDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
         Temporary_Prison.Data.UserService.GetUsersForPagedListResponse GetUsersForPagedList(Temporary_Prison.Data.UserService.GetUsersForPagedListRequest request);
         
         // CODEGEN: Generating message contract since the operation has multiple return values.
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetUsersForPagedList", ReplyAction="http://tempuri.org/IUserService/GetUsersForPagedListResponse")]
         System.Threading.Tasks.Task<Temporary_Prison.Data.UserService.GetUsersForPagedListResponse> GetUsersForPagedListAsync(Temporary_Prison.Data.UserService.GetUsersForPagedListRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetAllRoles", ReplyAction="http://tempuri.org/IUserService/GetAllRolesResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.UserService.DataErrorDto), Action="http://tempuri.org/IUserService/GetAllRolesDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        string[] GetAllRoles();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetAllRoles", ReplyAction="http://tempuri.org/IUserService/GetAllRolesResponse")]
+        System.Threading.Tasks.Task<string[]> GetAllRolesAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/AddUser", ReplyAction="http://tempuri.org/IUserService/AddUserResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.UserService.DataErrorDto), Action="http://tempuri.org/IUserService/AddUserDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        void AddUser(Temporary_Prison.Data.UserService.UserDto user);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/AddUser", ReplyAction="http://tempuri.org/IUserService/AddUserResponse")]
+        System.Threading.Tasks.Task AddUserAsync(Temporary_Prison.Data.UserService.UserDto user);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/EditUser", ReplyAction="http://tempuri.org/IUserService/EditUserResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.UserService.DataErrorDto), Action="http://tempuri.org/IUserService/EditUserDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        void EditUser(Temporary_Prison.Data.UserService.UserDto user);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/EditUser", ReplyAction="http://tempuri.org/IUserService/EditUserResponse")]
+        System.Threading.Tasks.Task EditUserAsync(Temporary_Prison.Data.UserService.UserDto user);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/DeleteUser", ReplyAction="http://tempuri.org/IUserService/DeleteUserResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.UserService.DataErrorDto), Action="http://tempuri.org/IUserService/DeleteUserDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        void DeleteUser(string userName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/DeleteUser", ReplyAction="http://tempuri.org/IUserService/DeleteUserResponse")]
+        System.Threading.Tasks.Task DeleteUserAsync(string userName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/IsExistsByLogin", ReplyAction="http://tempuri.org/IUserService/IsExistsByLoginResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.UserService.DataErrorDto), Action="http://tempuri.org/IUserService/IsExistsByLoginDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        bool IsExistsByLogin(string userName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/IsExistsByLogin", ReplyAction="http://tempuri.org/IUserService/IsExistsByLoginResponse")]
+        System.Threading.Tasks.Task<bool> IsExistsByLoginAsync(string userName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/IsExistsByEmail", ReplyAction="http://tempuri.org/IUserService/IsExistsByEmailResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.UserService.DataErrorDto), Action="http://tempuri.org/IUserService/IsExistsByEmailDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        bool IsExistsByEmail(string email);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/IsExistsByEmail", ReplyAction="http://tempuri.org/IUserService/IsExistsByEmailResponse")]
+        System.Threading.Tasks.Task<bool> IsExistsByEmailAsync(string email);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -64,7 +262,7 @@ namespace Temporary_Prison.Data.UserService {
     public partial class GetUsersForPagedListResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
-        public Temporary_Prison.Service.Contracts.Dto.UserDto[] GetUsersForPagedListResult;
+        public Temporary_Prison.Data.UserService.UserDto[] GetUsersForPagedListResult;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
         public int totalCountUsers;
@@ -72,7 +270,7 @@ namespace Temporary_Prison.Data.UserService {
         public GetUsersForPagedListResponse() {
         }
         
-        public GetUsersForPagedListResponse(Temporary_Prison.Service.Contracts.Dto.UserDto[] GetUsersForPagedListResult, int totalCountUsers) {
+        public GetUsersForPagedListResponse(Temporary_Prison.Data.UserService.UserDto[] GetUsersForPagedListResult, int totalCountUsers) {
             this.GetUsersForPagedListResult = GetUsersForPagedListResult;
             this.totalCountUsers = totalCountUsers;
         }
@@ -113,11 +311,11 @@ namespace Temporary_Prison.Data.UserService {
             return base.Channel.IsValidLoginAsync(userName, password);
         }
         
-        public Temporary_Prison.Service.Contracts.Dto.UserDto GetUserByName(string userName) {
+        public Temporary_Prison.Data.UserService.UserDto GetUserByName(string userName) {
             return base.Channel.GetUserByName(userName);
         }
         
-        public System.Threading.Tasks.Task<Temporary_Prison.Service.Contracts.Dto.UserDto> GetUserByNameAsync(string userName) {
+        public System.Threading.Tasks.Task<Temporary_Prison.Data.UserService.UserDto> GetUserByNameAsync(string userName) {
             return base.Channel.GetUserByNameAsync(userName);
         }
         
@@ -126,7 +324,7 @@ namespace Temporary_Prison.Data.UserService {
             return base.Channel.GetUsersForPagedList(request);
         }
         
-        public Temporary_Prison.Service.Contracts.Dto.UserDto[] GetUsersForPagedList(int skip, int rowSize, out int totalCountUsers) {
+        public Temporary_Prison.Data.UserService.UserDto[] GetUsersForPagedList(int skip, int rowSize, out int totalCountUsers) {
             Temporary_Prison.Data.UserService.GetUsersForPagedListRequest inValue = new Temporary_Prison.Data.UserService.GetUsersForPagedListRequest();
             inValue.skip = skip;
             inValue.rowSize = rowSize;
@@ -137,6 +335,54 @@ namespace Temporary_Prison.Data.UserService {
         
         public System.Threading.Tasks.Task<Temporary_Prison.Data.UserService.GetUsersForPagedListResponse> GetUsersForPagedListAsync(Temporary_Prison.Data.UserService.GetUsersForPagedListRequest request) {
             return base.Channel.GetUsersForPagedListAsync(request);
+        }
+        
+        public string[] GetAllRoles() {
+            return base.Channel.GetAllRoles();
+        }
+        
+        public System.Threading.Tasks.Task<string[]> GetAllRolesAsync() {
+            return base.Channel.GetAllRolesAsync();
+        }
+        
+        public void AddUser(Temporary_Prison.Data.UserService.UserDto user) {
+            base.Channel.AddUser(user);
+        }
+        
+        public System.Threading.Tasks.Task AddUserAsync(Temporary_Prison.Data.UserService.UserDto user) {
+            return base.Channel.AddUserAsync(user);
+        }
+        
+        public void EditUser(Temporary_Prison.Data.UserService.UserDto user) {
+            base.Channel.EditUser(user);
+        }
+        
+        public System.Threading.Tasks.Task EditUserAsync(Temporary_Prison.Data.UserService.UserDto user) {
+            return base.Channel.EditUserAsync(user);
+        }
+        
+        public void DeleteUser(string userName) {
+            base.Channel.DeleteUser(userName);
+        }
+        
+        public System.Threading.Tasks.Task DeleteUserAsync(string userName) {
+            return base.Channel.DeleteUserAsync(userName);
+        }
+        
+        public bool IsExistsByLogin(string userName) {
+            return base.Channel.IsExistsByLogin(userName);
+        }
+        
+        public System.Threading.Tasks.Task<bool> IsExistsByLoginAsync(string userName) {
+            return base.Channel.IsExistsByLoginAsync(userName);
+        }
+        
+        public bool IsExistsByEmail(string email) {
+            return base.Channel.IsExistsByEmail(email);
+        }
+        
+        public System.Threading.Tasks.Task<bool> IsExistsByEmailAsync(string email) {
+            return base.Channel.IsExistsByEmailAsync(email);
         }
     }
 }

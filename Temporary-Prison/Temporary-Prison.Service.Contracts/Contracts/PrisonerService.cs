@@ -24,7 +24,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             {
                 prisoner = prisonerContext.GetPrisonerById(Id);
             }
-     
+
             catch (Exception ex)
             {
                 var serviceData = new DataErrorDto();
@@ -41,7 +41,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             IReadOnlyList<PrisonerDto> prisoners = null;
             try
             {
-                prisoners = prisonerContext.GetPrisonersForPagedList(skip,rowSize,out totalCount);
+                prisoners = prisonerContext.GetPrisonersForPagedList(skip, rowSize, out totalCount);
             }
 
             catch (Exception ex)
@@ -73,22 +73,20 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             return prisoners as List<PrisonerDto>;
         }
 
-        public bool TryAddPrisoner(PrisonerDto prisoner, out int newId)
+        public bool AddPrisoner(PrisonerDto prisoner, out int newId)
         {
-            bool result = false;
             try
             {
-                result = prisonerContext.TryAddPrisoner(prisoner, out newId);
+               return prisonerContext.TryAddPrisoner(prisoner, out newId);
             }
             catch (Exception ex)
             {
                 var serviceData = new DataErrorDto();
-                serviceData.ErrorMessage = "Error Exception. GetPriosners";
+                serviceData.ErrorMessage = "Error Exception. AddPrisoner";
                 serviceData.ErrorDetails = ex.ToString();
                 log.Error($"Type Error: {serviceData.ErrorMessage}\n ErrorDetails {ex.ToString()}");
                 throw new FaultException<DataErrorDto>(serviceData, ex.ToString());
             }
-            return result;
         }
     }
 }

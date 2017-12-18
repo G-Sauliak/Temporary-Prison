@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using Temporary_Prison.Service.Contracts.Dto;
+using Temporary_Prison.Service.Contracts.Extensions;
 
 namespace Temporary_Prison.Service.Contracts.Repositories
 {
@@ -39,30 +40,20 @@ namespace Temporary_Prison.Service.Contracts.Repositories
 
                     using (var dataReader = sqlCommand.ExecuteReader())
                     {
-                        while (dataReader.Read())
+                        var dataTableModel = new DataTable();
+                        var dataTableArray = new DataTable();
+                        try
                         {
-                            prisoner = new PrisonerDto()
-                            {
-                                PrisonerId = (int)dataReader["PrisonerId"],
-                                FirstName = dataReader["FirstName"].ToString(),
-                                LastName = dataReader["LastName"].ToString(),
-                                Surname = dataReader["Surname"].ToString(),
-                                PlaceOfWork = dataReader["PlaceOfWork"].ToString(),
-                                AdditionalInformation = dataReader["AdditionalInformation"].ToString(),
-                                BirthDate = ((DateTime)dataReader["BirthDate"]),
-                                RelationshipStatus = dataReader["RelationshipStatus"].ToString(),
-                                Photo = dataReader["Photo"].ToString(),
-                                Address = dataReader["Address"].ToString(),
-                                PhoneNumbers = new List<string>()
-                            };
+                            dataTableModel.Load(dataReader);
+                            dataTableArray.Load(dataReader);
+
+                            prisoner = dataTableModel.ConvertToModel<PrisonerDto>();
+                            prisoner.PhoneNumbers = dataTableArray.ConvertToArrayOfStrings("PhoneNumber");
                         }
-                        if (dataReader.NextResult())
+                        finally
                         {
-                            while (dataReader.Read())
-                            {
-                                var s = dataReader.FieldCount;
-                                prisoner.PhoneNumbers.Add(dataReader["PhoneNumber"].ToString());
-                            }
+                            dataTableModel.Dispose();
+                            dataTableArray.Dispose();
                         }
                     }
                 }

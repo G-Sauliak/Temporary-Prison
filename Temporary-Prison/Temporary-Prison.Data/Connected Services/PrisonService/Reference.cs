@@ -9,21 +9,289 @@
 //------------------------------------------------------------------------------
 
 namespace Temporary_Prison.Data.PrisonService {
+    using System.Runtime.Serialization;
+    using System;
     
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PrisonerDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+    [System.SerializableAttribute()]
+    public partial class PrisonerDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AdditionalInformationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AddressField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime BirthDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FirstNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LastNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string[] PhoneNumbersField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PhotoField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PlaceOfWorkField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int PrisonerIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RelationshipStatusField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SurnameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string AdditionalInformation {
+            get {
+                return this.AdditionalInformationField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AdditionalInformationField, value) != true)) {
+                    this.AdditionalInformationField = value;
+                    this.RaisePropertyChanged("AdditionalInformation");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Address {
+            get {
+                return this.AddressField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AddressField, value) != true)) {
+                    this.AddressField = value;
+                    this.RaisePropertyChanged("Address");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime BirthDate {
+            get {
+                return this.BirthDateField;
+            }
+            set {
+                if ((this.BirthDateField.Equals(value) != true)) {
+                    this.BirthDateField = value;
+                    this.RaisePropertyChanged("BirthDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FirstName {
+            get {
+                return this.FirstNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FirstNameField, value) != true)) {
+                    this.FirstNameField = value;
+                    this.RaisePropertyChanged("FirstName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LastName {
+            get {
+                return this.LastNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LastNameField, value) != true)) {
+                    this.LastNameField = value;
+                    this.RaisePropertyChanged("LastName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string[] PhoneNumbers {
+            get {
+                return this.PhoneNumbersField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PhoneNumbersField, value) != true)) {
+                    this.PhoneNumbersField = value;
+                    this.RaisePropertyChanged("PhoneNumbers");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Photo {
+            get {
+                return this.PhotoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PhotoField, value) != true)) {
+                    this.PhotoField = value;
+                    this.RaisePropertyChanged("Photo");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlaceOfWork {
+            get {
+                return this.PlaceOfWorkField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PlaceOfWorkField, value) != true)) {
+                    this.PlaceOfWorkField = value;
+                    this.RaisePropertyChanged("PlaceOfWork");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int PrisonerId {
+            get {
+                return this.PrisonerIdField;
+            }
+            set {
+                if ((this.PrisonerIdField.Equals(value) != true)) {
+                    this.PrisonerIdField = value;
+                    this.RaisePropertyChanged("PrisonerId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string RelationshipStatus {
+            get {
+                return this.RelationshipStatusField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RelationshipStatusField, value) != true)) {
+                    this.RelationshipStatusField = value;
+                    this.RaisePropertyChanged("RelationshipStatus");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Surname {
+            get {
+                return this.SurnameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SurnameField, value) != true)) {
+                    this.SurnameField = value;
+                    this.RaisePropertyChanged("Surname");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+    [System.SerializableAttribute()]
+    public partial class DataErrorDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ErrorDetailsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ErrorMessageField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ErrorDetails {
+            get {
+                return this.ErrorDetailsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ErrorDetailsField, value) != true)) {
+                    this.ErrorDetailsField = value;
+                    this.RaisePropertyChanged("ErrorDetails");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ErrorMessage {
+            get {
+                return this.ErrorMessageField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ErrorMessageField, value) != true)) {
+                    this.ErrorMessageField = value;
+                    this.RaisePropertyChanged("ErrorMessage");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="PrisonService.IPrisonerService")]
     public interface IPrisonerService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/GetPrisoners", ReplyAction="http://tempuri.org/IPrisonerService/GetPrisonersResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Service.Contracts.Dto.DataErrorDto), Action="http://tempuri.org/IPrisonerService/GetPrisonersDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
-        Temporary_Prison.Service.Contracts.Dto.PrisonerDto[] GetPrisoners();
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.PrisonService.DataErrorDto), Action="http://tempuri.org/IPrisonerService/GetPrisonersDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        Temporary_Prison.Data.PrisonService.PrisonerDto[] GetPrisoners();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/GetPrisoners", ReplyAction="http://tempuri.org/IPrisonerService/GetPrisonersResponse")]
-        System.Threading.Tasks.Task<Temporary_Prison.Service.Contracts.Dto.PrisonerDto[]> GetPrisonersAsync();
+        System.Threading.Tasks.Task<Temporary_Prison.Data.PrisonService.PrisonerDto[]> GetPrisonersAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/GetPrisonersForPagedList", ReplyAction="http://tempuri.org/IPrisonerService/GetPrisonersForPagedListResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Service.Contracts.Dto.DataErrorDto), Action="http://tempuri.org/IPrisonerService/GetPrisonersForPagedListDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.PrisonService.DataErrorDto), Action="http://tempuri.org/IPrisonerService/GetPrisonersForPagedListDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
         Temporary_Prison.Data.PrisonService.GetPrisonersForPagedListResponse GetPrisonersForPagedList(Temporary_Prison.Data.PrisonService.GetPrisonersForPagedListRequest request);
         
         // CODEGEN: Generating message contract since the operation has multiple return values.
@@ -31,19 +299,19 @@ namespace Temporary_Prison.Data.PrisonService {
         System.Threading.Tasks.Task<Temporary_Prison.Data.PrisonService.GetPrisonersForPagedListResponse> GetPrisonersForPagedListAsync(Temporary_Prison.Data.PrisonService.GetPrisonersForPagedListRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/GetPrisonerById", ReplyAction="http://tempuri.org/IPrisonerService/GetPrisonerByIdResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Service.Contracts.Dto.DataErrorDto), Action="http://tempuri.org/IPrisonerService/GetPrisonerByIdDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
-        Temporary_Prison.Service.Contracts.Dto.PrisonerDto GetPrisonerById(int Id);
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.PrisonService.DataErrorDto), Action="http://tempuri.org/IPrisonerService/GetPrisonerByIdDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        Temporary_Prison.Data.PrisonService.PrisonerDto GetPrisonerById(int Id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/GetPrisonerById", ReplyAction="http://tempuri.org/IPrisonerService/GetPrisonerByIdResponse")]
-        System.Threading.Tasks.Task<Temporary_Prison.Service.Contracts.Dto.PrisonerDto> GetPrisonerByIdAsync(int Id);
+        System.Threading.Tasks.Task<Temporary_Prison.Data.PrisonService.PrisonerDto> GetPrisonerByIdAsync(int Id);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/TryAddPrisoner", ReplyAction="http://tempuri.org/IPrisonerService/TryAddPrisonerResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Service.Contracts.Dto.DataErrorDto), Action="http://tempuri.org/IPrisonerService/TryAddPrisonerDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
-        Temporary_Prison.Data.PrisonService.TryAddPrisonerResponse TryAddPrisoner(Temporary_Prison.Data.PrisonService.TryAddPrisonerRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/AddPrisoner", ReplyAction="http://tempuri.org/IPrisonerService/AddPrisonerResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.PrisonService.DataErrorDto), Action="http://tempuri.org/IPrisonerService/AddPrisonerDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        Temporary_Prison.Data.PrisonService.AddPrisonerResponse AddPrisoner(Temporary_Prison.Data.PrisonService.AddPrisonerRequest request);
         
         // CODEGEN: Generating message contract since the operation has multiple return values.
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/TryAddPrisoner", ReplyAction="http://tempuri.org/IPrisonerService/TryAddPrisonerResponse")]
-        System.Threading.Tasks.Task<Temporary_Prison.Data.PrisonService.TryAddPrisonerResponse> TryAddPrisonerAsync(Temporary_Prison.Data.PrisonService.TryAddPrisonerRequest request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/AddPrisoner", ReplyAction="http://tempuri.org/IPrisonerService/AddPrisonerResponse")]
+        System.Threading.Tasks.Task<Temporary_Prison.Data.PrisonService.AddPrisonerResponse> AddPrisonerAsync(Temporary_Prison.Data.PrisonService.AddPrisonerRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -72,7 +340,7 @@ namespace Temporary_Prison.Data.PrisonService {
     public partial class GetPrisonersForPagedListResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
-        public Temporary_Prison.Service.Contracts.Dto.PrisonerDto[] GetPrisonersForPagedListResult;
+        public Temporary_Prison.Data.PrisonService.PrisonerDto[] GetPrisonersForPagedListResult;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
         public int totalCount;
@@ -80,7 +348,7 @@ namespace Temporary_Prison.Data.PrisonService {
         public GetPrisonersForPagedListResponse() {
         }
         
-        public GetPrisonersForPagedListResponse(Temporary_Prison.Service.Contracts.Dto.PrisonerDto[] GetPrisonersForPagedListResult, int totalCount) {
+        public GetPrisonersForPagedListResponse(Temporary_Prison.Data.PrisonService.PrisonerDto[] GetPrisonersForPagedListResult, int totalCount) {
             this.GetPrisonersForPagedListResult = GetPrisonersForPagedListResult;
             this.totalCount = totalCount;
         }
@@ -88,36 +356,36 @@ namespace Temporary_Prison.Data.PrisonService {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="TryAddPrisoner", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
-    public partial class TryAddPrisonerRequest {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="AddPrisoner", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class AddPrisonerRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
-        public Temporary_Prison.Service.Contracts.Dto.PrisonerDto prisoner;
+        public Temporary_Prison.Data.PrisonService.PrisonerDto prisoner;
         
-        public TryAddPrisonerRequest() {
+        public AddPrisonerRequest() {
         }
         
-        public TryAddPrisonerRequest(Temporary_Prison.Service.Contracts.Dto.PrisonerDto prisoner) {
+        public AddPrisonerRequest(Temporary_Prison.Data.PrisonService.PrisonerDto prisoner) {
             this.prisoner = prisoner;
         }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.MessageContractAttribute(WrapperName="TryAddPrisonerResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
-    public partial class TryAddPrisonerResponse {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="AddPrisonerResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class AddPrisonerResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
-        public bool TryAddPrisonerResult;
+        public bool AddPrisonerResult;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
         public int newId;
         
-        public TryAddPrisonerResponse() {
+        public AddPrisonerResponse() {
         }
         
-        public TryAddPrisonerResponse(bool TryAddPrisonerResult, int newId) {
-            this.TryAddPrisonerResult = TryAddPrisonerResult;
+        public AddPrisonerResponse(bool AddPrisonerResult, int newId) {
+            this.AddPrisonerResult = AddPrisonerResult;
             this.newId = newId;
         }
     }
@@ -149,11 +417,11 @@ namespace Temporary_Prison.Data.PrisonService {
                 base(binding, remoteAddress) {
         }
         
-        public Temporary_Prison.Service.Contracts.Dto.PrisonerDto[] GetPrisoners() {
+        public Temporary_Prison.Data.PrisonService.PrisonerDto[] GetPrisoners() {
             return base.Channel.GetPrisoners();
         }
         
-        public System.Threading.Tasks.Task<Temporary_Prison.Service.Contracts.Dto.PrisonerDto[]> GetPrisonersAsync() {
+        public System.Threading.Tasks.Task<Temporary_Prison.Data.PrisonService.PrisonerDto[]> GetPrisonersAsync() {
             return base.Channel.GetPrisonersAsync();
         }
         
@@ -162,7 +430,7 @@ namespace Temporary_Prison.Data.PrisonService {
             return base.Channel.GetPrisonersForPagedList(request);
         }
         
-        public Temporary_Prison.Service.Contracts.Dto.PrisonerDto[] GetPrisonersForPagedList(int skip, int rowSize, out int totalCount) {
+        public Temporary_Prison.Data.PrisonService.PrisonerDto[] GetPrisonersForPagedList(int skip, int rowSize, out int totalCount) {
             Temporary_Prison.Data.PrisonService.GetPrisonersForPagedListRequest inValue = new Temporary_Prison.Data.PrisonService.GetPrisonersForPagedListRequest();
             inValue.skip = skip;
             inValue.rowSize = rowSize;
@@ -175,29 +443,29 @@ namespace Temporary_Prison.Data.PrisonService {
             return base.Channel.GetPrisonersForPagedListAsync(request);
         }
         
-        public Temporary_Prison.Service.Contracts.Dto.PrisonerDto GetPrisonerById(int Id) {
+        public Temporary_Prison.Data.PrisonService.PrisonerDto GetPrisonerById(int Id) {
             return base.Channel.GetPrisonerById(Id);
         }
         
-        public System.Threading.Tasks.Task<Temporary_Prison.Service.Contracts.Dto.PrisonerDto> GetPrisonerByIdAsync(int Id) {
+        public System.Threading.Tasks.Task<Temporary_Prison.Data.PrisonService.PrisonerDto> GetPrisonerByIdAsync(int Id) {
             return base.Channel.GetPrisonerByIdAsync(Id);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        Temporary_Prison.Data.PrisonService.TryAddPrisonerResponse Temporary_Prison.Data.PrisonService.IPrisonerService.TryAddPrisoner(Temporary_Prison.Data.PrisonService.TryAddPrisonerRequest request) {
-            return base.Channel.TryAddPrisoner(request);
+        Temporary_Prison.Data.PrisonService.AddPrisonerResponse Temporary_Prison.Data.PrisonService.IPrisonerService.AddPrisoner(Temporary_Prison.Data.PrisonService.AddPrisonerRequest request) {
+            return base.Channel.AddPrisoner(request);
         }
         
-        public bool TryAddPrisoner(Temporary_Prison.Service.Contracts.Dto.PrisonerDto prisoner, out int newId) {
-            Temporary_Prison.Data.PrisonService.TryAddPrisonerRequest inValue = new Temporary_Prison.Data.PrisonService.TryAddPrisonerRequest();
+        public bool AddPrisoner(Temporary_Prison.Data.PrisonService.PrisonerDto prisoner, out int newId) {
+            Temporary_Prison.Data.PrisonService.AddPrisonerRequest inValue = new Temporary_Prison.Data.PrisonService.AddPrisonerRequest();
             inValue.prisoner = prisoner;
-            Temporary_Prison.Data.PrisonService.TryAddPrisonerResponse retVal = ((Temporary_Prison.Data.PrisonService.IPrisonerService)(this)).TryAddPrisoner(inValue);
+            Temporary_Prison.Data.PrisonService.AddPrisonerResponse retVal = ((Temporary_Prison.Data.PrisonService.IPrisonerService)(this)).AddPrisoner(inValue);
             newId = retVal.newId;
-            return retVal.TryAddPrisonerResult;
+            return retVal.AddPrisonerResult;
         }
         
-        public System.Threading.Tasks.Task<Temporary_Prison.Data.PrisonService.TryAddPrisonerResponse> TryAddPrisonerAsync(Temporary_Prison.Data.PrisonService.TryAddPrisonerRequest request) {
-            return base.Channel.TryAddPrisonerAsync(request);
+        public System.Threading.Tasks.Task<Temporary_Prison.Data.PrisonService.AddPrisonerResponse> AddPrisonerAsync(Temporary_Prison.Data.PrisonService.AddPrisonerRequest request) {
+            return base.Channel.AddPrisonerAsync(request);
         }
     }
 }

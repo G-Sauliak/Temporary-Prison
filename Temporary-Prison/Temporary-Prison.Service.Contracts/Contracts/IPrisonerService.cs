@@ -22,6 +22,6 @@ namespace Temporary_Prison.Service.Contracts.Contracts
 
         [OperationContract]
         [FaultContract(typeof(DataErrorDto))]
-        bool TryAddPrisoner(PrisonerDto prisoner, out int newId);
+        bool AddPrisoner(PrisonerDto prisoner, out int newId);
     }
 }

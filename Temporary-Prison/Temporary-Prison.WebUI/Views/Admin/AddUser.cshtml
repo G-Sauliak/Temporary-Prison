@@ -1,0 +1,110 @@
+﻿@model Temporary_Prison.Models.UserViewModel
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="container">
+        <div class="col-md-7">
+            <div class="form-horizontal">
+                <h4>Create User</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+                    <span id="NameisValid" style="display: none;"><img src="@Url.Content("~/Content/Icons/ok-apply-icon.png")" /></span>
+                    <span id="NameisNotValid" style="display: none;"><img src="@Url.Content("~/Content/Icons/no-icon.png")" />That username is taken. Try another.</span>
+                    @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10 col-lg-5">
+                        @Html.EditorFor(model => model.UserName,
+                       new
+                       {
+                           htmlAttributes = new
+                           {
+                               @class = "form-control",
+                               @id = "userName",
+                               @onkeypress = "HideIcon('login')",
+                               @onchange = "window.isValid.IsExistsByUserName()"
+                           }
+                       })
+                        @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <img id="EmailisValid" style="display: none;" src="@Url.Content("~/Content/Icons/ok-apply-icon.png")" />
+                    <img id="EmailisNotValid" style="display: none;" src="@Url.Content("~/Content/Icons/no-icon.png")" />
+                    @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10 col-lg-5">
+                        @Html.EditorFor(model => model.Email,
+                     new
+                     {
+                         htmlAttributes = new
+                         {
+                             @class = "form-control",
+                             @id = "email",
+                             @onkeypress = "HideIcon('email')",
+                             @onchange = "window.isValid.IsExistsByEmail()"
+                         }
+                     })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Password,
+           htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10 col-lg-5">
+                        @Html.PasswordFor(model => model.Password,
+               new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Password,
+               "",
+               new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Roles,
+           htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.DropDownList("Roles")
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                        @Html.ActionLink("Back to List",
+               "Index",
+               null,
+               new { @class = "btn btn-default" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts
+{
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/Admin/IsValid.js"></script>
+
+    <script>
+        window.isValid = window.IsValidClass(
+            '@Html.Raw(Url.Action("IsExistsLogin", "Admin"))',
+            '@Html.Raw(Url.Action("IsExistsEmail", "Admin"))'
+        )
+        function HideIcon(type)
+        {
+            switch (type)
+            {
+                case 'login': $("#NameisValid").hide(); $("#NameisNotValid").hide();
+                    break;
+                case 'email': $("#EmailisValid").hide(); $("#EmailisNotValid").hide();
+                    break;
+            }
+        }
+    </script>
+}

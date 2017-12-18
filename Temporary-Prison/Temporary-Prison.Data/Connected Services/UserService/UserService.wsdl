@@ -35,6 +35,60 @@
   <wsdl:message name="IUserService_GetUsersForPagedList_DataErrorDtoFault_FaultMessage">
     <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q3:DataErrorDto" />
   </wsdl:message>
+  <wsdl:message name="IUserService_GetAllRoles_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllRoles" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_GetAllRoles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllRolesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_GetAllRoles_DataErrorDtoFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q4:DataErrorDto" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_AddUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddUser" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_AddUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_AddUser_DataErrorDtoFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q5:DataErrorDto" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_EditUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditUser" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_EditUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_EditUser_DataErrorDtoFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q6:DataErrorDto" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_DeleteUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteUser" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_DeleteUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_DeleteUser_DataErrorDtoFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q7:DataErrorDto" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_IsExistsByLogin_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsExistsByLogin" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_IsExistsByLogin_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsExistsByLoginResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_IsExistsByLogin_DataErrorDtoFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q8:DataErrorDto" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_IsExistsByEmail_InputMessage">
+    <wsdl:part name="parameters" element="tns:IsExistsByEmail" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_IsExistsByEmail_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IsExistsByEmailResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_IsExistsByEmail_DataErrorDtoFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q9:DataErrorDto" />
+  </wsdl:message>
   <wsdl:portType name="IUserService">
     <wsdl:operation name="IsValidLogin">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/IsValidLogin" message="tns:IUserService_IsValidLogin_InputMessage" />
@@ -50,6 +104,36 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/GetUsersForPagedList" message="tns:IUserService_GetUsersForPagedList_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUserService/GetUsersForPagedListResponse" message="tns:IUserService_GetUsersForPagedList_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IUserService/GetUsersForPagedListDataErrorDtoFault" name="DataErrorDtoFault" message="tns:IUserService_GetUsersForPagedList_DataErrorDtoFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAllRoles">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/GetAllRoles" message="tns:IUserService_GetAllRoles_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/GetAllRolesResponse" message="tns:IUserService_GetAllRoles_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IUserService/GetAllRolesDataErrorDtoFault" name="DataErrorDtoFault" message="tns:IUserService_GetAllRoles_DataErrorDtoFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/AddUser" message="tns:IUserService_AddUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/AddUserResponse" message="tns:IUserService_AddUser_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IUserService/AddUserDataErrorDtoFault" name="DataErrorDtoFault" message="tns:IUserService_AddUser_DataErrorDtoFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/EditUser" message="tns:IUserService_EditUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/EditUserResponse" message="tns:IUserService_EditUser_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IUserService/EditUserDataErrorDtoFault" name="DataErrorDtoFault" message="tns:IUserService_EditUser_DataErrorDtoFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/DeleteUser" message="tns:IUserService_DeleteUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/DeleteUserResponse" message="tns:IUserService_DeleteUser_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IUserService/DeleteUserDataErrorDtoFault" name="DataErrorDtoFault" message="tns:IUserService_DeleteUser_DataErrorDtoFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsExistsByLogin">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/IsExistsByLogin" message="tns:IUserService_IsExistsByLogin_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/IsExistsByLoginResponse" message="tns:IUserService_IsExistsByLogin_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IUserService/IsExistsByLoginDataErrorDtoFault" name="DataErrorDtoFault" message="tns:IUserService_IsExistsByLogin_DataErrorDtoFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="IsExistsByEmail">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/IsExistsByEmail" message="tns:IUserService_IsExistsByEmail_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/IsExistsByEmailResponse" message="tns:IUserService_IsExistsByEmail_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IUserService/IsExistsByEmailDataErrorDtoFault" name="DataErrorDtoFault" message="tns:IUserService_IsExistsByEmail_DataErrorDtoFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IUserService" type="tns:IUserService">
@@ -80,6 +164,78 @@
     </wsdl:operation>
     <wsdl:operation name="GetUsersForPagedList">
       <soap:operation soapAction="http://tempuri.org/IUserService/GetUsersForPagedList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataErrorDtoFault">
+        <soap:fault use="literal" name="DataErrorDtoFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllRoles">
+      <soap:operation soapAction="http://tempuri.org/IUserService/GetAllRoles" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataErrorDtoFault">
+        <soap:fault use="literal" name="DataErrorDtoFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AddUser">
+      <soap:operation soapAction="http://tempuri.org/IUserService/AddUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataErrorDtoFault">
+        <soap:fault use="literal" name="DataErrorDtoFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="EditUser">
+      <soap:operation soapAction="http://tempuri.org/IUserService/EditUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataErrorDtoFault">
+        <soap:fault use="literal" name="DataErrorDtoFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteUser">
+      <soap:operation soapAction="http://tempuri.org/IUserService/DeleteUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataErrorDtoFault">
+        <soap:fault use="literal" name="DataErrorDtoFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="IsExistsByLogin">
+      <soap:operation soapAction="http://tempuri.org/IUserService/IsExistsByLogin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataErrorDtoFault">
+        <soap:fault use="literal" name="DataErrorDtoFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="IsExistsByEmail">
+      <soap:operation soapAction="http://tempuri.org/IUserService/IsExistsByEmail" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

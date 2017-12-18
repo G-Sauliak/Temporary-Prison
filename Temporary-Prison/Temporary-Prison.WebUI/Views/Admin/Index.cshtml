@@ -1,14 +1,16 @@
 ﻿@model IEnumerable<Temporary_Prison.Common.Models.User>
 @using X.PagedList
 @using X.PagedList.Mvc
-
-<br />
-<p>
-    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-default" })
-    @Html.ActionLink("Edit Roles", "ViewAllRoles", null, new { @class = "btn btn-default" })
-    @Html.ActionLink("Back to Home", "Index", "Home", null, new { @class = "btn btn-default" })
-</p>
-<br />
+<div class="container">
+    <div class="col-md-7">
+        <br />
+        <p>
+            @Html.ActionLink("Create New", "AddUser", new { redirectUrl = ViewBag.RedirectUrl }, new { @class = "btn btn-default" })
+            @Html.ActionLink("Back to Home", "Index", "Home", null, new { @class = "btn btn-default" })
+        </p>
+        <br />
+    </div>
+</div>
 @using (Html.BeginForm("Index", "Admin", FormMethod.Get))
 {
     <div class="form-group">
@@ -29,7 +31,7 @@
     </tr>
 
     @foreach (var item in Model)
-    {
+            {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.UserName)
@@ -39,21 +41,19 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "EditUser", new { UserName = item.UserName, redirectUrl = ViewBag.RedirectUrl })
-                
+
                 @if ((item.UserName.ToLower() != this.User.Identity.Name.ToLower()))
                 {
-                 @Html.ActionLink("Delete", "Delete", new { UserName = item.UserName, redirectUrl = ViewBag.RedirectUrl })
+                    @Html.ActionLink("Delete", "DeleteUser", new { UserName = item.UserName, redirectUrl = ViewBag.RedirectUrl })
                 }
             </td>
         </tr>
-                }
+    }
 </table>
 
 <br />
 @Html.PagedListPager(Model as IPagedList, page => Url.Action("Index", new
-{
-    page,
-    search = ViewBag.searc,
-    currentFilter = ViewBag.CurrentFilter
-}), PagedListRenderOptions.MinimalWithPageCountText)
-<hr />
+   {
+       page,
+       search = ViewBag.searc
+   }), PagedListRenderOptions.MinimalWithPageCountText)

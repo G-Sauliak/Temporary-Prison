@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using Temporary_Prison.Service.Contracts.Dto;
+using Temporary_Prison.Service.Contracts.Extensions;
 
 namespace Temporary_Prison.Service.Contracts.Repository
 {
@@ -21,29 +22,103 @@ namespace Temporary_Prison.Service.Contracts.Repository
             }
         }
 
-        public string[] GetRoles(string userName)
+        public void AddUser(UserDto user)
         {
-            string[] userRoles = null;
             using (var sqlConnection = new SqlConnection(GetConnectionString))
             {
                 sqlConnection.Open();
 
-                using (var sqlCommand = new SqlCommand("GetRoles", sqlConnection))
+                using (var sqlCommand = new SqlCommand("AddUser", sqlConnection))
                 {
                     sqlCommand.CommandType = CommandType.StoredProcedure;
-                    sqlCommand.Parameters.AddWithValue("userName", userName);
-                    using (var dataReader = sqlCommand.ExecuteReader())
-                    {
-                        userRoles = new string[dataReader.FieldCount + 1];
-                        for (int i = 0; dataReader.Read(); ++i)
-                        {
-                            userRoles[i] = dataReader["RoleName"].ToString();
-                        }
 
+                    var param = new SqlParameter[]
+                    {
+                        new SqlParameter(@"UserName",user.UserName),
+                        new SqlParameter(@"Email",user.Email),
+                        new SqlParameter(@"Password",user.Password),
+                     };
+
+                    var returnVal = sqlCommand.Parameters.Add("@return_value", SqlDbType.Int);
+                    returnVal.Direction = ParameterDirection.ReturnValue;
+
+                    sqlCommand.Parameters.AddRange(param);
+
+                    var result = sqlCommand.ExecuteNonQuery();
+
+                    int newId = (int)returnVal.Value;
+
+                    sqlCommand.CommandText = "AddToRoles";
+
+                    foreach (var number in user.Roles)
+                    {
+                        sqlCommand.Parameters.Clear();
+                        sqlCommand.Parameters.AddWithValue("RoleName", number);
+                        sqlCommand.Parameters.AddWithValue("UserId", newId);
+                        sqlCommand.ExecuteNonQuery();
                     }
                 }
             }
-            return userRoles;
+        }
+
+        public void DeleteUser(string userName)
+        {
+            using (var sqlConnection = new SqlConnection(GetConnectionString))
+            {
+                sqlConnection.Open();
+
+                using (var sqlCommand = new SqlCommand("DeleteUser", sqlConnection))
+                {
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                    sqlCommand.Parameters.AddWithValue(@"userName", userName);
+
+                    sqlCommand.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void EditUser(UserDto user)
+        {
+            using (var sqlConnection = new SqlConnection(GetConnectionString))
+            {
+                sqlConnection.Open();
+
+                using (var sqlCommand = new SqlCommand("UpdateUser", sqlConnection))
+                {
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    var param = new SqlParameter[]
+                     {
+                        new SqlParameter(@"Email",user.Email),
+                        new SqlParameter(@"userName",user.UserName),
+                        new SqlParameter(@"Password",user.Password),
+                     };
+                    sqlCommand.Parameters.AddRange(param);
+
+                    sqlCommand.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public string[] GetAllRoles()
+        {
+            string[] allRoles = null;
+            using (var sqlConnection = new SqlConnection(GetConnectionString))
+            {
+                sqlConnection.Open();
+
+                using (var sqlCommand = new SqlCommand("GetAllRoles", sqlConnection))
+                {
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                    using (var dataTable = new DataTable())
+                    {
+                        dataTable.Load(sqlCommand.ExecuteReader());
+                        allRoles = dataTable.ConvertToArrayOfStrings("RoleName");
+                    }
+                }
+            }
+            return allRoles;
         }
 
         public UserDto GetUserByName(string userName)
@@ -56,25 +131,31 @@ namespace Temporary_Prison.Service.Contracts.Repository
                 {
                     sqlCommand.CommandType = CommandType.StoredProcedure;
                     sqlCommand.Parameters.AddWithValue("userName", userName);
-                    using (var dataReader = sqlCommand.ExecuteReader())
+                    var tableModel = new DataTable();
+                    var tableArray = new DataTable();
+                    try
                     {
-                        while (dataReader.Read())
-                        {
-                            userDto = new UserDto()
-                            {
-                                UserName = dataReader["UserName"].ToString(),
-                                Email = dataReader["Email"].ToString()
-                            };
-                        }
+                        tableModel.Load(sqlCommand.ExecuteReader());
+                        userDto = tableModel.ConvertToModel<UserDto>();
+
+                        sqlCommand.CommandText = "GetRolesByUserName";
+
+                        tableArray.Load(sqlCommand.ExecuteReader());
+                        userDto.Roles = tableArray.ConvertToArrayOfStrings("RoleName");
+                    }
+                    finally
+                    {
+                        tableModel.Dispose();
+                        tableArray.Dispose();
                     }
                 }
             }
             return userDto;
         }
 
-        public UserDto[] GetUsersForPagedList(int skip, int rowSize,out int totalCountUsers)
+        public UserDto[] GetUsersForPagedList(int skip, int rowSize, out int totalCountUsers)
         {
-            var usersDto = default(UserDto[]);
+            UserDto[] usersDto = null;
             using (var sqlConnection = new SqlConnection(GetConnectionString))
             {
                 sqlConnection.Open();
@@ -86,29 +167,53 @@ namespace Temporary_Prison.Service.Contracts.Repository
                         new SqlParameter(@"skip",skip),
                         new SqlParameter(@"rowSize",rowSize),
                      };
-
-                    var returnVal = sqlCommand.Parameters.Add("@return_value", SqlDbType.Int);
-                    returnVal.Direction = ParameterDirection.ReturnValue;
-
                     sqlCommand.Parameters.AddRange(param);
 
-                    using (var dataReader = sqlCommand.ExecuteReader())
+                    using (var dataTable = new DataTable())
                     {
-                        usersDto = new UserDto[dataReader.FieldCount];
-                        for (int i = 0;dataReader.Read(); i++)
-                        {
-                            usersDto[i] = new UserDto()
-                            {
-                                UserName = dataReader["UserName"].ToString(),
-                                Email = dataReader["Email"].ToString()
-                            };
-                        }
-                        dataReader.NextResult();
-                        totalCountUsers = (int)returnVal.Value;
+                        dataTable.Load(sqlCommand.ExecuteReader());
+                        usersDto = dataTable.ConvertToArrayOfModels<UserDto>();
+                        totalCountUsers = dataTable.Rows.Count;
                     }
                 }
             }
             return usersDto;
+        }
+
+        public bool IsExistsByEmail(string email)
+        {
+            bool result = false;
+            using (var sqlConnection = new SqlConnection(GetConnectionString))
+            {
+                sqlConnection.Open();
+
+                using (var sqlCommand = new SqlCommand("SELECT dbo.IsExistsEmail(@email)", sqlConnection))
+                {
+                    sqlCommand.CommandType = CommandType.Text;
+                    sqlCommand.Parameters.AddWithValue("@email", email);
+
+                    result = (bool)sqlCommand.ExecuteScalar();
+                }
+            }
+            return result;
+        }
+
+        public bool IsExistsByLogin(string userName)
+        {
+            bool result = false;
+            using (var sqlConnection = new SqlConnection(GetConnectionString))
+            {
+                sqlConnection.Open();
+
+                using (var sqlCommand = new SqlCommand("SELECT dbo.IsExistsLogin(@userName)", sqlConnection))
+                {
+                    sqlCommand.CommandType = CommandType.Text;
+                    sqlCommand.Parameters.AddWithValue("@userName", userName);
+
+                    result = (bool)sqlCommand.ExecuteScalar();
+                }
+            }
+            return result;
         }
 
         public bool IsValidUser(string userName, string password)

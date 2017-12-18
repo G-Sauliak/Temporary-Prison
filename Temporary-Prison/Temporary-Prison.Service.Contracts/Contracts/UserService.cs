@@ -17,22 +17,42 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             userRepository = new UserRepository();
         }
 
-        public string[] GetRoles(string userName)
+        public void AddUser(UserDto user)
         {
-            string[] userRoles = null;
             try
             {
-                userRoles = userRepository.GetRoles(userName);
+                if (user != null)
+                {
+                    userRepository.AddUser(user);
+                }
             }
             catch (Exception ex)
             {
                 var serviceDataError = new DataErrorDto();
-                serviceDataError.ErrorMessage = "Error. GetRoles";
+                serviceDataError.ErrorMessage = "Error. AddUser";
                 serviceDataError.ErrorDetails = ex.ToString();
                 log.Error($"Type Error: {serviceDataError.ErrorMessage}\n ErrorDetails {ex.ToString()}");
                 throw new FaultException<DataErrorDto>(serviceDataError, ex.ToString());
             }
-            return userRoles;
+        }
+
+        public string[] GetAllRoles()
+        {
+            string[] userDto = default(string[]);
+            try
+            {
+                userDto = userRepository.GetAllRoles();
+            }
+
+            catch (Exception ex)
+            {
+                var serviceDataError = new DataErrorDto();
+                serviceDataError.ErrorMessage = "Error. GetAllRoles";
+                serviceDataError.ErrorDetails = ex.ToString();
+                log.Error($"Type Error: {serviceDataError.ErrorMessage}\n ErrorDetails {ex.ToString()}");
+                throw new FaultException<DataErrorDto>(serviceDataError, ex.ToString());
+            }
+            return userDto;
         }
 
         public UserDto GetUserByName(string userName)
@@ -41,13 +61,12 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             try
             {
                 userDto = userRepository.GetUserByName(userName);
-                userDto.Roles = userRepository.GetRoles(userName);
             }
 
             catch (Exception ex)
             {
                 var serviceDataError = new DataErrorDto();
-                serviceDataError.ErrorMessage = "Error. GetUserByName";
+                serviceDataError.ErrorMessage = $"Error. GetUserByName {userName}";
                 serviceDataError.ErrorDetails = ex.ToString();
                 log.Error($"Type Error: {serviceDataError.ErrorMessage}\n ErrorDetails {ex.ToString()}");
                 throw new FaultException<DataErrorDto>(serviceDataError, ex.ToString());
@@ -65,7 +84,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             catch (Exception ex)
             {
                 var serviceDataError = new DataErrorDto();
-                serviceDataError.ErrorMessage = "Error. GetUsersForPagedList";
+                serviceDataError.ErrorMessage = $"Error. GetUsersForPagedList skip: {skip} countRows: {rowSize}";
                 serviceDataError.ErrorDetails = ex.ToString();
                 log.Error($"Type Error: {serviceDataError.ErrorMessage}\n ErrorDetails {ex.ToString()}");
                 throw new FaultException<DataErrorDto>(serviceDataError, ex.ToString());
@@ -73,7 +92,39 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             return usersDto;
         }
 
-    public bool IsValidLogin(string userName, string password)
+        public bool IsExistsByLogin(string userName)
+        {
+            try
+            {
+                return userRepository.IsExistsByLogin(userName);
+            }
+            catch (Exception ex)
+            {
+                var serviceDataError = new DataErrorDto();
+                serviceDataError.ErrorMessage = $"Error. IsExistsByLogin {userName}";
+                serviceDataError.ErrorDetails = ex.ToString();
+                log.Error($"Type Error: {serviceDataError.ErrorMessage}\n ErrorDetails {ex.ToString()}");
+                throw new FaultException<DataErrorDto>(serviceDataError, ex.ToString());
+            }
+        }
+
+        public bool IsExistsByEmail(string email)
+        {
+            try
+            {
+                return userRepository.IsExistsByEmail(email);
+            }
+            catch (Exception ex)
+            {
+                var serviceDataError = new DataErrorDto();
+                serviceDataError.ErrorMessage = $"Error. IsExistsByEmail {email}";
+                serviceDataError.ErrorDetails = ex.ToString();
+                log.Error($"Type Error: {serviceDataError.ErrorMessage}\n ErrorDetails {ex.ToString()}");
+                throw new FaultException<DataErrorDto>(serviceDataError, ex.ToString());
+            }
+        }
+
+        public bool IsValidLogin(string userName, string password)
         {
             bool result = false;
             try
@@ -84,12 +135,44 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             catch (Exception ex)
             {
                 var serviceDataError = new DataErrorDto();
-                serviceDataError.ErrorMessage = "Error. IsValidLogin";
+                serviceDataError.ErrorMessage = $"Error. IsValidLogin {userName}";
                 serviceDataError.ErrorDetails = ex.ToString();
                 log.Error($"Type Error: {serviceDataError.ErrorMessage}\n ErrorDetails {ex.ToString()}");
                 throw new FaultException<DataErrorDto>(serviceDataError, ex.ToString());
             }
             return result;
+        }
+
+        public void EditUser(UserDto user)
+        {
+            try
+            {
+                userRepository.EditUser(user);
+            }
+            catch (Exception ex)
+            {
+                var serviceDataError = new DataErrorDto();
+                serviceDataError.ErrorMessage = $"Error. EditUser: {user.UserName}";
+                serviceDataError.ErrorDetails = ex.ToString();
+                log.Error($"Type Error: {serviceDataError.ErrorMessage}\n ErrorDetails {ex.ToString()}");
+                throw new FaultException<DataErrorDto>(serviceDataError, ex.ToString());
+            }
+        }
+
+        public void DeleteUser(string userName)
+        {
+            try
+            {
+                userRepository.DeleteUser(userName);
+            }
+            catch (Exception ex)
+            {
+                var serviceDataError = new DataErrorDto();
+                serviceDataError.ErrorMessage = $"Error. DeleteUser: {userName}";
+                serviceDataError.ErrorDetails = ex.ToString();
+                log.Error($"Type Error: {serviceDataError.ErrorMessage}\n ErrorDetails {ex.ToString()}");
+                throw new FaultException<DataErrorDto>(serviceDataError, ex.ToString());
+            }
         }
     }
 

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Temporary_Prison.Service.Contracts.Dto;
+using Temporary_Prison.Data.UserService;
 
 namespace Temporary_Prison.Data.Clients
 {

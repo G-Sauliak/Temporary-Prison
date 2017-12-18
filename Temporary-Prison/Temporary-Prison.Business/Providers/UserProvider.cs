@@ -12,11 +12,33 @@ namespace Temporary_Prison.Business.Providers
         private readonly IUserDataService userDataService;
         private readonly ICacheService cacheService;
         private readonly ILog log = LogManager.GetLogger("LOGGER");
+        public UserProvider(){}
 
         public UserProvider(IUserDataService userDataService, ICacheService cacheService)
         {
             this.cacheService = cacheService;
             this.userDataService = userDataService;
+        }
+
+        public void AddUser(User user)
+        {
+            userDataService.AddUser(user);
+        }
+
+        public IReadOnlyList<string> GetAllRoles()
+        {
+            var roles = default(IReadOnlyList<string>);
+            var cacheKeyForPageList = "AllRolers";
+            try
+            {
+                roles = cacheService.GetOrSet(cacheKeyForPageList,
+                        () => userDataService.GetAllRoles());
+            }
+            catch (Exception ex)
+            {
+                log.Fatal(ex.Message);
+            }
+            return roles;
         }
 
         public User GetUserByName(string userName)
@@ -45,6 +67,16 @@ namespace Temporary_Prison.Business.Providers
                 log.Fatal(ex.Message);
             }
             return users;
+        }
+
+        public bool IsExistsByEmail(string email)
+        {
+            return userDataService.IsExistsByEmail(email);
+        }
+
+        public bool IsExistsByLogin(string userName)
+        {
+            return userDataService.IsExistLogin(userName);
         }
 
         public bool IsValidUser(string userName, string password)
