@@ -1,19 +1,19 @@
 ﻿@model Temporary_Prison.Models.PrisonerViewModel
 
 @{
-    ViewBag.Title = "AddPrisoner";
+    ViewBag.Title = "Edit Prisoner";
 }
 
-<h2>AddPrisoner</h2>
+<h2>EditPrisoner</h2>
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
 
-@using (Html.BeginForm("AddPrisoner", "Editor", new { RedirectUrl = ViewBag.RedirectUrl }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("EditPrisoner", "Editor", new { RedirectUrl = ViewBag.RedirectUrl }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-   
+
     <div class="form-horizontal col-md-10">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <hr />
@@ -64,16 +64,21 @@
                 });
             });
         </script>
+        <p class="number">
+        </p>
 
         <div class="form-group">
             @Html.LabelFor(model => model.PhoneNumbers, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <p class="number">
-                    @Html.EditorFor(model => model.PhoneNumbers,"Phones", new { htmlAttributes = new { @class = "form-control" } })
-                </p>
+                @for (int i = 0; i < Model.PhoneNumbers.Count; i++)
+                {
+                    @Html.EditorFor(model => model.PhoneNumbers, "Phones", new { htmlAttributes = new { @class = "form-control" } })
+                }
                 @Html.ValidationMessageFor(model => model.PhoneNumbers, "", new { @class = "text-danger" })
-                <a href="javascript:addMorePhoneNumber();" class="add_phone">Add More</a>
             </div>
+
+            <a href="javascript:addMorePhoneNumber();" class="add_phone">Add More</a>
+     
         </div>
 
         <div class="form-group">
@@ -110,14 +115,15 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Edit" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
-
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+
 
 

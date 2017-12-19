@@ -43,7 +43,6 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             {
                 prisoners = prisonerContext.GetPrisonersForPagedList(skip, rowSize, out totalCount);
             }
-
             catch (Exception ex)
             {
                 var serviceData = new DataErrorDto();
@@ -77,12 +76,49 @@ namespace Temporary_Prison.Service.Contracts.Contracts
         {
             try
             {
-               return prisonerContext.TryAddPrisoner(prisoner, out newId);
+                return prisonerContext.AddPrisoner(prisoner, out newId);
             }
             catch (Exception ex)
             {
                 var serviceData = new DataErrorDto();
                 serviceData.ErrorMessage = "Error Exception. AddPrisoner";
+                serviceData.ErrorDetails = ex.ToString();
+                log.Error($"Type Error: {serviceData.ErrorMessage}\n ErrorDetails {ex.ToString()}");
+                throw new FaultException<DataErrorDto>(serviceData, ex.ToString());
+            }
+        }
+
+        public PrisonerDto[] FindPrisonersByName(string search)
+        {
+            return prisonerContext.FindPrisonersByName(search);
+        }
+
+        public void DeletePrisoner(int id)
+        {
+            try
+            {
+                prisonerContext.DeletePrisoner(id);
+            }
+            catch (Exception ex)
+            {
+                var serviceData = new DataErrorDto();
+                serviceData.ErrorMessage = "Error Exception. EditPrisoner";
+                serviceData.ErrorDetails = ex.ToString();
+                log.Error($"Type Error: {serviceData.ErrorMessage}\n ErrorDetails {ex.ToString()}");
+                throw new FaultException<DataErrorDto>(serviceData, ex.ToString());
+            }
+        }
+
+        public void EditPrisoner(PrisonerDto prisoner)
+        {
+            try
+            {
+                prisonerContext.EditPrisoner(prisoner);
+            }
+            catch (Exception ex)
+            {
+                var serviceData = new DataErrorDto();
+                serviceData.ErrorMessage = "Error Exception. EditPrisoner";
                 serviceData.ErrorDetails = ex.ToString();
                 log.Error($"Type Error: {serviceData.ErrorMessage}\n ErrorDetails {ex.ToString()}");
                 throw new FaultException<DataErrorDto>(serviceData, ex.ToString());

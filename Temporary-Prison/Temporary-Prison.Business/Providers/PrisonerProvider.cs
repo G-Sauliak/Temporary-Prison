@@ -3,23 +3,26 @@ using Temporary_Prison.Common.Models;
 using Temporary_Prison.Data.Services;
 using System;
 using Temporary_Prison.Business.CacheManager;
+using System.Threading.Tasks;
+using log4net;
 
 namespace Temporary_Prison.Business.Providers
 {
     public class PrisonerProvider : IPrisonerProvider
     {
-        private readonly IPrisonerDataService dataService;
+        private readonly IPrisonerDataService prisonerDataService;
         private readonly ICacheService cacheService;
+        private readonly ILog log = LogManager.GetLogger("LOGGER");
 
         public PrisonerProvider(IPrisonerDataService dataService, ICacheService cacheService)
         {
             this.cacheService = cacheService;
-            this.dataService = dataService;
+            this.prisonerDataService = dataService;
         }
 
         public IReadOnlyList<Prisoner> GetPrisoner()
         {
-            return dataService.GetPrisoners();
+            return prisonerDataService.GetPrisoners();
         }
 
         public Prisoner GetPrisonerById(int id)
@@ -29,13 +32,13 @@ namespace Temporary_Prison.Business.Providers
             try
             {
                 priosner = cacheService.GetOrSet(cacheKey,
-                    () => dataService.GetPrisonerById(id));
+                    () => prisonerDataService.GetPrisonerById(id));
 
                 return priosner;
             }
             catch (Exception ex)
             {
-                //TODO
+                log.Fatal(ex.Message);
             }
             return default(Prisoner);
         }
@@ -48,7 +51,7 @@ namespace Temporary_Prison.Business.Providers
             try
             {
                 prisoners = cacheService.GetOrSet(cacheKeyForPageList,
-                    () => dataService.GetPrisonersForPageList(skip, rowSize, out outTotalCount));
+                    () => prisonerDataService.GetPrisonersForPageList(skip, rowSize, out outTotalCount));
 
                 if (totalCount == default(int))
                 {
@@ -59,14 +62,30 @@ namespace Temporary_Prison.Business.Providers
             }
             catch (Exception ex)
             {
-                //TODO
+                log.Fatal(ex.Message);
             }
             return prisoners;
         }
 
         public void AddPrisoner(Prisoner prisoner, out int newId)
         {
-            dataService.AddPrisoner(prisoner, out newId);
+            prisonerDataService.AddPrisoner(prisoner, out newId);
+        }
+
+        public async Task<IReadOnlyList<Prisoner>> FindPrisonersByName(string search)
+        {
+            //cache 
+            return await prisonerDataService.FindPrisonersByName(search);
+        }
+
+        public void EditPrisoner(Prisoner prisoner)
+        {
+            prisonerDataService.EditPrisoner(prisoner);
+        }
+
+        public void DeletePrisoner(int id)
+        {
+            prisonerDataService.DeletePrisoner(id);
         }
     }
 }

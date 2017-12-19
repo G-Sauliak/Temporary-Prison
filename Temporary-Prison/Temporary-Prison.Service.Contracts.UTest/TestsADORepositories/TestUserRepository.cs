@@ -21,9 +21,9 @@ namespace Temporary_Prison.Service.Contracts.UTest.TestsADORepositories
         public void UserRepository_GetUSersForPagedList()
         {
             int total;
-            var result = userRepository.GetUsersForPagedList(0, 2, out total);
+            var result = userRepository.GetUsersForPagedList(0, 4, out total);
             Assert.IsNotNull(result);
-            Assert.IsTrue(total == 2);
+            Assert.IsTrue(total > 4);
         }
 
         [TestMethod]

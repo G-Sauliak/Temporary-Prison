@@ -7,7 +7,7 @@
 
         <ul class="nav navbar-nav navbar-right">
             <li>
-                @Html.ActionLink($"Hello {identity.Name}", "Index", "Home", htmlAttributes: new { title = "Manage" })
+                @Html.ActionLink($"Hello {identity.Name}","Index","", htmlAttributes: new { title = "Manage" })
             </li>
             @using (Html.BeginForm("LogOff", "Account", FormMethod.Post,new{ id = "logoutForm"}))
             {

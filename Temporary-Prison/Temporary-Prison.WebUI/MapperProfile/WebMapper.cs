@@ -8,7 +8,8 @@ namespace Temporary_Prison.MapperProfile
     {
         public WebMapper()
         {
-            CreateMap<Prisoner, AddPrisonerViewModel>();
+            CreateMap<Prisoner, PrisonerViewModel>();
+            CreateMap<PrisonerViewModel, Prisoner>();
             CreateMap<User, UserViewModel>();
             CreateMap<UserViewModel, User>();
         }

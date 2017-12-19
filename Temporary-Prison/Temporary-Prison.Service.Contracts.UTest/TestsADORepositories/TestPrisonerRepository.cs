@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Temporary_Prison.Service.Contracts.Dto;
 using Temporary_Prison.Service.Contracts.Repositories;
 
 namespace Temporary_Prison.Service.Contracts.UTest
@@ -28,6 +29,13 @@ namespace Temporary_Prison.Service.Contracts.UTest
             int outResult;
             var result = prisonerRepository.GetPrisonerById(1);
             Assert.IsNotNull(result);
+        }
+        [TestMethod]
+        public void PrisonerRepository_FindPRisonersByName()
+        {
+            PrisonerDto[] prisoners = null;
+            prisoners = prisonerRepository.FindPrisonersByName("ge");
+            Assert.IsNotNull(prisoners);
         }
     }
 }

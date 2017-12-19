@@ -312,6 +312,27 @@ namespace Temporary_Prison.Data.PrisonService {
         // CODEGEN: Generating message contract since the operation has multiple return values.
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/AddPrisoner", ReplyAction="http://tempuri.org/IPrisonerService/AddPrisonerResponse")]
         System.Threading.Tasks.Task<Temporary_Prison.Data.PrisonService.AddPrisonerResponse> AddPrisonerAsync(Temporary_Prison.Data.PrisonService.AddPrisonerRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/FindPrisonersByName", ReplyAction="http://tempuri.org/IPrisonerService/FindPrisonersByNameResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.PrisonService.DataErrorDto), Action="http://tempuri.org/IPrisonerService/FindPrisonersByNameDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        Temporary_Prison.Data.PrisonService.PrisonerDto[] FindPrisonersByName(string search);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/FindPrisonersByName", ReplyAction="http://tempuri.org/IPrisonerService/FindPrisonersByNameResponse")]
+        System.Threading.Tasks.Task<Temporary_Prison.Data.PrisonService.PrisonerDto[]> FindPrisonersByNameAsync(string search);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/EditPrisoner", ReplyAction="http://tempuri.org/IPrisonerService/EditPrisonerResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.PrisonService.DataErrorDto), Action="http://tempuri.org/IPrisonerService/EditPrisonerDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        void EditPrisoner(Temporary_Prison.Data.PrisonService.PrisonerDto prisoner);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/EditPrisoner", ReplyAction="http://tempuri.org/IPrisonerService/EditPrisonerResponse")]
+        System.Threading.Tasks.Task EditPrisonerAsync(Temporary_Prison.Data.PrisonService.PrisonerDto prisoner);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/DeletePrisoner", ReplyAction="http://tempuri.org/IPrisonerService/DeletePrisonerResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.PrisonService.DataErrorDto), Action="http://tempuri.org/IPrisonerService/DeletePrisonerDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        void DeletePrisoner(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/DeletePrisoner", ReplyAction="http://tempuri.org/IPrisonerService/DeletePrisonerResponse")]
+        System.Threading.Tasks.Task DeletePrisonerAsync(int id);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -466,6 +487,30 @@ namespace Temporary_Prison.Data.PrisonService {
         
         public System.Threading.Tasks.Task<Temporary_Prison.Data.PrisonService.AddPrisonerResponse> AddPrisonerAsync(Temporary_Prison.Data.PrisonService.AddPrisonerRequest request) {
             return base.Channel.AddPrisonerAsync(request);
+        }
+        
+        public Temporary_Prison.Data.PrisonService.PrisonerDto[] FindPrisonersByName(string search) {
+            return base.Channel.FindPrisonersByName(search);
+        }
+        
+        public System.Threading.Tasks.Task<Temporary_Prison.Data.PrisonService.PrisonerDto[]> FindPrisonersByNameAsync(string search) {
+            return base.Channel.FindPrisonersByNameAsync(search);
+        }
+        
+        public void EditPrisoner(Temporary_Prison.Data.PrisonService.PrisonerDto prisoner) {
+            base.Channel.EditPrisoner(prisoner);
+        }
+        
+        public System.Threading.Tasks.Task EditPrisonerAsync(Temporary_Prison.Data.PrisonService.PrisonerDto prisoner) {
+            return base.Channel.EditPrisonerAsync(prisoner);
+        }
+        
+        public void DeletePrisoner(int id) {
+            base.Channel.DeletePrisoner(id);
+        }
+        
+        public System.Threading.Tasks.Task DeletePrisonerAsync(int id) {
+            return base.Channel.DeletePrisonerAsync(id);
         }
     }
 }

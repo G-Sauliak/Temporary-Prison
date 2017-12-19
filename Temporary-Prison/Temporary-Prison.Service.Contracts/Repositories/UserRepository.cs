@@ -41,7 +41,6 @@ namespace Temporary_Prison.Service.Contracts.Repository
 
                     var returnVal = sqlCommand.Parameters.Add("@return_value", SqlDbType.Int);
                     returnVal.Direction = ParameterDirection.ReturnValue;
-
                     sqlCommand.Parameters.AddRange(param);
 
                     var result = sqlCommand.ExecuteNonQuery();
@@ -49,7 +48,6 @@ namespace Temporary_Prison.Service.Contracts.Repository
                     int newId = (int)returnVal.Value;
 
                     sqlCommand.CommandText = "AddToRoles";
-
                     foreach (var number in user.Roles)
                     {
                         sqlCommand.Parameters.Clear();
@@ -70,9 +68,7 @@ namespace Temporary_Prison.Service.Contracts.Repository
                 using (var sqlCommand = new SqlCommand("DeleteUser", sqlConnection))
                 {
                     sqlCommand.CommandType = CommandType.StoredProcedure;
-
                     sqlCommand.Parameters.AddWithValue(@"userName", userName);
-
                     sqlCommand.ExecuteNonQuery();
                 }
             }
@@ -162,6 +158,10 @@ namespace Temporary_Prison.Service.Contracts.Repository
                 using (var sqlCommand = new SqlCommand("GetUsersForPagedList", sqlConnection))
                 {
                     sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                    var returnVal = sqlCommand.Parameters.Add("@return_value", SqlDbType.Int);
+                    returnVal.Direction = ParameterDirection.ReturnValue;
+
                     var param = new SqlParameter[]
                      {
                         new SqlParameter(@"skip",skip),
@@ -173,7 +173,7 @@ namespace Temporary_Prison.Service.Contracts.Repository
                     {
                         dataTable.Load(sqlCommand.ExecuteReader());
                         usersDto = dataTable.ConvertToArrayOfModels<UserDto>();
-                        totalCountUsers = dataTable.Rows.Count;
+                        totalCountUsers = (int)returnVal.Value;
                     }
                 }
             }

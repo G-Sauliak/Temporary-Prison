@@ -173,3 +173,44 @@ SET
 FROM web_Users w
 WHERE w.UserName = @userName
 END
+GO
+---------------------UPDATE PRISONER--------------------------------------
+----------------------------------------------------------------------
+CREATE PROC [dbo].[UpdatePrisoner]
+@Prisoner_ID int,
+@FirstName nvarchar(50),
+@SurName nvarchar(50),
+@LastName nvarchar(50),
+@PlaceOfWork nvarchar(50),
+@BirthDate date,
+@Photo nvarchar(max),
+@Address nvarchar(max),
+@AdditionalInformation nvarchar(max),
+@RelationshipStatus nvarchar(50)
+AS
+BEGIN
+UPDATE
+    Prisoners
+SET
+    FirstName = @FirstName,
+    LastName= @LastName,
+	Surname = @SurName,
+	PlaceOfWork = @PlaceOfWork,
+	BirthDate = @BirthDate,
+	Photo = @Photo,
+	Address = @Address,
+	AdditionalInformation = @AdditionalInformation,
+	RelationshipStatus = @RelationshipStatus
+FROM Prisoners p
+WHERE p.PrisonerId = @Prisoner_ID
+END
+---------------------DELETE PRISONER--------------------------------------
+----------------------------------------------------------------------
+GO
+CREATE PROC [dbo].[DeletePrisoner]
+@Priosner_ID int
+AS
+BEGIN
+DELETE FROM PhoneNumbers WHERE PrisonerID = @Priosner_ID
+DELETE FROM Prisoners WHERE PrisonerId = @Priosner_ID 
+END

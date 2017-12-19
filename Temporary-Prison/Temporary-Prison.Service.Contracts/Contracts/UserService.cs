@@ -12,19 +12,16 @@ namespace Temporary_Prison.Service.Contracts.Contracts
 
         private readonly IUserRepository userRepository;
 
-        public UserService()
+        public UserService(IUserRepository userRepository)
         {
-            userRepository = new UserRepository();
+            this.userRepository = userRepository;
         }
 
         public void AddUser(UserDto user)
         {
             try
             {
-                if (user != null)
-                {
-                    userRepository.AddUser(user);
-                }
+                userRepository.AddUser(user);
             }
             catch (Exception ex)
             {

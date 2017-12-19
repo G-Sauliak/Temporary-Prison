@@ -10,10 +10,10 @@ namespace Temporary_Prison
     {
         protected void Application_PostAuthenticateRequest()
         {
-            HttpCookie authoCookies = Request.Cookies[FormsAuthentication.FormsCookieName];
-            if (authoCookies != null)
+            var authCookies = Request.Cookies[FormsAuthentication.FormsCookieName];
+            if (authCookies != null)
             {
-                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authoCookies.Value);
+                var ticket = FormsAuthentication.Decrypt(authCookies.Value);
                 var user = JsonConvert.DeserializeObject<User>(ticket.UserData);
                 var UserIdentity = new UserIdentity(user);
                 var UserPrincipal = new UserPrincipal(UserIdentity);

@@ -11,49 +11,13 @@
         <br />
     </div>
 </div>
-@using (Html.BeginForm("Index", "Admin", FormMethod.Get))
-{
-    <div class="form-group">
-        Search: @Html.TextBox("search", ViewBag.CurrentFilter as string)
-        <input type="submit" value="Search" />
-    </div>
-}
-<br />
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.UserName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model)
-            {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "EditUser", new { UserName = item.UserName, redirectUrl = ViewBag.RedirectUrl })
-
-                @if ((item.UserName.ToLower() != this.User.Identity.Name.ToLower()))
-                {
-                    @Html.ActionLink("Delete", "DeleteUser", new { UserName = item.UserName, redirectUrl = ViewBag.RedirectUrl })
-                }
-            </td>
-        </tr>
-    }
-</table>
+<div class="form-group">
+    Search: @Html.TextBox("search", ViewBag.CurrentFilter as string)
+    <input type="submit" value="Search" onclick="window.search.FindUsersByName()"/>
+</div>
 
 <br />
-@Html.PagedListPager(Model as IPagedList, page => Url.Action("Index", new
-   {
-       page,
-       search = ViewBag.searc
-   }), PagedListRenderOptions.MinimalWithPageCountText)
+<div class="container" id="userList">
+    @Html.Partial("listUsers", Model)
+</div>

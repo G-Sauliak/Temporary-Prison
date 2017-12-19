@@ -87,12 +87,14 @@ namespace Temporary_Prison.Data.Services
 
         public bool IsExistLogin(string userName)
         {
-            return new UserServiceClient().Execute(client => client.IsExistsByLogin(userName));
+            return new UserServiceClient().Execute(client =>
+            client.IsExistsByLogin(userName));
         }
 
         public bool IsExistsByEmail(string email)
         {
-            return new UserServiceClient().Execute(client => client.IsExistsByEmail(email));
+            return new UserServiceClient().Execute(client =>
+            client.IsExistsByEmail(email));
         }
 
         public bool IsValidLogin(string userName, string password)

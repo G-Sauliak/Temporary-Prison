@@ -1,7 +1,5 @@
 ﻿using log4net;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Temporary_Prison.Business.Providers;
 using Temporary_Prison.Common.Models;
@@ -22,7 +20,7 @@ namespace Temporary_Prison.Controllers
         // GET: Prisoner/ListOfPrisoners
         [HttpGet]
         [Authorize]
-        public ActionResult ListOfPrisoners(int? page, string sort, string currentFilter, string search,int? currentTotal)
+        public ActionResult ListOfPrisoners(int? page, string sort, string currentFilter, string search, int? currentTotal)
         {
             const int pageSize = 4;
             var totalCount = default(int);
@@ -45,22 +43,36 @@ namespace Temporary_Prison.Controllers
             var pageNum = page ?? 1;
             int skip = (pageNum - 1) * pageSize;
 
+            var listPrisoners = prisonerProvider.GetPrisonerForPagedList(skip, pageSize, ref totalCount);
             ViewBag.TotalCountPrisoners = totalCount;
 
-            var listPrisoners = prisonerProvider.GetPrisonerForPagedList(skip, pageSize, ref totalCount);
             var prisonersPagedList = new StaticPagedList<Prisoner>(listPrisoners, pageNum, pageSize, totalCount);
 
             return View(prisonersPagedList);
         }
 
-        // Prisoner: DetailsOfPrisoner
+        [Authorize]
+        public async Task<ActionResult> FindPrisonersByName(string search)
+        {
+            var listPrisoners = await prisonerProvider.FindPrisonersByName(search);
+
+            var prisonersPagedList = new StaticPagedList<Prisoner>(
+                listPrisoners,
+                1, listPrisoners.Count,
+                listPrisoners.Count
+                );
+
+            ViewBag.TotalCountPrisoners = prisonersPagedList.Count;
+
+            return PartialView("PrisonerPanel", prisonersPagedList);
+        }
         [HttpGet]
         [Authorize]
         public ActionResult DetailsOfPrisoner(int? id)
         {
             if (!id.HasValue)
             {
-                RedirectToAction("ListPrisoner");
+                return RedirectToAction("ListPrisoner");
             }
             var prisoner = prisonerProvider.GetPrisonerById(id.Value);
 

@@ -171,68 +171,68 @@ namespace Temporary_Prison.Data.UserService {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="UserService.IUserService")]
     public interface IUserService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/IsValidLogin", ReplyAction="http://tempuri.org/IUserService/IsValidLoginResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.UserService.DataErrorDto), Action="http://tempuri.org/IUserService/IsValidLoginDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        [System.ServiceModel.OperationContractAttribute(ProtectionLevel=System.Net.Security.ProtectionLevel.EncryptAndSign, Action="http://tempuri.org/IUserService/IsValidLogin", ReplyAction="http://tempuri.org/IUserService/IsValidLoginResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.UserService.DataErrorDto), Action="http://tempuri.org/IUserService/IsValidLoginDataErrorDtoFault", ProtectionLevel=System.Net.Security.ProtectionLevel.EncryptAndSign, Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
         bool IsValidLogin(string userName, string password);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/IsValidLogin", ReplyAction="http://tempuri.org/IUserService/IsValidLoginResponse")]
+        [System.ServiceModel.OperationContractAttribute(ProtectionLevel=System.Net.Security.ProtectionLevel.EncryptAndSign, Action="http://tempuri.org/IUserService/IsValidLogin", ReplyAction="http://tempuri.org/IUserService/IsValidLoginResponse")]
         System.Threading.Tasks.Task<bool> IsValidLoginAsync(string userName, string password);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetUserByName", ReplyAction="http://tempuri.org/IUserService/GetUserByNameResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.UserService.DataErrorDto), Action="http://tempuri.org/IUserService/GetUserByNameDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        [System.ServiceModel.OperationContractAttribute(ProtectionLevel=System.Net.Security.ProtectionLevel.EncryptAndSign, Action="http://tempuri.org/IUserService/GetUserByName", ReplyAction="http://tempuri.org/IUserService/GetUserByNameResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.UserService.DataErrorDto), Action="http://tempuri.org/IUserService/GetUserByNameDataErrorDtoFault", ProtectionLevel=System.Net.Security.ProtectionLevel.EncryptAndSign, Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
         Temporary_Prison.Data.UserService.UserDto GetUserByName(string userName);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetUserByName", ReplyAction="http://tempuri.org/IUserService/GetUserByNameResponse")]
+        [System.ServiceModel.OperationContractAttribute(ProtectionLevel=System.Net.Security.ProtectionLevel.EncryptAndSign, Action="http://tempuri.org/IUserService/GetUserByName", ReplyAction="http://tempuri.org/IUserService/GetUserByNameResponse")]
         System.Threading.Tasks.Task<Temporary_Prison.Data.UserService.UserDto> GetUserByNameAsync(string userName);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetUsersForPagedList", ReplyAction="http://tempuri.org/IUserService/GetUsersForPagedListResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.UserService.DataErrorDto), Action="http://tempuri.org/IUserService/GetUsersForPagedListDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        [System.ServiceModel.OperationContractAttribute(ProtectionLevel=System.Net.Security.ProtectionLevel.EncryptAndSign, Action="http://tempuri.org/IUserService/GetUsersForPagedList", ReplyAction="http://tempuri.org/IUserService/GetUsersForPagedListResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.UserService.DataErrorDto), Action="http://tempuri.org/IUserService/GetUsersForPagedListDataErrorDtoFault", ProtectionLevel=System.Net.Security.ProtectionLevel.EncryptAndSign, Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
         Temporary_Prison.Data.UserService.GetUsersForPagedListResponse GetUsersForPagedList(Temporary_Prison.Data.UserService.GetUsersForPagedListRequest request);
         
         // CODEGEN: Generating message contract since the operation has multiple return values.
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetUsersForPagedList", ReplyAction="http://tempuri.org/IUserService/GetUsersForPagedListResponse")]
+        [System.ServiceModel.OperationContractAttribute(ProtectionLevel=System.Net.Security.ProtectionLevel.EncryptAndSign, Action="http://tempuri.org/IUserService/GetUsersForPagedList", ReplyAction="http://tempuri.org/IUserService/GetUsersForPagedListResponse")]
         System.Threading.Tasks.Task<Temporary_Prison.Data.UserService.GetUsersForPagedListResponse> GetUsersForPagedListAsync(Temporary_Prison.Data.UserService.GetUsersForPagedListRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetAllRoles", ReplyAction="http://tempuri.org/IUserService/GetAllRolesResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.UserService.DataErrorDto), Action="http://tempuri.org/IUserService/GetAllRolesDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        [System.ServiceModel.OperationContractAttribute(ProtectionLevel=System.Net.Security.ProtectionLevel.Sign, Action="http://tempuri.org/IUserService/GetAllRoles", ReplyAction="http://tempuri.org/IUserService/GetAllRolesResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.UserService.DataErrorDto), Action="http://tempuri.org/IUserService/GetAllRolesDataErrorDtoFault", ProtectionLevel=System.Net.Security.ProtectionLevel.Sign, Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
         string[] GetAllRoles();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/GetAllRoles", ReplyAction="http://tempuri.org/IUserService/GetAllRolesResponse")]
+        [System.ServiceModel.OperationContractAttribute(ProtectionLevel=System.Net.Security.ProtectionLevel.Sign, Action="http://tempuri.org/IUserService/GetAllRoles", ReplyAction="http://tempuri.org/IUserService/GetAllRolesResponse")]
         System.Threading.Tasks.Task<string[]> GetAllRolesAsync();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/AddUser", ReplyAction="http://tempuri.org/IUserService/AddUserResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.UserService.DataErrorDto), Action="http://tempuri.org/IUserService/AddUserDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        [System.ServiceModel.OperationContractAttribute(ProtectionLevel=System.Net.Security.ProtectionLevel.EncryptAndSign, Action="http://tempuri.org/IUserService/AddUser", ReplyAction="http://tempuri.org/IUserService/AddUserResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.UserService.DataErrorDto), Action="http://tempuri.org/IUserService/AddUserDataErrorDtoFault", ProtectionLevel=System.Net.Security.ProtectionLevel.EncryptAndSign, Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
         void AddUser(Temporary_Prison.Data.UserService.UserDto user);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/AddUser", ReplyAction="http://tempuri.org/IUserService/AddUserResponse")]
+        [System.ServiceModel.OperationContractAttribute(ProtectionLevel=System.Net.Security.ProtectionLevel.EncryptAndSign, Action="http://tempuri.org/IUserService/AddUser", ReplyAction="http://tempuri.org/IUserService/AddUserResponse")]
         System.Threading.Tasks.Task AddUserAsync(Temporary_Prison.Data.UserService.UserDto user);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/EditUser", ReplyAction="http://tempuri.org/IUserService/EditUserResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.UserService.DataErrorDto), Action="http://tempuri.org/IUserService/EditUserDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        [System.ServiceModel.OperationContractAttribute(ProtectionLevel=System.Net.Security.ProtectionLevel.EncryptAndSign, Action="http://tempuri.org/IUserService/EditUser", ReplyAction="http://tempuri.org/IUserService/EditUserResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.UserService.DataErrorDto), Action="http://tempuri.org/IUserService/EditUserDataErrorDtoFault", ProtectionLevel=System.Net.Security.ProtectionLevel.EncryptAndSign, Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
         void EditUser(Temporary_Prison.Data.UserService.UserDto user);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/EditUser", ReplyAction="http://tempuri.org/IUserService/EditUserResponse")]
+        [System.ServiceModel.OperationContractAttribute(ProtectionLevel=System.Net.Security.ProtectionLevel.EncryptAndSign, Action="http://tempuri.org/IUserService/EditUser", ReplyAction="http://tempuri.org/IUserService/EditUserResponse")]
         System.Threading.Tasks.Task EditUserAsync(Temporary_Prison.Data.UserService.UserDto user);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/DeleteUser", ReplyAction="http://tempuri.org/IUserService/DeleteUserResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.UserService.DataErrorDto), Action="http://tempuri.org/IUserService/DeleteUserDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        [System.ServiceModel.OperationContractAttribute(ProtectionLevel=System.Net.Security.ProtectionLevel.Sign, Action="http://tempuri.org/IUserService/DeleteUser", ReplyAction="http://tempuri.org/IUserService/DeleteUserResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.UserService.DataErrorDto), Action="http://tempuri.org/IUserService/DeleteUserDataErrorDtoFault", ProtectionLevel=System.Net.Security.ProtectionLevel.Sign, Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
         void DeleteUser(string userName);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/DeleteUser", ReplyAction="http://tempuri.org/IUserService/DeleteUserResponse")]
+        [System.ServiceModel.OperationContractAttribute(ProtectionLevel=System.Net.Security.ProtectionLevel.Sign, Action="http://tempuri.org/IUserService/DeleteUser", ReplyAction="http://tempuri.org/IUserService/DeleteUserResponse")]
         System.Threading.Tasks.Task DeleteUserAsync(string userName);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/IsExistsByLogin", ReplyAction="http://tempuri.org/IUserService/IsExistsByLoginResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.UserService.DataErrorDto), Action="http://tempuri.org/IUserService/IsExistsByLoginDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        [System.ServiceModel.OperationContractAttribute(ProtectionLevel=System.Net.Security.ProtectionLevel.Sign, Action="http://tempuri.org/IUserService/IsExistsByLogin", ReplyAction="http://tempuri.org/IUserService/IsExistsByLoginResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.UserService.DataErrorDto), Action="http://tempuri.org/IUserService/IsExistsByLoginDataErrorDtoFault", ProtectionLevel=System.Net.Security.ProtectionLevel.Sign, Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
         bool IsExistsByLogin(string userName);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/IsExistsByLogin", ReplyAction="http://tempuri.org/IUserService/IsExistsByLoginResponse")]
+        [System.ServiceModel.OperationContractAttribute(ProtectionLevel=System.Net.Security.ProtectionLevel.Sign, Action="http://tempuri.org/IUserService/IsExistsByLogin", ReplyAction="http://tempuri.org/IUserService/IsExistsByLoginResponse")]
         System.Threading.Tasks.Task<bool> IsExistsByLoginAsync(string userName);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/IsExistsByEmail", ReplyAction="http://tempuri.org/IUserService/IsExistsByEmailResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.UserService.DataErrorDto), Action="http://tempuri.org/IUserService/IsExistsByEmailDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        [System.ServiceModel.OperationContractAttribute(ProtectionLevel=System.Net.Security.ProtectionLevel.Sign, Action="http://tempuri.org/IUserService/IsExistsByEmail", ReplyAction="http://tempuri.org/IUserService/IsExistsByEmailResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.UserService.DataErrorDto), Action="http://tempuri.org/IUserService/IsExistsByEmailDataErrorDtoFault", ProtectionLevel=System.Net.Security.ProtectionLevel.Sign, Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
         bool IsExistsByEmail(string email);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IUserService/IsExistsByEmail", ReplyAction="http://tempuri.org/IUserService/IsExistsByEmailResponse")]
+        [System.ServiceModel.OperationContractAttribute(ProtectionLevel=System.Net.Security.ProtectionLevel.Sign, Action="http://tempuri.org/IUserService/IsExistsByEmail", ReplyAction="http://tempuri.org/IUserService/IsExistsByEmailResponse")]
         System.Threading.Tasks.Task<bool> IsExistsByEmailAsync(string email);
     }
     

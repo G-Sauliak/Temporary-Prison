@@ -15,7 +15,6 @@
             }
         });
     }
-
     function IsExistsByUserName() {
         var iconIsValid = $("#NameisValid");
         var iconIsNotValid = $("#NameisNotValid");
@@ -48,6 +47,9 @@
         }
         if (IsValid($("#userName").val())) {
             _Request("Get", _urlLogin, getUserName, callback);
+        }
+        else {
+            HideAllIcon();
         }
 
         function HideAllIcon() {

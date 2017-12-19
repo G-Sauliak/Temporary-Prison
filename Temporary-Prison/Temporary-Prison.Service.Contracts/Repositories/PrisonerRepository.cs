@@ -84,7 +84,7 @@ namespace Temporary_Prison.Service.Contracts.Repositories
                     sqlCommand.Parameters.AddRange(param);
                     using (var dataReader = sqlCommand.ExecuteReader())
                     {
-                        
+
                         while (dataReader.Read())
                         {
                             var prisoner = new PrisonerDto()
@@ -99,7 +99,7 @@ namespace Temporary_Prison.Service.Contracts.Repositories
                         }
 
                         dataReader.NextResult();
-                       
+
                         totalCount = (int)returnVal.Value;
                     }
                 }
@@ -139,7 +139,7 @@ namespace Temporary_Prison.Service.Contracts.Repositories
             return listPrisoners;
         }
 
-        public bool TryAddPrisoner(PrisonerDto prisoner, out int newId)
+        public bool AddPrisoner(PrisonerDto prisoner, out int newId)
         {
             using (var sqlConnection = new SqlConnection(GetConnectionString))
             {
@@ -183,6 +183,73 @@ namespace Temporary_Prison.Service.Contracts.Repositories
                 }
             }
             return true;
+        }
+
+        public PrisonerDto[] FindPrisonersByName(string search)
+        {
+            PrisonerDto[] prisoners = null;
+            using (var sqlConnection = new SqlConnection(GetConnectionString))
+            {
+                sqlConnection.Open();
+
+                using (var sqlCommand = new SqlCommand("FindPrisonersByName", sqlConnection))
+                {
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                    sqlCommand.Parameters.AddWithValue("search", search);
+               
+                    using (var dataTable = new DataTable())
+                    {
+                        dataTable.Load(sqlCommand.ExecuteReader());
+                        prisoners = dataTable.ConvertToArrayOfModels<PrisonerDto>();
+                    }
+                }
+            }
+            return prisoners;
+        }
+
+        public void EditPrisoner(PrisonerDto prisoner)
+        {
+            using (var sqlConnection = new SqlConnection(GetConnectionString))
+            {
+                sqlConnection.Open();
+
+                using (var sqlCommand = new SqlCommand("UpdatePrisoner", sqlConnection))
+                {
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    var param = new SqlParameter[]
+                     {
+                        new SqlParameter(@"Prisoner_ID",prisoner.PrisonerId),
+                        new SqlParameter(@"FirstName",prisoner.FirstName),
+                        new SqlParameter(@"SurName",prisoner.Surname),
+                        new SqlParameter(@"LastName",prisoner.LastName),
+                        new SqlParameter(@"PlaceOfWork",prisoner.PlaceOfWork),
+                        new SqlParameter(@"BirthDate",prisoner.BirthDate),
+                        new SqlParameter(@"Photo",prisoner.Photo),
+                        new SqlParameter(@"Address",prisoner.Address),
+                        new SqlParameter(@"AdditionalInformation",prisoner.AdditionalInformation),
+                        new SqlParameter(@"RelationshipStatus",prisoner.AdditionalInformation),
+                     };
+                    sqlCommand.Parameters.AddRange(param);
+
+                    sqlCommand.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void DeletePrisoner(int id)
+        {
+            using (var sqlConnection = new SqlConnection(GetConnectionString))
+            {
+                sqlConnection.Open();
+
+                using (var sqlCommand = new SqlCommand("DeletePrisoner", sqlConnection))
+                {
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue(@"Priosner_ID", id);
+                    sqlCommand.ExecuteNonQuery();
+                }
+            }
         }
     }
 }

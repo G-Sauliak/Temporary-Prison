@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using Temporary_Prison.Common.Models;
 using Temporary_Prison.Data.Clients;
 using Temporary_Prison.Data.PrisonService;
+using System.Threading.Tasks;
+using log4net;
 
 namespace Temporary_Prison.Data.Services
 {
     public class PrisonerDataService : IPrisonerDataService
     {
+        private readonly ILog log = LogManager.GetLogger("LOGGER");
         private readonly IPrisonerClient prisonerClient;
 
         public PrisonerDataService(IPrisonerClient prisonerClient)
@@ -59,14 +62,49 @@ namespace Temporary_Prison.Data.Services
                 var prisonerDto = Mapper.Map<Prisoner, PrisonerDto>(prisoner);
                 int _newId = default(int);
                 result = new PrisonerServiceClient().
-                    Execute(client => 
+                    Execute(client =>
                     client.AddPrisoner(prisonerDto, out _newId));
                 newId = _newId;
 
                 return result;
             }
             newId = default(int);
-            return default(bool);
+            return result;
+        }
+
+        public async Task<IReadOnlyList<Prisoner>> FindPrisonersByName(string search)
+        {
+            var prisonersDto = new PrisonerServiceClient().Execute(clinet => clinet.FindPrisonersByNameAsync(search));
+
+            if (prisonersDto != null)
+            {
+                var p = new PrisonerServiceClient();
+
+                try
+                {
+                    var prisoners = Mapper.Map<Task<PrisonerDto[]>, Task<Prisoner[]>>(prisonersDto);
+                    return await prisoners;
+
+                }
+                catch (AutoMapperMappingException me)
+                {
+                    log.Error(me.Message);
+                }
+            }
+            return null;
+        }
+        public void EditPrisoner(Prisoner prisoner)
+        {
+            if (prisoner != null)
+            {
+                var prisonerDto = Mapper.Map<Prisoner, PrisonerDto>(prisoner);
+                new PrisonerServiceClient().Execute(client => client.EditPrisoner(prisonerDto));
+            }
+        }
+
+        public void DeletePrisoner(int id)
+        {
+          new PrisonerServiceClient().Execute(client => client.DeletePrisoner(id));
         }
     }
 }

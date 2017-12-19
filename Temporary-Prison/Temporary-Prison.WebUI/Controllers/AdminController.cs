@@ -69,7 +69,7 @@ namespace Temporary_Prison.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
+            
             var user = userProvider.GetUserByName(userName);
 
             if (user == null)
@@ -92,15 +92,16 @@ namespace Temporary_Prison.Controllers
             {
                 return View(model);
             }
-            var user = Mapper.Map<UserViewModel, User>(model);
 
+            var user = Mapper.Map<UserViewModel, User>(model);
+         
             try
             {
                 userManager.EditUser(user);
             }
             catch (CreateUserException ce)
             {
-                ModelState.AddModelError("",ce.Message);
+                ModelState.AddModelError("", ce.Message);
                 return View(model);
             }
             return RedirectToLocal(redirectUrl);

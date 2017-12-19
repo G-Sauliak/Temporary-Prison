@@ -12,22 +12,32 @@
     </div>
 </div>
 
-
-@using (Html.BeginForm("ListUsers", "User", FormMethod.Get))
-{
-    <div class="form-horizontal ">
-        <div class="form-group">
-            <div class="col-md-10">
-                @Html.Label("Find by name:", new { @class = "control-label" })
-                @Html.TextBox("search", ViewBag.CurrentFilter as string, new { @class = "form-control" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-10">
-                <input class="btn btn-group " type="submit" value="Search" />
-            </div>
+<div class="form-horizontal ">
+    <div class="form-group">
+        <div class="col-md-10">
+            @Html.Label("Find by name:", new { @class = "control-label" })
+            @Html.TextBox("search", ViewBag.CurrentFilter as string, new { @class = "form-control", @id = "findPrisonersByName" })
         </div>
     </div>
-}
+
+    <div class="form-group">
+        <div class="col-md-10">
+            <input class="btn btn-group " type="submit" value="Search" onclick="window.search.FindPrisonersByName()" />
+        </div>
+    </div>
+</div>
+
 @Html.ActionLink("Back to Home", "Index", "Home")
+
+@section scripts
+{
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/search/search.js"></script>
+    <script>
+    window.search = window.FindPriosners(
+            '@Html.Raw(Url.Action("FindPrisonersByName", "Prisoner"))',
+    )
+    </script>
+}

@@ -42,13 +42,16 @@ namespace Temporary_Prison.Business.UserManagers
             throw new NotImplementedException();
         }
 
-        public void EditUser(User user)
+        public void EditUser(User updatedUser)
         {
-            if (userProvider.IsExistsByEmail(user.Email))
+            var currentUser = userProvider.GetUserByName(updatedUser.UserName);
+
+            if (userProvider.IsExistsByEmail(updatedUser.Email) && currentUser.Email != updatedUser.Email)
             {
                 throw new CreateUserException(UserCreateStatus.DuplicateEmail);
             }
-            userDataService.EditUser(user);
+
+            userDataService.EditUser(updatedUser);
         }
 
         public void DeleteUser(string userName)

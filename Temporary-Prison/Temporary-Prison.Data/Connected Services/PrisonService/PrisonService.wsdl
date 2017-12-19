@@ -44,6 +44,33 @@
   <wsdl:message name="IPrisonerService_AddPrisoner_DataErrorDtoFault_FaultMessage">
     <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q4:DataErrorDto" />
   </wsdl:message>
+  <wsdl:message name="IPrisonerService_FindPrisonersByName_InputMessage">
+    <wsdl:part name="parameters" element="tns:FindPrisonersByName" />
+  </wsdl:message>
+  <wsdl:message name="IPrisonerService_FindPrisonersByName_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FindPrisonersByNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPrisonerService_FindPrisonersByName_DataErrorDtoFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q5:DataErrorDto" />
+  </wsdl:message>
+  <wsdl:message name="IPrisonerService_EditPrisoner_InputMessage">
+    <wsdl:part name="parameters" element="tns:EditPrisoner" />
+  </wsdl:message>
+  <wsdl:message name="IPrisonerService_EditPrisoner_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EditPrisonerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPrisonerService_EditPrisoner_DataErrorDtoFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q6:DataErrorDto" />
+  </wsdl:message>
+  <wsdl:message name="IPrisonerService_DeletePrisoner_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeletePrisoner" />
+  </wsdl:message>
+  <wsdl:message name="IPrisonerService_DeletePrisoner_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeletePrisonerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPrisonerService_DeletePrisoner_DataErrorDtoFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q7:DataErrorDto" />
+  </wsdl:message>
   <wsdl:portType name="IPrisonerService">
     <wsdl:operation name="GetPrisoners">
       <wsdl:input wsaw:Action="http://tempuri.org/IPrisonerService/GetPrisoners" message="tns:IPrisonerService_GetPrisoners_InputMessage" />
@@ -64,6 +91,21 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IPrisonerService/AddPrisoner" message="tns:IPrisonerService_AddPrisoner_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPrisonerService/AddPrisonerResponse" message="tns:IPrisonerService_AddPrisoner_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IPrisonerService/AddPrisonerDataErrorDtoFault" name="DataErrorDtoFault" message="tns:IPrisonerService_AddPrisoner_DataErrorDtoFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="FindPrisonersByName">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPrisonerService/FindPrisonersByName" message="tns:IPrisonerService_FindPrisonersByName_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPrisonerService/FindPrisonersByNameResponse" message="tns:IPrisonerService_FindPrisonersByName_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IPrisonerService/FindPrisonersByNameDataErrorDtoFault" name="DataErrorDtoFault" message="tns:IPrisonerService_FindPrisonersByName_DataErrorDtoFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EditPrisoner">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPrisonerService/EditPrisoner" message="tns:IPrisonerService_EditPrisoner_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPrisonerService/EditPrisonerResponse" message="tns:IPrisonerService_EditPrisoner_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IPrisonerService/EditPrisonerDataErrorDtoFault" name="DataErrorDtoFault" message="tns:IPrisonerService_EditPrisoner_DataErrorDtoFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeletePrisoner">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPrisonerService/DeletePrisoner" message="tns:IPrisonerService_DeletePrisoner_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPrisonerService/DeletePrisonerResponse" message="tns:IPrisonerService_DeletePrisoner_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IPrisonerService/DeletePrisonerDataErrorDtoFault" name="DataErrorDtoFault" message="tns:IPrisonerService_DeletePrisoner_DataErrorDtoFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IPrisonerService" type="tns:IPrisonerService">
@@ -106,6 +148,42 @@
     </wsdl:operation>
     <wsdl:operation name="AddPrisoner">
       <soap:operation soapAction="http://tempuri.org/IPrisonerService/AddPrisoner" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataErrorDtoFault">
+        <soap:fault use="literal" name="DataErrorDtoFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="FindPrisonersByName">
+      <soap:operation soapAction="http://tempuri.org/IPrisonerService/FindPrisonersByName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataErrorDtoFault">
+        <soap:fault use="literal" name="DataErrorDtoFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="EditPrisoner">
+      <soap:operation soapAction="http://tempuri.org/IPrisonerService/EditPrisoner" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataErrorDtoFault">
+        <soap:fault use="literal" name="DataErrorDtoFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="DeletePrisoner">
+      <soap:operation soapAction="http://tempuri.org/IPrisonerService/DeletePrisoner" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

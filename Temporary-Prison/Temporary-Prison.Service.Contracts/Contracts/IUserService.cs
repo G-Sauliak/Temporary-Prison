@@ -3,18 +3,18 @@ using Temporary_Prison.Service.Contracts.Dto;
 
 namespace Temporary_Prison.Service.Contracts.Contracts
 {
-    [ServiceContract]
+    [ServiceContract(ProtectionLevel = System.Net.Security.ProtectionLevel.Sign)]
     public interface IUserService
     {
-        [OperationContract]
-        [FaultContract(typeof(DataErrorDto))]
+        [OperationContract(ProtectionLevel = System.Net.Security.ProtectionLevel.EncryptAndSign)]
+        [FaultContract(typeof(DataErrorDto), ProtectionLevel = System.Net.Security.ProtectionLevel.EncryptAndSign)]
         bool IsValidLogin(string userName, string password);
 
-        [OperationContract]
-        [FaultContract(typeof(DataErrorDto))]
+        [OperationContract(ProtectionLevel = System.Net.Security.ProtectionLevel.EncryptAndSign)]
+        [FaultContract(typeof(DataErrorDto), ProtectionLevel = System.Net.Security.ProtectionLevel.EncryptAndSign)]
         UserDto GetUserByName(string userName);
 
-        [OperationContract]
+        [OperationContract(ProtectionLevel = System.Net.Security.ProtectionLevel.EncryptAndSign)]
         [FaultContract(typeof(DataErrorDto))]
         UserDto[] GetUsersForPagedList(int skip, int rowSize, out int totalCountUsers);
 
@@ -22,12 +22,12 @@ namespace Temporary_Prison.Service.Contracts.Contracts
         [FaultContract(typeof(DataErrorDto))]
         string[] GetAllRoles();
 
-        [OperationContract]
-        [FaultContract(typeof(DataErrorDto))]
+        [OperationContract(ProtectionLevel = System.Net.Security.ProtectionLevel.EncryptAndSign)]
+        [FaultContract(typeof(DataErrorDto), ProtectionLevel = System.Net.Security.ProtectionLevel.EncryptAndSign)]
         void AddUser(UserDto user);
 
-        [OperationContract]
-        [FaultContract(typeof(DataErrorDto))]
+        [OperationContract(ProtectionLevel = System.Net.Security.ProtectionLevel.EncryptAndSign)]
+        [FaultContract(typeof(DataErrorDto), ProtectionLevel = System.Net.Security.ProtectionLevel.EncryptAndSign)]
         void EditUser(UserDto user);
 
         [OperationContract]
