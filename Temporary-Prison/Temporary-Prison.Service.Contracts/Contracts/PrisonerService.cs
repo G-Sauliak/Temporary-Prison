@@ -102,7 +102,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             catch (Exception ex)
             {
                 var serviceData = new DataErrorDto();
-                serviceData.ErrorMessage = "Error Exception. EditPrisoner";
+                serviceData.ErrorMessage = "Error Exception. DeletePridsoner";
                 serviceData.ErrorDetails = ex.ToString();
                 log.Error($"Type Error: {serviceData.ErrorMessage}\n ErrorDetails {ex.ToString()}");
                 throw new FaultException<DataErrorDto>(serviceData, ex.ToString());

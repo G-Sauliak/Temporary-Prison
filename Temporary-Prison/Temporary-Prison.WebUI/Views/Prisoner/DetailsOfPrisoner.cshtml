@@ -10,31 +10,38 @@
                         <div class="box-body">
                             <div class="col-sm-6">
                                 <div align="center">
-                                    @Html.Photo(Model.Photo,new { @class = "img-rounded img-responsive" })
+                                    @Html.Photo(Model.Photo, new { @class = "img-thumbnail" })
                                     <input id="profile-image-upload" class="hidden" type="file">
                                 </div>
 
                                 <br>
                             </div>
 
-                            <div class="col-sm-6"> <h4 style="color:#000000;">Address:</h4></div>
+                            <div class="col-sm-6"> <h4 style="color:#000000;"></h4>@Html.LabelFor(model => model.PhoneNumbers):</div>
+                            @foreach (var phone in Model.PhoneNumbers)
+                            {
+                            <div class="col-sm-6">@phone</div>
+                            }
 
-                           
                             <div class="clearfix"></div>
                             <div class="bot-border"></div>
-                            <div class="col-sm-5 col-xs-6 tital ">Last Name:</div><div class="col-sm-7">@Html.DisplayFor(model => model.LastName)</div>
+                            <div class="col-sm-5 col-xs-6 tital ">@Html.LabelFor(model => model.FirstName)</div><div class="col-sm-7">@Html.DisplayFor(model => model.FirstName)</div>
                             <div class="clearfix"></div>
                             <div class="bot-border"></div>
-                            <div class="col-sm-5 col-xs-6 tital ">Surname:</div><div class="col-sm-7">@Html.DisplayFor(model => model.Surname)</div>
-                            <div class="clearfix"></div>
-                            <div class="col-sm-5 col-xs-6 tital ">Relationship Status:</div><div class="col-sm-7">@Html.DisplayFor(model => model.RelationshipStatus)</div>
-                            <div class="bot-border"></div>
-                            <div class="col-sm-5 col-xs-6 tital ">Date Of Birth:</div><div class="col-sm-7">@Html.DisplayFor(model => model.BirthDate.Date)</div>
+                            <div class="col-sm-5 col-xs-6 tital ">@Html.LabelFor(model => model.FirstName)</div><div class="col-sm-7">@Html.DisplayFor(model => model.LastName)</div>
                             <div class="clearfix"></div>
                             <div class="bot-border"></div>
-                            <div class="col-sm-5 col-xs-6 tital ">Place Of Work:</div><div class="col-sm-7">@Html.DisplayFor(model => model.PlaceOfWork)</div>
+                            <div class="col-sm-5 col-xs-6 tital ">@Html.LabelFor(model => model.Surname)</div><div class="col-sm-7">@Html.DisplayFor(model => model.Surname)</div>
                             <div class="clearfix"></div>
-                            <div class="col-sm-5 col-xs-6 tital ">Relationship Status:</div><div class="col-sm-7">@Html.DisplayFor(model => model.RelationshipStatus)</div>
+                            <div class="col-sm-5 col-xs-6 tital ">@Html.LabelFor(model => model.RelationshipStatus)</div><div class="col-sm-7">@Html.DisplayFor(model => model.RelationshipStatus)</div>
+                            <div class="bot-border"></div>
+                            <div class="clearfix"></div>
+                            <div class="col-sm-5 col-xs-6 tital ">@Html.LabelFor(model => model.BirthDate)</div><div class="col-sm-7">@Html.DisplayFor(model => model.BirthDate)</div>
+                            <div class="clearfix"></div>
+                            <div class="bot-border"></div>
+                            <div class="col-sm-5 col-xs-6 tital ">@Html.LabelFor(model => model.PlaceOfWork)</div><div class="col-sm-7">@Html.DisplayFor(model => model.PlaceOfWork)</div>
+                            <div class="clearfix"></div>
+                            <div class="col-sm-5 col-xs-6 tital ">@Html.LabelFor(model => model.RelationshipStatus)</div><div class="col-sm-7">@Html.DisplayFor(model => model.RelationshipStatus)</div>
 
                         </div>
                     </div>

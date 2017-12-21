@@ -26,8 +26,7 @@ namespace Temporary_Prison.Controllers
         [Authorize(Roles = "Editor")]
         public ActionResult AddPrisoner()
         {
-            TempData["RelationshipAddPrisoner"] = Enum.GetValues(typeof(RelationshipStatus)).Cast<RelationshipStatus>();
-            ViewBag.RelationshipStatus = TempData["RelationshipAddPrisoner"];
+            ViewBag.RelationshipStatus = Enum.GetValues(typeof(RelationshipStatus)).Cast<RelationshipStatus>();
             ViewBag.RedirectUrl = Url.Action("ListOfPrisoners", "Prisoner");
             return View(new PrisonerViewModel());
         }
@@ -40,7 +39,8 @@ namespace Temporary_Prison.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.RelationshipStatus = TempData["RelationshipAddPrisoner"];
+                if (model.PhoneNumbers.Count < 1) model.PhoneNumbers = new string[] { "" };
+                    ViewBag.RelationshipStatus = Enum.GetValues(typeof(RelationshipStatus)).Cast<RelationshipStatus>(); ;
                 return View(model);
             }
 
@@ -48,17 +48,22 @@ namespace Temporary_Prison.Controllers
 
             if (photo != null && PhotosExtensions.SupportedFormat(photo) && PhotosExtensions.CheckSize(photo))
             {
-                var fileName = Path.GetFileName(photo.FileName);
-                var photoSavePath = Path.Combine(Server.MapPath("~/Content/PhotosOfPrisoners"), fileName);
+                var photoExtensions = Path.GetExtension(photo.FileName);
+                var photoName = string.Concat(DateTime.Now.Ticks, photoExtensions);
+                
+                var photoSavePath = Path.Combine(Server.MapPath("~/Content/PhotosOfPrisoners"), photoName);
 
-                Image.FromStream(photo.InputStream).SaveToFolder(photoSavePath);
+                photo.SaveAs(photoSavePath);
 
-                model.Photo = $"~/Content/PhotosOfPrisoners/{fileName}";
+                model.Photo = $"/Content/PhotosOfPrisoners/{photoName}";
 
                 var prisoner = Mapper.Map<PrisonerViewModel, Prisoner>(model);
 
                 int newID;
+
                 prisonerProvider.AddPrisoner(prisoner, out newID);
+
+                Session["NewPrisoner"] = prisoner;
 
                 //TODO
 
@@ -66,7 +71,7 @@ namespace Temporary_Prison.Controllers
             }
 
             ModelState.AddModelError(string.Empty, "Incorrect file");
-            ViewBag.RelationshipStatus = TempData["RelationshipAddPrisoner"];
+            ViewBag.RelationshipStatus = Enum.GetValues(typeof(RelationshipStatus)).Cast<RelationshipStatus>();
 
             return View(model);
         }
@@ -82,9 +87,8 @@ namespace Temporary_Prison.Controllers
 
             if (prisoner != null)
             {
-                TempData["RelationshipEditUser"] = Enum.GetValues(typeof(RelationshipStatus)).Cast<RelationshipStatus>();
                 var model = Mapper.Map<Prisoner, PrisonerViewModel>(prisoner);
-                ViewBag.RelationshipStatus = TempData["RelationshipEditUser"];
+                ViewBag.RelationshipStatus = Enum.GetValues(typeof(RelationshipStatus)).Cast<RelationshipStatus>();
                 return View(model);
             }
 
@@ -98,9 +102,17 @@ namespace Temporary_Prison.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.RelationshipStatus = TempData["RelationshipEditUser"];
+                ViewBag.RelationshipStatus = Enum.GetValues(typeof(RelationshipStatus)).Cast<RelationshipStatus>();
                 return View(model);
             }
+
+            var photo = Request.Files[0];
+
+            if (photo != null && PhotosExtensions.SupportedFormat(photo) && PhotosExtensions.CheckSize(photo))
+            {
+                
+            }
+
             var prisoner = Mapper.Map<PrisonerViewModel, Prisoner>(model);
             prisonerProvider.EditPrisoner(prisoner);
 

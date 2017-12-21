@@ -60,16 +60,16 @@ WHERE ph.PrisonerID = pr.PrisonerId AND ph.PrisonerID = @ID
 ---------------------GetPrisonersForPageList--------------------
 ---------------------------------------------------------------
 GO
-CREATE PROC [dbo].[GetPrisonersToPageList]
+CREATE PROC [dbo].[GetPrisonersToPagedList]
 @skip int,
 @rowSize int
 AS
-SELECT * FROM Prisoners p
+SELECT PrisonerId,FirstName,LastName,Surname,BirthDate FROM Prisoners p
 ORDER BY p.FirstName 
 OFFSET @skip ROWS 
 FETCH NEXT @rowSize ROWS ONLY;
 DECLARE @TotalCount int
-SET @Totalcount = (SELECT COUNT(*) FROM Prisoners)
+SET @Totalcount = (SELECT COUNT(*) FROM Prisoners p)
 
 RETURN @Totalcount
 GO
@@ -203,6 +203,8 @@ SET
 	RelationshipStatus = @RelationshipStatus
 FROM Prisoners p
 WHERE p.PrisonerId = @Prisoner_ID
+
+DELETE FROM PhoneNumbers WHERE PhoneNumbers.PrisonerID = @Prisoner_ID
 END
 ---------------------DELETE PRISONER--------------------------------------
 ----------------------------------------------------------------------
@@ -214,3 +216,14 @@ BEGIN
 DELETE FROM PhoneNumbers WHERE PrisonerID = @Priosner_ID
 DELETE FROM Prisoners WHERE PrisonerId = @Priosner_ID 
 END
+---------------------search prisoners by name--------------------------------------
+----------------------------------------------------------------------
+GO
+CREATE PROC [dbo].[FindPrisonersByName]
+@search nvarchar(100)
+AS
+BEGIN
+SELECT PrisonerId,FirstName,LastName,Surname,BirthDate FROM Prisoners p
+WHERE p.FirstName LIKE  CONCAT('%',@search) OR p.LastName LIKE  CONCAT('%',@search)
+END
+GO

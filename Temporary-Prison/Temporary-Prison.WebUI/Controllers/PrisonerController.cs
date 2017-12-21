@@ -1,6 +1,7 @@
 ﻿using log4net;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 using System.Web.Mvc;
+using Temporary_Prison.Business.CacheManager;
 using Temporary_Prison.Business.Providers;
 using Temporary_Prison.Common.Models;
 using X.PagedList;
@@ -20,30 +21,29 @@ namespace Temporary_Prison.Controllers
         // GET: Prisoner/ListOfPrisoners
         [HttpGet]
         [Authorize]
-        public ActionResult ListOfPrisoners(int? page, string sort, string currentFilter, string search, int? currentTotal)
+        public ActionResult ListOfPrisoners(int? page, int? currentTotal, string search)
         {
             const int pageSize = 4;
             var totalCount = default(int);
             var _currentTotal = currentTotal ?? default(int);
+            var listPrisoners = default(IReadOnlyList<Prisoner>);
 
-            ViewBag.CurrentSort = sort;
-            ViewBag.NameSortParam = string.IsNullOrEmpty(sort) ? "name_desc" : "";
+            var pageNum = page ?? 1;
+            int skip = (pageNum - 1) * pageSize;
+
             if (_currentTotal != default(int))
             {
                 totalCount = _currentTotal;
             }
-            if (search != null)
-            {
-                page = 1;
-            }
-            else
-            {
-                search = currentFilter;
-            }
-            var pageNum = page ?? 1;
-            int skip = (pageNum - 1) * pageSize;
 
-            var listPrisoners = prisonerProvider.GetPrisonerForPagedList(skip, pageSize, ref totalCount);
+            listPrisoners = prisonerProvider.
+                GetPrisonerForPagedList(skip, pageSize, ref totalCount, search);
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                ViewBag.Search = search;
+                return View(listPrisoners.ToPagedList(pageNum, pageSize));
+            }
             ViewBag.TotalCountPrisoners = totalCount;
 
             var prisonersPagedList = new StaticPagedList<Prisoner>(listPrisoners, pageNum, pageSize, totalCount);
@@ -52,19 +52,13 @@ namespace Temporary_Prison.Controllers
         }
 
         [Authorize]
-        public async Task<ActionResult> FindPrisonersByName(string search)
+        public ActionResult FindPrisonersByName(string search)
         {
-            var listPrisoners = await prisonerProvider.FindPrisonersByName(search);
+            var listPrisoners = prisonerProvider.FindPrisonersByName(search);
+            ViewBag.Search = search;
+            ViewBag.TotalCountPrisoners = listPrisoners.Count;
 
-            var prisonersPagedList = new StaticPagedList<Prisoner>(
-                listPrisoners,
-                1, listPrisoners.Count,
-                listPrisoners.Count
-                );
-
-            ViewBag.TotalCountPrisoners = prisonersPagedList.Count;
-
-            return PartialView("PrisonerPanel", prisonersPagedList);
+            return PartialView("PrisonerPanel", listPrisoners.ToPagedList(1, 4));
         }
         [HttpGet]
         [Authorize]

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 using Temporary_Prison.Business.Attributes;
 
 namespace Temporary_Prison.Models
@@ -10,6 +11,7 @@ namespace Temporary_Prison.Models
 
         public PrisonerViewModel(){ }
      
+        [HiddenInput]
         public int PrisonerID { get; set; }
 
         [Required]

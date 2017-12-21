@@ -11,10 +11,7 @@ namespace Temporary_Prison.Data.MapperProfile
         public DataMapper()
         {
             CreateMap<Prisoner,PrisonerDto>();
-            CreateMap<Task<Prisoner>, Task<PrisonerDto>>();
             CreateMap<User, UserDto>();
-            CreateMap<PrisonerDto, Prisoner>();
-            CreateMap<UserDto, User>();
         }
     }
 }

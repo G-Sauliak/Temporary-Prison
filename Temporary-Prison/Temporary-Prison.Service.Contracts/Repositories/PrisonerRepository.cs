@@ -233,6 +233,16 @@ namespace Temporary_Prison.Service.Contracts.Repositories
                     sqlCommand.Parameters.AddRange(param);
 
                     sqlCommand.ExecuteNonQuery();
+
+                    sqlCommand.CommandText = "AddPhoneNumber";
+
+                    foreach (var number in prisoner.PhoneNumbers)
+                    {
+                        sqlCommand.Parameters.Clear();
+                        sqlCommand.Parameters.AddWithValue("PhoneNumber", number);
+                        sqlCommand.Parameters.AddWithValue("PrisonerId", prisoner.PrisonerId);
+                        sqlCommand.ExecuteNonQuery();
+                    }
                 }
             }
         }

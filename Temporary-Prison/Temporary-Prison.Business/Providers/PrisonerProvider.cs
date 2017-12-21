@@ -3,7 +3,6 @@ using Temporary_Prison.Common.Models;
 using Temporary_Prison.Data.Services;
 using System;
 using Temporary_Prison.Business.CacheManager;
-using System.Threading.Tasks;
 using log4net;
 
 namespace Temporary_Prison.Business.Providers
@@ -43,28 +42,45 @@ namespace Temporary_Prison.Business.Providers
             return default(Prisoner);
         }
 
-        public IReadOnlyList<Prisoner> GetPrisonerForPagedList(int skip, int rowSize, ref int totalCount)
+        public IReadOnlyList<Prisoner> GetPrisonerForPagedList(int skip, int rowSize, ref int totalCount, string search)
         {
             var cacheKeyForPageList = $"prisonersForPagelist_s_{skip}_r_{rowSize}_t_{totalCount}";
             var outTotalCount = default(int);
-            var prisoners = default(IReadOnlyList<Prisoner>);
+            var listPrisoners = default(IReadOnlyList<Prisoner>);
             try
             {
-                prisoners = cacheService.GetOrSet(cacheKeyForPageList,
-                    () => prisonerDataService.GetPrisonersForPageList(skip, rowSize, out outTotalCount));
-
-                if (totalCount == default(int))
+                if (!string.IsNullOrEmpty(search))
                 {
-                    cacheService.Remove(cacheKeyForPageList);
+                    var cacheKey = $"FPBN:{search}";
+                    listPrisoners = cacheService.GetOrSet(cacheKey,
+                        () => FindPrisonersByName(search));
+                    return listPrisoners;
                 }
-                totalCount = outTotalCount;
+                else
+                {
+
+                    listPrisoners = cacheService.GetOrSet(cacheKeyForPageList,
+                        () => prisonerDataService.
+                        GetPrisonersForPageList(skip, rowSize, out outTotalCount), DateTime.Now.AddSeconds(30));
+
+
+                    if (totalCount == default(int))
+                    {
+                        cacheService.Remove(cacheKeyForPageList);
+                    }
+                    if (outTotalCount != default(int))
+                    {
+                        totalCount = outTotalCount;
+                    }
+
+                }
 
             }
             catch (Exception ex)
             {
                 log.Fatal(ex.Message);
             }
-            return prisoners;
+            return listPrisoners;
         }
 
         public void AddPrisoner(Prisoner prisoner, out int newId)
@@ -72,14 +88,19 @@ namespace Temporary_Prison.Business.Providers
             prisonerDataService.AddPrisoner(prisoner, out newId);
         }
 
-        public async Task<IReadOnlyList<Prisoner>> FindPrisonersByName(string search)
+        public IReadOnlyList<Prisoner> FindPrisonersByName(string search)
         {
-            //cache 
-            return await prisonerDataService.FindPrisonersByName(search);
+            var cacheKey = $"FPBN:{search}";
+            var listPrisoner = cacheService.GetOrSet(cacheKey,
+                () => prisonerDataService.FindPrisonersByName(search),
+                DateTime.Now.AddMinutes(2));
+
+            return listPrisoner;
         }
 
         public void EditPrisoner(Prisoner prisoner)
         {
+            cacheService.Remove($"prisoner_{prisoner.PrisonerId}");
             prisonerDataService.EditPrisoner(prisoner);
         }
 

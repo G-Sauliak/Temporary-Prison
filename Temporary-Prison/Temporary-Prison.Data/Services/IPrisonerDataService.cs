@@ -12,7 +12,7 @@ namespace Temporary_Prison.Data.Services
         void DeletePrisoner(int id);
         Prisoner GetPrisonerById(int id);
         IReadOnlyList<Prisoner> GetPrisonersForPageList(int skip, int rowSize, out int totalCount);
-        Task<IReadOnlyList<Prisoner>> FindPrisonersByName(string search);
+        IReadOnlyList<Prisoner> FindPrisonersByName(string search);
 
     }
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Temporary_Prison.Common.Models;
 using Temporary_Prison.Data.Clients;
 using Temporary_Prison.Data.PrisonService;
-using System.Threading.Tasks;
 using log4net;
 
 namespace Temporary_Prison.Data.Services
@@ -72,18 +71,16 @@ namespace Temporary_Prison.Data.Services
             return result;
         }
 
-        public async Task<IReadOnlyList<Prisoner>> FindPrisonersByName(string search)
+        public IReadOnlyList<Prisoner> FindPrisonersByName(string search)
         {
-            var prisonersDto = new PrisonerServiceClient().Execute(clinet => clinet.FindPrisonersByNameAsync(search));
+            var prisonersDto = new PrisonerServiceClient().Execute(clinet => clinet.FindPrisonersByName(search));
 
             if (prisonersDto != null)
             {
-                var p = new PrisonerServiceClient();
-
                 try
                 {
-                    var prisoners = Mapper.Map<Task<PrisonerDto[]>, Task<Prisoner[]>>(prisonersDto);
-                    return await prisoners;
+                    var prisoners = Mapper.Map<PrisonerDto[], Prisoner[]>(prisonersDto);
+                    return prisoners;
 
                 }
                 catch (AutoMapperMappingException me)
@@ -91,7 +88,7 @@ namespace Temporary_Prison.Data.Services
                     log.Error(me.Message);
                 }
             }
-            return null;
+            return default(Prisoner[]);
         }
         public void EditPrisoner(Prisoner prisoner)
         {
@@ -104,7 +101,7 @@ namespace Temporary_Prison.Data.Services
 
         public void DeletePrisoner(int id)
         {
-          new PrisonerServiceClient().Execute(client => client.DeletePrisoner(id));
+            new PrisonerServiceClient().Execute(client => client.DeletePrisoner(id));
         }
     }
 }

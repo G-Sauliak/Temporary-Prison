@@ -56,23 +56,14 @@
             </div>
         </div>
 
-        <script>
-            $(document).ready(function addMorePhoneNumber() {
-                $('.add_phone').click(function () {
-                    $('p.number:last').
-                        after('<p class="number">'.concat($('p.number').html()).concat('</p>'));
-                });
-            });
-        </script>
-
         <div class="form-group">
             @Html.LabelFor(model => model.PhoneNumbers, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <p class="number">
+                <p class="number" id="0">
                     @Html.EditorFor(model => model.PhoneNumbers,"Phones", new { htmlAttributes = new { @class = "form-control" } })
                 </p>
                 @Html.ValidationMessageFor(model => model.PhoneNumbers, "", new { @class = "text-danger" })
-                <a href="javascript:addMorePhoneNumber();" class="add_phone">Add More</a>
+                <div class="form-inline"><a href="javascript:window.phone.AddPhone();" class="add_phone">Add more</a> &nbsp; <a href="javascript:window.phone.RemovePhone();" hidden="hidden" class="delete_phone">Remove</a></div>
             </div>
         </div>
 
@@ -119,5 +110,9 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
+@section scripts
+{
+    <script src="~/Scripts/Phone/phoneNumbers.js"></script>
+    <script>window.phone = window.MultiplePhones()</script>
+}
 

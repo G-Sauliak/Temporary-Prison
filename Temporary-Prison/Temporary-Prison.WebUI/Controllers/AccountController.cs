@@ -20,6 +20,10 @@ namespace Temporary_Prison.Controllers
         public ActionResult Login()
         {
             ViewBag.ReturnUrl = Url.Action("Index","Home");
+            if (Request.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
 
             return View();
         }

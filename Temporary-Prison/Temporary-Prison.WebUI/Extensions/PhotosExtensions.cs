@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Drawing;
-using System.IO;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Web;
 
 namespace Temporary_Prison.Extensions
@@ -39,18 +34,6 @@ namespace Temporary_Prison.Extensions
                 return true;
             }
             return false;
-        }
-
-        public static void SaveToFolder(this Image image, string savePath)
-        {
-            if (image != null)
-            {
-                if (File.Exists(savePath))
-                {
-                    File.Delete(savePath);
-                }
-                image.Save(savePath);
-            }
         }
 
     }

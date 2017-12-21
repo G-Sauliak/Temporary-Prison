@@ -17,10 +17,14 @@
     <div class="form-horizontal col-md-10">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <hr />
+        @Html.HiddenFor(model => model.PrisonerID)
         <div class="form-group">
-            <div class="col-md-10">
-                @Html.LabelFor(model => model.Photo, htmlAttributes: new { @class = "control-label col-md-2", })
-                @Html.EditorFor(model => model.Photo, new { htmlAttributes = new { @class = "form-control", type = "file", id = "photoUpload" } })
+            <div class="col-md-10 col-lg-6">
+                @Html.LabelFor(model => model.Photo, htmlAttributes: new { @class = "control-label control-label col-md-2", })
+                <div class="col-sm-6 col-lg-offset-2 col-lg-8">
+                    @Html.Photo(Model.Photo, new { @class = "img-thumbnail" })
+                    @Html.EditorFor(model => model.Photo, new { htmlAttributes = new { @class = "form-control", type = "file", id = "photoUpload" } })
+                </div>
                 @Html.ValidationMessageFor(model => model.Photo, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -56,29 +60,18 @@
             </div>
         </div>
 
-        <script>
-            $(document).ready(function addMorePhoneNumber() {
-                $('.add_phone').click(function () {
-                    $('p.number:last').
-                        after('<p class="number">'.concat($('p.number').html()).concat('</p>'));
-                });
-            });
-        </script>
-        <p class="number">
-        </p>
-
         <div class="form-group">
             @Html.LabelFor(model => model.PhoneNumbers, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @for (int i = 0; i < Model.PhoneNumbers.Count; i++)
                 {
-                    @Html.EditorFor(model => model.PhoneNumbers, "Phones", new { htmlAttributes = new { @class = "form-control" } })
+                    <p class="number" id="@i">
+                        @Html.EditorFor(model => model.PhoneNumbers[i], "Phones", "PhoneNumbers", new { htmlAttributes = new { @class = "form-control text-box single-line valid", @data_val = "true", @data_val_required = "input phone number" } })
+                    </p>
                 }
                 @Html.ValidationMessageFor(model => model.PhoneNumbers, "", new { @class = "text-danger" })
+                <div class="form-inline"><a href="javascript:window.phone.AddPhone();" class="add_phone">Add more</a> &nbsp; <a href="javascript:window.phone.RemovePhone();" class="delete_phone">Remove</a></div>
             </div>
-
-            <a href="javascript:addMorePhoneNumber();" class="add_phone">Add More</a>
-     
         </div>
 
         <div class="form-group">
@@ -121,8 +114,15 @@
     </div>
 }
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "ListOfPrisoners","Prisoner","",new { @class = "btn btn-default" })
 </div>
+
+@section scripts
+{
+
+    <script src="~/Scripts/Phone/phoneNumbers.js"></script>
+    <script>window.phone = window.MultiplePhones()</script>
+}
 
 
 
