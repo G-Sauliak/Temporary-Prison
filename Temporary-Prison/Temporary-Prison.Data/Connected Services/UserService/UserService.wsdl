@@ -573,6 +573,102 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IUserService_RemoveFromRoles_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IUserService_RemoveFromRoles_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IUserService_RemoveFromRoles_DataErrorDtoFault_Fault">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IUserService_AddToRole_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IUserService_AddToRole_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IUserService_AddToRole_DataErrorDtoFault_Fault">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:49365/UserService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
@@ -662,6 +758,24 @@
   <wsdl:message name="IUserService_IsExistsByEmail_DataErrorDtoFault_FaultMessage">
     <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q9:DataErrorDto" />
   </wsdl:message>
+  <wsdl:message name="IUserService_RemoveFromRoles_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveFromRoles" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_RemoveFromRoles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveFromRolesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_RemoveFromRoles_DataErrorDtoFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q10:DataErrorDto" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_AddToRole_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddToRole" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_AddToRole_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddToRoleResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUserService_AddToRole_DataErrorDtoFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q11:DataErrorDto" />
+  </wsdl:message>
   <wsdl:portType name="IUserService">
     <wsdl:operation name="IsValidLogin">
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/IsValidLogin" message="tns:IUserService_IsValidLogin_InputMessage" />
@@ -707,6 +821,16 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IUserService/IsExistsByEmail" message="tns:IUserService_IsExistsByEmail_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IUserService/IsExistsByEmailResponse" message="tns:IUserService_IsExistsByEmail_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IUserService/IsExistsByEmailDataErrorDtoFault" name="DataErrorDtoFault" message="tns:IUserService_IsExistsByEmail_DataErrorDtoFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveFromRoles">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/RemoveFromRoles" message="tns:IUserService_RemoveFromRoles_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/RemoveFromRolesResponse" message="tns:IUserService_RemoveFromRoles_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IUserService/RemoveFromRolesDataErrorDtoFault" name="DataErrorDtoFault" message="tns:IUserService_RemoveFromRoles_DataErrorDtoFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddToRole">
+      <wsdl:input wsaw:Action="http://tempuri.org/IUserService/AddToRole" message="tns:IUserService_AddToRole_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IUserService/AddToRoleResponse" message="tns:IUserService_AddToRole_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IUserService/AddToRoleDataErrorDtoFault" name="DataErrorDtoFault" message="tns:IUserService_AddToRole_DataErrorDtoFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="WSHttpBinding_IUserService" type="tns:IUserService">
@@ -844,6 +968,36 @@
       </wsdl:output>
       <wsdl:fault name="DataErrorDtoFault">
         <wsp:PolicyReference URI="#WSHttpBinding_IUserService_IsExistsByEmail_DataErrorDtoFault_Fault" />
+        <soap12:fault use="literal" name="DataErrorDtoFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveFromRoles">
+      <soap12:operation soapAction="http://tempuri.org/IUserService/RemoveFromRoles" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IUserService_RemoveFromRoles_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IUserService_RemoveFromRoles_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataErrorDtoFault">
+        <wsp:PolicyReference URI="#WSHttpBinding_IUserService_RemoveFromRoles_DataErrorDtoFault_Fault" />
+        <soap12:fault use="literal" name="DataErrorDtoFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="AddToRole">
+      <soap12:operation soapAction="http://tempuri.org/IUserService/AddToRole" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IUserService_AddToRole_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IUserService_AddToRole_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataErrorDtoFault">
+        <wsp:PolicyReference URI="#WSHttpBinding_IUserService_AddToRole_DataErrorDtoFault_Fault" />
         <soap12:fault use="literal" name="DataErrorDtoFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>

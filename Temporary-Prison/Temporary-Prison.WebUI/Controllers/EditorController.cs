@@ -63,7 +63,8 @@ namespace Temporary_Prison.Controllers
 
                 prisonerProvider.AddPrisoner(prisoner, out newID);
 
-                Session["NewPrisoner"] = prisoner;
+                TempData["NewPrisoner"] = prisoner;
+                TempData["newID"] = newID;
 
                 //TODO
 
@@ -87,6 +88,7 @@ namespace Temporary_Prison.Controllers
 
             if (prisoner != null)
             {
+                TempData["photo"] = prisoner.Photo;
                 var model = Mapper.Map<Prisoner, PrisonerViewModel>(prisoner);
                 ViewBag.RelationshipStatus = Enum.GetValues(typeof(RelationshipStatus)).Cast<RelationshipStatus>();
                 return View(model);
@@ -107,9 +109,13 @@ namespace Temporary_Prison.Controllers
             }
 
             var photo = Request.Files[0];
-
+            
             if (photo != null && PhotosExtensions.SupportedFormat(photo) && PhotosExtensions.CheckSize(photo))
             {
+
+                if (!TempData["photo"].Equals(photo.FileName))
+                {
+                }
                 
             }
 

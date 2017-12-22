@@ -1,4 +1,7 @@
-﻿CREATE FUNCTION IsValidUser(@name nvarchar(max),@Password nvarchar(max))
+﻿USE PRISONDB
+GO
+
+CREATE FUNCTION IsValidUser(@name nvarchar(max),@Password nvarchar(max))
 RETURNS bit
 AS
 BEGIN

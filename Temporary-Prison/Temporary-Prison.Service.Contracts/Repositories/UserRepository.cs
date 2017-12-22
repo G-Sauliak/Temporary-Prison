@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -9,6 +10,8 @@ namespace Temporary_Prison.Service.Contracts.Repository
 {
     public class UserRepository : IUserRepository
     {
+        private readonly ILog log = LogManager.GetLogger("LOGGER");
+
         private string GetConnectionString
         {
             get
@@ -19,6 +22,23 @@ namespace Temporary_Prison.Service.Contracts.Repository
                     throw new NullReferenceException("Connection string is null");
                 }
                 return ConStrSettings.ConnectionString;
+            }
+        }
+
+        public void AddToRole(string userName, string roleName)
+        {
+            using (var sqlConnection = new SqlConnection(GetConnectionString))
+            {
+                sqlConnection.Open();
+
+                using (var sqlCommand = new SqlCommand("AddToRole", sqlConnection))
+                {
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue(@"userName", userName);
+                    sqlCommand.Parameters.AddWithValue(@"roleName", roleName);
+                    sqlCommand.ExecuteNonQuery();
+                }
+                log.Info($"RoleName {roleName} added to user: {userName}");
             }
         }
 
@@ -233,6 +253,23 @@ namespace Temporary_Prison.Service.Contracts.Repository
                 }
             }
             return result;
+        }
+
+        public void RemoveFromRoles(string userName, string roleName)
+        {
+            using (var sqlConnection = new SqlConnection(GetConnectionString))
+            {
+                sqlConnection.Open();
+
+                using (var sqlCommand = new SqlCommand("DeleteFromRoles", sqlConnection))
+                {
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+                    sqlCommand.Parameters.AddWithValue(@"userName", userName);
+                    sqlCommand.Parameters.AddWithValue(@"roleName", roleName);
+                    sqlCommand.ExecuteNonQuery();
+                }
+                log.Info($"RoleName {roleName} deleted from user: {userName}");
+            }
         }
     }
 }

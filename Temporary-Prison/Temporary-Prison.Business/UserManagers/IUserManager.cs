@@ -8,5 +8,7 @@ namespace Temporary_Prison.Business.UserManagers
         void EditUser(User user);
         void EditUserRoles(string userName, string[] roles);
         void DeleteUser(string userName);
+        void RemoveFromRoles(string userName, string roleName);
+        void AddToRole(string userName, string roleName);
     }
 }

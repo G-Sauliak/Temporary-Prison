@@ -234,6 +234,20 @@ namespace Temporary_Prison.Data.UserService {
         
         [System.ServiceModel.OperationContractAttribute(ProtectionLevel=System.Net.Security.ProtectionLevel.Sign, Action="http://tempuri.org/IUserService/IsExistsByEmail", ReplyAction="http://tempuri.org/IUserService/IsExistsByEmailResponse")]
         System.Threading.Tasks.Task<bool> IsExistsByEmailAsync(string email);
+        
+        [System.ServiceModel.OperationContractAttribute(ProtectionLevel=System.Net.Security.ProtectionLevel.Sign, Action="http://tempuri.org/IUserService/RemoveFromRoles", ReplyAction="http://tempuri.org/IUserService/RemoveFromRolesResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.UserService.DataErrorDto), Action="http://tempuri.org/IUserService/RemoveFromRolesDataErrorDtoFault", ProtectionLevel=System.Net.Security.ProtectionLevel.Sign, Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        void RemoveFromRoles(string userName, string roleName);
+        
+        [System.ServiceModel.OperationContractAttribute(ProtectionLevel=System.Net.Security.ProtectionLevel.Sign, Action="http://tempuri.org/IUserService/RemoveFromRoles", ReplyAction="http://tempuri.org/IUserService/RemoveFromRolesResponse")]
+        System.Threading.Tasks.Task RemoveFromRolesAsync(string userName, string roleName);
+        
+        [System.ServiceModel.OperationContractAttribute(ProtectionLevel=System.Net.Security.ProtectionLevel.Sign, Action="http://tempuri.org/IUserService/AddToRole", ReplyAction="http://tempuri.org/IUserService/AddToRoleResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.UserService.DataErrorDto), Action="http://tempuri.org/IUserService/AddToRoleDataErrorDtoFault", ProtectionLevel=System.Net.Security.ProtectionLevel.Sign, Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        void AddToRole(string userName, string roleName);
+        
+        [System.ServiceModel.OperationContractAttribute(ProtectionLevel=System.Net.Security.ProtectionLevel.Sign, Action="http://tempuri.org/IUserService/AddToRole", ReplyAction="http://tempuri.org/IUserService/AddToRoleResponse")]
+        System.Threading.Tasks.Task AddToRoleAsync(string userName, string roleName);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -383,6 +397,22 @@ namespace Temporary_Prison.Data.UserService {
         
         public System.Threading.Tasks.Task<bool> IsExistsByEmailAsync(string email) {
             return base.Channel.IsExistsByEmailAsync(email);
+        }
+        
+        public void RemoveFromRoles(string userName, string roleName) {
+            base.Channel.RemoveFromRoles(userName, roleName);
+        }
+        
+        public System.Threading.Tasks.Task RemoveFromRolesAsync(string userName, string roleName) {
+            return base.Channel.RemoveFromRolesAsync(userName, roleName);
+        }
+        
+        public void AddToRole(string userName, string roleName) {
+            base.Channel.AddToRole(userName, roleName);
+        }
+        
+        public System.Threading.Tasks.Task AddToRoleAsync(string userName, string roleName) {
+            return base.Channel.AddToRoleAsync(userName, roleName);
         }
     }
 }

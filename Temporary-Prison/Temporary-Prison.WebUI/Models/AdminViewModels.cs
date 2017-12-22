@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace Temporary_Prison.Models
@@ -16,7 +17,7 @@ namespace Temporary_Prison.Models
         public string Email { get; set; }
         [Required]
         [Display(Name = "Password")]
-        public string Password { get;set;}
+        public string Password { get; set; }
         [Display(Name = "Roles")]
         public string[] Roles { get; set; }
     }
@@ -28,11 +29,20 @@ namespace Temporary_Prison.Models
         public string RoleName { get; set; }
     }
 
+
     public class UserAndRolesViewModel
     {
-        [Key]
+   
         [Display(Name = "User Name")]
         public string UserName { get; set; }
-        public string[] Roles { get; set; }
+        public List<UserRole> UserRole { get; set; }
+    }
+    public class UserRole
+    {
+    
+        [Display(Name = "User Name")]
+        public string UserName { get; set; }
+        [Display(Name = "Role Name")]
+        public string RoleName { get; set; }
     }
 }

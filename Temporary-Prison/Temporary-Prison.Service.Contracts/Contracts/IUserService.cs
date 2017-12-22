@@ -41,5 +41,12 @@ namespace Temporary_Prison.Service.Contracts.Contracts
         [OperationContract]
         [FaultContract(typeof(DataErrorDto))]
         bool IsExistsByEmail(string email);
+
+        [OperationContract]
+        [FaultContract(typeof(DataErrorDto))]
+        void RemoveFromRoles(string userName, string roleName);
+        [OperationContract]
+        [FaultContract(typeof(DataErrorDto))]
+        void AddToRole(string userName, string roleName);
     }
 }

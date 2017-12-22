@@ -14,5 +14,7 @@ namespace Temporary_Prison.Data.Services
         void AddUser(User user);
         void EditUser(User user);
         void DeleteUser(string userName);
+        void RemoveFromRoles(string userName, string roleName);
+        void AddToRole(string userName, string roleName);
     }
 }

@@ -12,6 +12,8 @@ namespace Temporary_Prison.Service.Contracts.Repository
         void EditUser(UserDto user);
         void DeleteUser(string userName);
         bool IsExistsByLogin(string userName);
-        bool IsExistsByEmail(string email); 
+        bool IsExistsByEmail(string email);
+        void RemoveFromRoles(string userName, string roleName);
+        void AddToRole(string userName, string roleName);
     }
 }

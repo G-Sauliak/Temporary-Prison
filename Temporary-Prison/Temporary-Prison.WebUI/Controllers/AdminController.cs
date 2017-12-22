@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using log4net;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -69,7 +70,7 @@ namespace Temporary_Prison.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            
+
             var user = userProvider.GetUserByName(userName);
 
             if (user == null)
@@ -94,7 +95,7 @@ namespace Temporary_Prison.Controllers
             }
 
             var user = Mapper.Map<UserViewModel, User>(model);
-         
+
             try
             {
                 userManager.EditUser(user);
@@ -198,15 +199,59 @@ namespace Temporary_Prison.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var roles = userProvider.GetUserByName(userName).Roles;
+            var allRoles = userProvider.GetAllRoles();
+            TempData["allRoles"] = allRoles;
+
+            List<UserRole> colUserRole =
+               (from objRole in roles
+                select new UserRole
+                {
+                    RoleName = objRole,
+                    UserName = userName
+                }).ToList();
+
             var model = new UserAndRolesViewModel
             {
-                Roles = roles,
+                UserRole = colUserRole,
                 UserName = userName
             };
 
-            ViewBag.Roles = new SelectList(roles);
+            var colRolesUserInNotIn = (from objRole in allRoles
+                                       where !roles.Contains(objRole)
+                                       select objRole).ToList();
+
+            ViewBag.AddRole = new SelectList(colRolesUserInNotIn);
 
             return View(model);
+        }
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditRoles(UserAndRolesViewModel userAndRoles)
+        {
+            var newRole = Request.Form["AddRole"].ToString();
+            if ((TempData["allRoles"] as IReadOnlyList<string>).Contains(newRole))
+            {
+                var userName = userAndRoles.UserName;
+                userManager.AddToRole(userName, newRole);
+                return RedirectToAction("Admin", "EditRoles", new { userName = userName });
+            }
+            return RedirectToAction("Admin", "index");
+        }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult DeleteRole(string userName, string roleName)
+        {
+            if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(roleName))
+            {
+
+                if (!(TempData["allRoles"] as IReadOnlyList<string>).Contains(roleName))
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                userManager.RemoveFromRoles(userName, roleName);
+            }
+            return RedirectToAction("Admin", "EditRoles", new { userName = userName});
         }
 
         private ActionResult RedirectToLocal(string redirectUrl)

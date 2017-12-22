@@ -18,6 +18,11 @@ namespace Temporary_Prison.Data.Services
             this.userClient = userClient;
         }
 
+        public void AddToRole(string userName, string roleName)
+        {
+            new UserServiceClient().Execute(client => client.AddToRole(userName, roleName));
+        }
+
         public void AddUser(User user)
         {
             var userDto = default(UserDto);
@@ -100,6 +105,12 @@ namespace Temporary_Prison.Data.Services
         public bool IsValidLogin(string userName, string password)
         {
             return userClient.IsValidLogin(userName, password);
+        }
+
+        public void RemoveFromRoles(string userName, string roleName)
+        {
+            new UserServiceClient().Execute(client =>
+            client.RemoveFromRoles(userName,roleName));
         }
     }
 }

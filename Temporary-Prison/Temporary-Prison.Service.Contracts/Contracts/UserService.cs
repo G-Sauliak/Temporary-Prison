@@ -171,6 +171,40 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                 throw new FaultException<DataErrorDto>(serviceDataError, ex.ToString());
             }
         }
+
+        public void RemoveFromRoles(string userName, string roleName)
+        {
+            try
+            {
+                userRepository.DeleteUser(userName);
+            }
+            catch (Exception ex)
+            {
+                var serviceDataError = new DataErrorDto();
+                serviceDataError.ErrorMessage = $"Error. RemoveFromRoles: userName: {userName} RoleName: {roleName}";
+                serviceDataError.ErrorDetails = ex.ToString();
+                log.Error($"Type Error: {serviceDataError.ErrorMessage}\n ErrorDetails {ex.ToString()}");
+                throw new FaultException<DataErrorDto>(serviceDataError, ex.ToString());
+            }
+
+        }
+
+        public void AddToRole(string userName, string roleName)
+        {
+            try
+            {
+                userRepository.AddToRole(userName, roleName);
+            }
+            catch (Exception ex)
+            {
+                var serviceDataError = new DataErrorDto();
+                serviceDataError.ErrorMessage = $"Error. AddToRole: userName: {userName} RoleName: {roleName}";
+                serviceDataError.ErrorDetails = ex.ToString();
+                log.Error($"Type Error: {serviceDataError.ErrorMessage}\n ErrorDetails {ex.ToString()}");
+                throw new FaultException<DataErrorDto>(serviceDataError, ex.ToString());
+            }
+
+        }
     }
 
 }

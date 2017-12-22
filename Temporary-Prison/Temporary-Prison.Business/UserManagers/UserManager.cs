@@ -61,5 +61,15 @@ namespace Temporary_Prison.Business.UserManagers
                 userDataService.DeleteUser(userName);
             }
         }
+
+        public void RemoveFromRoles(string userName, string roleName)
+        {
+            userDataService.RemoveFromRoles(userName, roleName);
+        }
+
+        public void AddToRole(string userName, string roleName)
+        {
+            userDataService.AddToRole(userName, roleName);
+        }
     }
 }
