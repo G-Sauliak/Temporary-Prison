@@ -229,3 +229,34 @@ SELECT PrisonerId,FirstName,LastName,Surname,BirthDate FROM Prisoners p
 WHERE p.FirstName LIKE  CONCAT('%',@search) OR p.LastName LIKE  CONCAT('%',@search)
 END
 GO
+CREATE PROC [dbo].[AddToRole]
+@UserName nvarchar(50),
+@RoleName nvarchar(50)
+AS
+BEGIN
+DECLARE @userID int;
+DECLARE @RoleID int;
+SET @userID = (SELECT UserID FROM web_Users WHERE UserName = @UserName)
+SET @RoleID = (SELECT RoleID FROM web_Roles WHERE RoleName = @RoleName )
+    INSERT INTO web_UserRoles(
+	RoleID,
+	UserID
+	)
+	VALUES(
+	@RoleID,
+	@UserID
+	)
+END
+GO
+CREATE PROC [dbo].[DeleteFromRoles]
+@userName nvarchar(50),
+@roleName nvarchar(50)
+AS
+BEGIN
+declare @userid int;
+declare @roleid int;
+SET @userid = (SELECT UserID FROM web_Users WHERE UserName = @UserName)
+SET @roleid = (SELECT RoleID FROM web_Roles WHERE RoleName = @RoleName )
+DELETE FROM web_UserRoles WHERE web_UserRoles.UserID = @userid and web_UserRoles.RoleID = @roleid
+END
+go

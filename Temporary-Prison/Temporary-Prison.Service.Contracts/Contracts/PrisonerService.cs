@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 using Temporary_Prison.Service.Contracts.Dto;
+using Temporary_Prison.Service.Contracts.Extensions;
 using Temporary_Prison.Service.Contracts.Repositories;
 
 namespace Temporary_Prison.Service.Contracts.Contracts
@@ -19,6 +20,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
 
         public PrisonerDto GetPrisonerById(int Id)
         {
+
             PrisonerDto prisoner = null;
             try
             {

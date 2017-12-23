@@ -1,5 +1,4 @@
-﻿@model Temporary_Prison.Models.UserViewModel
-
+﻿@model Temporary_Prison.Models.EditUserViewModel
 
 @using (Html.BeginForm())
 {
@@ -22,21 +21,19 @@
                     <img id="EmailisNotValid" style="display: none;" src="@Url.Content("~/Content/Icons/no-icon.png")" />
                     @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10 col-lg-5">
-                        @Html.EditorFor(model => model.Email,
-                     new
-                     {
-                         htmlAttributes = new
-                         {
-                             @class = "form-control",
-                             @id = "email",
-                             @onkeypress = "HideIcon('email')",
-                             @onchange = "window.isValid.IsExistsByEmail()"
-                         }
-                     })
+                        @Html.EditorFor(model => model.Email, new
+                   {
+                       htmlAttributes = new
+                       {
+                           @class = "form-control",
+                           @id = "email",
+                           @onkeypress = "HideIcon('email')",
+                           @onchange = "window.isValid.IsExistsByEmail()"
+                       }
+                   })
                         @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
                 <div class="form-group">
                     @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -44,13 +41,9 @@
                         @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
-
-
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <input type="submit" value="Save" class="btn btn-default" />
-                        @Html.ActionLink("Edit Roles", "EditRoles", new { userName = Model.UserName }, new { @class = "btn btn-default" })
                         @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
                     </div>
                 </div>
@@ -58,17 +51,29 @@
         </div>
     </div>
 }
+<div class="container" id="ListRoles">
+    @Html.Partial("ListExistingRoles", Model.UserAndRoles)
+</div>
 @section scripts
 {
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/Scripts/Admin/IsValid.js"></script>
+    <script src="~/Scripts/Admin/IsExistsEmailAndLogin.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+    <script>
+        function RoleFailure(response, status, error) {
+            alert(response.statusText);
+        }
+
+    </script>
     <script>
         window.isValid = window.IsValidClass(
             '@Html.Raw(Url.Action("IsExistsLogin", "Admin"))',
             '@Html.Raw(Url.Action("IsExistsEmail", "Admin"))'
         )
+
         function HideIcon(type)
         {
             switch (type)

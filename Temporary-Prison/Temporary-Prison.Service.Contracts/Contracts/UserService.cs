@@ -12,9 +12,9 @@ namespace Temporary_Prison.Service.Contracts.Contracts
 
         private readonly IUserRepository userRepository;
 
-        public UserService(IUserRepository userRepository)
+        public UserService()
         {
-            this.userRepository = userRepository;
+            userRepository = new UserRepository();
         }
 
         public void AddUser(UserDto user)
@@ -176,7 +176,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
         {
             try
             {
-                userRepository.DeleteUser(userName);
+                userRepository.RemoveFromRoles(userName,roleName);
             }
             catch (Exception ex)
             {

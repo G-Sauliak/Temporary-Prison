@@ -3,22 +3,13 @@ using Temporary_Prison.Business.Enums;
 
 namespace Temporary_Prison.Business.Exceptions
 {
-    public class CreateUserException : Exception
+    public class CreateOrUpdateUserException : Exception
     {
-        public CreateUserException(UserCreateStatus statusCode)
+        public CreateOrUpdateUserException(UserCreateStatus statusCode)
                     : base(GetMessageFromStatusCode(statusCode))
         {
             _StatusCode = statusCode;
         }
-
-        public CreateUserException(String message)
-            : base(message) { }
-
-        public CreateUserException() { }
-
-        public CreateUserException(String message, Exception innerException)
-            : base(message, innerException) { }
-
 
         public UserCreateStatus _StatusCode { get; private set; }
 

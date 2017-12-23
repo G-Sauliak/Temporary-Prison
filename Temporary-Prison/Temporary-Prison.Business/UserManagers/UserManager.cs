@@ -24,11 +24,11 @@ namespace Temporary_Prison.Business.UserManagers
 
             if (userProvider.IsExistsByLogin(user.UserName))
             {
-                throw new CreateUserException(UserCreateStatus.DuplicateUserName);
+                throw new CreateOrUpdateUserException(UserCreateStatus.DuplicateUserName);
             }
             if (userProvider.IsExistsByEmail(user.Email))
             {
-                throw new CreateUserException(UserCreateStatus.DuplicateEmail);
+                throw new CreateOrUpdateUserException(UserCreateStatus.DuplicateEmail);
             }
             //Encrypt pass
             //user.Password
@@ -48,7 +48,7 @@ namespace Temporary_Prison.Business.UserManagers
 
             if (userProvider.IsExistsByEmail(updatedUser.Email) && currentUser.Email != updatedUser.Email)
             {
-                throw new CreateUserException(UserCreateStatus.DuplicateEmail);
+                throw new CreateOrUpdateUserException(UserCreateStatus.DuplicateEmail);
             }
 
             userDataService.EditUser(updatedUser);

@@ -12,13 +12,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Temporary-Prison.Business",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Temporary-Prison.Common", "Temporary-Prison.Common\Temporary-Prison.Common.csproj", "{F226AF5B-CEB7-461A-9F1E-694A5676FA05}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SqlScripts", "SqlScripts", "{EB95C97D-AD89-4847-B9B3-46F9D18DE50D}"
-	ProjectSection(SolutionItems) = preProject
-		SqlScripts\Deploy.sql = SqlScripts\Deploy.sql
-		SqlScripts\ScalarValuedFunctions.sql = SqlScripts\ScalarValuedFunctions.sql
-		SqlScripts\StoredProcedures.sql = SqlScripts\StoredProcedures.sql
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Temporary-Prison.Service", "Temporary-Prison.Service\Temporary-Prison.Service.csproj", "{6CF831B5-7EA4-4686-9380-C98441F0F492}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Temporary-Prison.Service.Contracts", "Temporary-Prison.Service.Contracts\Temporary-Prison.Service.Contracts.csproj", "{7AF6D9C5-D316-41F9-B944-F055DEBBC151}"

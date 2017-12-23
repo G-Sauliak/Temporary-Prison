@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using System.Web.Security;
 using Temporary_Prison.Attributes;
 using Temporary_Prison.Business.Exceptions;
 using Temporary_Prison.Business.Providers;
@@ -14,6 +15,7 @@ using X.PagedList;
 
 namespace Temporary_Prison.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly IUserProvider userProvider;
@@ -27,29 +29,20 @@ namespace Temporary_Prison.Controllers
         }
 
         // GET: Admin/index
-        [Authorize(Roles = "Admin")]
-        public ActionResult Index(int? page, string search, string currentFilter, int? currentTotal)
+        public ActionResult Index(int? page, int? currentTotal)
         {
             const int pageSize = 4;
             var totalCount = default(int);
-            int _currentTotal = currentTotal ?? default(int);
+            var _currentTotal = currentTotal ?? default(int);
 
             if (_currentTotal != default(int))
             {
                 totalCount = _currentTotal;
             }
-            if (search != null)
-            {
-                page = 1;
-            }
-            else
-            {
-                search = currentFilter;
-            }
+       
             var pageNum = page ?? 1;
-            int skip = (pageNum - 1) * pageSize;
+            var skip = (pageNum - 1) * pageSize;
 
-            ViewBag.CurrentFilter = search;
             ViewBag.RedirectUrl = Url.Action("Index", "Admin");
 
             var listUsers = userProvider.GetUsersForPagedList(skip, pageSize, ref totalCount);
@@ -59,26 +52,37 @@ namespace Temporary_Prison.Controllers
         }
 
         // GET: /Admin/EditUser
-        [HttpGet]
-        [Authorize(Roles = "Admin")]
         public ActionResult EditUser(string userName)
         {
             ViewBag.RedirectUrl = Url.Action("Index", "Admin");
 
-            var userModel = default(UserViewModel);
+            var userModel = default(EditUserViewModel);
             if (string.IsNullOrEmpty(userName))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             var user = userProvider.GetUserByName(userName);
+            var userRoles = userProvider.GetUserByName(userName).Roles;
+            var allRoles = userProvider.GetAllRoles();
 
             if (user == null)
             {
-                return HttpNotFound();
+                return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
-            userModel = Mapper.Map<User, UserViewModel>(user);
+            userModel = Mapper.Map<User, EditUserViewModel>(user);
 
+            userModel.UserAndRoles = new UserAndRoles()
+            {
+                UserName = userName,
+                Roles = userRoles
+
+            };
+            var missingRoles = (from role in allRoles
+                                where !userRoles.Contains(role)
+                                select role).ToList();
+
+            ViewBag.listOfMissingRoles = new SelectList(missingRoles);
 
             return View(userModel);
         }
@@ -86,21 +90,18 @@ namespace Temporary_Prison.Controllers
         //POST: /Admin/EditUser
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
-        public ActionResult EditUser(UserViewModel model, string redirectUrl)
+        public ActionResult EditUser(EditUserViewModel model, string redirectUrl)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-
-            var user = Mapper.Map<UserViewModel, User>(model);
-
+            var user = Mapper.Map<EditUserViewModel, User>(model);
             try
             {
                 userManager.EditUser(user);
             }
-            catch (CreateUserException ce)
+            catch (CreateOrUpdateUserException ce)
             {
                 ModelState.AddModelError("", ce.Message);
                 return View(model);
@@ -109,17 +110,15 @@ namespace Temporary_Prison.Controllers
         }
         // GET: Admin/AddUser
         [HttpGet]
-        [Authorize(Roles = "Admin")]
         public ActionResult AddUser()
         {
             var roles = userProvider.GetAllRoles();
 
             ViewBag.Roles = new SelectList(roles);
 
-            return View(new UserViewModel());
+            return View(new CreateUserViewModel());
         }
 
-        [Authorize(Roles = "Admin")]
         public ActionResult DeleteUser(string UserName, string redirectUrl)
         {
             if (string.IsNullOrEmpty(UserName))
@@ -142,32 +141,27 @@ namespace Temporary_Prison.Controllers
         // POST: Admin/AddUser
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
-        public ActionResult AddUser(UserViewModel model, string redirectUrl)
+        public ActionResult AddUser(CreateUserViewModel model, string redirectUrl)
         {
             var userRole = Request.Form["Roles"];
             var allRoles = userProvider.GetAllRoles();
 
             if (!ModelState.IsValid || !allRoles.Contains(userRole))
             {
-                var roles = userProvider.GetAllRoles();
-                ViewBag.Roles = new SelectList(roles);
+                ViewBag.Roles = new SelectList(allRoles);
                 return View(model);
             }
 
-            var user = Mapper.Map<UserViewModel, User>(model);
-            user.Roles = GetRoles(userRole);
-
+            var user = Mapper.Map<CreateUserViewModel, User>(model);
+            user.Roles = new string[] { userRole };
             try
             {
                 userManager.CreateUser(user);
-
             }
-            catch (CreateUserException ex)
+            catch (CreateOrUpdateUserException ex)
             {
                 ModelState.AddModelError("", ex.Message);
-                var roles = userProvider.GetAllRoles();
-                ViewBag.Roles = new SelectList(roles);
+                ViewBag.Roles = new SelectList(allRoles);
                 return View(model);
             }
 
@@ -190,68 +184,65 @@ namespace Temporary_Prison.Controllers
             return Json(new { isValid = isExists }, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public ActionResult EditRoles(string userName)
-        {
-            if (userName == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var roles = userProvider.GetUserByName(userName).Roles;
-            var allRoles = userProvider.GetAllRoles();
-            TempData["allRoles"] = allRoles;
-
-            List<UserRole> colUserRole =
-               (from objRole in roles
-                select new UserRole
-                {
-                    RoleName = objRole,
-                    UserName = userName
-                }).ToList();
-
-            var model = new UserAndRolesViewModel
-            {
-                UserRole = colUserRole,
-                UserName = userName
-            };
-
-            var colRolesUserInNotIn = (from objRole in allRoles
-                                       where !roles.Contains(objRole)
-                                       select objRole).ToList();
-
-            ViewBag.AddRole = new SelectList(colRolesUserInNotIn);
-
-            return View(model);
-        }
-        [Authorize(Roles = "Admin")]
+        [AjaxOnly]
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EditRoles(UserAndRolesViewModel userAndRoles)
+        public ActionResult AddRole(string userName)
         {
-            var newRole = Request.Form["AddRole"].ToString();
-            if ((TempData["allRoles"] as IReadOnlyList<string>).Contains(newRole))
+            if (!string.IsNullOrEmpty(Request.Form["listOfMissingRoles"]))
             {
-                var userName = userAndRoles.UserName;
-                userManager.AddToRole(userName, newRole);
-                return RedirectToAction("Admin", "EditRoles", new { userName = userName });
+                var newRole = Request.Form["listOfMissingRoles"];
+                var allRoles = userProvider.GetAllRoles();
+
+                if (allRoles.Contains(newRole))
+                {
+                    userManager.AddToRole(userName, newRole);
+
+                    var missingRoles = default(IReadOnlyList<string>);
+
+                    var userAndRoles = GetUserAndRoles(userName, allRoles, out missingRoles);
+                    ViewBag.listOfMissingRoles = new SelectList(missingRoles);
+                    return PartialView("ListExistingRoles", userAndRoles);
+                }
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "non-existent role");
             }
-            return RedirectToAction("Admin", "index");
+            return new HttpStatusCodeResult(HttpStatusCode.NotFound, "please select role");
         }
 
-        [Authorize(Roles = "Admin")]
+        [AjaxOnly]
         public ActionResult DeleteRole(string userName, string roleName)
         {
             if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(roleName))
             {
-
-                if (!(TempData["allRoles"] as IReadOnlyList<string>).Contains(roleName))
+                var allRoles = userProvider.GetAllRoles();
+                if (allRoles.Contains(roleName))
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    userManager.RemoveFromRoles(userName, roleName);
+
+                    var missingRoles = default(IReadOnlyList<string>);
+
+                    var userAndRoles = GetUserAndRoles(userName, allRoles, out missingRoles);
+                    ViewBag.listOfMissingRoles = new SelectList(missingRoles);
+                    return PartialView("ListExistingRoles", userAndRoles);
                 }
-                userManager.RemoveFromRoles(userName, roleName);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "non-existent role");
             }
-            return RedirectToAction("Admin", "EditRoles", new { userName = userName});
+            return new HttpStatusCodeResult(HttpStatusCode.NotFound, "please select role");
+        }
+
+        private UserAndRoles GetUserAndRoles(string userName, IReadOnlyList<string> allRoles,
+            out IReadOnlyList<string> missingRoles)
+        {
+            var userRoles = userProvider.GetUserByName(userName).Roles;
+
+            missingRoles = (from role in allRoles
+                            where !userRoles.Contains(role)
+                            select role).ToList();
+
+            return new UserAndRoles()
+            {
+                UserName = userName,
+                Roles = userRoles
+            };
         }
 
         private ActionResult RedirectToLocal(string redirectUrl)
@@ -263,15 +254,5 @@ namespace Temporary_Prison.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        private string[] GetRoles(string userRole)
-        {
-            switch (userRole)
-            {
-                case "Admin": return new string[] { "Admin", "Editor" };
-                case "Editor": return new string[] { "Editor" };
-                case "User": return new string[] { "User" };
-                default: return default(string[]);
-            }
-        }
     }
 }

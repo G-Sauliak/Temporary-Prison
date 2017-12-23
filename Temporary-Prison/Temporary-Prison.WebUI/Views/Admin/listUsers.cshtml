@@ -24,7 +24,7 @@
             <td>
                 @Html.ActionLink("Edit", "EditUser", new { UserName = item.UserName, redirectUrl = ViewBag.RedirectUrl })
 
-                @if ((item.UserName.ToLower() != this.User.Identity.Name.ToLower()))
+                @if (item.UserName != User.Identity.Name)
                 {
                     @Html.ActionLink("Delete", "DeleteUser", new { UserName = item.UserName, redirectUrl = ViewBag.RedirectUrl })
                 }
@@ -33,7 +33,6 @@
     }
 </table>
 
-<br />
 @Html.PagedListPager(Model as IPagedList, page => Url.Action("Index", new
 {
     page,

@@ -91,7 +91,6 @@
     <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Repositories\PrisonerRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
-    <Compile Include="ServiceHostFactories\UserServiceHostFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

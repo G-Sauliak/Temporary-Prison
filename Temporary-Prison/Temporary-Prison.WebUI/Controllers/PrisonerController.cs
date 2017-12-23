@@ -1,7 +1,6 @@
 ﻿using log4net;
 using System.Collections.Generic;
 using System.Web.Mvc;
-using Temporary_Prison.Business.CacheManager;
 using Temporary_Prison.Business.Providers;
 using Temporary_Prison.Common.Models;
 using X.PagedList;

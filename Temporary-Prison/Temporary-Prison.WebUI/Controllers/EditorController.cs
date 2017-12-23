@@ -13,6 +13,7 @@ using Temporary_Prison.Models;
 
 namespace Temporary_Prison.Controllers
 {
+    [Authorize(Roles = "Admin,Editor")]
     public class EditorController : Controller
     {
         private readonly IPrisonerProvider prisonerProvider;
@@ -23,7 +24,6 @@ namespace Temporary_Prison.Controllers
         }
         // GET: Editor/AddPrisoner
         [HttpGet]
-        [Authorize(Roles = "Editor")]
         public ActionResult AddPrisoner()
         {
             ViewBag.RelationshipStatus = Enum.GetValues(typeof(RelationshipStatus)).Cast<RelationshipStatus>();
@@ -34,7 +34,6 @@ namespace Temporary_Prison.Controllers
         // POST: Editor/Addrisoner
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Editor")]
         public ActionResult AddPrisoner(PrisonerViewModel model, string RedirectUrl)
         {
             if (!ModelState.IsValid)
@@ -77,7 +76,6 @@ namespace Temporary_Prison.Controllers
             return View(model);
         }
         [HttpGet]
-        [Authorize(Roles = "Editor")]
         public ActionResult EditPrisoner(int? id)
         {
             if (!id.HasValue)
@@ -99,7 +97,6 @@ namespace Temporary_Prison.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Editor")]
         public ActionResult EditPrisoner(PrisonerViewModel model, string redirectUrl)
         {
             if (!ModelState.IsValid)

@@ -1,5 +1,5 @@
 ﻿BEGIN TRAN
-
+USE PRISONDB
 CREATE TABLE [dbo].[Prisoners] (
     [PrisonerId]            INT            IDENTITY (1, 1) NOT NULL,
     [RelationshipStatus]    NVARCHAR (20)  NOT NULL,

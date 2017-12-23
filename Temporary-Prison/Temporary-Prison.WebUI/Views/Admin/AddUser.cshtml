@@ -1,4 +1,4 @@
-﻿@model Temporary_Prison.Models.UserViewModel
+﻿@model Temporary_Prison.Models.CreateUserViewModel
 
 @using (Html.BeginForm())
 {
@@ -63,7 +63,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.Roles,
+                    @Html.Label("Roles",
            htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
                         @Html.DropDownList("Roles")
@@ -89,7 +89,7 @@
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/Scripts/Admin/IsValid.js"></script>
+    <script src="~/Scripts/Admin/IsExistsEmailAndLogin.js"></script>
 
     <script>
         window.isValid = window.IsValidClass(
