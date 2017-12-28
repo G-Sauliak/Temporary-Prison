@@ -1,5 +1,31 @@
 ﻿BEGIN TRAN
 USE PRISONDB
+
+CREATE TYPE [dbo].[web_UserDt] AS TABLE(
+	[UserID] [int] NULL,
+	[UserName] [nvarchar](50) NULL,
+	[Password] [nvarchar](max) NULL,
+	[Email] [nvarchar](max) NULL
+)
+GO
+CREATE TYPE [dbo].[PrisonerDt] AS TABLE(
+	[PrisonerId] [int] NULL,
+	[RelationshipStatus] [nvarchar](20) NULL,
+	[PlaceOfWork] [nvarchar](55) NULL,
+	[BirthDate] [date] NULL,
+	[Photo] [nvarchar](max) NULL,
+	[AdditionalInformation] [nvarchar](max) NULL,
+	[FirstName] [nvarchar](30) NULL,
+	[Surname] [nvarchar](30) NULL,
+	[LastName] [nvarchar](30) NULL,
+	[Address] [nvarchar](max) NULL
+)
+GO
+CREATE TYPE [dbo].[PhoneNumbersDt] AS TABLE(
+	[PrisonerId] [int] NULL,
+	[PhoneNumber] [nvarchar](100) NULL
+)
+GO
 CREATE TABLE [dbo].[Prisoners] (
     [PrisonerId]            INT            IDENTITY (1, 1) NOT NULL,
     [RelationshipStatus]    NVARCHAR (20)  NOT NULL,
@@ -53,17 +79,6 @@ CREATE TABLE [dbo].[ReleaseProcedures] (
     CONSTRAINT [FK_ReleaseProcedures_Employees] FOREIGN KEY ([EmployeesID]) REFERENCES [dbo].[Employees] ([EmployeeID])
 );
 
-CREATE TABLE [dbo].[ExecutionProcedures] (
-    [ExecutionProceduresID] INT  IDENTITY (1, 1) NOT NULL,
-    [DeliveryProcedureID]   INT NULL,
-    [DetentionProcedureID]  INT NULL,
-    [ReleaseProceduresID]   INT NULL,
-    CONSTRAINT [PK_ExecutionProcedures] PRIMARY KEY CLUSTERED ([ExecutionProceduresID] ASC),
-    CONSTRAINT [FK_ExecutionProcedures_DeliveryProcedures] FOREIGN KEY ([DeliveryProcedureID]) REFERENCES [dbo].[DeliveryProcedures] ([DeliveredID]),
-    CONSTRAINT [FK_ExecutionProcedures_DetentionProcedures] FOREIGN KEY ([DetentionProcedureID]) REFERENCES [dbo].[DetentionProcedures] ([DetentionID]),
-    CONSTRAINT [FK_ExecutionProcedures_ReleaseProcedures] FOREIGN KEY ([ReleaseProceduresID]) REFERENCES [dbo].[ReleaseProcedures] ([ReleaseProceduresID])
-);
-
 CREATE TABLE [dbo].[ListOfDetentions] (
     [DetentionID]           INT           IDENTITY (1, 1) NOT NULL,
     [PrisonerID]            INT           NOT NULL,
@@ -73,9 +88,13 @@ CREATE TABLE [dbo].[ListOfDetentions] (
     [AccruedAmount]         MONEY         NULL,
     [PaidAmount]            MONEY         NULL,
     [PlaceofDetention]      NVARCHAR (50) NULL,
-    [ExecutionProceduresID] INT           NULL,
+    [ReleaseProceduresID]   INT           NULL,
+    [DetentionProceduresID] INT           NULL,
+    [DeliveredProceduresID] INT           NULL,
     PRIMARY KEY CLUSTERED ([DetentionID] ASC),
-    CONSTRAINT [FK_ListOfDetentions_ExecutionProcedures] FOREIGN KEY ([ExecutionProceduresID]) REFERENCES [dbo].[ExecutionProcedures] ([ExecutionProceduresID]),
+    CONSTRAINT [FK_ListOfDetentions_ReleaseProcedures] FOREIGN KEY ([ReleaseProceduresID]) REFERENCES [dbo].[ReleaseProcedures] ([ReleaseProceduresID]),
+    CONSTRAINT [FK_ListOfDetentions_DetentionProcedures] FOREIGN KEY ([DetentionProceduresID]) REFERENCES [dbo].[DetentionProcedures] ([DetentionProceduresID]),
+    CONSTRAINT [FK_ListOfDetentions_DeliveryProcedures] FOREIGN KEY ([DeliveredProceduresID]) REFERENCES [dbo].[DeliveryProcedures] ([DeliveredProceduresID]),
     CONSTRAINT [FK_ListOfDetentions_Prisoners] FOREIGN KEY ([PrisonerID]) REFERENCES [dbo].[Prisoners] ([PrisonerId])
 );
 

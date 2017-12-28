@@ -1,210 +1,135 @@
 ﻿using log4net;
-using System;
-using System.ServiceModel;
+using System.Data.SqlClient;
+using System.Linq;
 using Temporary_Prison.Service.Contracts.Dto;
-using Temporary_Prison.Service.Contracts.Repository;
 
 namespace Temporary_Prison.Service.Contracts.Contracts
 {
-    public class UserService : IUserService
+    public class UserService : DataAccessService, IUserService
     {
         private readonly ILog log = LogManager.GetLogger("LOGGER");
 
-        private readonly IUserRepository userRepository;
-
-        public UserService()
-        {
-            userRepository = new UserRepository();
-        }
-
         public void AddUser(UserDto user)
         {
-            try
+            if (user != null)
             {
-                userRepository.AddUser(user);
-            }
-            catch (Exception ex)
-            {
-                var serviceDataError = new DataErrorDto();
-                serviceDataError.ErrorMessage = "Error. AddUser";
-                serviceDataError.ErrorDetails = ex.ToString();
-                log.Error($"Type Error: {serviceDataError.ErrorMessage}\n ErrorDetails {ex.ToString()}");
-                throw new FaultException<DataErrorDto>(serviceDataError, ex.ToString());
+                ExecNonQuery("insertUser", user);
+
+                var parametrs = new SqlParameter[]
+                {
+                new SqlParameter("@RoleName",user.Roles.First()),
+                new SqlParameter("@UserName",user.UserName)
+                };
+                ExecNonQuery("AddToRole", parametrs);
             }
         }
 
         public string[] GetAllRoles()
         {
-            string[] userDto = default(string[]);
-            try
-            {
-                userDto = userRepository.GetAllRoles();
-            }
-
-            catch (Exception ex)
-            {
-                var serviceDataError = new DataErrorDto();
-                serviceDataError.ErrorMessage = "Error. GetAllRoles";
-                serviceDataError.ErrorDetails = ex.ToString();
-                log.Error($"Type Error: {serviceDataError.ErrorMessage}\n ErrorDetails {ex.ToString()}");
-                throw new FaultException<DataErrorDto>(serviceDataError, ex.ToString());
-            }
-            return userDto;
+            return GetArrayByColumn<string>("GetAllRoles", "RoleName");
         }
 
         public UserDto GetUserByName(string userName)
         {
-            UserDto userDto = default(UserDto);
-            try
+            if (!string.IsNullOrEmpty(userName))
             {
-                userDto = userRepository.GetUserByName(userName);
+                var user = GetModel<UserDto>("GetUserByName", new SqlParameter("@userName", userName));
+                user.Roles = GetArrayByColumn<string>("GetRolesByUserName", "RoleName", new SqlParameter("@userName", userName));
+                return user;
             }
-
-            catch (Exception ex)
-            {
-                var serviceDataError = new DataErrorDto();
-                serviceDataError.ErrorMessage = $"Error. GetUserByName {userName}";
-                serviceDataError.ErrorDetails = ex.ToString();
-                log.Error($"Type Error: {serviceDataError.ErrorMessage}\n ErrorDetails {ex.ToString()}");
-                throw new FaultException<DataErrorDto>(serviceDataError, ex.ToString());
-            }
-            return userDto;
+            return default(UserDto);
         }
 
         public UserDto[] GetUsersForPagedList(int skip, int rowSize, out int totalCountUsers)
         {
-            var usersDto = default(UserDto[]);
-            try
+            if (rowSize > 0)
             {
-                usersDto = userRepository.GetUsersForPagedList(skip, rowSize, out totalCountUsers);
+                var param = new SqlParameter[]
+                     {
+                        new SqlParameter(@"skip",skip),
+                        new SqlParameter(@"rowSize",rowSize),
+                     };
+
+                return GetModels<UserDto, int>("GetUsersForPagedList", "TotalCount", out totalCountUsers, param);
             }
-            catch (Exception ex)
-            {
-                var serviceDataError = new DataErrorDto();
-                serviceDataError.ErrorMessage = $"Error. GetUsersForPagedList skip: {skip} countRows: {rowSize}";
-                serviceDataError.ErrorDetails = ex.ToString();
-                log.Error($"Type Error: {serviceDataError.ErrorMessage}\n ErrorDetails {ex.ToString()}");
-                throw new FaultException<DataErrorDto>(serviceDataError, ex.ToString());
-            }
-            return usersDto;
+            totalCountUsers = default(int);
+            return default(UserDto[]);
         }
 
         public bool IsExistsByLogin(string userName)
         {
-            try
+            if (!string.IsNullOrEmpty(userName))
             {
-                return userRepository.IsExistsByLogin(userName);
+                return ExecScalarValued<bool>("SELECT dbo.IsExistsLogin(@userName)",
+                    new SqlParameter("@userName", userName));
             }
-            catch (Exception ex)
-            {
-                var serviceDataError = new DataErrorDto();
-                serviceDataError.ErrorMessage = $"Error. IsExistsByLogin {userName}";
-                serviceDataError.ErrorDetails = ex.ToString();
-                log.Error($"Type Error: {serviceDataError.ErrorMessage}\n ErrorDetails {ex.ToString()}");
-                throw new FaultException<DataErrorDto>(serviceDataError, ex.ToString());
-            }
+            return default(bool);
         }
 
         public bool IsExistsByEmail(string email)
         {
-            try
+            if (!string.IsNullOrEmpty(email))
             {
-                return userRepository.IsExistsByEmail(email);
+                return ExecScalarValued<bool>("SELECT dbo.IsExistsLogin(@email)",
+              new SqlParameter("@email", email));
             }
-            catch (Exception ex)
-            {
-                var serviceDataError = new DataErrorDto();
-                serviceDataError.ErrorMessage = $"Error. IsExistsByEmail {email}";
-                serviceDataError.ErrorDetails = ex.ToString();
-                log.Error($"Type Error: {serviceDataError.ErrorMessage}\n ErrorDetails {ex.ToString()}");
-                throw new FaultException<DataErrorDto>(serviceDataError, ex.ToString());
-            }
+            return default(bool);
         }
 
         public bool IsValidLogin(string userName, string password)
         {
-            bool result = false;
-            try
+            if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(userName))
             {
-                result = userRepository.IsValidUser(userName, password);
+                var parametrs = new SqlParameter[]
+                 {
+                     new SqlParameter("@name",userName),
+                     new SqlParameter("@password",password)
+                 };
+                return ExecScalarValued<bool>("SELECT dbo.IsValidUser(@name,@password)", parametrs);
             }
-
-            catch (Exception ex)
-            {
-                var serviceDataError = new DataErrorDto();
-                serviceDataError.ErrorMessage = $"Error. IsValidLogin {userName}";
-                serviceDataError.ErrorDetails = ex.ToString();
-                log.Error($"Type Error: {serviceDataError.ErrorMessage}\n ErrorDetails {ex.ToString()}");
-                throw new FaultException<DataErrorDto>(serviceDataError, ex.ToString());
-            }
-            return result;
+            return default(bool);
         }
 
         public void EditUser(UserDto user)
         {
-            try
+            if (user != null)
             {
-                userRepository.EditUser(user);
-            }
-            catch (Exception ex)
-            {
-                var serviceDataError = new DataErrorDto();
-                serviceDataError.ErrorMessage = $"Error. EditUser: {user.UserName}";
-                serviceDataError.ErrorDetails = ex.ToString();
-                log.Error($"Type Error: {serviceDataError.ErrorMessage}\n ErrorDetails {ex.ToString()}");
-                throw new FaultException<DataErrorDto>(serviceDataError, ex.ToString());
+                ExecNonQuery("EditUser", user);
             }
         }
 
         public void DeleteUser(string userName)
         {
-            try
+            if (!string.IsNullOrEmpty(userName))
             {
-                userRepository.DeleteUser(userName);
-            }
-            catch (Exception ex)
-            {
-                var serviceDataError = new DataErrorDto();
-                serviceDataError.ErrorMessage = $"Error. DeleteUser: {userName}";
-                serviceDataError.ErrorDetails = ex.ToString();
-                log.Error($"Type Error: {serviceDataError.ErrorMessage}\n ErrorDetails {ex.ToString()}");
-                throw new FaultException<DataErrorDto>(serviceDataError, ex.ToString());
+                ExecNonQuery("DeleteUser", new SqlParameter("@userName", userName));
             }
         }
 
         public void RemoveFromRoles(string userName, string roleName)
         {
-            try
+            if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(roleName))
             {
-                userRepository.RemoveFromRoles(userName,roleName);
+                var parametrs = new SqlParameter[]
+                {
+                   new SqlParameter("@userName",userName),
+                   new SqlParameter("@roleName",roleName)
+                };
+                ExecNonQuery("DeleteFromRoles", parametrs);
             }
-            catch (Exception ex)
-            {
-                var serviceDataError = new DataErrorDto();
-                serviceDataError.ErrorMessage = $"Error. RemoveFromRoles: userName: {userName} RoleName: {roleName}";
-                serviceDataError.ErrorDetails = ex.ToString();
-                log.Error($"Type Error: {serviceDataError.ErrorMessage}\n ErrorDetails {ex.ToString()}");
-                throw new FaultException<DataErrorDto>(serviceDataError, ex.ToString());
-            }
-
         }
 
         public void AddToRole(string userName, string roleName)
         {
-            try
+            if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(roleName))
             {
-                userRepository.AddToRole(userName, roleName);
+                var param = new SqlParameter[]
+                {
+                   new SqlParameter("@userName",userName),
+                   new SqlParameter("@roleName",roleName)
+                };
+                ExecNonQuery("AddToRole", param);
             }
-            catch (Exception ex)
-            {
-                var serviceDataError = new DataErrorDto();
-                serviceDataError.ErrorMessage = $"Error. AddToRole: userName: {userName} RoleName: {roleName}";
-                serviceDataError.ErrorDetails = ex.ToString();
-                log.Error($"Type Error: {serviceDataError.ErrorMessage}\n ErrorDetails {ex.ToString()}");
-                throw new FaultException<DataErrorDto>(serviceDataError, ex.ToString());
-            }
-
         }
     }
-
 }

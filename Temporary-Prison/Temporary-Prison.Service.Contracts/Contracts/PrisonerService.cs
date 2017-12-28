@@ -1,129 +1,110 @@
 ﻿using log4net;
-using System;
-using System.Collections.Generic;
-using System.ServiceModel;
+using System.Data.SqlClient;
+using Temporary_Prison.Common.Models;
 using Temporary_Prison.Service.Contracts.Dto;
-using Temporary_Prison.Service.Contracts.Extensions;
-using Temporary_Prison.Service.Contracts.Repositories;
 
 namespace Temporary_Prison.Service.Contracts.Contracts
 {
-    public class PrisonerService : IPrisonerService
+    public class PrisonerService : DataAccessService, IPrisonerService
     {
-        private readonly IPrisonerRepository prisonerContext;
         private readonly ILog log = LogManager.GetLogger("LOGGER");
-
-        public PrisonerService()
-        {
-            prisonerContext = new PrisonerRepository();
-        }
 
         public PrisonerDto GetPrisonerById(int Id)
         {
-
-            PrisonerDto prisoner = null;
-            try
+            if (Id != default(int))
             {
-                prisoner = prisonerContext.GetPrisonerById(Id);
-            }
+                var prisoner = GetModel<PrisonerDto>("GetPrisonerById", new SqlParameter(@"prisonerId", Id));
+                var phones = GetModels<Phone>("GetPhoneNumbers", new SqlParameter(@"prisonerId", Id));
 
-            catch (Exception ex)
-            {
-                var serviceData = new DataErrorDto();
-                serviceData.ErrorMessage = "Error Exception. GetPriosnerById";
-                serviceData.ErrorDetails = ex.ToString();
-                log.Error($"Type Error: {serviceData.ErrorMessage}\n ErrorDetails {ex.ToString()}");
-                throw new FaultException<DataErrorDto>(serviceData, ex.ToString());
+                if (phones != null)
+                {
+                    prisoner.PhoneNumbers = new string[phones.Length];
+                    for (int i = 0; i < phones.Length; i++)
+                    {
+                        prisoner.PhoneNumbers[i] = phones[i].PhoneNumber;
+                    }
+                }
+
+                return prisoner;
             }
-            return prisoner;
+            return default(PrisonerDto);
         }
 
-        public List<PrisonerDto> GetPrisonersForPagedList(int skip, int rowSize, out int totalCount)
+        public PrisonerDto[] GetPrisonersForPagedList(int skip, int rowSize, out int totalCount)
         {
-            IReadOnlyList<PrisonerDto> prisoners = null;
-            try
+            if (rowSize != default(int))
             {
-                prisoners = prisonerContext.GetPrisonersForPagedList(skip, rowSize, out totalCount);
+                var param = new SqlParameter[]
+                     {
+                        new SqlParameter(@"skip",skip),
+                        new SqlParameter(@"rowSize",rowSize),
+                     };
+                return GetModels<PrisonerDto, int>("GetPrisonersToPagedList", "TotalCount", out totalCount, param);
             }
-            catch (Exception ex)
-            {
-                var serviceData = new DataErrorDto();
-                serviceData.ErrorMessage = "Error Exception. GetPrisonersForPageList";
-                serviceData.ErrorDetails = ex.ToString();
-                log.Error($"Type Error: {serviceData.ErrorMessage}\n ErrorDetails {ex.ToString()}");
-                throw new FaultException<DataErrorDto>(serviceData, ex.ToString());
-            }
-            return prisoners as List<PrisonerDto>;
-        }
-
-        public List<PrisonerDto> GetPrisoners()
-        {
-            IReadOnlyList<PrisonerDto> prisoners = default(IReadOnlyList<PrisonerDto>);
-            try
-            {
-                prisoners = prisonerContext.GetPrisoners();
-            }
-            catch (Exception ex)
-            {
-                var serviceData = new DataErrorDto();
-                serviceData.ErrorMessage = "Error Exception. GetPriosners";
-                serviceData.ErrorDetails = ex.ToString();
-                log.Error($"Type Error: {serviceData.ErrorMessage}\n ErrorDetails {ex.ToString()}");
-                throw new FaultException<DataErrorDto>(serviceData, ex.ToString());
-            }
-            return prisoners as List<PrisonerDto>;
+            totalCount = default(int);
+            return default(PrisonerDto[]);
         }
 
         public bool AddPrisoner(PrisonerDto prisoner, out int newId)
         {
-            try
+            if (prisoner != null)
             {
-                return prisonerContext.AddPrisoner(prisoner, out newId);
+                int lasID;
+                ExecNonQuery("insertPrisoner", prisoner, "newID", out lasID);
+                var countPhones = prisoner.PhoneNumbers.Length;
+                var phones = new Phone[countPhones];
+                if (lasID != default(int))
+                {
+                    for (int i = 0; i < countPhones; i++)
+                    {
+                        phones[i] = new Phone()
+                        {
+                            PrisonerId = lasID,
+                            PhoneNumber = prisoner.PhoneNumbers[i]
+                        };
+                    }
+                    ExecNonQuery("dbo.InsertPhoneNumbers", phones);
+                    newId = lasID;
+                    return true;
+                }
             }
-            catch (Exception ex)
-            {
-                var serviceData = new DataErrorDto();
-                serviceData.ErrorMessage = "Error Exception. AddPrisoner";
-                serviceData.ErrorDetails = ex.ToString();
-                log.Error($"Type Error: {serviceData.ErrorMessage}\n ErrorDetails {ex.ToString()}");
-                throw new FaultException<DataErrorDto>(serviceData, ex.ToString());
-            }
+            newId = default(int);
+            return default(bool);
         }
 
         public PrisonerDto[] FindPrisonersByName(string search)
         {
-            return prisonerContext.FindPrisonersByName(search);
+            if (!string.IsNullOrEmpty(search))
+            {
+                return GetModels<PrisonerDto>("FindPrisonersByName", new SqlParameter(@"search", search));
+            }
+            return default(PrisonerDto[]);
         }
 
         public void DeletePrisoner(int id)
         {
-            try
+            if (id != default(int))
             {
-                prisonerContext.DeletePrisoner(id);
-            }
-            catch (Exception ex)
-            {
-                var serviceData = new DataErrorDto();
-                serviceData.ErrorMessage = "Error Exception. DeletePridsoner";
-                serviceData.ErrorDetails = ex.ToString();
-                log.Error($"Type Error: {serviceData.ErrorMessage}\n ErrorDetails {ex.ToString()}");
-                throw new FaultException<DataErrorDto>(serviceData, ex.ToString());
+                ExecNonQuery("DeletePrisoner", new SqlParameter("@Priosner_ID", id));
             }
         }
 
         public void EditPrisoner(PrisonerDto prisoner)
         {
-            try
+            if (prisoner != null)
             {
-                prisonerContext.EditPrisoner(prisoner);
-            }
-            catch (Exception ex)
-            {
-                var serviceData = new DataErrorDto();
-                serviceData.ErrorMessage = "Error Exception. EditPrisoner";
-                serviceData.ErrorDetails = ex.ToString();
-                log.Error($"Type Error: {serviceData.ErrorMessage}\n ErrorDetails {ex.ToString()}");
-                throw new FaultException<DataErrorDto>(serviceData, ex.ToString());
+                ExecNonQuery("EditPrisoner", prisoner);
+                var countPhones = prisoner.PhoneNumbers.Length;
+                var phones = new Phone[countPhones];
+                for (int i = 0; i < countPhones; i++)
+                {
+                    phones[i] = new Phone()
+                    {
+                        PrisonerId = prisoner.PrisonerId,
+                        PhoneNumber = prisoner.PhoneNumbers[i]
+                    };
+                }
+                ExecNonQuery("dbo.InsertPhoneNumbers", phones);
             }
         }
     }

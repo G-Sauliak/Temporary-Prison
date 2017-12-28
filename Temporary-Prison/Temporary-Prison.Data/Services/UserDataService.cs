@@ -4,7 +4,6 @@ using log4net;
 using Temporary_Prison.Common.Models;
 using Temporary_Prison.Data.Clients;
 using Temporary_Prison.Data.UserService;
-
 namespace Temporary_Prison.Data.Services
 {
     public class UserDataService : IUserDataService
@@ -28,6 +27,7 @@ namespace Temporary_Prison.Data.Services
             var userDto = default(UserDto);
             try
             {
+                
                 userDto = Mapper.Map<User, UserDto>(user);
             }
             catch (AutoMapperMappingException me)

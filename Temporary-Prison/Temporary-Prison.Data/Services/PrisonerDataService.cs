@@ -41,18 +41,6 @@ namespace Temporary_Prison.Data.Services
             return default(IReadOnlyList<Prisoner>);
         }
 
-        public IReadOnlyList<Prisoner> GetPrisoners()
-        {
-            var prisonersDto = prisonerClient.GetPrisoners();
-            if (prisonersDto != null)
-            {
-                var prisoners = Mapper.Map<IReadOnlyList<PrisonerDto>, IReadOnlyList<Prisoner>>(prisonersDto);
-
-                return prisoners;
-            }
-            return default(IReadOnlyList<Prisoner>);
-        }
-
         public bool AddPrisoner(Prisoner prisoner, out int newId)
         {
             var result = false;

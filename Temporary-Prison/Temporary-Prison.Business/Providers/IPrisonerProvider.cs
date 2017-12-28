@@ -6,7 +6,6 @@ namespace Temporary_Prison.Business.Providers
 {
     public interface IPrisonerProvider
     {
-        IReadOnlyList<Prisoner> GetPrisoner();
         Prisoner GetPrisonerById(int id);
         void AddPrisoner(Prisoner prisoner, out int newId);
         void EditPrisoner(Prisoner prisoner);

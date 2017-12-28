@@ -19,11 +19,6 @@ namespace Temporary_Prison.Business.Providers
             this.prisonerDataService = dataService;
         }
 
-        public IReadOnlyList<Prisoner> GetPrisoner()
-        {
-            return prisonerDataService.GetPrisoners();
-        }
-
         public Prisoner GetPrisonerById(int id)
         {
             var cacheKey = $"prisoner_{id}";

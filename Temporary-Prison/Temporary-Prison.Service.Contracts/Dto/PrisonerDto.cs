@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
-using Temporary_Prison.Common.Models;
 
 namespace Temporary_Prison.Service.Contracts.Dto
 {
@@ -11,12 +9,6 @@ namespace Temporary_Prison.Service.Contracts.Dto
         [DataMember]
         public int PrisonerId { get; set; }
         [DataMember]
-        public string FirstName { get; set; }
-        [DataMember]
-        public string Surname { get; set; }
-        [DataMember]
-        public string LastName { get; set; }
-        [DataMember]
         public string RelationshipStatus { get; set; }
         [DataMember]
         public string PlaceOfWork { get; set; }
@@ -25,11 +17,16 @@ namespace Temporary_Prison.Service.Contracts.Dto
         [DataMember]
         public DateTime BirthDate { get; set; }
         [DataMember]
-        public string Address { get; set; }
+        public string Photo { get; set; }
         [DataMember]
         public string AdditionalInformation { get; set; }
         [DataMember]
-        public string Photo { get; set; }
-
+        public string FirstName { get; set; }
+        [DataMember]
+        public string Surname { get; set; }
+        [DataMember]
+        public string LastName { get; set; }
+        [DataMember]
+        public string Address { get; set; }
     }
 }

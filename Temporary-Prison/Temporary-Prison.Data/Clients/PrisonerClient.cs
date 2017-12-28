@@ -21,10 +21,6 @@ namespace Temporary_Prison.Data.Clients
             return prisoners;
         }
 
-        public IReadOnlyList<PrisonerDto> GetPrisoners()
-        {
-           return new PrisonerServiceClient().Execute(client => client.GetPrisoners());
-        }
 
         public void AddPrisoner(PrisonerDto prisoner, out int newId)
         {

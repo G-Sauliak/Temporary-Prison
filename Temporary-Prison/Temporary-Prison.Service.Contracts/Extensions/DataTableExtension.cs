@@ -1,78 +1,74 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 
 namespace Temporary_Prison.Service.Contracts.Extensions
 {
     public static class DataTableExtension
     {
-        public static string[] ConvertToArrayOfStrings(this DataTable dataTable, string columName)
+        public static TypeArray[] ConvertToArrayByColumn<TypeArray>(this DataTable dataTable, string columName)
         {
-            string[] data = new string[dataTable.Rows.Count];
-            int i = 0;  
+            TypeArray[] data = new TypeArray[dataTable.Rows.Count];
+            int i = 0;
             foreach (DataRow row in dataTable.Rows)
             {
-                data[i] = row[columName].ToString();
+                data[i] = (TypeArray)row[columName];
                 i++;
             }
             return data;
         }
 
-        public static TResult ConvertToModel<TResult>(this DataTable dataTable)
+        public static TypeModel ConvertToModel<TypeModel>(this DataTable dataTable) where TypeModel : class, new()
         {
             if (dataTable.Rows.Count == 0)
             {
-                return default(TResult);
+                return default(TypeModel);
             }
-            var obj = Activator.CreateInstance<TResult>();
-            var temp = typeof(TResult);
+            var obj = new TypeModel();
+            var temp = typeof(TypeModel);
             var row = dataTable.Rows[0];
 
             foreach (DataColumn colum in row.Table.Columns)
             {
                 foreach (var property in temp.GetProperties())
                 {
-                    if (property.Name != colum.ColumnName)
+                    if (property.Name == colum.ColumnName)
                     {
-                        continue;
+                        property.SetValue(obj, row[colum.ColumnName], null);
                     }
-                    property.SetValue(obj, row[colum.ColumnName], null);
                 }
             }
             return obj;
         }
 
-        public static TResult[] ConvertToArrayOfModels<TResult>(this DataTable dataTable)
+        public static TypeModel[] ConvertToArrayOfModels<TypeModel>(this DataTable dataTable)
+            where TypeModel : class, new()
         {
-            TResult[] data = new TResult[dataTable.Rows.Count];
+            TypeModel[] data = new TypeModel[dataTable.Rows.Count];
             int i = 0;
             foreach (DataRow row in dataTable.Rows)
             {
-                TResult item = GetItem<TResult>(row);
+                TypeModel item = GetItem<TypeModel>(row);
                 data[i] = item;
                 i++;
             }
             return data;
         }
 
-        private static TResult GetItem<TResult>(DataRow row)
+        private static TypeModel GetItem<TypeModel>(DataRow row) where TypeModel : class, new()
         {
-            var temp = typeof(TResult);
-            var obj = Activator.CreateInstance<TResult>();
-
+            var temp = typeof(TypeModel);
+            var obj = new TypeModel();
             foreach (DataColumn colum in row.Table.Columns)
             {
                 foreach (var property in temp.GetProperties())
                 {
-                    if (property.Name != colum.ColumnName)
+                    if (property.Name == colum.ColumnName)
                     {
-                        continue;
+                        property.SetValue(obj, row[colum.ColumnName], null);
                     }
-                    property.SetValue(obj, row[colum.ColumnName], null);
                 }
             }
             return obj;
         }
-
 
     }
 }

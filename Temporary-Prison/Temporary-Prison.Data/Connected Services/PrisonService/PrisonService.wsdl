@@ -8,15 +8,6 @@
       <xsd:import schemaLocation="http://localhost:49365/PrisonService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="IPrisonerService_GetPrisoners_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetPrisoners" />
-  </wsdl:message>
-  <wsdl:message name="IPrisonerService_GetPrisoners_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetPrisonersResponse" />
-  </wsdl:message>
-  <wsdl:message name="IPrisonerService_GetPrisoners_DataErrorDtoFault_FaultMessage">
-    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q1:DataErrorDto" />
-  </wsdl:message>
   <wsdl:message name="IPrisonerService_GetPrisonersForPagedList_InputMessage">
     <wsdl:part name="parameters" element="tns:GetPrisonersForPagedList" />
   </wsdl:message>
@@ -24,7 +15,7 @@
     <wsdl:part name="parameters" element="tns:GetPrisonersForPagedListResponse" />
   </wsdl:message>
   <wsdl:message name="IPrisonerService_GetPrisonersForPagedList_DataErrorDtoFault_FaultMessage">
-    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q2:DataErrorDto" />
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q1:DataErrorDto" />
   </wsdl:message>
   <wsdl:message name="IPrisonerService_GetPrisonerById_InputMessage">
     <wsdl:part name="parameters" element="tns:GetPrisonerById" />
@@ -33,7 +24,7 @@
     <wsdl:part name="parameters" element="tns:GetPrisonerByIdResponse" />
   </wsdl:message>
   <wsdl:message name="IPrisonerService_GetPrisonerById_DataErrorDtoFault_FaultMessage">
-    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q3:DataErrorDto" />
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q2:DataErrorDto" />
   </wsdl:message>
   <wsdl:message name="IPrisonerService_AddPrisoner_InputMessage">
     <wsdl:part name="parameters" element="tns:AddPrisoner" />
@@ -42,7 +33,7 @@
     <wsdl:part name="parameters" element="tns:AddPrisonerResponse" />
   </wsdl:message>
   <wsdl:message name="IPrisonerService_AddPrisoner_DataErrorDtoFault_FaultMessage">
-    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q4:DataErrorDto" />
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q3:DataErrorDto" />
   </wsdl:message>
   <wsdl:message name="IPrisonerService_FindPrisonersByName_InputMessage">
     <wsdl:part name="parameters" element="tns:FindPrisonersByName" />
@@ -51,7 +42,7 @@
     <wsdl:part name="parameters" element="tns:FindPrisonersByNameResponse" />
   </wsdl:message>
   <wsdl:message name="IPrisonerService_FindPrisonersByName_DataErrorDtoFault_FaultMessage">
-    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q5:DataErrorDto" />
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q4:DataErrorDto" />
   </wsdl:message>
   <wsdl:message name="IPrisonerService_EditPrisoner_InputMessage">
     <wsdl:part name="parameters" element="tns:EditPrisoner" />
@@ -60,7 +51,7 @@
     <wsdl:part name="parameters" element="tns:EditPrisonerResponse" />
   </wsdl:message>
   <wsdl:message name="IPrisonerService_EditPrisoner_DataErrorDtoFault_FaultMessage">
-    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q6:DataErrorDto" />
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q5:DataErrorDto" />
   </wsdl:message>
   <wsdl:message name="IPrisonerService_DeletePrisoner_InputMessage">
     <wsdl:part name="parameters" element="tns:DeletePrisoner" />
@@ -69,14 +60,9 @@
     <wsdl:part name="parameters" element="tns:DeletePrisonerResponse" />
   </wsdl:message>
   <wsdl:message name="IPrisonerService_DeletePrisoner_DataErrorDtoFault_FaultMessage">
-    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q7:DataErrorDto" />
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q6:DataErrorDto" />
   </wsdl:message>
   <wsdl:portType name="IPrisonerService">
-    <wsdl:operation name="GetPrisoners">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPrisonerService/GetPrisoners" message="tns:IPrisonerService_GetPrisoners_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPrisonerService/GetPrisonersResponse" message="tns:IPrisonerService_GetPrisoners_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IPrisonerService/GetPrisonersDataErrorDtoFault" name="DataErrorDtoFault" message="tns:IPrisonerService_GetPrisoners_DataErrorDtoFault_FaultMessage" />
-    </wsdl:operation>
     <wsdl:operation name="GetPrisonersForPagedList">
       <wsdl:input wsaw:Action="http://tempuri.org/IPrisonerService/GetPrisonersForPagedList" message="tns:IPrisonerService_GetPrisonersForPagedList_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPrisonerService/GetPrisonersForPagedListResponse" message="tns:IPrisonerService_GetPrisonersForPagedList_OutputMessage" />
@@ -110,18 +96,6 @@
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IPrisonerService" type="tns:IPrisonerService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="GetPrisoners">
-      <soap:operation soapAction="http://tempuri.org/IPrisonerService/GetPrisoners" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-      <wsdl:fault name="DataErrorDtoFault">
-        <soap:fault use="literal" name="DataErrorDtoFault" namespace="" />
-      </wsdl:fault>
-    </wsdl:operation>
     <wsdl:operation name="GetPrisonersForPagedList">
       <soap:operation soapAction="http://tempuri.org/IPrisonerService/GetPrisonersForPagedList" style="document" />
       <wsdl:input>

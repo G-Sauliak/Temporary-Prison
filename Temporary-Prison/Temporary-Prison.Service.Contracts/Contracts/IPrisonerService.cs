@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ServiceModel;
-using Temporary_Prison.Common.Models;
+﻿using System.ServiceModel;
 using Temporary_Prison.Service.Contracts.Dto;
 
 namespace Temporary_Prison.Service.Contracts.Contracts
@@ -10,11 +8,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
     {
         [OperationContract]
         [FaultContract(typeof(DataErrorDto))]
-        List<PrisonerDto> GetPrisoners();
-
-        [OperationContract]
-        [FaultContract(typeof(DataErrorDto))]
-        List<PrisonerDto> GetPrisonersForPagedList(int skip, int rowSize, out int totalCount);
+        PrisonerDto[] GetPrisonersForPagedList(int skip, int rowSize, out int totalCount);
 
         [OperationContract]
         [FaultContract(typeof(DataErrorDto))]

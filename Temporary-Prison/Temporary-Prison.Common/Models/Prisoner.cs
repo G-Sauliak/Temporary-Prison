@@ -1,21 +1,26 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Temporary_Prison.Common.Models
 {
     public class Prisoner
     {
         public int PrisonerId { get; set; }
+        public string RelationshipStatus { get; set; }
+        public string[] PhoneNumbers { get; set; }
+        public string PlaceOfWork { get; set; }
+        public DateTime BirthDate { get; set; }
+        public string Photo { get; set; }
+        public string AdditionalInformation { get; set; }
         public string FirstName { get; set; }
         public string Surname { get; set; }
         public string LastName { get; set; }
-        public IReadOnlyList<string> PhoneNumbers { get; set; }
-        public string RelationshipStatus { get; set; }
-        public string PlaceOfWork { get; set; }
-        public DateTime BirthDate { get; set; }
-        public string AdditionalInformation { get; set; }
-        public string Photo { get; set; }
         public string Address { get; set; }
+    }
+
+    public class Phone
+    {
+        public int PrisonerId { get; set; }
+        public string PhoneNumber { get; set; }
     }
 
     public class ListOfDetentions

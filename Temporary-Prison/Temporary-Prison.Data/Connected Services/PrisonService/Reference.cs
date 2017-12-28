@@ -283,13 +283,6 @@ namespace Temporary_Prison.Data.PrisonService {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="PrisonService.IPrisonerService")]
     public interface IPrisonerService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/GetPrisoners", ReplyAction="http://tempuri.org/IPrisonerService/GetPrisonersResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.PrisonService.DataErrorDto), Action="http://tempuri.org/IPrisonerService/GetPrisonersDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
-        Temporary_Prison.Data.PrisonService.PrisonerDto[] GetPrisoners();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/GetPrisoners", ReplyAction="http://tempuri.org/IPrisonerService/GetPrisonersResponse")]
-        System.Threading.Tasks.Task<Temporary_Prison.Data.PrisonService.PrisonerDto[]> GetPrisonersAsync();
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/GetPrisonersForPagedList", ReplyAction="http://tempuri.org/IPrisonerService/GetPrisonersForPagedListResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.PrisonService.DataErrorDto), Action="http://tempuri.org/IPrisonerService/GetPrisonersForPagedListDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
         Temporary_Prison.Data.PrisonService.GetPrisonersForPagedListResponse GetPrisonersForPagedList(Temporary_Prison.Data.PrisonService.GetPrisonersForPagedListRequest request);
@@ -436,14 +429,6 @@ namespace Temporary_Prison.Data.PrisonService {
         
         public PrisonerServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
-        }
-        
-        public Temporary_Prison.Data.PrisonService.PrisonerDto[] GetPrisoners() {
-            return base.Channel.GetPrisoners();
-        }
-        
-        public System.Threading.Tasks.Task<Temporary_Prison.Data.PrisonService.PrisonerDto[]> GetPrisonersAsync() {
-            return base.Channel.GetPrisonersAsync();
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]

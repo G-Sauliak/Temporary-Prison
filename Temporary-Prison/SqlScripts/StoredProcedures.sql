@@ -1,4 +1,5 @@
-﻿USE PRISONDB
+﻿
+USE PRISONDB
 GO
 ---------------------Add Phone---------------------------------
 ---------------------------------------------------------------
@@ -8,46 +9,20 @@ CREATE PROCEDURE [dbo].[AddPhoneNumber]
 AS
 	INSERT INTO PhoneNumbers (PhoneNumber,PrisonerID) VALUES (@PhoneNumber,@PrisonerId)
 GO
----------------------Add Prisoner------------------------------
+---------------------InsertPrisoner------------------------------
 ---------------------------------------------------------------
-CREATE PROC [dbo].[AddPriosner]
-@FirstName nvarchar(50),
-@SurName nvarchar(50),
-@LastName nvarchar(50),
-@PlaceOfWork nvarchar(50),
-@BirthDate date,
-@Photo nvarchar(max),
-@Address nvarchar(max),
-@AdditionalInformation nvarchar(max),
-@RelationshipStatus nvarchar(50)
-
+CREATE PROC [dbo].[InsertPrisoner] 
+@dt AS dbo.PrisonerDt READONLY,
+@newId VARCHAR(20) output
 AS
 BEGIN
-    INSERT INTO Prisoners(
-	FirstName,
-	LastName,
-	Surname,
-	PlaceOfWork,
-	Photo,
-    BirthDate,
-	RelationshipStatus,
-	[Address],
-	AdditionalInformation
-	)
-	VALUES(
-	@FirstName,
-	@LastName,
-	@SurName,
-	@PlaceOfWork,
-	@Photo,
-	@BirthDate,
-	@RelationshipStatus,
-	@Address,
-	@AdditionalInformation
-	)
-
-	DECLARE @LastId int = SCOPE_IDENTITY()
-RETURN @lastID
+ SET NOCOUNT ON
+ INSERT INTO dbo.Prisoners(
+ RelationshipStatus,PlaceOfWork,BirthDate,Photo,AdditionalInformation,FirstName,Surname,LastName,Address)
+ SELECT 
+ RelationshipStatus,PlaceOfWork,BirthDate,Photo,AdditionalInformation,FirstName,Surname,LastName,Address FROM @dt
+  SET @newId = SCOPE_IDENTITY();
+  RETURN;
 END
 ---------------------GetPrisonerById---------------------------
 ---------------------------------------------------------------
@@ -94,16 +69,16 @@ GO
 -------------------------------------------------------------------
 CREATE PROC [dbo].[GetUsersForPagedList]
 @skip int,
-@rowSize int
+@rowSize int,
+@TotalCount int output
 AS
+BEGIN
 SELECT UserName,Email FROM web_Users u
 ORDER BY u.UserName 
 OFFSET @skip ROWS 
 FETCH NEXT @rowSize ROWS ONLY;
-DECLARE @TotalCount int
 SET @Totalcount = (SELECT COUNT(*) FROM web_Users)
-
-RETURN @Totalcount
+END
 GO
 ---------------------GETALLROLES-----------------------------------
 -------------------------------------------------------------------
@@ -113,39 +88,20 @@ BEGIN
 SELECT RoleName FROM web_Roles
 END
 GO
----------------------ADD USER--------------------------------------
+---------------------insertUser--------------------------------------
 -------------------------------------------------------------------
-CREATE PROC [dbo].[AddUser]
-@UserName nvarchar(50),
-@Email nvarchar(max),
-@Password nvarchar(max)
- 
+CREATE PROC [dbo].[insertUser] 
+@dt AS dbo.web_UserDt READONLY
 AS
 BEGIN
-    INSERT INTO web_Users(
+ SET NOCOUNT ON
+  INSERT INTO web_Users(
 	UserName,
 	Email,
 	Password
 	)
-	VALUES(
-	@UserName,
-	@Email,
-	@Password
-	)
+ SELECT UserName,Email,Password FROM @dt
 END
-	DECLARE @LastId int = SCOPE_IDENTITY()
-RETURN @lastID
-GO
----------------------ADD TO ROLES---------------------------------------
-------------------------------------------------------------------------
-GO
-CREATE PROCEDURE [dbo].[AddToRoles]
-	@RoleName nvarchar(50),
-	@UserId int
-AS
-DECLARE @RoleId int
-set @RoleId = (SELECT RoleID FROM web_Roles w_R WHERE w_R.RoleName = @RoleName)
-	INSERT INTO web_UserRoles(UserID,RoleID) VALUES (@UserId,@RoleId)
 GO
 ---------------------DELETE USER--------------------------------------
 ----------------------------------------------------------------------
@@ -159,54 +115,45 @@ DELETE FROM web_UserRoles WHERE web_UserRoles.UserID IN
 DELETE FROM web_Users WHERE web_Users.UserName = @userName 
 END
 GO
----------------------UPDATE USER--------------------------------------
+---------------------[EditUser]--------------------------------------
 ----------------------------------------------------------------------
-CREATE PROC [dbo].[UpdateUser]
-@userName nvarchar(50),
-@email nvarchar(max),
-@password nvarchar(max)
+CREATE PROC [dbo].[EditUser]
+@dt AS dbo.web_UserDt READONLY
 AS
 BEGIN
 UPDATE
     web_Users
 SET
-    Email = @email,
-    Password= @password
-FROM web_Users w
-WHERE w.UserName = @userName
+    Email = u.Email,
+    Password= u.Password
+FROM (SELECT userName,Email,Password FROM @dt) u
+WHERE
+u.UserName = web_Users.UserName
 END
 GO
----------------------UPDATE PRISONER--------------------------------------
+---------------------[EditPrisoner]--------------------------------------
 ----------------------------------------------------------------------
-CREATE PROC [dbo].[UpdatePrisoner]
-@Prisoner_ID int,
-@FirstName nvarchar(50),
-@SurName nvarchar(50),
-@LastName nvarchar(50),
-@PlaceOfWork nvarchar(50),
-@BirthDate date,
-@Photo nvarchar(max),
-@Address nvarchar(max),
-@AdditionalInformation nvarchar(max),
-@RelationshipStatus nvarchar(50)
+CREATE PROC [dbo].[EditPrisoner]
+@dt AS dbo.PrisonerDt READONLY
 AS
 BEGIN
 UPDATE
     Prisoners
 SET
-    FirstName = @FirstName,
-    LastName= @LastName,
-	Surname = @SurName,
-	PlaceOfWork = @PlaceOfWork,
-	BirthDate = @BirthDate,
-	Photo = @Photo,
-	Address = @Address,
-	AdditionalInformation = @AdditionalInformation,
-	RelationshipStatus = @RelationshipStatus
-FROM Prisoners p
-WHERE p.PrisonerId = @Prisoner_ID
+    FirstName = p.FirstName,
+    LastName= p.LastName,
+	Surname = p.SurName,
+	PlaceOfWork = p.PlaceOfWork,
+	BirthDate = p.BirthDate,
+	Photo = p.Photo,
+	Address = p.Address,
+	AdditionalInformation = p.AdditionalInformation,
+	RelationshipStatus = p.RelationshipStatus
+FROM (SELECT PrisonerId,FirstName,Surname,LastName,RelationshipStatus,PlaceOfWork,BirthDate,AdditionalInformation,Photo,Address FROM @dt) p
+WHERE 
+p.PrisonerId = Prisoners.PrisonerId
 
-DELETE FROM PhoneNumbers WHERE PhoneNumbers.PrisonerID = @Prisoner_ID
+DELETE FROM PhoneNumbers WHERE PhoneNumbers.PrisonerID = p.PrisonerId
 END
 ---------------------DELETE PRISONER--------------------------------------
 ----------------------------------------------------------------------
@@ -229,6 +176,8 @@ SELECT PrisonerId,FirstName,LastName,Surname,BirthDate FROM Prisoners p
 WHERE p.FirstName LIKE  CONCAT('%',@search) OR p.LastName LIKE  CONCAT('%',@search)
 END
 GO
+---------------------ADD TO ROLE--------------------------------------
+----------------------------------------------------------------------
 CREATE PROC [dbo].[AddToRole]
 @UserName nvarchar(50),
 @RoleName nvarchar(50)
@@ -248,6 +197,8 @@ SET @RoleID = (SELECT RoleID FROM web_Roles WHERE RoleName = @RoleName )
 	)
 END
 GO
+---------------------DELETE FROM ROLES--------------------------------------
+----------------------------------------------------------------------
 CREATE PROC [dbo].[DeleteFromRoles]
 @userName nvarchar(50),
 @roleName nvarchar(50)
@@ -260,3 +211,63 @@ SET @roleid = (SELECT RoleID FROM web_Roles WHERE RoleName = @RoleName )
 DELETE FROM web_UserRoles WHERE web_UserRoles.UserID = @userid and web_UserRoles.RoleID = @roleid
 END
 go
+---------------------GET PHONE NUMBERS--------------------------------------
+----------------------------------------------------------------------
+CREATE PROC GetPhoneNumbers
+@prisonerId int
+AS
+BEGIN
+SELECT PhoneNumber FROM PhoneNumbers ph, Prisoners pr
+WHERE ph.PrisonerID = pr.PrisonerId AND ph.PrisonerID = @prisonerId
+END
+---------------------INSERT PRISONER----------------------------------
+----------------------------------------------------------------------
+GO
+CREATE PROC [dbo].[InsertPrisoner] 
+@dt AS dbo.PrisonerDt READONLY,
+@newId VARCHAR(20) output
+AS
+BEGIN
+ SET NOCOUNT ON
+ INSERT dbo.Prisoners(FirstName,Surname,LastName,RelationshipStatus,PlaceOfWork,BirthDate,AdditionalInformation,Photo,Address)
+ SELECT FirstName,Surname,LastName,RelationshipStatus,PlaceOfWork,BirthDate,AdditionalInformation,Photo,Address FROM @dt
+  SET @newId = SCOPE_IDENTITY();
+  RETURN;
+END
+-------------------- [InsertPhoneNumbers]-----------------------------
+----------------------------------------------------------------------
+GO
+CREATE PROC [dbo].[InsertPhoneNumbers] 
+@dt AS dbo.PhoneNumbersDt READONLY
+AS
+BEGIN
+ SET NOCOUNT ON
+ INSERT dbo.PhoneNumbers(PrisonerID,PhoneNumber)
+ SELECT *
+ FROM @dt
+ RETURN;
+END
+-------------------- [EditPrisoner]-----------------------------
+----------------------------------------------------------------------
+GO
+CREATE PROC [dbo].[EditPrisoner]
+@dt AS dbo.PrisonerDt READONLY
+AS
+BEGIN
+UPDATE
+    Prisoners
+SET
+    FirstName = p.FirstName,
+    LastName= p.LastName,
+	Surname = p.SurName,
+	PlaceOfWork = p.PlaceOfWork,
+	BirthDate = p.BirthDate,
+	Photo = p.Photo,
+	Address = p.Address,
+	AdditionalInformation = p.AdditionalInformation,
+	RelationshipStatus = p.RelationshipStatus
+FROM (SELECT PrisonerId,FirstName,Surname,LastName,RelationshipStatus,PlaceOfWork,BirthDate,AdditionalInformation,Photo,Address FROM @dt) p
+WHERE 
+p.PrisonerId = Prisoners.PrisonerId
+END
+GO
