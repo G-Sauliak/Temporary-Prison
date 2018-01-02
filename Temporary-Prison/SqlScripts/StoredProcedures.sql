@@ -13,7 +13,7 @@ GO
 ---------------------------------------------------------------
 CREATE PROC [dbo].[InsertPrisoner] 
 @dt AS dbo.PrisonerDt READONLY,
-@newId VARCHAR(20) output
+@newId int output
 AS
 BEGIN
  SET NOCOUNT ON
@@ -225,12 +225,14 @@ END
 GO
 CREATE PROC [dbo].[InsertPrisoner] 
 @dt AS dbo.PrisonerDt READONLY,
-@newId VARCHAR(20) output
+@newId int output
 AS
 BEGIN
  SET NOCOUNT ON
- INSERT dbo.Prisoners(FirstName,Surname,LastName,RelationshipStatus,PlaceOfWork,BirthDate,AdditionalInformation,Photo,Address)
- SELECT FirstName,Surname,LastName,RelationshipStatus,PlaceOfWork,BirthDate,AdditionalInformation,Photo,Address FROM @dt
+ INSERT INTO dbo.Prisoners(
+ RelationshipStatus,PlaceOfWork,BirthDate,Photo,AdditionalInformation,FirstName,Surname,LastName,Address)
+ SELECT 
+ RelationshipStatus,PlaceOfWork,BirthDate,Photo,AdditionalInformation,FirstName,Surname,LastName,Address FROM @dt
   SET @newId = SCOPE_IDENTITY();
   RETURN;
 END
@@ -270,4 +272,79 @@ FROM (SELECT PrisonerId,FirstName,Surname,LastName,RelationshipStatus,PlaceOfWor
 WHERE 
 p.PrisonerId = Prisoners.PrisonerId
 END
+-------------------- [insertEmployee] --------------------------------
+----------------------------------------------------------------------
 GO
+CREATE PROC [dbo].[insertEmployee] 
+@dt AS dbo.EmployeeDt READONLY,
+@employeeID int output
+AS
+BEGIN
+DECLARE @id int;
+
+SET @id = (SELECT EmployeeID FROM Employees e WHERE EXISTS 
+(SELECT * 
+FROM @dt d
+WHERE d.FirstName = e.FirstName AND 
+d.Surname = e.Surname AND 
+d.LastName = e.LastName))
+
+ if @id > 0
+  BEGIN
+     SET @employeeID = @id
+  END
+ ELSE
+ BEGIN
+   INSERT INTO Employees(
+	 FirstName,
+	 Surname,
+	 LastName,
+ 	 Position)
+    SELECT d.FirstName,d.Surname,d.LastName,d.Position 
+   FROM @dt d
+   SET @employeeID = SCOPE_IDENTITY();
+ END
+END
+GO
+-------------------- [InsertDetentionProcedures]----------------------
+----------------------------------------------------------------------
+CREATE PROC [dbo].[InsertDetentionProcedures] 
+@employeeID int,
+@DetentionProceduresID int output
+AS
+BEGIN
+    BEGIN 
+     INSERT INTO DetentionProcedures(EmployeeID)
+      VALUES(@employeeID);
+      set @DetentionProceduresID = SCOPE_IDENTITY();
+    END
+END
+GO
+-------------------- [InsertDeliveryProcedures]----------------------
+----------------------------------------------------------------------
+CREATE PROC [dbo].[InsertDeliveryProcedures] 
+@employeeID int,
+@DeliveryProceduresID int output
+AS
+BEGIN
+     INSERT INTO DeliveryProcedures(EmployeeID)
+     VALUES(@employeeID);
+     set @DeliveryProceduresID = SCOPE_IDENTITY();
+END
+--------------------[RegistrationOfDetention]-------------------------
+----------------------------------------------------------------------
+CREATE PROC [dbo].[RegistrationOfDetention] 
+@dt AS dbo.RegistrationOfDetentionDt READONLY
+AS
+BEGIN
+ SET NOCOUNT ON
+  INSERT INTO ListOfDetentions(
+	PrisonerID,
+	DateOfDetention,
+	DateOfArrival,
+	PlaceofDetention,
+	DetentionProceduresID,
+	DeliveredProceduresID
+	)
+ SELECT * FROM @dt
+END

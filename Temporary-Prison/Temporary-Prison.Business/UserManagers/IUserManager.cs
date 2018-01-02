@@ -1,4 +1,4 @@
-﻿using Temporary_Prison.Common.Models;
+﻿using Temporary_Prison.Common.Entities;
 
 namespace Temporary_Prison.Business.UserManagers
 {

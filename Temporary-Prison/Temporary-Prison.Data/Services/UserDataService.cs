@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using AutoMapper;
 using log4net;
-using Temporary_Prison.Common.Models;
+using Temporary_Prison.Common.Entities;
 using Temporary_Prison.Data.Clients;
 using Temporary_Prison.Data.UserService;
 namespace Temporary_Prison.Data.Services

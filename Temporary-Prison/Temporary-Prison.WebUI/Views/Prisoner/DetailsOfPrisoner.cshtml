@@ -1,4 +1,4 @@
-﻿@model Temporary_Prison.Common.Models.Prisoner
+﻿@model Temporary_Prison.Common.Entities.Prisoner
 
 <div class="container">
     <div class="row">
@@ -50,6 +50,7 @@
         </div>
     </div>
 </div>
+@Html.Partial("ListOfDetentions", Model)
 <p>
     @Html.ActionLink("Back to List", "ListOfPrisoners")
 </p>

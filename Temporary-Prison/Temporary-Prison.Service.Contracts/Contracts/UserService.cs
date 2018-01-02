@@ -1,6 +1,8 @@
 ﻿using log4net;
+using System;
 using System.Data.SqlClient;
 using System.Linq;
+using System.ServiceModel;
 using Temporary_Prison.Service.Contracts.Dto;
 
 namespace Temporary_Prison.Service.Contracts.Contracts

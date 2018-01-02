@@ -6,7 +6,9 @@ namespace Temporary_Prison.Data.Clients
     public interface IPrisonerClient
     {
         PrisonerDto GetPrisonerById(int id);
-        void AddPrisoner(PrisonerDto prisoner, out int newId);
+        bool AddPrisoner(PrisonerDto prisoner, out int newId);
         IReadOnlyList<PrisonerDto> GetPrisonersForPagedList(int skip, int rowSize, out int totalCount);
+        void RegisterDetention(RegistrationOfDetentionDto registrationOfDetention);
+        IReadOnlyList<PrisonerDto> FindPrisonersByName(string search);
     }
 }

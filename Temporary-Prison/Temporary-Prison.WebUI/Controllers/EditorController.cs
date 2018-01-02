@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
 using System;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Temporary_Prison.Business.Providers;
+using Temporary_Prison.Common.Entities;
 using Temporary_Prison.Common.Models;
 using Temporary_Prison.Enums;
 using Temporary_Prison.Extensions;
@@ -14,10 +14,19 @@ using Temporary_Prison.Models;
 
 namespace Temporary_Prison.Controllers
 {
-    [Authorize(Roles = "Admin,Editor")]
+    [Authorize(Roles = "Admin, Editor")]
     public class EditorController : Controller
     {
         private readonly IPrisonerProvider prisonerProvider;
+
+        public EditorController() : this(new PrisonerProvider())
+        {
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Prisoner, PrisonerViewModel>();
+                cfg.CreateMap<User, EditUserViewModel>();
+            });
+        }
 
         public EditorController(IPrisonerProvider prisonerProvider)
         {
@@ -44,8 +53,6 @@ namespace Temporary_Prison.Controllers
                 return View(model);
             }
 
-           // var photo = Request.Files[0];
-
             if (photo != null && PhotosExtensions.SupportedFormat(photo) && PhotosExtensions.CheckSize(photo))
             {
                 var photoExtensions = Path.GetExtension(photo.FileName);
@@ -67,14 +74,22 @@ namespace Temporary_Prison.Controllers
                 int newID;
 
                 prisonerProvider.AddPrisoner(prisoner, out newID);
+                return RedirectToAction("CreateListOfDetention", "Editor", new { id = newID });
 
-                TempData["NewPrisoner"] = prisoner;
-                TempData["newID"] = newID;
-
-                //TODO
-
-                return RedirectToAction("ListOfPrisoners", "Prisoner");
             }
+            else if (photo == null)
+            {
+                int newID;
+
+                var prisoner = Mapper.Map<PrisonerViewModel, Prisoner>(model);
+               
+                //TODO add ConfigurationManager
+                prisoner.Photo = "/Content/DefaultPhoto/defaultPhotoPrisoner.jpg";
+
+                prisonerProvider.AddPrisoner(prisoner, out newID);
+                return RedirectToAction("CreateListOfDetention", "Editor", new { id = newID });
+            }
+
 
             ModelState.AddModelError(string.Empty, "Incorrect file");
             ViewBag.RelationshipStatus = Enum.GetValues(typeof(RelationshipStatus)).Cast<RelationshipStatus>();
@@ -136,6 +151,32 @@ namespace Temporary_Prison.Controllers
             }
 
             return RedirectToAction("ListOfPrisoners", "Prisoner");
+        }
+        //GET : Editor/CreateListOfDetention
+        [HttpGet]
+        public ActionResult CreateListOfDetention(int id)
+        {
+            var model = new RegistrationOfDetentionViewModel
+            {
+                PrisonerID = id
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateListOfDetention(RegistrationOfDetentionViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var regist = Mapper.Map<RegistrationOfDetentionViewModel, RegistDetention>(model);
+
+            prisonerProvider.RegisterDetention(regist);
+
+            return View(new RegistrationOfDetentionViewModel());
         }
 
     }

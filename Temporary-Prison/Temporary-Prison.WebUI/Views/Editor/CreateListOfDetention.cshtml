@@ -1,0 +1,133 @@
+﻿@model Temporary_Prison.Models.RegistrationOfDetentionViewModel
+
+@{
+    ViewBag.Title = "CreateListOfDetention";
+}
+
+<h2>Registration of detention</h2>
+<style>
+    .container-fluid {
+        border: 1px solid #cecece;
+    }
+</style>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <!--DetainedEmployee-->
+        @Html.HiddenFor(model => model.PrisonerID)
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><h4>information on detention</h4></div>
+                        <div class="panel-body">
+                            <div class="col-md-10">
+                                @Html.LabelFor(model => model.DateOfDetention)
+                                @Html.EditorFor(model => model.DateOfDetention, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.DateOfDetention, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-10">
+                                @Html.LabelFor(model => model.DateOfArrival)
+                                @Html.EditorFor(model => model.DateOfArrival, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.DateOfArrival, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-10">
+                                @Html.LabelFor(model => model.PlaceofDetention)
+                                @Html.EditorFor(model => model.PlaceofDetention, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.PlaceofDetention, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h4>Detained by an employee</h4>
+        <hr />
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-2 col-lg-4">
+                    <div class="panel panel-default">
+
+                        <div class="panel-body">
+                            <div class="col-md-10">
+                                @Html.LabelFor(model => model.DetainedEmployee.FristName)
+                                @Html.EditorFor(model => model.DetainedEmployee.FristName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.DetainedEmployee.FristName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-10">
+                                @Html.LabelFor(model => model.DetainedEmployee.Surname)
+                                @Html.EditorFor(model => model.DetainedEmployee.Surname, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.DetainedEmployee.Surname, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-10">
+                                @Html.LabelFor(model => model.DetainedEmployee.LastName)
+                                @Html.EditorFor(model => model.DetainedEmployee.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.DetainedEmployee.LastName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-10 col-lg-12">
+                                @Html.LabelFor(model => model.DetainedEmployee.Position)
+                                @Html.EditorFor(model => model.DetainedEmployee.Position, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.DetainedEmployee.Position, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h4>Delivered by an employee</h4>
+        <hr />
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-2 col-lg-4">
+                    <div class="panel panel-default">
+
+                        <div class="panel-body">
+                            <div class="col-md-10">
+                                @Html.LabelFor(model => model.DeliveredEmployee.FristName)
+                                @Html.EditorFor(model => model.DeliveredEmployee.FristName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.DeliveredEmployee.FristName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-10">
+                                @Html.LabelFor(model => model.DeliveredEmployee.Surname)
+                                @Html.EditorFor(model => model.DeliveredEmployee.Surname, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.DeliveredEmployee.Surname, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-10">
+                                @Html.LabelFor(model => model.DeliveredEmployee.LastName)
+                                @Html.EditorFor(model => model.DeliveredEmployee.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.DeliveredEmployee.LastName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-10 col-lg-12">
+                                @Html.LabelFor(model => model.DeliveredEmployee.Position)
+                                @Html.EditorFor(model => model.DeliveredEmployee.Position, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.DeliveredEmployee.Position, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10 col-lg-2 col-lg-offset-8">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

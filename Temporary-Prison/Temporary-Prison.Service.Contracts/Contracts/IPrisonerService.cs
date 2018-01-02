@@ -29,5 +29,9 @@ namespace Temporary_Prison.Service.Contracts.Contracts
         [OperationContract]
         [FaultContract(typeof(DataErrorDto))]
         void DeletePrisoner(int id);
+
+        [OperationContract]
+        [FaultContract(typeof(DataErrorDto))]
+        void RegisterDetention(RegistrationOfDetentionDto registrationOfDetention);
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Web.Mvc;
 using Temporary_Prison.Business.Providers;
-using Temporary_Prison.Common.Models;
+using Temporary_Prison.Common.Entities;
 using X.PagedList;
 
 namespace Temporary_Prison.Controllers

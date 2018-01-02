@@ -2,7 +2,7 @@
 using System.Web;
 using System.Web.Security;
 using Temporary_Prison.Business.SecurityPrincipal;
-using Temporary_Prison.Common.Models;
+using Temporary_Prison.Common.Entities;
 
 namespace Temporary_Prison
 {

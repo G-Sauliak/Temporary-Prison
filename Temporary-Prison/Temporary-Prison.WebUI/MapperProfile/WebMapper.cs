@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Temporary_Prison.Common.Models;
+using Temporary_Prison.Common.Entities;
 using Temporary_Prison.Models;
 
 namespace Temporary_Prison.MapperProfile
@@ -10,6 +10,7 @@ namespace Temporary_Prison.MapperProfile
         {
             CreateMap<Prisoner, PrisonerViewModel>();
             CreateMap<User, EditUserViewModel>();
+            CreateMap<Employee, EmployeeViewModel>();
         }
     }
 

@@ -279,6 +279,240 @@ namespace Temporary_Prison.Data.PrisonService {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RegistrationOfDetentionDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+    [System.SerializableAttribute()]
+    public partial class RegistrationOfDetentionDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime DateOfArrivalField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.DateTime DateOfDetentionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Temporary_Prison.Data.PrisonService.EmployeeDto DeliveredEmployeeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Temporary_Prison.Data.PrisonService.EmployeeDto DetainedEmployeeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PlaceofDetentionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int PrisonerIDField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime DateOfArrival {
+            get {
+                return this.DateOfArrivalField;
+            }
+            set {
+                if ((this.DateOfArrivalField.Equals(value) != true)) {
+                    this.DateOfArrivalField = value;
+                    this.RaisePropertyChanged("DateOfArrival");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime DateOfDetention {
+            get {
+                return this.DateOfDetentionField;
+            }
+            set {
+                if ((this.DateOfDetentionField.Equals(value) != true)) {
+                    this.DateOfDetentionField = value;
+                    this.RaisePropertyChanged("DateOfDetention");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Temporary_Prison.Data.PrisonService.EmployeeDto DeliveredEmployee {
+            get {
+                return this.DeliveredEmployeeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DeliveredEmployeeField, value) != true)) {
+                    this.DeliveredEmployeeField = value;
+                    this.RaisePropertyChanged("DeliveredEmployee");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Temporary_Prison.Data.PrisonService.EmployeeDto DetainedEmployee {
+            get {
+                return this.DetainedEmployeeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DetainedEmployeeField, value) != true)) {
+                    this.DetainedEmployeeField = value;
+                    this.RaisePropertyChanged("DetainedEmployee");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlaceofDetention {
+            get {
+                return this.PlaceofDetentionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PlaceofDetentionField, value) != true)) {
+                    this.PlaceofDetentionField = value;
+                    this.RaisePropertyChanged("PlaceofDetention");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int PrisonerID {
+            get {
+                return this.PrisonerIDField;
+            }
+            set {
+                if ((this.PrisonerIDField.Equals(value) != true)) {
+                    this.PrisonerIDField = value;
+                    this.RaisePropertyChanged("PrisonerID");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="EmployeeDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+    [System.SerializableAttribute()]
+    public partial class EmployeeDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int EmployeeIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FristNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LastNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PositionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SurnameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int EmployeeID {
+            get {
+                return this.EmployeeIDField;
+            }
+            set {
+                if ((this.EmployeeIDField.Equals(value) != true)) {
+                    this.EmployeeIDField = value;
+                    this.RaisePropertyChanged("EmployeeID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FristName {
+            get {
+                return this.FristNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FristNameField, value) != true)) {
+                    this.FristNameField = value;
+                    this.RaisePropertyChanged("FristName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LastName {
+            get {
+                return this.LastNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LastNameField, value) != true)) {
+                    this.LastNameField = value;
+                    this.RaisePropertyChanged("LastName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Position {
+            get {
+                return this.PositionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PositionField, value) != true)) {
+                    this.PositionField = value;
+                    this.RaisePropertyChanged("Position");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Surname {
+            get {
+                return this.SurnameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SurnameField, value) != true)) {
+                    this.SurnameField = value;
+                    this.RaisePropertyChanged("Surname");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="PrisonService.IPrisonerService")]
     public interface IPrisonerService {
@@ -326,6 +560,13 @@ namespace Temporary_Prison.Data.PrisonService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/DeletePrisoner", ReplyAction="http://tempuri.org/IPrisonerService/DeletePrisonerResponse")]
         System.Threading.Tasks.Task DeletePrisonerAsync(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/RegisterDetention", ReplyAction="http://tempuri.org/IPrisonerService/RegisterDetentionResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.PrisonService.DataErrorDto), Action="http://tempuri.org/IPrisonerService/RegisterDetentionDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        void RegisterDetention(Temporary_Prison.Data.PrisonService.RegistrationOfDetentionDto registrationOfDetention);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/RegisterDetention", ReplyAction="http://tempuri.org/IPrisonerService/RegisterDetentionResponse")]
+        System.Threading.Tasks.Task RegisterDetentionAsync(Temporary_Prison.Data.PrisonService.RegistrationOfDetentionDto registrationOfDetention);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -496,6 +737,14 @@ namespace Temporary_Prison.Data.PrisonService {
         
         public System.Threading.Tasks.Task DeletePrisonerAsync(int id) {
             return base.Channel.DeletePrisonerAsync(id);
+        }
+        
+        public void RegisterDetention(Temporary_Prison.Data.PrisonService.RegistrationOfDetentionDto registrationOfDetention) {
+            base.Channel.RegisterDetention(registrationOfDetention);
+        }
+        
+        public System.Threading.Tasks.Task RegisterDetentionAsync(Temporary_Prison.Data.PrisonService.RegistrationOfDetentionDto registrationOfDetention) {
+            return base.Channel.RegisterDetentionAsync(registrationOfDetention);
         }
     }
 }

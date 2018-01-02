@@ -84,4 +84,16 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="RegisterDetention">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" minOccurs="0" name="registrationOfDetention" nillable="true" type="q6:RegistrationOfDetentionDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RegisterDetentionResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

@@ -22,10 +22,11 @@ namespace Temporary_Prison.Data.Clients
 
                 return result;
             }
-            catch (FaultException<DataErrorDto> e)
+            catch (FaultException e)
             {
                 log.Error(e.Message);
                 client.Abort();
+                throw;
             }
             catch (CommunicationException e)
             {
@@ -42,6 +43,17 @@ namespace Temporary_Prison.Data.Clients
                 log.Error(e.Message);
                 client.Abort();
                 throw;
+            }
+            finally
+            {
+                if (client.State == CommunicationState.Faulted)
+                {
+                    client.Abort();
+                }
+                else
+                {
+                    client.Close();
+                }
             }
             return default(TResult);
         }
@@ -57,10 +69,11 @@ namespace Temporary_Prison.Data.Clients
 
                 client.Close();
             }
-            catch (FaultException<DataErrorDto> e)
+            catch (FaultException e)
             {
                 log.Error(e.Message);
                 client.Abort();
+                throw;
             }
             catch (CommunicationException e)
             {
@@ -77,6 +90,17 @@ namespace Temporary_Prison.Data.Clients
                 log.Error(e.Message);
                 client.Abort();
                 throw;
+            }
+            finally
+            {
+                if (client.State == CommunicationState.Faulted)
+                {
+                    client.Abort();
+                }
+                else
+                {
+                    client.Close();
+                }
             }
         }
     }

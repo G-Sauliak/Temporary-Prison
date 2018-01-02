@@ -22,7 +22,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @if (User.IsInRole("Editor"))
+                    @if (User.IsInRole("Editor") || User.IsInRole("Admin"))
                     {
                         <li>@Html.ActionLink("Add prisoner", "AddPrisoner", "Editor")</li>
                     }

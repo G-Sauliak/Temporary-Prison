@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+using Temporary_Prison.Common.Entities;
 using Temporary_Prison.Common.Models;
 
 namespace Temporary_Prison.Business.Providers
@@ -12,5 +12,6 @@ namespace Temporary_Prison.Business.Providers
         void DeletePrisoner(int id);
         IReadOnlyList<Prisoner> GetPrisonerForPagedList(int skip, int rowSize, ref int totalCount, string srarch);
         IReadOnlyList<Prisoner> FindPrisonersByName(string search);
+        void RegisterDetention(RegistDetention registDetention);
     }
 }

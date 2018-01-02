@@ -30,4 +30,25 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DataErrorDto" nillable="true" type="tns:DataErrorDto" />
+  <xs:complexType name="RegistrationOfDetentionDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DateOfArrival" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DateOfDetention" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DeliveredEmployee" nillable="true" type="tns:EmployeeDto" />
+      <xs:element minOccurs="0" name="DetainedEmployee" nillable="true" type="tns:EmployeeDto" />
+      <xs:element minOccurs="0" name="PlaceofDetention" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PrisonerID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RegistrationOfDetentionDto" nillable="true" type="tns:RegistrationOfDetentionDto" />
+  <xs:complexType name="EmployeeDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="EmployeeID" type="xs:int" />
+      <xs:element minOccurs="0" name="FristName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Position" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Surname" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EmployeeDto" nillable="true" type="tns:EmployeeDto" />
 </xs:schema>

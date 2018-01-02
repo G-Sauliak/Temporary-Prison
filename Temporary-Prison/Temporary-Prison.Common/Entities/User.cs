@@ -1,4 +1,4 @@
-﻿namespace Temporary_Prison.Common.Models
+﻿namespace Temporary_Prison.Common.Entities
 {
     public class User
     {

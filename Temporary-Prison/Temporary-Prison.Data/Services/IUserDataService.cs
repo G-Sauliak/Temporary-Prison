@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Temporary_Prison.Common.Models;
+using Temporary_Prison.Common.Entities;
 
 namespace Temporary_Prison.Data.Services
 {

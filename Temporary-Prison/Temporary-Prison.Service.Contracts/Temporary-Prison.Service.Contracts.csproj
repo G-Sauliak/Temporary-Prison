@@ -84,6 +84,7 @@
     <Compile Include="Contracts\UserService.cs" />
     <Compile Include="Dto\DataErrorDto.cs" />
     <Compile Include="Contracts\PrisonerService.cs" />
+    <Compile Include="Dto\Detention.cs" />
     <Compile Include="Dto\PrisonerDto.cs" />
     <Compile Include="Dto\UserDto.cs" />
     <Compile Include="Extensions\DataTableExtension.cs" />

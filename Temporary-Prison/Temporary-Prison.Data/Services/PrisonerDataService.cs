@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using System.Collections.Generic;
-using Temporary_Prison.Common.Models;
+using Temporary_Prison.Common.Entities;
 using Temporary_Prison.Data.Clients;
 using Temporary_Prison.Data.PrisonService;
 using log4net;
+using Temporary_Prison.Common.Models;
 
 namespace Temporary_Prison.Data.Services
 {
@@ -11,6 +12,16 @@ namespace Temporary_Prison.Data.Services
     {
         private readonly ILog log = LogManager.GetLogger("LOGGER");
         private readonly IPrisonerClient prisonerClient;
+
+        public PrisonerDataService() : this(new PrisonerClient())
+        {
+            Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Prisoner, PrisonerDto>();
+                cfg.CreateMap<RegistDetention, RegistrationOfDetentionDto>();
+                cfg.CreateMap<Employee, EmployeeDto>();
+            });
+        }
 
         public PrisonerDataService(IPrisonerClient prisonerClient)
         {
@@ -29,7 +40,7 @@ namespace Temporary_Prison.Data.Services
             return default(Prisoner);
         }
 
-        public IReadOnlyList<Prisoner> GetPrisonersForPageList(int skip, int rowSize, out int totalCount)
+        public IReadOnlyList<Prisoner> GetPrisonersForPagedList(int skip, int rowSize, out int totalCount)
         {
             var prisonersDto = prisonerClient.GetPrisonersForPagedList(skip, rowSize, out totalCount);
             if (prisonersDto != null)
@@ -43,31 +54,20 @@ namespace Temporary_Prison.Data.Services
 
         public bool AddPrisoner(Prisoner prisoner, out int newId)
         {
-            var result = false;
-            if (prisoner != null)
-            {
-                var prisonerDto = Mapper.Map<Prisoner, PrisonerDto>(prisoner);
-                int _newId = default(int);
-                result = new PrisonerServiceClient().
-                    Execute(client =>
-                    client.AddPrisoner(prisonerDto, out _newId));
-                newId = _newId;
-
-                return result;
-            }
-            newId = default(int);
-            return result;
+            var prisonerDto = Mapper.Map<Prisoner, PrisonerDto>(prisoner);
+            prisonerClient.AddPrisoner(prisonerDto, out newId);
+            return prisonerClient.AddPrisoner(prisonerDto, out newId);
         }
 
         public IReadOnlyList<Prisoner> FindPrisonersByName(string search)
         {
-            var prisonersDto = new PrisonerServiceClient().Execute(clinet => clinet.FindPrisonersByName(search));
+            var prisonersDto = prisonerClient.FindPrisonersByName(search);
 
             if (prisonersDto != null)
             {
                 try
                 {
-                    var prisoners = Mapper.Map<PrisonerDto[], Prisoner[]>(prisonersDto);
+                    var prisoners = Mapper.Map<IReadOnlyList<PrisonerDto>, IReadOnlyList<Prisoner>>(prisonersDto);
                     return prisoners;
 
                 }
@@ -90,6 +90,13 @@ namespace Temporary_Prison.Data.Services
         public void DeletePrisoner(int id)
         {
             new PrisonerServiceClient().Execute(client => client.DeletePrisoner(id));
+        }
+
+        public void RegisterDetention(RegistDetention registrationOfDetention)
+        {
+           
+            var registDeten = Mapper.Map<RegistDetention, RegistrationOfDetentionDto>(registrationOfDetention);
+            prisonerClient.RegisterDetention(registDeten);
         }
     }
 }

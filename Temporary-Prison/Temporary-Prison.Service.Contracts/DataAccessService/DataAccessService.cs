@@ -3,6 +3,7 @@ using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Reflection;
 using System.ServiceModel;
 using Temporary_Prison.Service.Contracts.Dto;
 using Temporary_Prison.Service.Contracts.Extensions;
@@ -39,21 +40,21 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             var properties = temp.GetProperties();
             if (properties != null)
             {
-                foreach (var property in temp.GetProperties())
+                foreach (var prop in temp.GetProperties())
                 {
-                    if (!property.PropertyType.IsArray)
+                    if (IsValidPropertyType(prop))
                     {
-                        dataTable.Columns.Add(property.Name, property.PropertyType);
+                        dataTable.Columns.Add(prop.Name, prop.PropertyType);
                     }
                 }
                 foreach (var model in objectModels)
                 {
                     var row = dataTable.NewRow();
-                    foreach (var property in temp.GetProperties())
+                    foreach (var prop in temp.GetProperties())
                     {
-                        if (!property.PropertyType.IsArray)
+                        if (IsValidPropertyType(prop))
                         {
-                            row[property.Name] = property.GetValue(model, null);
+                            row[prop.Name] = prop.GetValue(model, null);
                         }
                     }
                     dataTable.Rows.Add(row);
@@ -66,6 +67,15 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             return dataTable;
         }
 
+        private bool IsValidPropertyType(PropertyInfo prop)
+        {
+            if (prop.PropertyType.IsPrimitive || prop.PropertyType == typeof(String) 
+                || prop.PropertyType == typeof(DateTime))
+            {
+                return true;
+            }
+            return false;
+        }
         private DataTable ConvertToDataTable<TInput>(TInput objectModel)
         {
             var dataTable = new DataTable();
@@ -73,19 +83,19 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             var properties = temp.GetProperties();
             if (properties != null)
             {
-                foreach (var property in temp.GetProperties())
+                foreach (var prop in temp.GetProperties())
                 {
-                    if (!property.PropertyType.IsArray)
+                    if (IsValidPropertyType(prop))
                     {
-                        dataTable.Columns.Add(property.Name, property.PropertyType);
+                        dataTable.Columns.Add(prop.Name, prop.PropertyType);
                     }
                 }
                 var row = dataTable.NewRow();
-                foreach (var property in temp.GetProperties())
+                foreach (var prop in temp.GetProperties())
                 {
-                    if (!property.PropertyType.IsArray)
+                    if (IsValidPropertyType(prop))
                     {
-                        row[property.Name] = property.GetValue(objectModel, null);
+                        row[prop.Name] = prop.GetValue(objectModel, null);
                     }
                 }
                 dataTable.Rows.Add(row);
@@ -97,7 +107,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             return dataTable;
         }
 
-        protected void ExecNonQuery<TypeModel, TOut>(string sqlCommandString, TypeModel objectmodel, string outPutName,
+        public void ExecNonQuery<TypeModel, TOut>(string sqlCommandString, TypeModel objectmodel, string outPutName,
             out TOut outPutValue) where TypeModel : class
         {
             try
@@ -133,7 +143,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             }
         }
 
-        protected void ExecNonQuery(string sqlCommandString, params SqlParameter[] parametrs)
+        public void ExecNonQuery(string sqlCommandString, params SqlParameter[] parametrs)
         {
             try
             {
@@ -158,7 +168,38 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             }
         }
 
-        protected void ExecNonQuery<TypeModel>(string sqlCommandString, TypeModel[] objectModels)
+        public void ExecNonQuery<TOut>(string sqlCommandString, string outPutName, out TOut outPutValue, params SqlParameter[] parametrs)
+        {
+            try
+            {
+                using (var sqlConnection = new SqlConnection(GetConnectionString))
+                {
+                    sqlConnection.Open();
+                    using (var sqlCommand = new SqlCommand(sqlCommandString, sqlConnection))
+                    {
+                        var outPutParametr = sqlCommand.Parameters.Add($"@{outPutName}", SqlDbTypeHelper.GetDbType(typeof(TOut)));
+                        outPutParametr.Direction = ParameterDirection.Output;
+
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+                        sqlCommand.Parameters.AddRange(parametrs);
+                        sqlCommand.ExecuteNonQuery();
+                        outPutValue = (TOut)outPutParametr.Value;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                var serviceDataError = new DataErrorDto();
+                serviceDataError.ErrorMessage = ex.Message;
+                serviceDataError.ErrorDetails = ex.ToString();
+                log.Error($"Type Error: {serviceDataError.ErrorMessage}\n ErrorDetails {ex.ToString()}");
+                throw new FaultException<DataErrorDto>(serviceDataError, ex.ToString());
+            }
+        }
+
+
+
+        public void ExecNonQuery<TypeModel>(string sqlCommandString, TypeModel[] objectModels)
         {
             try
             {
@@ -189,7 +230,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             }
         }
 
-        protected void ExecNonQuery<TypeModel>(string sqlCommandString, TypeModel objectmodel)
+        public void ExecNonQuery<TypeModel>(string sqlCommandString, TypeModel objectmodel, params SqlParameter[] parametrs)
         {
             try
             {
@@ -203,6 +244,10 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                         sqlCommand.CommandType = CommandType.StoredProcedure;
 
                         var param = sqlCommand.Parameters.AddWithValue("@dt", dataTable);
+                        if (parametrs != null)
+                        {
+                            sqlCommand.Parameters.AddRange(parametrs);
+                        }
                         param.SqlDbType = SqlDbType.Structured;
 
                         sqlCommand.ExecuteNonQuery();
@@ -219,7 +264,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             }
         }
 
-        protected TypeModel[] GetModels<TypeModel, TOut>(string sqlCommandString, string outPutName, out TOut outPutValue,
+        public TypeModel[] GetModels<TypeModel, TOut>(string sqlCommandString, string outPutName, out TOut outPutValue,
             params SqlParameter[] inputParametrs) where TypeModel : class, new()
         {
             var result = default(TypeModel[]);
@@ -256,7 +301,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             }
         }
 
-        protected TypeModel[] GetModels<TypeModel>(string sqlCommandString, params SqlParameter[] inputParametrs)
+        public TypeModel[] GetModels<TypeModel>(string sqlCommandString, params SqlParameter[] inputParametrs)
             where TypeModel : class, new()
         {
             var result = default(TypeModel[]);
@@ -290,7 +335,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
         }
 
 
-        protected TypeModel GetModel<TypeModel>(string sqlCommandString, params SqlParameter[] inputParametrs)
+        public TypeModel GetModel<TypeModel>(string sqlCommandString, params SqlParameter[] inputParametrs)
             where TypeModel : class, new()
         {
             var result = default(TypeModel);
@@ -323,7 +368,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             }
         }
 
-        protected TypeArray[] GetArrayByColumn<TypeArray>(string sqlCommandString, string columnName, params SqlParameter[] inputParametrs)
+        public TypeArray[] GetArrayByColumn<TypeArray>(string sqlCommandString, string columnName, params SqlParameter[] inputParametrs)
         {
             var result = default(TypeArray[]);
             try
@@ -358,7 +403,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
 
 
         }
-        protected TResult ExecScalarValued<TResult>(string sqlCommandString, params SqlParameter[] inputParametrs)
+        public TResult ExecScalarValued<TResult>(string sqlCommandString, params SqlParameter[] inputParametrs)
         {
             try
             {

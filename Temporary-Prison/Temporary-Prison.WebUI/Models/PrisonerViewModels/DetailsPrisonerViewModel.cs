@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Temporary_Prison.Common.Models
+namespace Temporary_Prison.Models.PrisonerViewModels
 {
-    public class Prisoner
+    public class DetailsPrisonerViewModel
     {
         public int PrisonerId { get; set; }
         public string RelationshipStatus { get; set; }
@@ -15,21 +15,5 @@ namespace Temporary_Prison.Common.Models
         public string Surname { get; set; }
         public string LastName { get; set; }
         public string Address { get; set; }
-    }
-
-    public class Phone
-    {
-        public int PrisonerId { get; set; }
-        public string PhoneNumber { get; set; }
-    }
-
-    public class ListOfDetentions
-    {
-        public DateTime DateOfDetention { get; set; }
-        public DateTime DateOfArrival { get; set; }
-        public DateTime DateOfRelease { get; set; }
-        public double AccruedAmount { get; set; }
-        public double PaidAmount { get; set; }
-        public string PlaceofDetention { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Temporary_Prison.Business.CacheManager;
-using Temporary_Prison.Common.Models;
+using Temporary_Prison.Common.Entities;
 using Temporary_Prison.Data.Services;
 
 namespace Temporary_Prison.Business.Providers

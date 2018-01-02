@@ -1,6 +1,6 @@
 ﻿using log4net;
 using System.Data.SqlClient;
-using Temporary_Prison.Common.Models;
+using Temporary_Prison.Common.Entities;
 using Temporary_Prison.Service.Contracts.Dto;
 
 namespace Temporary_Prison.Service.Contracts.Contracts
@@ -106,6 +106,34 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                 }
                 ExecNonQuery("dbo.InsertPhoneNumbers", phones);
             }
+        }
+
+        public void RegisterDetention(RegistrationOfDetentionDto registrationOfDetention)
+        {
+
+            if (registrationOfDetention != null)
+            {
+           
+                ExecNonQuery("insertEmployee", registrationOfDetention.DetainedEmployee ,"employeeID", out int _DetainedEmployeeID);
+                ExecNonQuery("insertEmployee", registrationOfDetention.DeliveredEmployee, "employeeID", out int _DeliveredEmployeeID);
+
+                ExecNonQuery("InsertDeliveryProcedures", "DeliveryProceduresID", out int _DeliveryProceduresID, new SqlParameter("@employeeID", _DeliveredEmployeeID));
+
+                ExecNonQuery("InsertDetentionProcedures", "DetentionProceduresID", out int _DetentionProceduresID, new SqlParameter("@employeeID", _DetainedEmployeeID));
+
+                var regist = new RegistrationOfDetention()
+                {
+                    PrisonerID = registrationOfDetention.PrisonerID,
+                    DateOfDetention = registrationOfDetention.DateOfDetention,
+                    DateOfArrival = registrationOfDetention.DateOfArrival,
+                    DeliveredProceduresID = _DeliveryProceduresID,
+                    DetentionProceduresID = _DetentionProceduresID,
+                    PlaceofDetention = registrationOfDetention.PlaceofDetention
+                };
+               
+                ExecNonQuery("RegistrationOfDetention", regist);
+            }
+
         }
     }
 }
