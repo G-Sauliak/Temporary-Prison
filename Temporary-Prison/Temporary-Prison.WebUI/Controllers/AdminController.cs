@@ -125,17 +125,15 @@ namespace Temporary_Prison.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddUser(CreateUserViewModel model, string redirectUrl)
         {
-            var userRole = Request.Form["Roles"];
             var allRoles = userProvider.GetAllRoles();
+            var roleName = model.Roles.First();
 
-            if (!ModelState.IsValid || !allRoles.Contains(userRole))
+            if (!ModelState.IsValid || !allRoles.Contains(roleName))
             {
                 ViewBag.Roles = new SelectList(allRoles);
                 return View(model);
             }
-
             var user = Mapper.Map<CreateUserViewModel, User>(model);
-            user.Roles = new string[] { userRole };
             try
             {
                 userManager.CreateUser(user);
