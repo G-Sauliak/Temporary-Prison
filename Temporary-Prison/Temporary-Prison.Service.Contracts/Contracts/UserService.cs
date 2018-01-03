@@ -52,7 +52,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                         new SqlParameter(@"rowSize",rowSize),
                      };
 
-                return GetModels<UserDto, int>("GetUsersForPagedList", "TotalCount", out totalCountUsers, param);
+                return ExecProcGetModels<UserDto, int>("GetUsersForPagedList", "TotalCount", out totalCountUsers, param);
             }
             totalCountUsers = default(int);
             return default(UserDto[]);

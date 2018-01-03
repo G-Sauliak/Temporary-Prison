@@ -71,6 +71,15 @@
   <wsdl:message name="IPrisonerService_RegisterDetention_DataErrorDtoFault_FaultMessage">
     <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q7:DataErrorDto" />
   </wsdl:message>
+  <wsdl:message name="IPrisonerService_GetDetentionsByPrisonerIdForPagedList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDetentionsByPrisonerIdForPagedList" />
+  </wsdl:message>
+  <wsdl:message name="IPrisonerService_GetDetentionsByPrisonerIdForPagedList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDetentionsByPrisonerIdForPagedListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPrisonerService_GetDetentionsByPrisonerIdForPagedList_DataErrorDtoFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q8:DataErrorDto" />
+  </wsdl:message>
   <wsdl:portType name="IPrisonerService">
     <wsdl:operation name="GetPrisonersForPagedList">
       <wsdl:input wsaw:Action="http://tempuri.org/IPrisonerService/GetPrisonersForPagedList" message="tns:IPrisonerService_GetPrisonersForPagedList_InputMessage" />
@@ -106,6 +115,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IPrisonerService/RegisterDetention" message="tns:IPrisonerService_RegisterDetention_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPrisonerService/RegisterDetentionResponse" message="tns:IPrisonerService_RegisterDetention_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IPrisonerService/RegisterDetentionDataErrorDtoFault" name="DataErrorDtoFault" message="tns:IPrisonerService_RegisterDetention_DataErrorDtoFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDetentionsByPrisonerIdForPagedList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPrisonerService/GetDetentionsByPrisonerIdForPagedList" message="tns:IPrisonerService_GetDetentionsByPrisonerIdForPagedList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPrisonerService/GetDetentionsByPrisonerIdForPagedListResponse" message="tns:IPrisonerService_GetDetentionsByPrisonerIdForPagedList_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IPrisonerService/GetDetentionsByPrisonerIdForPagedListDataErrorDtoFault" name="DataErrorDtoFault" message="tns:IPrisonerService_GetDetentionsByPrisonerIdForPagedList_DataErrorDtoFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IPrisonerService" type="tns:IPrisonerService">
@@ -184,6 +198,18 @@
     </wsdl:operation>
     <wsdl:operation name="RegisterDetention">
       <soap:operation soapAction="http://tempuri.org/IPrisonerService/RegisterDetention" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="DataErrorDtoFault">
+        <soap:fault use="literal" name="DataErrorDtoFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetDetentionsByPrisonerIdForPagedList">
+      <soap:operation soapAction="http://tempuri.org/IPrisonerService/GetDetentionsByPrisonerIdForPagedList" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

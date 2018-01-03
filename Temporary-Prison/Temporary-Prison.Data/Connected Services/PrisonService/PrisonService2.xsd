@@ -51,4 +51,19 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="EmployeeDto" nillable="true" type="tns:EmployeeDto" />
+  <xs:complexType name="ArrayOfDetentionPagedListDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DetentionPagedListDto" nillable="true" type="tns:DetentionPagedListDto" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDetentionPagedListDto" nillable="true" type="tns:ArrayOfDetentionPagedListDto" />
+  <xs:complexType name="DetentionPagedListDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="DateOfDetention" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DateOfRelease" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DetentionID" type="xs:int" />
+      <xs:element minOccurs="0" name="PlaceofDetention" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DetentionPagedListDto" nillable="true" type="tns:DetentionPagedListDto" />
 </xs:schema>

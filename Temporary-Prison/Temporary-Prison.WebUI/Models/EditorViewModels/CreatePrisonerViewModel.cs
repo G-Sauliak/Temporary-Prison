@@ -6,9 +6,9 @@ using Temporary_Prison.Business.Attributes;
 
 namespace Temporary_Prison.Models
 {
-    public class PrisonerViewModel
+    public class CreatePrisonerViewModel
     {
-        public PrisonerViewModel() { }
+        public CreatePrisonerViewModel() { }
 
         [HiddenInput]
         public int PrisonerID { get; set; }

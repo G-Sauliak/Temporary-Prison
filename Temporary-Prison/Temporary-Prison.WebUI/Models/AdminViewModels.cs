@@ -25,9 +25,6 @@ namespace Temporary_Prison.Models
 
     public class EditUserViewModel
     {
-        [Required]
-        [RegularExpression(@"^[a-zA-Z]*$", ErrorMessage = "only alphabetic characters are allowed.")]
-        [StringLength(15, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 3)]
         [Display(Name = "User Name")]
         public string UserName { get; set; }
         [Required]

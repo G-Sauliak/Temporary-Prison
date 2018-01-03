@@ -12,4 +12,12 @@ namespace Temporary_Prison.Common.Models
         public Employee DetainedEmployee { get; set; }
         public Employee DeliveredEmployee { get; set; }
     }
+
+    public class DetentionPagedList
+    {
+        public int DetentionID { get; set; }
+        public DateTime? DateOfDetention { get; set; }
+        public string PlaceofDetention { get; set; }
+        public DateTime? DateOfRelease { get; set; }
+    }
 }

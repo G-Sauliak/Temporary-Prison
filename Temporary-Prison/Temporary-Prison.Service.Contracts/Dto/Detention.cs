@@ -31,6 +31,19 @@ namespace Temporary_Prison.Service.Contracts.Dto
         public EmployeeDto ReleasedEmployee { get; set; }
     }
 
+    [DataContract]
+    public class DetentionPagedListDto
+    {
+        [DataMember]
+        public int DetentionID { get; set; }
+        [DataMember]
+        public DateTime? DateOfDetention { get; set; }
+        [DataMember]
+        public string PlaceofDetention { get; set; }
+        [DataMember]
+        public DateTime? DateOfRelease { get; set; }
+    }
+
     public class ReleaseOfPrisonerDto
     {
         public int DetentionID { get; set; }

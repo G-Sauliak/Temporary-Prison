@@ -114,5 +114,10 @@ namespace Temporary_Prison.Business.Providers
         {
             dataService.RegisterDetention(registDetention);
         }
+
+        public IReadOnlyList<DetentionPagedList> GetDetentionsByPrisonerIdForPagedList(int Id, int skip, int rowSize, ref int totalCount)
+        {
+            return dataService.GetDetentionsByPrisonerIdForPagedList(Id, skip, rowSize, out totalCount);
+        }
     }
 }

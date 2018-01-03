@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 
 namespace Temporary_Prison.Service.Contracts.Extensions
 {
@@ -63,7 +64,15 @@ namespace Temporary_Prison.Service.Contracts.Extensions
                 {
                     if (property.Name == colum.ColumnName)
                     {
+                        object value = row[colum.ColumnName];
+                        if (value == DBNull.Value)
+                        {
+                            value = null;
+                            property.SetValue(obj, value, null);
+                            break;
+                        }
                         property.SetValue(obj, row[colum.ColumnName], null);
+                        break;
                     }
                 }
             }

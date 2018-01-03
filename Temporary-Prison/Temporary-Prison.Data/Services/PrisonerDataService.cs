@@ -20,6 +20,7 @@ namespace Temporary_Prison.Data.Services
                 cfg.CreateMap<Prisoner, PrisonerDto>();
                 cfg.CreateMap<RegistDetention, RegistrationOfDetentionDto>();
                 cfg.CreateMap<Employee, EmployeeDto>();
+                cfg.CreateMap<DetentionPagedList, DetentionPagedListDto>();
             });
         }
 
@@ -97,6 +98,17 @@ namespace Temporary_Prison.Data.Services
            
             var registDeten = Mapper.Map<RegistDetention, RegistrationOfDetentionDto>(registrationOfDetention);
             prisonerClient.RegisterDetention(registDeten);
+        }
+
+        public IReadOnlyList<DetentionPagedList> GetDetentionsByPrisonerIdForPagedList(int Id, int skip, int rowSize, out int totalCount)
+        {
+            var detentionsDto = prisonerClient.GetDetentionsByPrisonerIdForPagedList(Id, skip, rowSize, out totalCount);
+            if (detentionsDto != null)
+            {
+                var detentions = Mapper.Map<DetentionPagedListDto[], DetentionPagedList[]>(detentionsDto);
+                return detentions;
+            }
+            return default(DetentionPagedList[]);
         }
     }
 }

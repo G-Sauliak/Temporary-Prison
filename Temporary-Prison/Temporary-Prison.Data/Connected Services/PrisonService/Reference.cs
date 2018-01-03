@@ -513,6 +513,99 @@ namespace Temporary_Prison.Data.PrisonService {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DetentionPagedListDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+    [System.SerializableAttribute()]
+    public partial class DetentionPagedListDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> DateOfDetentionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> DateOfReleaseField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int DetentionIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PlaceofDetentionField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> DateOfDetention {
+            get {
+                return this.DateOfDetentionField;
+            }
+            set {
+                if ((this.DateOfDetentionField.Equals(value) != true)) {
+                    this.DateOfDetentionField = value;
+                    this.RaisePropertyChanged("DateOfDetention");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> DateOfRelease {
+            get {
+                return this.DateOfReleaseField;
+            }
+            set {
+                if ((this.DateOfReleaseField.Equals(value) != true)) {
+                    this.DateOfReleaseField = value;
+                    this.RaisePropertyChanged("DateOfRelease");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int DetentionID {
+            get {
+                return this.DetentionIDField;
+            }
+            set {
+                if ((this.DetentionIDField.Equals(value) != true)) {
+                    this.DetentionIDField = value;
+                    this.RaisePropertyChanged("DetentionID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PlaceofDetention {
+            get {
+                return this.PlaceofDetentionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PlaceofDetentionField, value) != true)) {
+                    this.PlaceofDetentionField = value;
+                    this.RaisePropertyChanged("PlaceofDetention");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="PrisonService.IPrisonerService")]
     public interface IPrisonerService {
@@ -567,6 +660,17 @@ namespace Temporary_Prison.Data.PrisonService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/RegisterDetention", ReplyAction="http://tempuri.org/IPrisonerService/RegisterDetentionResponse")]
         System.Threading.Tasks.Task RegisterDetentionAsync(Temporary_Prison.Data.PrisonService.RegistrationOfDetentionDto registrationOfDetention);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/GetDetentionsByPrisonerIdForPagedList", ReplyAction="http://tempuri.org/IPrisonerService/GetDetentionsByPrisonerIdForPagedListResponse" +
+            "")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.PrisonService.DataErrorDto), Action="http://tempuri.org/IPrisonerService/GetDetentionsByPrisonerIdForPagedListDataErro" +
+            "rDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        Temporary_Prison.Data.PrisonService.GetDetentionsByPrisonerIdForPagedListResponse GetDetentionsByPrisonerIdForPagedList(Temporary_Prison.Data.PrisonService.GetDetentionsByPrisonerIdForPagedListRequest request);
+        
+        // CODEGEN: Generating message contract since the operation has multiple return values.
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/GetDetentionsByPrisonerIdForPagedList", ReplyAction="http://tempuri.org/IPrisonerService/GetDetentionsByPrisonerIdForPagedListResponse" +
+            "")]
+        System.Threading.Tasks.Task<Temporary_Prison.Data.PrisonService.GetDetentionsByPrisonerIdForPagedListResponse> GetDetentionsByPrisonerIdForPagedListAsync(Temporary_Prison.Data.PrisonService.GetDetentionsByPrisonerIdForPagedListRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -642,6 +746,50 @@ namespace Temporary_Prison.Data.PrisonService {
         public AddPrisonerResponse(bool AddPrisonerResult, int newId) {
             this.AddPrisonerResult = AddPrisonerResult;
             this.newId = newId;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetDetentionsByPrisonerIdForPagedList", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class GetDetentionsByPrisonerIdForPagedListRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public int Id;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        public int skip;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
+        public int rowSize;
+        
+        public GetDetentionsByPrisonerIdForPagedListRequest() {
+        }
+        
+        public GetDetentionsByPrisonerIdForPagedListRequest(int Id, int skip, int rowSize) {
+            this.Id = Id;
+            this.skip = skip;
+            this.rowSize = rowSize;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="GetDetentionsByPrisonerIdForPagedListResponse", WrapperNamespace="http://tempuri.org/", IsWrapped=true)]
+    public partial class GetDetentionsByPrisonerIdForPagedListResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=0)]
+        public Temporary_Prison.Data.PrisonService.DetentionPagedListDto[] GetDetentionsByPrisonerIdForPagedListResult;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
+        public int totalCount;
+        
+        public GetDetentionsByPrisonerIdForPagedListResponse() {
+        }
+        
+        public GetDetentionsByPrisonerIdForPagedListResponse(Temporary_Prison.Data.PrisonService.DetentionPagedListDto[] GetDetentionsByPrisonerIdForPagedListResult, int totalCount) {
+            this.GetDetentionsByPrisonerIdForPagedListResult = GetDetentionsByPrisonerIdForPagedListResult;
+            this.totalCount = totalCount;
         }
     }
     
@@ -745,6 +893,25 @@ namespace Temporary_Prison.Data.PrisonService {
         
         public System.Threading.Tasks.Task RegisterDetentionAsync(Temporary_Prison.Data.PrisonService.RegistrationOfDetentionDto registrationOfDetention) {
             return base.Channel.RegisterDetentionAsync(registrationOfDetention);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        Temporary_Prison.Data.PrisonService.GetDetentionsByPrisonerIdForPagedListResponse Temporary_Prison.Data.PrisonService.IPrisonerService.GetDetentionsByPrisonerIdForPagedList(Temporary_Prison.Data.PrisonService.GetDetentionsByPrisonerIdForPagedListRequest request) {
+            return base.Channel.GetDetentionsByPrisonerIdForPagedList(request);
+        }
+        
+        public Temporary_Prison.Data.PrisonService.DetentionPagedListDto[] GetDetentionsByPrisonerIdForPagedList(int Id, int skip, int rowSize, out int totalCount) {
+            Temporary_Prison.Data.PrisonService.GetDetentionsByPrisonerIdForPagedListRequest inValue = new Temporary_Prison.Data.PrisonService.GetDetentionsByPrisonerIdForPagedListRequest();
+            inValue.Id = Id;
+            inValue.skip = skip;
+            inValue.rowSize = rowSize;
+            Temporary_Prison.Data.PrisonService.GetDetentionsByPrisonerIdForPagedListResponse retVal = ((Temporary_Prison.Data.PrisonService.IPrisonerService)(this)).GetDetentionsByPrisonerIdForPagedList(inValue);
+            totalCount = retVal.totalCount;
+            return retVal.GetDetentionsByPrisonerIdForPagedListResult;
+        }
+        
+        public System.Threading.Tasks.Task<Temporary_Prison.Data.PrisonService.GetDetentionsByPrisonerIdForPagedListResponse> GetDetentionsByPrisonerIdForPagedListAsync(Temporary_Prison.Data.PrisonService.GetDetentionsByPrisonerIdForPagedListRequest request) {
+            return base.Channel.GetDetentionsByPrisonerIdForPagedListAsync(request);
         }
     }
 }

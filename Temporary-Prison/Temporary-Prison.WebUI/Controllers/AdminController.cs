@@ -39,7 +39,7 @@ namespace Temporary_Prison.Controllers
             {
                 totalCount = _currentTotal;
             }
-       
+
             var pageNum = page ?? 1;
             var skip = (pageNum - 1) * pageSize;
 
@@ -119,25 +119,7 @@ namespace Temporary_Prison.Controllers
             return View(new CreateUserViewModel());
         }
 
-        public ActionResult DeleteUser(string UserName, string redirectUrl)
-        {
-            if (string.IsNullOrEmpty(UserName))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
 
-            if (UserName.ToLower() == User.Identity.Name.ToLower())
-            {
-                ModelState.AddModelError(
-                    string.Empty, "Error: Cannot delete the current user");
-
-                return View("Index");
-            }
-
-            userManager.DeleteUser(UserName);
-
-            return RedirectToLocal(redirectUrl);
-        }
         // POST: Admin/AddUser
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -168,6 +150,25 @@ namespace Temporary_Prison.Controllers
             return RedirectToLocal(redirectUrl);
         }
 
+        public ActionResult DeleteUser(string UserName, string redirectUrl)
+        {
+            if (string.IsNullOrEmpty(UserName))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            if (UserName.ToLower() == User.Identity.Name.ToLower())
+            {
+                ModelState.AddModelError(
+                    string.Empty, "Error: Cannot delete the current user");
+
+                return View("Index");
+            }
+
+            userManager.DeleteUser(UserName);
+
+            return RedirectToLocal(redirectUrl);
+        }
         [HttpGet]
         [AjaxOnly]
         public JsonResult IsExistsLogin(string userName)

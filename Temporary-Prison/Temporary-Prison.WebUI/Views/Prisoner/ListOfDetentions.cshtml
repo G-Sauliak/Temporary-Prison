@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Temporary_Prison.Common.Entities.Detention>
+﻿@model IEnumerable<Temporary_Prison.Common.Models.DetentionPagedList>
 @using X.PagedList
 @using X.PagedList.Mvc
 <table class="table">
@@ -8,12 +8,15 @@
         </th>
 
         <th>
-           @Html.DisplayNameFor(model => model.PlaceofDetention)
+            @Html.DisplayNameFor(model => model.PlaceofDetention)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DateOfRelease)
         </th>
     </tr>
 
     @foreach (var item in Model)
-            {
+    {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.DateOfDetention)
@@ -24,21 +27,29 @@
             <td>
                 @if (item.DateOfRelease != null)
                 {
-                @Html.DisplayFor(modelItem => item.DateOfRelease)
+                    @Html.DisplayFor(modelItem => item.DateOfRelease)
                 }
-                else if(User.IsInRole("Admin") || User.IsInRole("Editor"))
+            </td>
+            <td>
+                @if (User.IsInRole("Admin") || User.IsInRole("Editor") && item.DateOfRelease == null)
                 {
-                    @Html.ActionLink("Release", "ReleasePrisoner", new { DetentionID = item.DetentionID })
-                    @Html.ActionLink("Edit", "EditDetention", new { DetentionID = item.DetentionID })
-                    @Html.ActionLink("Delete", "DeleteDetention", new { DetentionID = item.DetentionID })
+                    @Html.ActionLink("Release", "ReleasePrisoner", new { DetentionID = item.DetentionID }, new { @class = "btn btn-success btn-xs" })
                 }
+                @if (User.IsInRole("Admin") || User.IsInRole("Editor"))
+                {
+                    @Html.ActionLink("Edit |", "EditDetention", new { DetentionID = item.DetentionID })
+                    @Html.ActionLink("Delete |", "DeleteDetention", new { DetentionID = item.DetentionID })
+                }
+                @Html.ActionLink("Details", "DetailsDetention", new { DetentionID = item.DetentionID })
             </td>
         </tr>
     }
 </table>
 
-@Html.PagedListPager(Model as IPagedList, page => Url.Action("Index", new
-{
-    page,
-    search = ViewBag.searc
-}), PagedListRenderOptions.MinimalWithPageCountText)
+
+@Html.PagedListPager(Model as IPagedList, page => Url.Action("Index",
+    new
+    {
+        page,
+
+    }), PagedListRenderOptions.MinimalWithPageCountText)

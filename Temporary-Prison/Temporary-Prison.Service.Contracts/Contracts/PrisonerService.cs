@@ -14,7 +14,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             if (Id != default(int))
             {
                 var prisoner = GetModel<PrisonerDto>("GetPrisonerById", new SqlParameter(@"prisonerId", Id));
-                var phones = GetModels<Phone>("GetPhoneNumbers", new SqlParameter(@"prisonerId", Id));
+                var phones = ExecProcGetModels<Phone>("GetPhoneNumbers", new SqlParameter(@"prisonerId", Id));
 
                 if (phones != null)
                 {
@@ -39,7 +39,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                         new SqlParameter(@"skip",skip),
                         new SqlParameter(@"rowSize",rowSize),
                      };
-                return GetModels<PrisonerDto, int>("GetPrisonersToPagedList", "TotalCount", out totalCount, param);
+                return ExecProcGetModels<PrisonerDto, int>("GetPrisonersToPagedList", "TotalCount", out totalCount, param);
             }
             totalCount = default(int);
             return default(PrisonerDto[]);
@@ -76,7 +76,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
         {
             if (!string.IsNullOrEmpty(search))
             {
-                return GetModels<PrisonerDto>("FindPrisonersByName", new SqlParameter(@"search", search));
+                return ExecProcGetModels<PrisonerDto>("FindPrisonersByName", new SqlParameter(@"search", search));
             }
             return default(PrisonerDto[]);
         }
@@ -107,19 +107,35 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                 ExecNonQuery("dbo.InsertPhoneNumbers", phones);
             }
         }
+        public DetentionPagedListDto[] GetDetentionsByPrisonerIdForPagedList(int Id, int skip, int rowSize, out int totalCount)
+        {
+            var parametrs = new SqlParameter[]
+            {
+                new SqlParameter("@PrisonerID",Id),
+                new SqlParameter("@skip",skip),
+                new SqlParameter("@rowSize",rowSize)
+            };
+
+            return ExecProcGetModels<DetentionPagedListDto,int>("GetDetentionsByIdTForPagedList", "totalCount", out totalCount, parametrs);
+        }
 
         public void RegisterDetention(RegistrationOfDetentionDto registrationOfDetention)
         {
 
             if (registrationOfDetention != null)
             {
-           
-                ExecNonQuery("insertEmployee", registrationOfDetention.DetainedEmployee ,"employeeID", out int _DetainedEmployeeID);
-                ExecNonQuery("insertEmployee", registrationOfDetention.DeliveredEmployee, "employeeID", out int _DeliveredEmployeeID);
+                ExecNonQuery("insertEmployee", registrationOfDetention.DetainedEmployee,
+                    "employeeID", out int _DetainedEmployeeID);
+                ExecNonQuery("insertEmployee", registrationOfDetention.DeliveredEmployee,
+                    "employeeID", out int _DeliveredEmployeeID);
 
-                ExecNonQuery("InsertDeliveryProcedures", "DeliveryProceduresID", out int _DeliveryProceduresID, new SqlParameter("@employeeID", _DeliveredEmployeeID));
+                ExecNonQuery("InsertDeliveryProcedures",
+                    "DeliveryProceduresID", out int _DeliveryProceduresID,
+                    new SqlParameter("@employeeID", _DeliveredEmployeeID));
 
-                ExecNonQuery("InsertDetentionProcedures", "DetentionProceduresID", out int _DetentionProceduresID, new SqlParameter("@employeeID", _DetainedEmployeeID));
+                ExecNonQuery("InsertDetentionProcedures",
+                    "DetentionProceduresID", out int _DetentionProceduresID,
+                    new SqlParameter("@employeeID", _DetainedEmployeeID));
 
                 var regist = new RegistrationOfDetention()
                 {
@@ -130,7 +146,6 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                     DetentionProceduresID = _DetentionProceduresID,
                     PlaceofDetention = registrationOfDetention.PlaceofDetention
                 };
-               
                 ExecNonQuery("RegistrationOfDetention", regist);
             }
 

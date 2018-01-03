@@ -1,4 +1,4 @@
-﻿@model Temporary_Prison.Common.Entities.Prisoner
+﻿@model Temporary_Prison.Models.DetailsPrisonerViewModel
 
 <div class="container">
     <div class="row">
@@ -20,7 +20,7 @@
                             <div class="col-sm-6"> <h4 style="color:#000000;"></h4>@Html.LabelFor(model => model.PhoneNumbers):</div>
                             @foreach (var phone in Model.PhoneNumbers)
                             {
-                            <div class="col-sm-6">@phone</div>
+                                <div class="col-sm-6">@phone</div>
                             }
 
                             <div class="clearfix"></div>
@@ -50,7 +50,21 @@
         </div>
     </div>
 </div>
-@Html.Partial("ListOfDetentions", Model)
+@Html.Partial("ListOfDetentions", Model.DetentionPagedList)
+
+@if ((bool)ViewBag.Guarded)
+{
+    @Html.ActionLink("Create Detention", "ListOfDetentions", "Editor",
+    new
+    {
+        id = Model.PrisonerId
+    },
+    new
+    {
+        @class = "btn btn-outline-dark col-md-offset-5 col-md-10"
+    })
+}
+
 <p>
     @Html.ActionLink("Back to List", "ListOfPrisoners")
 </p>

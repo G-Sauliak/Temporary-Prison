@@ -10,5 +10,6 @@ namespace Temporary_Prison.Data.Clients
         IReadOnlyList<PrisonerDto> GetPrisonersForPagedList(int skip, int rowSize, out int totalCount);
         void RegisterDetention(RegistrationOfDetentionDto registrationOfDetention);
         IReadOnlyList<PrisonerDto> FindPrisonersByName(string search);
+        DetentionPagedListDto[] GetDetentionsByPrisonerIdForPagedList(int Id, int skip, int rowSize, out int totalCount);
     }
 }

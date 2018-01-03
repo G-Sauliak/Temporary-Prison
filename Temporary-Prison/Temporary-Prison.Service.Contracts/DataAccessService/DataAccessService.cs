@@ -264,7 +264,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             }
         }
 
-        public TypeModel[] GetModels<TypeModel, TOut>(string sqlCommandString, string outPutName, out TOut outPutValue,
+        public TypeModel[] ExecProcGetModels<TypeModel, TOut>(string sqlCommandString, string outPutName, out TOut outPutValue,
             params SqlParameter[] inputParametrs) where TypeModel : class, new()
         {
             var result = default(TypeModel[]);
@@ -301,7 +301,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             }
         }
 
-        public TypeModel[] GetModels<TypeModel>(string sqlCommandString, params SqlParameter[] inputParametrs)
+        public TypeModel[] ExecProcGetModels<TypeModel>(string sqlCommandString, params SqlParameter[] inputParametrs)
             where TypeModel : class, new()
         {
             var result = default(TypeModel[]);

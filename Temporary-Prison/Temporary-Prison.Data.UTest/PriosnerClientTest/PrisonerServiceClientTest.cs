@@ -35,6 +35,12 @@ namespace Temporary_Prison.Data.UTest.PriosnerClient
         }
 
         [TestMethod]
+        public void PrisonerServiceClient_DeteinonsForPagedlist_3isReturned()
+        {
+            var result = service.GetDetentionsByPrisonerIdForPagedList(19,0, 4, out int outResult);
+            Assert.IsTrue(outResult == 3);
+        }
+        [TestMethod]
         [ExpectedException(typeof(FaultException))]
         public void registerDetent()
         {
@@ -57,8 +63,6 @@ namespace Temporary_Prison.Data.UTest.PriosnerClient
             };
 
             service.RegisterDetention(regist);
-
-            
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using Temporary_Prison.Common.Models;
 
-namespace Temporary_Prison.Models.PrisonerViewModels
+namespace Temporary_Prison.Models
 {
     public class DetailsPrisonerViewModel
     {
@@ -15,5 +17,6 @@ namespace Temporary_Prison.Models.PrisonerViewModels
         public string Surname { get; set; }
         public string LastName { get; set; }
         public string Address { get; set; }
+        public IEnumerable<DetentionPagedList> DetentionPagedList;
     }
 }

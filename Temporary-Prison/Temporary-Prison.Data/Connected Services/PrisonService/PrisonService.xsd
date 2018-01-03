@@ -96,4 +96,21 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetDetentionsByPrisonerIdForPagedList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Id" type="xs:int" />
+        <xs:element minOccurs="0" name="skip" type="xs:int" />
+        <xs:element minOccurs="0" name="rowSize" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetDetentionsByPrisonerIdForPagedListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" minOccurs="0" name="GetDetentionsByPrisonerIdForPagedListResult" nillable="true" type="q7:ArrayOfDetentionPagedListDto" />
+        <xs:element minOccurs="0" name="totalCount" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

@@ -112,6 +112,12 @@
     <None Include="Connected Services\PrisonService\Temporary_Prison.Data.PrisonService.AddPrisonerResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\PrisonService\Temporary_Prison.Data.PrisonService.DetentionPagedListDto.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\PrisonService\Temporary_Prison.Data.PrisonService.GetDetentionsByPrisonerIdForPagedListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\PrisonService\Temporary_Prison.Data.PrisonService.GetPrisonersForPagedListResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
