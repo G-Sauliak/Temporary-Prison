@@ -43,6 +43,7 @@
     <Compile Include="Entities\Prisoner.cs" />
     <Compile Include="Models\PrisonModels.cs" />
     <Compile Include="Entities\User.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

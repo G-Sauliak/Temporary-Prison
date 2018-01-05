@@ -1,31 +1,6 @@
 ﻿BEGIN TRAN
 USE PRISONDB
 
-CREATE TYPE [dbo].[web_UserDt] AS TABLE(
-	[UserID] [int] NULL,
-	[UserName] [nvarchar](50) NULL,
-	[Password] [nvarchar](max) NULL,
-	[Email] [nvarchar](max) NULL
-)
-GO
-CREATE TYPE [dbo].[PrisonerDt] AS TABLE(
-	[PrisonerId] [int] NULL,
-	[RelationshipStatus] [nvarchar](20) NULL,
-	[PlaceOfWork] [nvarchar](55) NULL,
-	[BirthDate] [date] NULL,
-	[Photo] [nvarchar](max) NULL,
-	[AdditionalInformation] [nvarchar](max) NULL,
-	[FirstName] [nvarchar](30) NULL,
-	[Surname] [nvarchar](30) NULL,
-	[LastName] [nvarchar](30) NULL,
-	[Address] [nvarchar](max) NULL
-)
-GO
-CREATE TYPE [dbo].[PhoneNumbersDt] AS TABLE(
-	[PrisonerId] [int] NULL,
-	[PhoneNumber] [nvarchar](100) NULL
-)
-GO
 CREATE TABLE [dbo].[Prisoners] (
     [PrisonerId]            INT            IDENTITY (1, 1) NOT NULL,
     [RelationshipStatus]    NVARCHAR (20)  NOT NULL,
@@ -45,7 +20,7 @@ CREATE TABLE [dbo].[PhoneNumbers] (
     [PrisonerID]    INT           NOT NULL,
     [PhoneNumber]   NVARCHAR (30) NULL,
     PRIMARY KEY CLUSTERED ([PhoneNumberID] ASC),
-    CONSTRAINT [FK_Phones_Prisoners] FOREIGN KEY ([PrisonerID]) REFERENCES [dbo].[Prisoners] ([PrisonerId])
+    CONSTRAINT [FK_Phones_Prisoners] FOREIGN KEY ([PrisonerID]) REFERENCES [dbo].[Prisoners] ([PrisonerId]) ON DELETE CASCADE
 );
 
 CREATE TABLE [dbo].[Employees] (
@@ -92,10 +67,10 @@ CREATE TABLE [dbo].[ListOfDetentions] (
     [DetentionProceduresID] INT           NULL,
     [DeliveredProceduresID] INT           NULL,
     PRIMARY KEY CLUSTERED ([DetentionID] ASC),
-    CONSTRAINT [FK_ListOfDetentions_ReleaseProcedures] FOREIGN KEY ([ReleaseProceduresID]) REFERENCES [dbo].[ReleaseProcedures] ([ReleaseProceduresID]),
-    CONSTRAINT [FK_ListOfDetentions_DetentionProcedures] FOREIGN KEY ([DetentionProceduresID]) REFERENCES [dbo].[DetentionProcedures] ([DetentionProceduresID]),
-    CONSTRAINT [FK_ListOfDetentions_DeliveryProcedures] FOREIGN KEY ([DeliveredProceduresID]) REFERENCES [dbo].[DeliveryProcedures] ([DeliveredProceduresID]),
-    CONSTRAINT [FK_ListOfDetentions_Prisoners] FOREIGN KEY ([PrisonerID]) REFERENCES [dbo].[Prisoners] ([PrisonerId])
+    CONSTRAINT [FK_ListOfDetentions_DetentionProcedures] FOREIGN KEY ([DetentionProceduresID]) REFERENCES [dbo].[DetentionProcedures] ([DetentionProceduresID]) ON DELETE CASCADE,
+    CONSTRAINT [FK_ListOfDetentions_Prisoners] FOREIGN KEY ([PrisonerID]) REFERENCES [dbo].[Prisoners] ([PrisonerId]) ON DELETE CASCADE,
+    CONSTRAINT [FK_ListOfDetentions_DeliveryProcedures1] FOREIGN KEY ([DeliveredProceduresID]) REFERENCES [dbo].[DeliveryProcedures] ([DeliveredProceduresID]) ON DELETE CASCADE,
+    CONSTRAINT [FK_ListOfDetentions_ReleaseProcedures] FOREIGN KEY ([ReleaseProceduresID]) REFERENCES [dbo].[ReleaseProcedures] ([ReleaseProceduresID]) ON DELETE CASCADE
 );
 
 
@@ -118,8 +93,8 @@ CREATE TABLE [dbo].[web_UserRoles] (
     [RoleID]      INT NULL,
     [UserID]      INT NULL,
     CONSTRAINT [PK_UserRoles] PRIMARY KEY CLUSTERED ([UserRolesID] ASC),
-    CONSTRAINT [FK_web_UserRoles_web_Users] FOREIGN KEY ([UserID]) REFERENCES [dbo].[web_Users] ([UserID]),
-    CONSTRAINT [FK_web_UserRoles_web_Roles] FOREIGN KEY ([RoleID]) REFERENCES [dbo].[web_Roles] ([RoleID])
+    CONSTRAINT [FK_web_UserRoles_web_Users] FOREIGN KEY ([UserID]) REFERENCES [dbo].[web_Users] ([UserID])ON DELETE CASCADE,
+    CONSTRAINT [FK_web_UserRoles_web_Roles] FOREIGN KEY ([RoleID]) REFERENCES [dbo].[web_Roles] ([RoleID])ON DELETE CASCADE
 );
 
 INSERT INTO web_Roles(RoleName)

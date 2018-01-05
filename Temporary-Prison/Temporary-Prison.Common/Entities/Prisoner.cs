@@ -1,9 +1,7 @@
 ﻿using System;
 
-
 namespace Temporary_Prison.Common.Entities
 {
-
     public class Detention
     {
         public int DetentionID { get; set; }

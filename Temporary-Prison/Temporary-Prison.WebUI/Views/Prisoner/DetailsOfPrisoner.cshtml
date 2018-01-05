@@ -22,7 +22,6 @@
                             {
                                 <div class="col-sm-6">@phone</div>
                             }
-
                             <div class="clearfix"></div>
                             <div class="bot-border"></div>
                             <div class="col-sm-5 col-xs-6 tital ">@Html.LabelFor(model => model.FirstName)</div><div class="col-sm-7">@Html.DisplayFor(model => model.FirstName)</div>
@@ -50,21 +49,23 @@
         </div>
     </div>
 </div>
-@Html.Partial("ListOfDetentions", Model.DetentionPagedList)
-
-@if ((bool)ViewBag.Guarded)
+@if (Model.DetentionPagedList != null)
 {
-    @Html.ActionLink("Create Detention", "ListOfDetentions", "Editor",
+@Html.Partial("ListOfDetentions", Model.DetentionPagedList)
+}
+
+@if (!(bool)ViewBag.Guarded)
+{
+    @Html.ActionLink("Create Detention", "CreateDetention", "Editor",
     new
     {
-        id = Model.PrisonerId
+        prisonerId = Model.PrisonerId
     },
     new
     {
-        @class = "btn btn-outline-dark col-md-offset-5 col-md-10"
+        @class = "btn btn-secondary col-md-offset-5 col-md-10"
     })
 }
-
 <p>
     @Html.ActionLink("Back to List", "ListOfPrisoners")
 </p>

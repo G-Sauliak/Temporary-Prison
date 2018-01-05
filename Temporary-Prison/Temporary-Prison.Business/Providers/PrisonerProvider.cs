@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Temporary_Prison.Common.Entities;
 using Temporary_Prison.Data.Services;
 using System;
 using Temporary_Prison.Business.CacheManager;
@@ -16,7 +15,7 @@ namespace Temporary_Prison.Business.Providers
 
         public PrisonerProvider() : this(new PrisonerDataService(), new CacheService())
         {
-           
+
         }
 
         public PrisonerProvider(IPrisonerDataService prisonerDataService, ICacheService cacheService)
@@ -54,7 +53,7 @@ namespace Temporary_Prison.Business.Providers
                 {
                     var cacheKey = $"FPBN:{search}";
                     listPrisoners = cacheService.GetOrSet(cacheKey,
-                        () => FindPrisonersByName(search));
+                        () => FindPrisonersByName(search), DateTime.Now.AddSeconds(20));
                     return listPrisoners;
                 }
                 else
@@ -118,6 +117,16 @@ namespace Temporary_Prison.Business.Providers
         public IReadOnlyList<DetentionPagedList> GetDetentionsByPrisonerIdForPagedList(int Id, int skip, int rowSize, ref int totalCount)
         {
             return dataService.GetDetentionsByPrisonerIdForPagedList(Id, skip, rowSize, out totalCount);
+        }
+
+        public Detention GetDetentionById(int id)
+        {
+            var cacheKey = $"Detention_{id}";
+
+            var detention = cacheService.GetOrSet(cacheKey,
+                        () => dataService.GetDetentionById(id),DateTime.Now.AddMinutes(3));
+
+            return detention;
         }
     }
 }

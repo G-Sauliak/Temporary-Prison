@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Temporary_Prison.Common.Entities;
 using Temporary_Prison.Common.Models;
 
 namespace Temporary_Prison.Data.Services
@@ -14,5 +13,6 @@ namespace Temporary_Prison.Data.Services
         IReadOnlyList<Prisoner> FindPrisonersByName(string search);
         void RegisterDetention(RegistDetention registDetention);
         IReadOnlyList<DetentionPagedList> GetDetentionsByPrisonerIdForPagedList(int Id, int skip, int rowSize, out int totalCount);
+        Detention GetDetentionById(int id);
     }
 }

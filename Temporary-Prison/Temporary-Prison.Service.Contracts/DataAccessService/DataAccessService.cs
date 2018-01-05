@@ -76,6 +76,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             }
             return false;
         }
+
         private DataTable ConvertToDataTable<TInput>(TInput objectModel)
         {
             var dataTable = new DataTable();
@@ -335,7 +336,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
         }
 
 
-        public TypeModel GetModel<TypeModel>(string sqlCommandString, params SqlParameter[] inputParametrs)
+        public TypeModel ExecProcGetModel<TypeModel>(string sqlCommandString, params SqlParameter[] inputParametrs)
             where TypeModel : class, new()
         {
             var result = default(TypeModel);

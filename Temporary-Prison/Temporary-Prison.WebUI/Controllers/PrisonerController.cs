@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using log4net;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using Temporary_Prison.Business.Providers;
-using Temporary_Prison.Common.Entities;
 using Temporary_Prison.Common.Models;
 using Temporary_Prison.Models;
 using X.PagedList;
@@ -34,7 +32,6 @@ namespace Temporary_Prison.Controllers
             const int pageSize = 4;
             var totalCount = default(int);
             var _currentTotal = currentTotal ?? default(int);
-            var listPrisoners = default(IReadOnlyList<Prisoner>);
 
             var pageNum = page ?? 1;
             var skip = (pageNum - 1) * pageSize;
@@ -44,7 +41,7 @@ namespace Temporary_Prison.Controllers
                 totalCount = _currentTotal;
             }
 
-            listPrisoners = prisonerProvider.
+            var listPrisoners = prisonerProvider.
                 GetPrisonerForPagedList(skip, pageSize, ref totalCount, search);
 
             if (!string.IsNullOrEmpty(search))
@@ -54,9 +51,12 @@ namespace Temporary_Prison.Controllers
             }
             ViewBag.TotalCountPrisoners = totalCount;
 
-            var prisonersPagedList = new StaticPagedList<Prisoner>(listPrisoners, pageNum, pageSize, totalCount);
-
-            return View(prisonersPagedList);
+            if (listPrisoners != null)
+            {
+                var prisonersPagedList = new StaticPagedList<Prisoner>(listPrisoners, pageNum, pageSize, totalCount);
+                return View(prisonersPagedList);
+            }
+            return View(default(StaticPagedList<Prisoner>));
         }
 
         [Authorize]
@@ -78,7 +78,6 @@ namespace Temporary_Prison.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
             var pageNum = page ?? 1;
             var skip = (pageNum - 1) * pageSize;
 
@@ -90,17 +89,41 @@ namespace Temporary_Prison.Controllers
                 totalCount = _currentTotal;
             }
             var prisoner = prisonerProvider.GetPrisonerById(id.Value);
+
             var model = Mapper.Map<Prisoner, DetailsPrisonerViewModel>(prisoner);
 
             var listOfDetentions = prisonerProvider.GetDetentionsByPrisonerIdForPagedList(id.Value, skip, pageSize, ref totalCount);
 
-            ViewBag.Guarded = listOfDetentions.Last().DateOfRelease != null ? true : false;
+            if (listOfDetentions != null)
+            {
+                ViewBag.Guarded = listOfDetentions.Last().DateOfRelease != null ? true : false;
+                var pagedListDetention = new StaticPagedList<DetentionPagedList>(listOfDetentions, pageNum, pageSize, totalCount);
+                model.DetentionPagedList = pagedListDetention;
+            }
+            else
+            {
+                ViewBag.Guarded = false;
+            }
 
-            var pagedListDetention = new StaticPagedList<DetentionPagedList>(listOfDetentions, pageNum, pageSize, totalCount);
-
-            model.DetentionPagedList = pagedListDetention;
-
+            ViewBag.TotalCountDetentions = totalCount;
             return View(model);
+        }
+
+        public ActionResult DetailsOfDetention(int? id)
+        {
+            if (!id.HasValue || id.Value == default(int))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var detention = prisonerProvider.GetDetentionById(id.Value);
+
+            if (detention == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(detention);
         }
 
     }

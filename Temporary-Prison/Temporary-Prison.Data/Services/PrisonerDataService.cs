@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using System.Collections.Generic;
-using Temporary_Prison.Common.Entities;
 using Temporary_Prison.Data.Clients;
 using Temporary_Prison.Data.PrisonService;
 using log4net;
@@ -21,6 +20,8 @@ namespace Temporary_Prison.Data.Services
                 cfg.CreateMap<RegistDetention, RegistrationOfDetentionDto>();
                 cfg.CreateMap<Employee, EmployeeDto>();
                 cfg.CreateMap<DetentionPagedList, DetentionPagedListDto>();
+                cfg.CreateMap<Detention, DetentionDto>();
+                cfg.CreateMap<DetentionDto, Detention>();
             });
         }
 
@@ -55,9 +56,13 @@ namespace Temporary_Prison.Data.Services
 
         public bool AddPrisoner(Prisoner prisoner, out int newId)
         {
-            var prisonerDto = Mapper.Map<Prisoner, PrisonerDto>(prisoner);
-            prisonerClient.AddPrisoner(prisonerDto, out newId);
-            return prisonerClient.AddPrisoner(prisonerDto, out newId);
+            if (prisoner != null)
+            {
+                var prisonerDto = Mapper.Map<Prisoner, PrisonerDto>(prisoner);
+                return prisonerClient.AddPrisoner(prisonerDto, out newId);
+            }
+            newId = default(int);
+            return default(bool);
         }
 
         public IReadOnlyList<Prisoner> FindPrisonersByName(string search)
@@ -90,12 +95,12 @@ namespace Temporary_Prison.Data.Services
 
         public void DeletePrisoner(int id)
         {
-            new PrisonerServiceClient().Execute(client => client.DeletePrisoner(id));
+            prisonerClient.DeletePrisoner(id);
         }
 
         public void RegisterDetention(RegistDetention registrationOfDetention)
         {
-           
+
             var registDeten = Mapper.Map<RegistDetention, RegistrationOfDetentionDto>(registrationOfDetention);
             prisonerClient.RegisterDetention(registDeten);
         }
@@ -109,6 +114,17 @@ namespace Temporary_Prison.Data.Services
                 return detentions;
             }
             return default(DetentionPagedList[]);
+        }
+
+        public Detention GetDetentionById(int id)
+        {
+            var detentionDto = prisonerClient.GetDetentionById(id);
+            if (detentionDto != null)
+            {
+                var detention = Mapper.Map<DetentionDto, Detention>(detentionDto);
+                return detention;
+            }
+            return default(Detention);
         }
     }
 }

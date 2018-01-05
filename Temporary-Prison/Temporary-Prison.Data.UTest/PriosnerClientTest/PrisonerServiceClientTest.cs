@@ -1,11 +1,9 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Temporary_Prison.Common.Models;
-using Temporary_Prison.Data.Clients;
 using Temporary_Prison.Data.Services;
 using Temporary_Prison.Service.Contracts.Contracts;
 using System.ServiceModel;
-using Temporary_Prison.Data.PrisonService;
 
 namespace Temporary_Prison.Data.UTest.PriosnerClient
 {
@@ -15,8 +13,6 @@ namespace Temporary_Prison.Data.UTest.PriosnerClient
     {
         private IPrisonerDataService service;
         private DataAccessService db;
-
-     
 
         [TestInitialize]
         public void TestInitialize()
@@ -38,14 +34,21 @@ namespace Temporary_Prison.Data.UTest.PriosnerClient
         public void PrisonerServiceClient_DeteinonsForPagedlist_3isReturned()
         {
             var result = service.GetDetentionsByPrisonerIdForPagedList(19,0, 4, out int outResult);
-            Assert.IsTrue(outResult == 3);
+            Assert.IsTrue(outResult > 3);
         }
+
         [TestMethod]
-        [ExpectedException(typeof(FaultException))]
+        public void PrisonerServiceClient_GetDetentionById_isNotNull()
+        {
+            var result = service.GetDetentionById(28);
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
         public void registerDetent()
         {
             int id = 0;
-            var emp = new Common.Entities.Employee()
+            var emp = new Employee()
             {
                 FristName = "sfirstname",
                 Position = "sposition",

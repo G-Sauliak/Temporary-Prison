@@ -53,6 +53,17 @@ namespace Temporary_Prison.Data.Clients
             return detentions;
         }
 
+        public DetentionDto GetDetentionById(int id)
+        {
+            return new PrisonerServiceClient().
+                Execute(client => client.GetDetentionById(id));
+        }
+
+        public void DeletePrisoner(int id)
+        {
+            new PrisonerServiceClient().
+                Execute(client => client.DeletePrisoner(id));
+        }
     }
 }
 

@@ -19,39 +19,30 @@ namespace Temporary_Prison.Service.Contracts.Extensions
 
         public static TypeModel ConvertToModel<TypeModel>(this DataTable dataTable) where TypeModel : class, new()
         {
-            if (dataTable.Rows.Count == 0)
+            if (dataTable.Rows.Count > 0)
             {
-                return default(TypeModel);
+                var row = dataTable.Rows[0];
+                return GetItem<TypeModel>(row);
             }
-            var obj = new TypeModel();
-            var temp = typeof(TypeModel);
-            var row = dataTable.Rows[0];
-
-            foreach (DataColumn colum in row.Table.Columns)
-            {
-                foreach (var property in temp.GetProperties())
-                {
-                    if (property.Name == colum.ColumnName)
-                    {
-                        property.SetValue(obj, row[colum.ColumnName], null);
-                    }
-                }
-            }
-            return obj;
+            return default(TypeModel);
         }
 
         public static TypeModel[] ConvertToArrayOfModels<TypeModel>(this DataTable dataTable)
             where TypeModel : class, new()
         {
-            TypeModel[] data = new TypeModel[dataTable.Rows.Count];
-            int i = 0;
-            foreach (DataRow row in dataTable.Rows)
+            if (dataTable.Rows.Count > 0)
             {
-                TypeModel item = GetItem<TypeModel>(row);
-                data[i] = item;
-                i++;
+                TypeModel[] data = new TypeModel[dataTable.Rows.Count];
+                int i = 0;
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    TypeModel item = GetItem<TypeModel>(row);
+                    data[i] = item;
+                    i++;
+                }
+                return data;
             }
-            return data;
+            return default(TypeModel[]);
         }
 
         private static TypeModel GetItem<TypeModel>(DataRow row) where TypeModel : class, new()
@@ -78,6 +69,5 @@ namespace Temporary_Prison.Service.Contracts.Extensions
             }
             return obj;
         }
-
     }
 }

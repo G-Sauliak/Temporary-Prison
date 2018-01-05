@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Temporary_Prison.Common.Entities;
 using Temporary_Prison.Common.Models;
 using Temporary_Prison.Data.PrisonService;
 using Temporary_Prison.Data.UserService;
@@ -15,6 +14,8 @@ namespace Temporary_Prison.Data.MapperProfile
             CreateMap<RegistDetention, RegistrationOfDetentionDto>();
             CreateMap<Employee, EmployeeDto>();
             CreateMap<DetentionPagedList, DetentionPagedListDto>();
+            CreateMap<Detention, DetentionDto>();
+            CreateMap<DetentionDto, Detention>();
         }
     }
 }

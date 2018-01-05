@@ -5,16 +5,17 @@ using Temporary_Prison.Service.Contracts.Dto;
 
 namespace Temporary_Prison.Service.Contracts.Contracts
 {
-    public class PrisonerService : DataAccessService, IPrisonerService
+    public class PrisonerService : IPrisonerService
     {
+        private readonly DataAccessService context = new DataAccessService();
         private readonly ILog log = LogManager.GetLogger("LOGGER");
 
         public PrisonerDto GetPrisonerById(int Id)
         {
             if (Id != default(int))
             {
-                var prisoner = GetModel<PrisonerDto>("GetPrisonerById", new SqlParameter(@"prisonerId", Id));
-                var phones = ExecProcGetModels<Phone>("GetPhoneNumbers", new SqlParameter(@"prisonerId", Id));
+                var prisoner = context.ExecProcGetModel<PrisonerDto>("GetPrisonerById", new SqlParameter(@"prisonerId", Id));
+                var phones = context.ExecProcGetModels<Phone>("GetPhoneNumbers", new SqlParameter(@"prisonerId", Id));
 
                 if (phones != null)
                 {
@@ -39,7 +40,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                         new SqlParameter(@"skip",skip),
                         new SqlParameter(@"rowSize",rowSize),
                      };
-                return ExecProcGetModels<PrisonerDto, int>("GetPrisonersToPagedList", "TotalCount", out totalCount, param);
+                return context.ExecProcGetModels<PrisonerDto, int>("GetPrisonersToPagedList", "TotalCount", out totalCount, param);
             }
             totalCount = default(int);
             return default(PrisonerDto[]);
@@ -50,7 +51,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             if (prisoner != null)
             {
                 int lasID;
-                ExecNonQuery("insertPrisoner", prisoner, "newID", out lasID);
+                context.ExecNonQuery("insertPrisoner", prisoner, "newID", out lasID);
                 var countPhones = prisoner.PhoneNumbers.Length;
                 var phones = new Phone[countPhones];
                 if (lasID != default(int))
@@ -63,7 +64,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                             PhoneNumber = prisoner.PhoneNumbers[i]
                         };
                     }
-                    ExecNonQuery("dbo.InsertPhoneNumbers", phones);
+                    context.ExecNonQuery("dbo.InsertPhoneNumbers", phones);
                     newId = lasID;
                     return true;
                 }
@@ -76,7 +77,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
         {
             if (!string.IsNullOrEmpty(search))
             {
-                return ExecProcGetModels<PrisonerDto>("FindPrisonersByName", new SqlParameter(@"search", search));
+                return context.ExecProcGetModels<PrisonerDto>("FindPrisonersByName", new SqlParameter(@"search", search));
             }
             return default(PrisonerDto[]);
         }
@@ -85,7 +86,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
         {
             if (id != default(int))
             {
-                ExecNonQuery("DeletePrisoner", new SqlParameter("@Priosner_ID", id));
+                context.ExecNonQuery("DeletePrisoner", new SqlParameter("@Priosner_ID", id));
             }
         }
 
@@ -93,7 +94,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
         {
             if (prisoner != null)
             {
-                ExecNonQuery("EditPrisoner", prisoner);
+                context.ExecNonQuery("EditPrisoner", prisoner);
                 var countPhones = prisoner.PhoneNumbers.Length;
                 var phones = new Phone[countPhones];
                 for (int i = 0; i < countPhones; i++)
@@ -104,36 +105,42 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                         PhoneNumber = prisoner.PhoneNumbers[i]
                     };
                 }
-                ExecNonQuery("dbo.InsertPhoneNumbers", phones);
+                context.ExecNonQuery("dbo.InsertPhoneNumbers", phones);
             }
         }
         public DetentionPagedListDto[] GetDetentionsByPrisonerIdForPagedList(int Id, int skip, int rowSize, out int totalCount)
         {
-            var parametrs = new SqlParameter[]
+            if (rowSize > 0)
             {
+                var parametrs = new SqlParameter[]
+                {
                 new SqlParameter("@PrisonerID",Id),
                 new SqlParameter("@skip",skip),
                 new SqlParameter("@rowSize",rowSize)
-            };
-
-            return ExecProcGetModels<DetentionPagedListDto,int>("GetDetentionsByIdTForPagedList", "totalCount", out totalCount, parametrs);
+                };
+                return context.ExecProcGetModels<DetentionPagedListDto, int>("GetDetentionsByIdForPagedList", "totalCount", out totalCount, parametrs);
+            }
+            totalCount = default(int);
+            return default(DetentionPagedListDto[]);
         }
 
         public void RegisterDetention(RegistrationOfDetentionDto registrationOfDetention)
         {
-
             if (registrationOfDetention != null)
             {
-                ExecNonQuery("insertEmployee", registrationOfDetention.DetainedEmployee,
+                context.ExecNonQuery("insertEmployee",
+                    registrationOfDetention.DetainedEmployee,
                     "employeeID", out int _DetainedEmployeeID);
-                ExecNonQuery("insertEmployee", registrationOfDetention.DeliveredEmployee,
+
+                context.ExecNonQuery("insertEmployee",
+                    registrationOfDetention.DeliveredEmployee,
                     "employeeID", out int _DeliveredEmployeeID);
 
-                ExecNonQuery("InsertDeliveryProcedures",
+                context.ExecNonQuery("InsertDeliveryProcedures",
                     "DeliveryProceduresID", out int _DeliveryProceduresID,
                     new SqlParameter("@employeeID", _DeliveredEmployeeID));
 
-                ExecNonQuery("InsertDetentionProcedures",
+                context.ExecNonQuery("InsertDetentionProcedures",
                     "DetentionProceduresID", out int _DetentionProceduresID,
                     new SqlParameter("@employeeID", _DetainedEmployeeID));
 
@@ -146,9 +153,46 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                     DetentionProceduresID = _DetentionProceduresID,
                     PlaceofDetention = registrationOfDetention.PlaceofDetention
                 };
-                ExecNonQuery("RegistrationOfDetention", regist);
+                context.ExecNonQuery("RegistrationOfDetention", regist);
             }
+        }
 
+        public DetentionDto GetDetentionById(int id)
+        {
+            if (id != default(int))
+            {
+                var detention = context.ExecProcGetModel<Detention>("GetDetentionById", new SqlParameter("@DetentionId", id));
+
+                var ReleaseEmpl = context.ExecProcGetModel<EmployeeDto>("GetEmployeeByExecutionProcedureID",
+                    new SqlParameter("@ExecProcedureID", detention.ReleaseProceduresID),
+                    new SqlParameter("@ExecuProcName", "Release"));
+
+                var DetainedEmpl = context.ExecProcGetModel<EmployeeDto>("GetEmployeeByExecutionProcedureID",
+                    new SqlParameter("@ExecProcedureID", detention.DetentionProceduresID),
+                    new SqlParameter("@ExecuProcName", "Detention"));
+
+                var DeliveredEmpl = context.ExecProcGetModel<EmployeeDto>("GetEmployeeByExecutionProcedureID",
+                    new SqlParameter("@ExecProcedureID", detention.DeliveredProceduresID),
+                    new SqlParameter("@ExecuProcName", "Delivery"));
+
+                var detentionDto = new DetentionDto()
+                {
+                    DetentionID = detention.DetentionID,
+                    PrisonerID = detention.PrisonerID,
+                    PlaceofDetention = detention.PlaceofDetention,
+                    DateOfDetention = detention.DateOfDetention,
+                    DateOfArrival = detention.DateOfArrival,
+                    DateOfRelease = detention.DateOfRelease,
+                    AccruedAmount = detention.AccruedAmount,
+                    DeliveredEmployee = DeliveredEmpl,
+                    DetainedEmployee = DetainedEmpl,
+                    ReleasedEmployee = ReleaseEmpl,
+                    PaidAmount = detention.PaidAmount
+                };
+
+                return detentionDto;
+            }
+            return default(DetentionDto);
         }
     }
 }

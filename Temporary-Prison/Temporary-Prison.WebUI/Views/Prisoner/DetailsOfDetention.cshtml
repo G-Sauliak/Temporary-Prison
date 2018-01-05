@@ -1,0 +1,67 @@
+﻿@model Temporary_Prison.Common.Models.Detention
+
+@{
+    ViewBag.Title = "DetailsOfDetention";
+}
+
+<h2>DetailsOfDetention</h2>
+
+<div>
+    <h4>Detention</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfDetention)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfDetention)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfArrival)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfArrival)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfRelease)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfRelease)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AccruedAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AccruedAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaidAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaidAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PlaceofDetention)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PlaceofDetention)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "EditDetention","Editor", new { id = Model.DetentionID },new { @class = "btn btn-default"}) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -24,7 +24,7 @@ namespace Temporary_Prison.Service.Contracts.Dto
         [DataMember]
         public string PlaceofDetention { get; set; }
         [DataMember]
-        public EmployeeDto ReleaseProceduresID { get; set; }
+        public EmployeeDto DeliveredEmployee { get; set; }
         [DataMember]
         public EmployeeDto DetainedEmployee { get; set; }
         [DataMember]
@@ -43,7 +43,6 @@ namespace Temporary_Prison.Service.Contracts.Dto
         [DataMember]
         public DateTime? DateOfRelease { get; set; }
     }
-
     public class ReleaseOfPrisonerDto
     {
         public int DetentionID { get; set; }
@@ -64,7 +63,7 @@ namespace Temporary_Prison.Service.Contracts.Dto
     public class EmployeeDto
     {
         public int EmployeeID { get; set; }
-        public string FristName { get; set; }
+        public string FirstName { get; set; }
         public string Surname { get; set; }
         public string LastName { get; set; }
         public string Position { get; set; }

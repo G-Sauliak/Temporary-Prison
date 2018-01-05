@@ -4,12 +4,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
-using System.Web.Security;
 using Temporary_Prison.Attributes;
 using Temporary_Prison.Business.Exceptions;
 using Temporary_Prison.Business.Providers;
 using Temporary_Prison.Business.UserManagers;
-using Temporary_Prison.Common.Entities;
+using Temporary_Prison.Common.Models;
 using Temporary_Prison.Models;
 using X.PagedList;
 

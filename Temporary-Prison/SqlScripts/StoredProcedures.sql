@@ -109,9 +109,6 @@ CREATE PROC [dbo].[DeleteUser]
 @userName nvarchar(50)
 AS
 BEGIN
-DELETE FROM web_UserRoles WHERE web_UserRoles.UserID IN 
-(SELECT UserID FROM web_Users w WHERE w.UserName = @userName )
-
 DELETE FROM web_Users WHERE web_Users.UserName = @userName 
 END
 GO
@@ -347,4 +344,62 @@ BEGIN
 	DeliveredProceduresID
 	)
  SELECT * FROM @dt
+END
+--------------------[GetDetentionById]-------------------------
+---------------------------------------------------------------
+GO
+CREATE PROC [dbo].[GetDetentionById]
+@DetentionID int
+AS
+BEGIN
+SELECT * FROM ListOfDetentions ld WHERE ld.DetentionID = @DetentionID
+END
+GO
+--------------------[GetEmployeeById]-------------------------
+---------------------------------------------------------------
+CREATE PROC [dbo].[GetEmployeeById]
+@EmployeeID int
+AS
+BEGIN
+SELECT * FROM Employees em WHERE em.EmployeeID = @EmployeeID
+END
+GO
+--------------------[GetEmployeeByExecutionProcedureID]--------------------
+---------------------------------------------------------------------------
+CREATE PROC GetEmployeeByExecutionProcedureID
+@ExecuProcName nvarchar(50),
+@ExecProcedureID int
+AS
+BEGIN
+   declare @EmployeeID int;
+   set @EmployeeID = 
+   CASE 
+            WHEN @ExecuProcName = 'Release' 
+			    THEN (SELECT rp.EmployeesID FROM ReleaseProcedures rp 
+				             WHERE rp.ReleaseProceduresID = @ExecProcedureID)
+            WHEN @ExecuProcName = 'Delivery' 
+			    THEN (SELECT rp.EmployeeID FROM DeliveryProcedures rp 
+				             WHERE rp.DeliveredProceduresID = @ExecProcedureID)
+		    WHEN @ExecuProcName = 'Detention' 
+			    THEN (SELECT rp.EmployeeID FROM DetentionProcedures rp 
+				             WHERE rp.DetentionProceduresID = @ExecProcedureID)
+	END  
+SELECT e.EmployeeID FROM Employees e WHERE e.EmployeeID = @EmployeeID
+END
+--------------------[GetEmployeeByExecutionProcedureID]--------------------
+---------------------------------------------------------------------------
+GO
+CREATE PROC [dbo].[GetDetentionsByIdForPagedList]
+@PrisonerID int,
+@skip int,
+@rowSize int,
+@TotalCount int output
+AS
+BEGIN
+SELECT DetentionID,DateOfDetention,PlaceofDetention,DateOfRelease FROM [ListOfDetentions] l
+WHERE l.PrisonerID = @PrisonerID
+ORDER BY l.DateOfDetention
+OFFSET @skip ROWS 
+FETCH NEXT @rowSize ROWS ONLY;
+SET @Totalcount = (SELECT COUNT(*) FROM [ListOfDetentions] l WHERE l.PrisonerID = @PrisonerID)
 END

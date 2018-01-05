@@ -1,42 +1,41 @@
 ﻿using log4net;
-using System;
 using System.Data.SqlClient;
 using System.Linq;
-using System.ServiceModel;
 using Temporary_Prison.Service.Contracts.Dto;
 
 namespace Temporary_Prison.Service.Contracts.Contracts
 {
-    public class UserService : DataAccessService, IUserService
+    public class UserService : IUserService
     {
+        private readonly DataAccessService context = new DataAccessService();
         private readonly ILog log = LogManager.GetLogger("LOGGER");
 
         public void AddUser(UserDto user)
         {
             if (user != null)
             {
-                ExecNonQuery("insertUser", user);
+                context.ExecNonQuery("insertUser", user);
 
                 var parametrs = new SqlParameter[]
                 {
                 new SqlParameter("@RoleName",user.Roles.First()),
                 new SqlParameter("@UserName",user.UserName)
                 };
-                ExecNonQuery("AddToRole", parametrs);
+                context.ExecNonQuery("AddToRole", parametrs);
             }
         }
 
         public string[] GetAllRoles()
         {
-            return GetArrayByColumn<string>("GetAllRoles", "RoleName");
+            return context.GetArrayByColumn<string>("GetAllRoles", "RoleName");
         }
 
         public UserDto GetUserByName(string userName)
         {
             if (!string.IsNullOrEmpty(userName))
             {
-                var user = GetModel<UserDto>("GetUserByName", new SqlParameter("@userName", userName));
-                user.Roles = GetArrayByColumn<string>("GetRolesByUserName", "RoleName", new SqlParameter("@userName", userName));
+                var user = context.ExecProcGetModel<UserDto>("GetUserByName", new SqlParameter("@userName", userName));
+                user.Roles = context.GetArrayByColumn<string>("GetRolesByUserName", "RoleName", new SqlParameter("@userName", userName));
                 return user;
             }
             return default(UserDto);
@@ -52,7 +51,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                         new SqlParameter(@"rowSize",rowSize),
                      };
 
-                return ExecProcGetModels<UserDto, int>("GetUsersForPagedList", "TotalCount", out totalCountUsers, param);
+                return context.ExecProcGetModels<UserDto, int>("GetUsersForPagedList", "TotalCount", out totalCountUsers, param);
             }
             totalCountUsers = default(int);
             return default(UserDto[]);
@@ -62,7 +61,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
         {
             if (!string.IsNullOrEmpty(userName))
             {
-                return ExecScalarValued<bool>("SELECT dbo.IsExistsLogin(@userName)",
+                return context.ExecScalarValued<bool>("SELECT dbo.IsExistsLogin(@userName)",
                     new SqlParameter("@userName", userName));
             }
             return default(bool);
@@ -72,7 +71,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
         {
             if (!string.IsNullOrEmpty(email))
             {
-                return ExecScalarValued<bool>("SELECT dbo.IsExistsLogin(@email)",
+                return context.ExecScalarValued<bool>("SELECT dbo.IsExistsLogin(@email)",
               new SqlParameter("@email", email));
             }
             return default(bool);
@@ -87,7 +86,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                      new SqlParameter("@name",userName),
                      new SqlParameter("@password",password)
                  };
-                return ExecScalarValued<bool>("SELECT dbo.IsValidUser(@name,@password)", parametrs);
+                return context.ExecScalarValued<bool>("SELECT dbo.IsValidUser(@name,@password)", parametrs);
             }
             return default(bool);
         }
@@ -96,7 +95,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
         {
             if (user != null)
             {
-                ExecNonQuery("EditUser", user);
+                context.ExecNonQuery("EditUser", user);
             }
         }
 
@@ -104,7 +103,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
         {
             if (!string.IsNullOrEmpty(userName))
             {
-                ExecNonQuery("DeleteUser", new SqlParameter("@userName", userName));
+                context.ExecNonQuery("DeleteUser", new SqlParameter("@userName", userName));
             }
         }
 
@@ -117,7 +116,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                    new SqlParameter("@userName",userName),
                    new SqlParameter("@roleName",roleName)
                 };
-                ExecNonQuery("DeleteFromRoles", parametrs);
+                context.ExecNonQuery("DeleteFromRoles", parametrs);
             }
         }
 
@@ -130,7 +129,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                    new SqlParameter("@userName",userName),
                    new SqlParameter("@roleName",roleName)
                 };
-                ExecNonQuery("AddToRole", param);
+                context.ExecNonQuery("AddToRole", param);
             }
         }
     }

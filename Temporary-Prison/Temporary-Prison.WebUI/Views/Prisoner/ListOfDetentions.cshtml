@@ -19,7 +19,7 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.DateOfDetention)
+                @Html.DisplayFor(modelItem => item.DateOfDetention.Value.ToShortDateString())
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PlaceofDetention)
@@ -33,23 +33,23 @@
             <td>
                 @if (User.IsInRole("Admin") || User.IsInRole("Editor") && item.DateOfRelease == null)
                 {
-                    @Html.ActionLink("Release", "ReleasePrisoner", new { DetentionID = item.DetentionID }, new { @class = "btn btn-success btn-xs" })
+                    @Html.ActionLink("Release", "ReleasePrisoner", new { id = item.DetentionID }, new { @class = "btn btn-success btn-xs" })
                 }
                 @if (User.IsInRole("Admin") || User.IsInRole("Editor"))
                 {
-                    @Html.ActionLink("Edit |", "EditDetention", new { DetentionID = item.DetentionID })
-                    @Html.ActionLink("Delete |", "DeleteDetention", new { DetentionID = item.DetentionID })
+                    @Html.ActionLink("Edit |", "EditDetention", "Editor", new { id = item.DetentionID }, string.Empty)
+                    @Html.ActionLink("Delete |", "DeleteDetention", "Editor", new { id = item.DetentionID }, string.Empty)
                 }
-                @Html.ActionLink("Details", "DetailsDetention", new { DetentionID = item.DetentionID })
+                @Html.ActionLink("Details", "DetailsOfDetention", new { id = item.DetentionID })
             </td>
         </tr>
     }
 </table>
 
-
 @Html.PagedListPager(Model as IPagedList, page => Url.Action("Index",
     new
     {
         page,
+        currentTotal = ViewBag.CurrentTotalOfDetentions
 
     }), PagedListRenderOptions.MinimalWithPageCountText)

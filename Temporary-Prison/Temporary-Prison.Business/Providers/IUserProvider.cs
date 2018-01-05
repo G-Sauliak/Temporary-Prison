@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Temporary_Prison.Common.Entities;
+using Temporary_Prison.Common.Models;
 
 namespace Temporary_Prison.Business.Providers
 {

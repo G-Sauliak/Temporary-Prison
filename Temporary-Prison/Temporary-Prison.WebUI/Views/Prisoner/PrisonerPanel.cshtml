@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Temporary_Prison.Common.Entities.Prisoner>
+﻿@model IEnumerable<Temporary_Prison.Common.Models.Prisoner>
 @using X.PagedList
 @using X.PagedList.Mvc
 
@@ -80,7 +80,6 @@
                                new
                                {
                                    page,
-                                   sort = ViewBag.CurrentSort,
                                    currentTotal = ViewBag.TotalCountPrisoners,
                                    search = ViewBag.Search
                                }),

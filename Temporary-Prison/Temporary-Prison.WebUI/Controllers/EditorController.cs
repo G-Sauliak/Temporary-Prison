@@ -6,7 +6,6 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Temporary_Prison.Business.Providers;
-using Temporary_Prison.Common.Entities;
 using Temporary_Prison.Common.Models;
 using Temporary_Prison.Enums;
 using Temporary_Prison.Extensions;
@@ -72,22 +71,19 @@ namespace Temporary_Prison.Controllers
                 var prisoner = Mapper.Map<CreatePrisonerViewModel, Prisoner>(model);
 
                 int newID;
-
                 prisonerProvider.AddPrisoner(prisoner, out newID);
-                return RedirectToAction("CreateListOfDetention", "Editor", new { id = newID });
 
+                return RedirectToAction("CreateDetention", "Editor", new { prisonerId = newID });
             }
             else if (photo == null)
             {
                 int newID;
-
                 var prisoner = Mapper.Map<CreatePrisonerViewModel, Prisoner>(model);
-               
+
                 //TODO add ConfigurationManager
                 prisoner.Photo = "/Content/DefaultPhoto/defaultPhotoPrisoner.jpg";
-
                 prisonerProvider.AddPrisoner(prisoner, out newID);
-                return RedirectToAction("CreateDetention", "Editor", new { id = newID });
+                return RedirectToAction("CreateDetention", "Editor", new { prisonerId = newID });
             }
 
 
@@ -96,6 +92,8 @@ namespace Temporary_Prison.Controllers
 
             return View(model);
         }
+
+        //GET: Editor/EditPriosner
         [HttpGet]
         public ActionResult EditPrisoner(int? id)
         {
@@ -116,6 +114,7 @@ namespace Temporary_Prison.Controllers
             return Redirect(Url.Action("ListOfPrisoners", "Prisoner"));
         }
 
+        //POST: Editor/EditPriosner
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditPrisoner(CreatePrisonerViewModel model, string redirectUrl)
@@ -132,7 +131,6 @@ namespace Temporary_Prison.Controllers
             {
                 //TODO
             }
-
             var prisoner = Mapper.Map<CreatePrisonerViewModel, Prisoner>(model);
             prisonerProvider.EditPrisoner(prisoner);
 
@@ -148,31 +146,40 @@ namespace Temporary_Prison.Controllers
 
             return RedirectToAction("ListOfPrisoners", "Prisoner");
         }
+
         //GET : Editor/CreateListOfDetention
         [HttpGet]
-        public ActionResult CreateListOfDetention(int id)
+        public ActionResult CreateDetention(int? prisonerId)
         {
+            if (!prisonerId.HasValue)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             var model = new RegistrationOfDetentionViewModel
             {
-                PrisonerID = id
+                PrisonerID = prisonerId.Value
             };
 
             return View(model);
         }
 
+        //HOST : Editor/CreateListOfDetention
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateDetention(RegistrationOfDetentionViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return View(model);
+                var prisoner = prisonerProvider.GetPrisonerById(model.PrisonerID);
+                if (prisoner != null)
+                {
+                    var regist = Mapper.Map<RegistrationOfDetentionViewModel, RegistDetention>(model);
+                    prisonerProvider.RegisterDetention(regist);
+
+                    return RedirectToAction("DetailsOfPrisoner", "Prisoner", new { id = model.PrisonerID });
+                }
             }
-            var regist = Mapper.Map<RegistrationOfDetentionViewModel, RegistDetention>(model);
-
-            prisonerProvider.RegisterDetention(regist);
-
-            return View(new RegistrationOfDetentionViewModel());
+            return View(model);
         }
 
     }

@@ -66,4 +66,20 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DetentionPagedListDto" nillable="true" type="tns:DetentionPagedListDto" />
+  <xs:complexType name="DetentionDto">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AccruedAmount" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="DateOfArrival" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DateOfDetention" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DateOfRelease" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DetainedEmployee" nillable="true" type="tns:EmployeeDto" />
+      <xs:element minOccurs="0" name="DetentionID" type="xs:int" />
+      <xs:element minOccurs="0" name="PaidAmount" nillable="true" type="xs:double" />
+      <xs:element minOccurs="0" name="PlaceofDetention" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PrisonerID" type="xs:int" />
+      <xs:element minOccurs="0" name="ReleaseProceduresID" nillable="true" type="tns:EmployeeDto" />
+      <xs:element minOccurs="0" name="ReleasedEmployee" nillable="true" type="tns:EmployeeDto" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DetentionDto" nillable="true" type="tns:DetentionDto" />
 </xs:schema>

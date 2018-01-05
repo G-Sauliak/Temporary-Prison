@@ -50,5 +50,4 @@ namespace Temporary_Prison.Models
         [Display(Name = "Position")]
         public string Position { get; set; }
     }
-
 }
