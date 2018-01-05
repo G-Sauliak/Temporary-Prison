@@ -51,10 +51,10 @@
 </div>
 @if (Model.DetentionPagedList != null)
 {
-@Html.Partial("ListOfDetentions", Model.DetentionPagedList)
+    @Html.Partial("ListOfDetentions", Model.DetentionPagedList)
 }
 
-@if (!(bool)ViewBag.Guarded)
+@if (!(bool)ViewBag.Guarded && (User.IsInRole("Admin") || User.IsInRole("Editor")))
 {
     @Html.ActionLink("Create Detention", "CreateDetention", "Editor",
     new
@@ -63,7 +63,7 @@
     },
     new
     {
-        @class = "btn btn-secondary col-md-offset-5 col-md-10"
+        @class = "btn btn-default col-md-offset-10"
     })
 }
 <p>

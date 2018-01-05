@@ -70,7 +70,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
         private bool IsValidPropertyType(PropertyInfo prop)
         {
             if (prop.PropertyType.IsPrimitive || prop.PropertyType == typeof(String) 
-                || prop.PropertyType == typeof(DateTime))
+                 || prop.PropertyType == typeof(DateTime))
             {
                 return true;
             }

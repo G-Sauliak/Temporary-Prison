@@ -44,7 +44,7 @@
   <xs:complexType name="EmployeeDto">
     <xs:sequence>
       <xs:element minOccurs="0" name="EmployeeID" type="xs:int" />
-      <xs:element minOccurs="0" name="FristName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="LastName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Position" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Surname" nillable="true" type="xs:string" />
@@ -72,12 +72,12 @@
       <xs:element minOccurs="0" name="DateOfArrival" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="DateOfDetention" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="DateOfRelease" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="DeliveredEmployee" nillable="true" type="tns:EmployeeDto" />
       <xs:element minOccurs="0" name="DetainedEmployee" nillable="true" type="tns:EmployeeDto" />
       <xs:element minOccurs="0" name="DetentionID" type="xs:int" />
       <xs:element minOccurs="0" name="PaidAmount" nillable="true" type="xs:double" />
       <xs:element minOccurs="0" name="PlaceofDetention" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PrisonerID" type="xs:int" />
-      <xs:element minOccurs="0" name="ReleaseProceduresID" nillable="true" type="tns:EmployeeDto" />
       <xs:element minOccurs="0" name="ReleasedEmployee" nillable="true" type="tns:EmployeeDto" />
     </xs:sequence>
   </xs:complexType>

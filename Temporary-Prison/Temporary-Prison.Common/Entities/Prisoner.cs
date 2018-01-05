@@ -6,9 +6,9 @@ namespace Temporary_Prison.Common.Entities
     {
         public int DetentionID { get; set; }
         public int PrisonerID { get; set; }
-        public DateTime DateOfDetention { get; set; }
-        public DateTime DateOfArrival { get; set; }
-        public DateTime DateOfRelease { get; set; }
+        public DateTime? DateOfDetention { get; set; }
+        public DateTime? DateOfArrival { get; set; }
+        public DateTime? DateOfRelease { get; set; }
         public double AccruedAmount { get; set; }
         public double PaidAmount { get; set; }
         public string PlaceofDetention { get; set; }
@@ -20,7 +20,7 @@ namespace Temporary_Prison.Common.Entities
     public class Employee
     {
         public int EmployeeID { get; set; }
-        public string FristName { get; set; }
+        public string FirstName { get; set; }
         public string Surname { get; set; }
         public string LastName { get; set; }
         public string Position { get; set; }

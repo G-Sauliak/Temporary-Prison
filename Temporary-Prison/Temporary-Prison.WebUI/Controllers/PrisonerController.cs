@@ -78,6 +78,13 @@ namespace Temporary_Prison.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            var prisoner = prisonerProvider.GetPrisonerById(id.Value);
+
+            if (prisoner == null)
+            {
+                return HttpNotFound();
+            }
+
             var pageNum = page ?? 1;
             var skip = (pageNum - 1) * pageSize;
 
@@ -88,7 +95,6 @@ namespace Temporary_Prison.Controllers
             {
                 totalCount = _currentTotal;
             }
-            var prisoner = prisonerProvider.GetPrisonerById(id.Value);
 
             var model = Mapper.Map<Prisoner, DetailsPrisonerViewModel>(prisoner);
 
@@ -96,7 +102,7 @@ namespace Temporary_Prison.Controllers
 
             if (listOfDetentions != null)
             {
-                ViewBag.Guarded = listOfDetentions.Last().DateOfRelease != null ? true : false;
+                ViewBag.Guarded = listOfDetentions.Last().DateOfRelease != null ? false : true;
                 var pagedListDetention = new StaticPagedList<DetentionPagedList>(listOfDetentions, pageNum, pageSize, totalCount);
                 model.DetentionPagedList = pagedListDetention;
             }

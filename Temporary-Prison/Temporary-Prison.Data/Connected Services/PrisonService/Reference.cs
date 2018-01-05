@@ -417,7 +417,7 @@ namespace Temporary_Prison.Data.PrisonService {
         private int EmployeeIDField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string FristNameField;
+        private string FirstNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string LastNameField;
@@ -452,14 +452,14 @@ namespace Temporary_Prison.Data.PrisonService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FristName {
+        public string FirstName {
             get {
-                return this.FristNameField;
+                return this.FirstNameField;
             }
             set {
-                if ((object.ReferenceEquals(this.FristNameField, value) != true)) {
-                    this.FristNameField = value;
-                    this.RaisePropertyChanged("FristName");
+                if ((object.ReferenceEquals(this.FirstNameField, value) != true)) {
+                    this.FirstNameField = value;
+                    this.RaisePropertyChanged("FirstName");
                 }
             }
         }
@@ -628,6 +628,9 @@ namespace Temporary_Prison.Data.PrisonService {
         private System.Nullable<System.DateTime> DateOfReleaseField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Temporary_Prison.Data.PrisonService.EmployeeDto DeliveredEmployeeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private Temporary_Prison.Data.PrisonService.EmployeeDto DetainedEmployeeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -641,9 +644,6 @@ namespace Temporary_Prison.Data.PrisonService {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int PrisonerIDField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Temporary_Prison.Data.PrisonService.EmployeeDto ReleaseProceduresIDField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private Temporary_Prison.Data.PrisonService.EmployeeDto ReleasedEmployeeField;
@@ -711,6 +711,19 @@ namespace Temporary_Prison.Data.PrisonService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public Temporary_Prison.Data.PrisonService.EmployeeDto DeliveredEmployee {
+            get {
+                return this.DeliveredEmployeeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DeliveredEmployeeField, value) != true)) {
+                    this.DeliveredEmployeeField = value;
+                    this.RaisePropertyChanged("DeliveredEmployee");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public Temporary_Prison.Data.PrisonService.EmployeeDto DetainedEmployee {
             get {
                 return this.DetainedEmployeeField;
@@ -771,19 +784,6 @@ namespace Temporary_Prison.Data.PrisonService {
                 if ((this.PrisonerIDField.Equals(value) != true)) {
                     this.PrisonerIDField = value;
                     this.RaisePropertyChanged("PrisonerID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Temporary_Prison.Data.PrisonService.EmployeeDto ReleaseProceduresID {
-            get {
-                return this.ReleaseProceduresIDField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ReleaseProceduresIDField, value) != true)) {
-                    this.ReleaseProceduresIDField = value;
-                    this.RaisePropertyChanged("ReleaseProceduresID");
                 }
             }
         }

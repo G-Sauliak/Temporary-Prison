@@ -3,65 +3,142 @@
 @{
     ViewBag.Title = "DetailsOfDetention";
 }
-
-<h2>DetailsOfDetention</h2>
-
 <div>
-    <h4>Detention</h4>
-    <hr />
-    <dl class="dl-horizontal">
+    <h4 class="col-lg-5">
+        Detained
+    </h4>
+</div>
+<div>
+    <h4 class="col-lg-5">Delivered</h4>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DateOfDetention)
-        </dt>
+</div>
+<dl class="dl-horizontal col-lg-5">
+    <dt>
+        @Html.LabelFor(model => model.DateOfDetention) <br>
+        <br>
+    </dt>
+    <dd> @Html.DisplayFor(model => model.DateOfDetention) </dd>
+</dl>
+<dl class="dl-horizontal col-lg-5">
+    <dt>
+        @Html.LabelFor(model => model.DateOfArrival) <br>
+        <br>
+    </dt>
+    <dd> @Html.DisplayFor(model => model.DateOfArrival)</dd>
+</dl>
+<div>
+    <h4 class="col-lg-5">Detained by an employee</h4>
 
-        <dd>
-            @Html.DisplayFor(model => model.DateOfDetention)
-        </dd>
+</div>
+<div>
+    <h4 class="col-lg-5">Delivered by an employee</h4>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DateOfArrival)
-        </dt>
+</div>
+<dl class="dl-horizontal col-lg-5">
+    <dt> @Html.LabelFor(model => model.DetainedEmployee.FirstName) </dt>
+    <dd> @Html.DisplayFor(model => model.DetainedEmployee.FirstName) </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.DateOfArrival)
-        </dd>
+    <dt> @Html.LabelFor(model => model.DetainedEmployee.Surname) </dt>
+    <dd> @Html.DisplayFor(model => model.DetainedEmployee.Surname) </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DateOfRelease)
-        </dt>
+    <dt> @Html.LabelFor(model => model.DetainedEmployee.LastName) </dt>
+    <dd> @Html.DisplayFor(model => model.DetainedEmployee.LastName) </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.DateOfRelease)
-        </dd>
+    <dt> @Html.LabelFor(model => model.DetainedEmployee.Position) </dt>
+    <dd> @Html.DisplayFor(model => model.DetainedEmployee.Position) </dd>
+</dl>
+<dl class="dl-horizontal col-lg-5">
+    <dt> @Html.LabelFor(model => model.DeliveredEmployee.FirstName) </dt>
+    <dd> @Html.DisplayFor(model => model.DeliveredEmployee.FirstName) </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.AccruedAmount)
-        </dt>
+    <dt> @Html.LabelFor(model => model.DeliveredEmployee.Surname) </dt>
+    <dd> @Html.DisplayFor(model => model.DeliveredEmployee.Surname) </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.AccruedAmount)
-        </dd>
+    <dt> @Html.LabelFor(model => model.DeliveredEmployee.LastName) </dt>
+    <dd> @Html.DisplayFor(model => model.DeliveredEmployee.LastName) </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PaidAmount)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PaidAmount)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PlaceofDetention)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PlaceofDetention)
-        </dd>
+    <dt> @Html.LabelFor(model => model.DeliveredEmployee.Position) </dt>
+    <dd> @Html.DisplayFor(model => model.DeliveredEmployee.Position) </dd>
+</dl>
+@if (Model.DateOfRelease != null)
+{
+    <div>
+        <h4 class="col-lg-offset-2 col-lg-10">Release</h4>
+    </div>
+    <dl class="dl-horizontal col-lg-offset-2 col-lg-10">
+        <dt> @Html.LabelFor(model => model.DateOfRelease) </dt>
+        <dd> @Html.DisplayFor(model => model.DateOfRelease) </dd>
 
     </dl>
-</div>
+    <div>
+        <h4 class="col-lg-10 col-lg-offset-2">Released by an employee</h4>
+    </div>
+    <dl class="dl-horizontal col-lg-offset-2 col-lg-10">
+        <dt> @Html.LabelFor(model => model.ReleasedEmployee.FirstName) </dt>
+        <dd> @Html.DisplayFor(model => model.ReleasedEmployee.FirstName) </dd>
+
+        <dt> @Html.LabelFor(model => model.ReleasedEmployee.Surname) </dt>
+        <dd> @Html.DisplayFor(model => model.ReleasedEmployee.Surname) </dd>
+
+        <dt> @Html.LabelFor(model => model.ReleasedEmployee.LastName) </dt>
+        <dd> @Html.DisplayFor(model => model.ReleasedEmployee.LastName) </dd>
+
+        <dt> @Html.LabelFor(model => model.ReleasedEmployee.Position) </dt>
+        <dd> @Html.DisplayFor(model => model.ReleasedEmployee.Position) </dd>
+    </dl>
+    <div>
+        <h4 class="col-lg-10 col-lg-offset-2">Place Of Detention</h4>
+
+    </div>
+    <dl class="dl-horizontal col-lg-offset-2 col-lg-10">
+        <dt> @Html.DisplayFor(model => model.PlaceofDetention) </dt>
+    </dl>
+    <dl class="dl-horizontal col-lg-3 col-lg-offset-9">
+        <dt> @Html.LabelFor(model => model.AccruedAmount) </dt>
+        <dd> @Html.DisplayFor(model => model.AccruedAmount) </dd>
+
+        <dt> @Html.LabelFor(model => model.PaidAmount) </dt>
+        <dd> @Html.DisplayFor(model => model.PaidAmount) </dd>
+    </dl>
+}
+else
+{
+    <div>
+        <h4 class="col-lg-10 col-lg-offset-2">Place Of Detention</h4>
+
+    </div>
+    <dl class="dl-horizontal col-lg-offset-2 col-lg-10">
+        <dt> @Html.DisplayFor(model => model.PlaceofDetention) </dt>
+    </dl>
+
+    @Html.ActionLink("Release the prisoner", "ReleaseOfPrisoner", "Editor",
+        new
+        {
+            DetentionID = Model.DetentionID
+        },
+        new
+        {
+            @class = "btn btn-default col-lg-2 col-lg-offset-10"
+        })
+}
 <p>
-    @Html.ActionLink("Edit", "EditDetention","Editor", new { id = Model.DetentionID },new { @class = "btn btn-default"}) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back", "DetailsOfPrisoner", "Prisoner",
+    new
+    {
+        id = Model.PrisonerID
+    },
+    new
+    {
+        @class = "btn btn-default"
+    })
+    |
+    @Html.ActionLink("Edit", "EditDetention", "Editor",
+    new
+    {
+        id = Model.DetentionID
+    },
+    new
+    {
+        @class = "btn btn-default"
+    })
 </p>
