@@ -17,10 +17,12 @@ namespace Temporary_Prison.Business.CacheManager
                 return item;
             }
             item = getCallback();
-
-            HttpRuntime.Cache.Insert(cacheKey, item, null, DateTime.Now.AddMinutes(cacheDefaultTimeoutInMinute), Cache.NoSlidingExpiration);
-
-            return item;
+            if (item != null)
+            {
+                HttpRuntime.Cache.Insert(cacheKey, item, null, DateTime.Now.AddMinutes(cacheDefaultTimeoutInMinute), Cache.NoSlidingExpiration);
+                return item;
+            }
+            return default(TResult);
         }
 
         public TResult GetOrSet<TResult>(string cacheKey, Func<TResult> getCallback, DateTime expirationTime) where TResult : class
@@ -32,10 +34,12 @@ namespace Temporary_Prison.Business.CacheManager
                 return item;
             }
             item = getCallback();
-
-            HttpRuntime.Cache.Insert(cacheKey, item, null, expirationTime, Cache.NoSlidingExpiration);
-
-            return item;
+            if (item != null)
+            {
+                HttpRuntime.Cache.Insert(cacheKey, item, null, expirationTime, Cache.NoSlidingExpiration);
+                return item;
+            }
+            return default(TResult);
         }
 
         public void Remove(string cacheKey)

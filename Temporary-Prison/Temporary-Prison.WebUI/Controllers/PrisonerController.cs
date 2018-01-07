@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using log4net;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -10,6 +11,7 @@ using X.PagedList;
 
 namespace Temporary_Prison.Controllers
 {
+    [Authorize]
     public class PrisonerController : Controller
     {
         private readonly IPrisonerProvider prisonerProvider;
@@ -26,40 +28,34 @@ namespace Temporary_Prison.Controllers
 
         // GET: Prisoner/ListOfPrisoners
         [HttpGet]
-        [Authorize]
-        public ActionResult ListOfPrisoners(int? page, int? currentTotal, string search)
+        public ActionResult ListOfPrisoners(int? page, int? totalCount, string search)
         {
             const int pageSize = 4;
-            var totalCount = default(int);
-            var _currentTotal = currentTotal ?? default(int);
+            var _totalCount = totalCount ?? default(int);
 
             var pageNum = page ?? 1;
             var skip = (pageNum - 1) * pageSize;
 
-            if (_currentTotal != default(int))
-            {
-                totalCount = _currentTotal;
-            }
-
             var listPrisoners = prisonerProvider.
-                GetPrisonerForPagedList(skip, pageSize, ref totalCount, search);
+                GetPrisonerForPagedList(skip, pageSize, ref _totalCount, search);
 
             if (!string.IsNullOrEmpty(search))
             {
                 ViewBag.Search = search;
                 return View(listPrisoners.ToPagedList(pageNum, pageSize));
             }
-            ViewBag.TotalCountPrisoners = totalCount;
+            ViewBag.TotalCountPrisoners = _totalCount;
+
+            var model = Mapper.Map<IReadOnlyList<Prisoner>, IReadOnlyList<PrisonerPagedListViewModel>>(listPrisoners);
 
             if (listPrisoners != null)
             {
-                var prisonersPagedList = new StaticPagedList<Prisoner>(listPrisoners, pageNum, pageSize, totalCount);
+                var prisonersPagedList = new StaticPagedList<PrisonerPagedListViewModel>(model, pageNum, pageSize, _totalCount);
                 return View(prisonersPagedList);
             }
             return View(default(StaticPagedList<Prisoner>));
         }
 
-        [Authorize]
         public ActionResult FindPrisonersByName(string search)
         {
             var listPrisoners = prisonerProvider.FindPrisonersByName(search);
@@ -69,7 +65,6 @@ namespace Temporary_Prison.Controllers
             return PartialView("PrisonerPanel", listPrisoners.ToPagedList(1, 4));
         }
         [HttpGet]
-        [Authorize]
         public ActionResult DetailsOfPrisoner(int? id, int? page, int? currentTotal)
         {
             const int pageSize = 4;

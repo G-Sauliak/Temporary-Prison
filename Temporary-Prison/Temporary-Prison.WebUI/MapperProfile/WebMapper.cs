@@ -16,9 +16,16 @@ namespace Temporary_Prison.MapperProfile
 
             CreateMap<Prisoner, DetailsPrisonerViewModel>()
                  .ForMember(p => p.DetentionPagedList, opt => opt.Ignore());
-            
+
+           CreateMap<Prisoner, PrisonerPagedListViewModel>()
+                .ForMember(p => p.BirthDate, opt => opt.MapFrom(c => c.BirthDate.ToShortDateString()));
+
+            CreateMap<UserAndRoles, UserAndRolesViewModel>();
+                
+            CreateMap<ReleaseOfPrisoner, ReleaseOfPrisonerViewModel>();
             CreateMap<Employee, EmployeeViewModel>();
             CreateMap<Prisoner, CreatePrisonerViewModel>();
+
         }
     }
 

@@ -71,7 +71,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
         {
             if (!string.IsNullOrEmpty(email))
             {
-                return context.ExecScalarValued<bool>("SELECT dbo.IsExistsLogin(@email)",
+                return context.ExecScalarValued<bool>("SELECT dbo.IsExistsEmail(@email)",
               new SqlParameter("@email", email));
             }
             return default(bool);

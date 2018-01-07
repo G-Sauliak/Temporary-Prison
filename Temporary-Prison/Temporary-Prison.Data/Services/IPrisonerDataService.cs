@@ -8,6 +8,7 @@ namespace Temporary_Prison.Data.Services
         bool AddPrisoner(Prisoner prisoner, out int newId);
         void EditPrisoner(Prisoner prisoner);
         void DeletePrisoner(int id);
+        void ReleaseOfPrisoner(ReleaseOfPrisoner release);
         Prisoner GetPrisonerById(int id);
         IReadOnlyList<Prisoner> GetPrisonersForPagedList(int skip, int rowSize, out int totalCount);
         IReadOnlyList<Prisoner> FindPrisonersByName(string search);

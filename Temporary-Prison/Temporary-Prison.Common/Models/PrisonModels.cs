@@ -56,4 +56,12 @@ namespace Temporary_Prison.Common.Models
         public string LastName { get; set; }
         public string Position { get; set; }
     }
+    public class ReleaseOfPrisoner
+    {
+        public int DetentionID { get; set; }
+        public DateTime DateOfRelease { get; set; }
+        public decimal AccruedAmount { get; set; }
+        public decimal PaidAmount { get; set; }
+        public Employee ReleasedEmployee { get; set; }
+    }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using Temporary_Prison.Common.Entities;
 
 namespace Temporary_Prison.Service.Contracts.Dto
 {
@@ -18,9 +17,9 @@ namespace Temporary_Prison.Service.Contracts.Dto
         [DataMember]
         public DateTime? DateOfRelease { get; set; }
         [DataMember]
-        public double? AccruedAmount { get; set; }
+        public decimal? AccruedAmount { get; set; }
         [DataMember]
-        public double? PaidAmount { get; set; }
+        public decimal? PaidAmount { get; set; }
         [DataMember]
         public string PlaceofDetention { get; set; }
         [DataMember]
@@ -47,8 +46,9 @@ namespace Temporary_Prison.Service.Contracts.Dto
     {
         public int DetentionID { get; set; }
         public DateTime DateOfRelease { get; set; }
-        public double AccruedAmount { get; set; }
-        public double PaidAmount { get; set; }
+        public decimal AccruedAmount { get; set; }
+        public decimal PaidAmount { get; set; }
+        public EmployeeDto ReleasedEmployee { get; set; }
     }
     public class RegistrationOfDetentionDto
     {

@@ -35,10 +35,10 @@ namespace Temporary_Prison.Models
         [Display(Name = "New Password")]
         public string Password { get; set; }
 
-        public UserAndRoles UserAndRoles { get; set; }
+        public UserAndRolesViewModel UserAndRoles { get; set; }
     }
 
-    public class UserAndRoles
+    public class UserAndRolesViewModel
     {
         [Display(Name = "User Name")]
         public string UserName { get; set; }

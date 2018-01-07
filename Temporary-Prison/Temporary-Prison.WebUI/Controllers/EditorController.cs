@@ -47,7 +47,7 @@ namespace Temporary_Prison.Controllers
         {
             if (!ModelState.IsValid)
             {
-                if (model.PhoneNumbers.Count < 1) model.PhoneNumbers = new string[] { "" };
+                if (model.PhoneNumbers.Count < 1) model.PhoneNumbers = new string[] { string.Empty };
                 ViewBag.RelationshipStatus = Enum.GetValues(typeof(RelationshipStatus)).Cast<RelationshipStatus>(); ;
                 return View(model);
             }
@@ -70,22 +70,23 @@ namespace Temporary_Prison.Controllers
 
                 var prisoner = Mapper.Map<CreatePrisonerViewModel, Prisoner>(model);
 
-                int newID;
+                var newID = default(int);
                 prisonerProvider.AddPrisoner(prisoner, out newID);
 
                 return RedirectToAction("CreateDetention", "Editor", new { prisonerId = newID });
             }
             else if (photo == null)
             {
-                int newID;
                 var prisoner = Mapper.Map<CreatePrisonerViewModel, Prisoner>(model);
 
                 //TODO add ConfigurationManager
                 prisoner.Photo = "/Content/DefaultPhoto/defaultPhotoPrisoner.jpg";
-                prisonerProvider.AddPrisoner(prisoner, out newID);
+
+                var newID = default(int);
+                prisonerProvider.AddPrisoner(prisoner,out newID);
+
                 return RedirectToAction("CreateDetention", "Editor", new { prisonerId = newID });
             }
-
 
             ModelState.AddModelError(string.Empty, "Incorrect file");
             ViewBag.RelationshipStatus = Enum.GetValues(typeof(RelationshipStatus)).Cast<RelationshipStatus>();
@@ -111,7 +112,7 @@ namespace Temporary_Prison.Controllers
                 return View(model);
             }
 
-            return Redirect(Url.Action("ListOfPrisoners", "Prisoner"));
+            return HttpNotFound();
         }
 
         //POST: Editor/EditPriosner
@@ -163,7 +164,7 @@ namespace Temporary_Prison.Controllers
             return View(model);
         }
 
-        //HOST : Editor/CreateListOfDetention
+        //POST : Editor/CreateListOfDetention
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateDetention(RegistrationOfDetentionViewModel model)
@@ -180,6 +181,55 @@ namespace Temporary_Prison.Controllers
                 }
             }
             return View(model);
+        }
+        //GET : Editor/ReleaseOfPriosner
+        [HttpGet]
+        public ActionResult ReleaseOfPrisoner(int? detentionID)
+        {
+            if (!detentionID.HasValue)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var detention = prisonerProvider.GetDetentionById(detentionID.Value);
+
+            if (detention == null)
+            {
+                return HttpNotFound();
+            }
+            var model = new ReleaseOfPrisonerViewModel()
+            {
+                DetentionID = detentionID.Value
+            };
+            return View(model);
+
+        }
+
+        //POST : Editor/ReleaseOfPriosner
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ReleaseOfPrisoner(ReleaseOfPrisonerViewModel model, string redirectUrl)
+        {
+            if (ModelState.IsValid)
+            {
+                var detention = prisonerProvider.GetDetentionById(model.DetentionID);
+                if (detention != null && detention.DateOfRelease == null)
+                {
+                    var releaseOfPriosner = Mapper.Map<ReleaseOfPrisonerViewModel, ReleaseOfPrisoner>(model);
+
+                    prisonerProvider.ReleaseOfPrisoner(releaseOfPriosner);
+                    RedirectToLocal(redirectUrl);
+                }
+            }
+            return View(model);
+        }
+        private ActionResult RedirectToLocal(string redirectUrl)
+        {
+            if (Url.IsLocalUrl(redirectUrl))
+            {
+                return Redirect(redirectUrl);
+            }
+            return RedirectToAction("Index", "Home");
         }
 
     }

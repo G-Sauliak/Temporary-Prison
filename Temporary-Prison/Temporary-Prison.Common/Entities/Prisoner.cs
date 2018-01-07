@@ -9,8 +9,8 @@ namespace Temporary_Prison.Common.Entities
         public DateTime? DateOfDetention { get; set; }
         public DateTime? DateOfArrival { get; set; }
         public DateTime? DateOfRelease { get; set; }
-        public double AccruedAmount { get; set; }
-        public double PaidAmount { get; set; }
+        public decimal AccruedAmount { get; set; }
+        public decimal PaidAmount { get; set; }
         public string PlaceofDetention { get; set; }
         public int ReleaseProceduresID { get; set; }
         public int DetentionProceduresID { get; set; }
@@ -41,8 +41,9 @@ namespace Temporary_Prison.Common.Entities
     {
         public int DetentionID { get; set; }
         public DateTime DateOfRelease { get; set; }
-        public double AccruedAmount { get; set; }
-        public double PaidAmount { get; set; }
+        public decimal AccruedAmount { get; set; }
+        public decimal PaidAmount { get; set; }
+        public int ReleaseProceduresID { get; set; }
     }
 
     public class Prisoner

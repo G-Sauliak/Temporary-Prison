@@ -50,7 +50,7 @@ namespace Temporary_Prison.Data.UTest.PriosnerClient
             int id = 0;
             var emp = new Employee()
             {
-                FristName = "sfirstname",
+                FirstName = "sfirstname",
                 Position = "sposition",
                 LastName = "slasname",
                 Surname = "ssurname"

@@ -50,8 +50,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
         {
             if (prisoner != null)
             {
-                int lasID;
-                context.ExecNonQuery("insertPrisoner", prisoner, "newID", out lasID);
+                context.ExecNonQuery("insertPrisoner", prisoner, "newID", out int lasID);
                 var countPhones = prisoner.PhoneNumbers.Length;
                 var phones = new Phone[countPhones];
                 if (lasID != default(int))
@@ -163,36 +162,65 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             {
                 var detention = context.ExecProcGetModel<Detention>("GetDetentionById", new SqlParameter("@DetentionId", id));
 
-                var ReleaseEmpl = context.ExecProcGetModel<EmployeeDto>("GetEmployeeByExecutionProcedureID",
-                    new SqlParameter("@ExecProcedureID", detention.ReleaseProceduresID),
-                    new SqlParameter("@ExecuProcName", "Release"));
-
-                var DetainedEmpl = context.ExecProcGetModel<EmployeeDto>("GetEmployeeByExecutionProcedureID",
-                    new SqlParameter("@ExecProcedureID", detention.DetentionProceduresID),
-                    new SqlParameter("@ExecuProcName", "Detention"));
-
-                var DeliveredEmpl = context.ExecProcGetModel<EmployeeDto>("GetEmployeeByExecutionProcedureID",
-                    new SqlParameter("@ExecProcedureID", detention.DeliveredProceduresID),
-                    new SqlParameter("@ExecuProcName", "Delivery"));
-
-                var detentionDto = new DetentionDto()
+                if (detention != null)
                 {
-                    DetentionID = detention.DetentionID,
-                    PrisonerID = detention.PrisonerID,
-                    PlaceofDetention = detention.PlaceofDetention,
-                    DateOfDetention = detention.DateOfDetention,
-                    DateOfArrival = detention.DateOfArrival,
-                    DateOfRelease = detention.DateOfRelease,
-                    AccruedAmount = detention.AccruedAmount,
-                    DeliveredEmployee = DeliveredEmpl,
-                    DetainedEmployee = DetainedEmpl,
-                    ReleasedEmployee = ReleaseEmpl,
-                    PaidAmount = detention.PaidAmount
-                };
+                    var ReleaseEmpl = context.ExecProcGetModel<EmployeeDto>("GetEmployeeByExecutionProcedureID",
+                        new SqlParameter("@ExecProcedureID", detention.ReleaseProceduresID),
+                        new SqlParameter("@ExecuProcName", "Release"));
 
-                return detentionDto;
+                    var DetainedEmpl = context.ExecProcGetModel<EmployeeDto>("GetEmployeeByExecutionProcedureID",
+                        new SqlParameter("@ExecProcedureID", detention.DetentionProceduresID),
+                        new SqlParameter("@ExecuProcName", "Detention"));
+
+                    var DeliveredEmpl = context.ExecProcGetModel<EmployeeDto>("GetEmployeeByExecutionProcedureID",
+                        new SqlParameter("@ExecProcedureID", detention.DeliveredProceduresID),
+                        new SqlParameter("@ExecuProcName", "Delivery"));
+
+                    var detentionDto = new DetentionDto()
+                    {
+                        DetentionID = detention.DetentionID,
+                        PrisonerID = detention.PrisonerID,
+                        PlaceofDetention = detention.PlaceofDetention,
+                        DateOfDetention = detention.DateOfDetention,
+                        DateOfArrival = detention.DateOfArrival,
+                        DateOfRelease = detention.DateOfRelease,
+                        AccruedAmount = detention.AccruedAmount,
+                        DeliveredEmployee = DeliveredEmpl,
+                        DetainedEmployee = DetainedEmpl,
+                        ReleasedEmployee = ReleaseEmpl,
+                        PaidAmount = detention.PaidAmount
+                    };
+
+                    return detentionDto;
+                }
             }
             return default(DetentionDto);
+        }
+
+        public void ReleaseOfPrisoner(ReleaseOfPrisonerDto release)
+        {
+            if (release != null)
+            {
+                context.ExecNonQuery("insertEmployee",
+                         release.ReleasedEmployee,
+                        "employeeID", out int _ReleasedEmployeeID);
+
+                context.ExecNonQuery("InsertReleaseProcedures",
+                      "ReleaseProceduresID",
+                      out int _ReleasedProceduresID,
+                      new SqlParameter("@employeeID", _ReleasedEmployeeID));
+
+                var ReleaseOfPrisoner = new ReleaseOfPrisoner()
+                {
+                    AccruedAmount = release.AccruedAmount,
+                    DateOfRelease = release.DateOfRelease,
+                    DetentionID = release.DetentionID,
+                    PaidAmount = release.PaidAmount,
+                    ReleaseProceduresID = _ReleasedProceduresID
+                };
+
+                context.ExecNonQuery("ReleaseOfPrisoner", ReleaseOfPrisoner);
+            }
         }
     }
 }

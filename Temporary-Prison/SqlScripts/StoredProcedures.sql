@@ -403,3 +403,40 @@ OFFSET @skip ROWS
 FETCH NEXT @rowSize ROWS ONLY;
 SET @Totalcount = (SELECT COUNT(*) FROM [ListOfDetentions] l WHERE l.PrisonerID = @PrisonerID)
 END
+--------------------[ReleaseOfPrisoner]-----------------------------------
+---------------------------------------------------------------------------
+GO
+CREATE PROC [dbo].[ReleaseOfPrisoner]
+@dt AS dbo.ReleaseOfPrisoner READONLY
+AS
+BEGIN
+ SET NOCOUNT ON
+  UPDATE
+   ListOfDetentions 
+	SET
+	[DateOfRelease] = l.DateOfRelease,
+	[AccruedAmount] = l.AccruedAmount,
+	[PaidAmount] = l.PaidAmount,
+	[ReleaseProceduresID] = l.ReleaseProceduresID
+	FROM (SELECT [DetentionID],[DateOfRelease],[AccruedAmount],[PaidAmount],[ReleaseProceduresID] FROM @dt) l
+ WHERE
+  ListOfDetentions.DetentionID = l.DetentionID
+END
+GO
+--------------------[RegistrationOfDetention]------------------------------
+---------------------------------------------------------------------------
+CREATE PROC [dbo].[RegistrationOfDetention] 
+@dt AS dbo.RegistrationOfDetentionDt READONLY
+AS
+BEGIN
+ SET NOCOUNT ON
+  INSERT INTO ListOfDetentions(
+	PrisonerID,
+	DateOfDetention,
+	DateOfArrival,
+	PlaceofDetention,
+	DetentionProceduresID,
+	DeliveredProceduresID
+	)
+ SELECT * FROM @dt
+END

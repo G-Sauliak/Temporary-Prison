@@ -31,8 +31,7 @@ namespace Temporary_Prison.Business.Providers
             var cacheKeyForPageList = "AllRolers";
             try
             {
-                roles = cacheService.GetOrSet(cacheKeyForPageList,
-                        () => userDataService.GetAllRoles());
+                roles = cacheService.GetOrSet(cacheKeyForPageList, () => userDataService.GetAllRoles());
             }
             catch (Exception ex)
             {
@@ -53,7 +52,7 @@ namespace Temporary_Prison.Business.Providers
             var users = default(IReadOnlyList<User>);
             try
             {
-                users = cacheService.GetOrSet(cacheKeyForPageList,
+                users = cacheService.GetOrSet(cacheKeyForPageList, 
                     () => userDataService.GetUsersForPagedList(skip, rowSize, out outTotalCount));
 
                 if (totalCount == default(int))

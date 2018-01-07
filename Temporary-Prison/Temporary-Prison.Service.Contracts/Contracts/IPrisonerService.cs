@@ -36,6 +36,10 @@ namespace Temporary_Prison.Service.Contracts.Contracts
 
         [OperationContract]
         [FaultContract(typeof(DataErrorDto))]
+        void ReleaseOfPrisoner(ReleaseOfPrisonerDto release);
+
+        [OperationContract]
+        [FaultContract(typeof(DataErrorDto))]
         DetentionPagedListDto[] GetDetentionsByPrisonerIdForPagedList(int Id, int skip, int rowSize, out int totalCount);
 
         [OperationContract]

@@ -13,5 +13,6 @@ namespace Temporary_Prison.Data.Clients
         DetentionPagedListDto[] GetDetentionsByPrisonerIdForPagedList(int Id, int skip, int rowSize, out int totalCount);
         DetentionDto GetDetentionById(int id);
         void DeletePrisoner(int id);
+        void ReleaseOfPrisoner(ReleaseOfPrisonerDto release);
     }
 }

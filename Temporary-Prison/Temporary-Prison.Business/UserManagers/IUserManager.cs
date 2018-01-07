@@ -1,4 +1,5 @@
-﻿using Temporary_Prison.Common.Models;
+﻿using System.Collections.Generic;
+using Temporary_Prison.Common.Models;
 
 namespace Temporary_Prison.Business.UserManagers
 {
@@ -10,5 +11,7 @@ namespace Temporary_Prison.Business.UserManagers
         void DeleteUser(string userName);
         void RemoveFromRoles(string userName, string roleName);
         void AddToRole(string userName, string roleName);
+        IReadOnlyList<string> GetMissingRoles(string userName);
+        UserAndRoles GetUserAndRoles(string userName);
     }
 }

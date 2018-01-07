@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Temporary_Prison.Common.Models.Prisoner>
+﻿@model IEnumerable<Temporary_Prison.Models.PrisonerPagedListViewModel>
 
 @{
     ViewBag.Title = "list of prisoners";
@@ -9,11 +9,11 @@
         <div class="row" id="UserListBox">
             @if (Model != null)
             {
-            @Html.Partial("PrisonerPanel", Model)
+                @Html.Partial("PrisonerPanel", Model)
             }
             else
             {
-            @Html.Label("not found")
+                @Html.Label("not found")
             }
         </div>
     </div>
@@ -23,7 +23,8 @@
     <div class="form-group">
         <div class="col-md-10">
             @Html.Label("Find by name:", new { @class = "control-label" })
-            @Html.TextBox("search", ViewBag.CurrentFilter as string, new { @class = "form-control", @id = "findPrisonersByName" })
+            @Html.TextBox("search", ViewBag.CurrentFilter as string, 
+           new { @class = "form-control", @id = "findPrisonersByName" })
         </div>
     </div>
 

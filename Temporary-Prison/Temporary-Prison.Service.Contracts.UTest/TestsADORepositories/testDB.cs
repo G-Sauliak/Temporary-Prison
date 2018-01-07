@@ -22,7 +22,7 @@ namespace Temporary_Prison.Service.Contracts.UTest.TestsADORepositories
             int id = 0;
             var emp = new Employee()
             {
-                FristName = "vasya",
+                FirstName = "vasya",
                 Position = "svarshik",
                 LastName = "Samec",
                 Surname = "Eduardovich"

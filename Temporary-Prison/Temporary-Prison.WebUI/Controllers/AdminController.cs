@@ -45,9 +45,13 @@ namespace Temporary_Prison.Controllers
             ViewBag.RedirectUrl = Url.Action("Index", "Admin");
 
             var listUsers = userProvider.GetUsersForPagedList(skip, pageSize, ref totalCount);
-            var usersPagedList = new StaticPagedList<User>(listUsers, pageNum, pageSize, totalCount);
 
-            return View(usersPagedList);
+            if (listUsers != null)
+            {
+                var usersPagedList = new StaticPagedList<User>(listUsers, pageNum, pageSize, totalCount);
+                return View(usersPagedList);
+            }
+            return View(default(StaticPagedList<User>));
         }
 
         // GET: /Admin/EditUser
@@ -55,35 +59,30 @@ namespace Temporary_Prison.Controllers
         {
             ViewBag.RedirectUrl = Url.Action("Index", "Admin");
 
-            var userModel = default(EditUserViewModel);
             if (string.IsNullOrEmpty(userName))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             var user = userProvider.GetUserByName(userName);
-            var userRoles = userProvider.GetUserByName(userName).Roles;
-            var allRoles = userProvider.GetAllRoles();
 
             if (user == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.NotFound);
             }
-            userModel = Mapper.Map<User, EditUserViewModel>(user);
 
-            userModel.UserAndRoles = new UserAndRoles()
-            {
-                UserName = userName,
-                Roles = userRoles
+            var userEditModel = Mapper.Map<User, EditUserViewModel>(user);
 
-            };
-            var missingRoles = (from role in allRoles
-                                where !userRoles.Contains(role)
-                                select role).ToList();
+            var userAdnRoles = userManager.GetUserAndRoles(userName);
 
+            var userAndRolesViewModel = Mapper.Map<UserAndRoles, UserAndRolesViewModel>(userAdnRoles);
+            userEditModel.UserAndRoles = userAndRolesViewModel;
+
+
+            var missingRoles = userManager.GetMissingRoles(userName);
             ViewBag.listOfMissingRoles = new SelectList(missingRoles);
 
-            return View(userModel);
+            return View(userEditModel);
         }
 
         //POST: /Admin/EditUser
@@ -102,7 +101,7 @@ namespace Temporary_Prison.Controllers
             }
             catch (CreateOrUpdateUserException ce)
             {
-                ModelState.AddModelError("", ce.Message);
+                ModelState.AddModelError(string.Empty, ce.Message);
                 return View(model);
             }
             return RedirectToLocal(redirectUrl);
@@ -139,7 +138,7 @@ namespace Temporary_Prison.Controllers
             }
             catch (CreateOrUpdateUserException ex)
             {
-                ModelState.AddModelError("", ex.Message);
+                ModelState.AddModelError(string.Empty, ex.Message);
                 ViewBag.Roles = new SelectList(allRoles);
                 return View(model);
             }
@@ -184,26 +183,30 @@ namespace Temporary_Prison.Controllers
 
         [AjaxOnly]
         [HttpPost]
-        public ActionResult AddRole(string userName)
+        public ActionResult AddRole(FormCollection form, string userName)
         {
-            if (!string.IsNullOrEmpty(Request.Form["listOfMissingRoles"]))
+            var newRole = form["listOfMissingRoles"];
+
+            if (!string.IsNullOrEmpty(newRole))
             {
-                var newRole = Request.Form["listOfMissingRoles"];
                 var allRoles = userProvider.GetAllRoles();
 
                 if (allRoles.Contains(newRole))
                 {
                     userManager.AddToRole(userName, newRole);
 
-                    var missingRoles = default(IReadOnlyList<string>);
+                    var missingRoles = userManager.GetMissingRoles(userName);
+                    var userAndRoles = userManager.GetUserAndRoles(userName);
 
-                    var userAndRoles = GetUserAndRoles(userName, allRoles, out missingRoles);
+                    var userAndRolesViewModel = Mapper.Map<UserAndRoles, UserAndRolesViewModel>(userAndRoles);
+
                     ViewBag.listOfMissingRoles = new SelectList(missingRoles);
-                    return PartialView("ListExistingRoles", userAndRoles);
+
+                    return PartialView("ListExistingRoles", userAndRolesViewModel);
                 }
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "non-existent role");
             }
-            return new HttpStatusCodeResult(HttpStatusCode.NotFound, "please select role");
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest," please select role");
         }
 
         [AjaxOnly]
@@ -211,36 +214,24 @@ namespace Temporary_Prison.Controllers
         {
             if (!string.IsNullOrEmpty(userName) && !string.IsNullOrEmpty(roleName))
             {
-                var allRoles = userProvider.GetAllRoles();
-                if (allRoles.Contains(roleName))
+                var user = userProvider.GetUserByName(userName);
+
+                if (user.Roles.Contains(roleName))
                 {
                     userManager.RemoveFromRoles(userName, roleName);
 
-                    var missingRoles = default(IReadOnlyList<string>);
+                    var missingRoles = userManager.GetMissingRoles(userName);
+                    var userAndRoles = userManager.GetUserAndRoles(userName);
 
-                    var userAndRoles = GetUserAndRoles(userName, allRoles, out missingRoles);
+                    var userAndRolesViewModel = Mapper.Map<UserAndRoles, UserAndRolesViewModel>(userAndRoles);
+
                     ViewBag.listOfMissingRoles = new SelectList(missingRoles);
-                    return PartialView("ListExistingRoles", userAndRoles);
+
+                    return PartialView("ListExistingRoles", userAndRolesViewModel);
                 }
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "non-existent role");
             }
-            return new HttpStatusCodeResult(HttpStatusCode.NotFound, "please select role");
-        }
-
-        private UserAndRoles GetUserAndRoles(string userName, IReadOnlyList<string> allRoles,
-            out IReadOnlyList<string> missingRoles)
-        {
-            var userRoles = userProvider.GetUserByName(userName).Roles;
-
-            missingRoles = (from role in allRoles
-                            where !userRoles.Contains(role)
-                            select role).ToList();
-
-            return new UserAndRoles()
-            {
-                UserName = userName,
-                Roles = userRoles
-            };
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest,"Please select role");
         }
 
         private ActionResult RedirectToLocal(string redirectUrl)

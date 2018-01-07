@@ -66,11 +66,23 @@
                 @for (int i = 0; i < Model.PhoneNumbers.Count; i++)
                 {
                     <p class="number" id="@i">
-                        @Html.EditorFor(model => model.PhoneNumbers[i], "Phones", "PhoneNumbers", new { htmlAttributes = new { @class = "form-control text-box single-line valid", @data_val = "true", @data_val_required = "input phone number" } })
+                        @Html.EditorFor(model => model.PhoneNumbers[i], "Phones", "PhoneNumbers",
+                       new
+                       {
+                           htmlAttributes =
+                           new
+                           {
+                               @class = "form-control text-box single-line valid",
+                               @data_val = "true",
+                               @data_val_required = "input phone number"
+                           }
+                       })
                     </p>
                 }
                 @Html.ValidationMessageFor(model => model.PhoneNumbers, "", new { @class = "text-danger" })
-                <div class="form-inline"><a href="javascript:window.phone.AddPhone();" class="add_phone">Add more</a> &nbsp; <a href="javascript:window.phone.RemovePhone();" class="delete_phone">Remove</a></div>
+                <div class="form-inline">
+                <a href="javascript:window.phone.AddPhone();" class="add_phone">Add more</a> &nbsp;
+                <a href="javascript:window.phone.RemovePhone();" class="delete_phone">Remove</a></div>
             </div>
         </div>
 
@@ -114,7 +126,7 @@
     </div>
 }
 <div>
-    @Html.ActionLink("Back to List", "ListOfPrisoners","Prisoner","",new { @class = "btn btn-default" })
+    @Html.ActionLink("Back to List", "ListOfPrisoners", "Prisoner", "", new { @class = "btn btn-default" })
 </div>
 
 @section scripts

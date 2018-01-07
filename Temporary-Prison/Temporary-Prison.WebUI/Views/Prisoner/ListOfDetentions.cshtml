@@ -31,9 +31,11 @@
                 }
             </td>
             <td>
-                @if (User.IsInRole("Admin") || User.IsInRole("Editor") && item.DateOfRelease == null)
+                @if ((User.IsInRole("Admin") || User.IsInRole("Editor")) && (bool)ViewBag.Guarded)
                 {
-                    @Html.ActionLink("Release", "ReleasePrisoner", new { id = item.DetentionID }, new { @class = "btn btn-success btn-xs" })
+                    @Html.ActionLink("Release", "ReleaseOfPrisoner", "Editor",
+                   new { detentionID = item.DetentionID },
+                   new { @class = "btn btn-success btn-xs" })
                 }
                 @if (User.IsInRole("Admin") || User.IsInRole("Editor"))
                 {

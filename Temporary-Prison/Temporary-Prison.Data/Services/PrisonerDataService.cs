@@ -22,6 +22,7 @@ namespace Temporary_Prison.Data.Services
                 cfg.CreateMap<DetentionPagedList, DetentionPagedListDto>();
                 cfg.CreateMap<Detention, DetentionDto>();
                 cfg.CreateMap<DetentionDto, Detention>();
+                cfg.CreateMap<ReleaseOfPrisoner, ReleaseOfPrisonerDto>();
             });
         }
 
@@ -125,6 +126,12 @@ namespace Temporary_Prison.Data.Services
                 return detention;
             }
             return default(Detention);
+        }
+
+        public void ReleaseOfPrisoner(ReleaseOfPrisoner release)
+        {
+            var releaseOfPrisonerDto = Mapper.Map<ReleaseOfPrisoner, ReleaseOfPrisonerDto>(release);
+            prisonerClient.ReleaseOfPrisoner(releaseOfPrisonerDto);
         }
     }
 }

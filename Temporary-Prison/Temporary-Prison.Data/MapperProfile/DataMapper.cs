@@ -16,6 +16,7 @@ namespace Temporary_Prison.Data.MapperProfile
             CreateMap<DetentionPagedList, DetentionPagedListDto>();
             CreateMap<Detention, DetentionDto>();
             CreateMap<DetentionDto, Detention>();
+            CreateMap<ReleaseOfPrisoner, ReleaseOfPrisonerDto>();
         }
     }
 }

@@ -1,0 +1,102 @@
+﻿@model Temporary_Prison.Models.ReleaseOfPrisonerViewModel
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, string.Empty, new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.DetentionID)
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-lg-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading"><h4>information on detention</h4></div>
+                        <div class="panel-body">
+                            <div class="col-md-10">
+                                @Html.LabelFor(model => model.DateOfRelease)
+                                @Html.EditorFor(model => model.DateOfRelease, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.DateOfRelease, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h4>Released by an employee</h4>
+        <hr />
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 col-md-offset-2 col-lg-4">
+                    <div class="panel panel-default">
+
+                        <div class="panel-body">
+                            <div class="col-md-10">
+                                @Html.LabelFor(model => model.ReleasedEmployee.FirstName)
+                                @Html.EditorFor(model => model.ReleasedEmployee.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ReleasedEmployee.FirstName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-10">
+                                @Html.LabelFor(model => model.ReleasedEmployee.Surname)
+                                @Html.EditorFor(model => model.ReleasedEmployee.Surname, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ReleasedEmployee.Surname, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-10">
+                                @Html.LabelFor(model => model.ReleasedEmployee.LastName)
+                                @Html.EditorFor(model => model.ReleasedEmployee.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ReleasedEmployee.LastName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-md-10 col-lg-12">
+                                @Html.LabelFor(model => model.ReleasedEmployee.Position)
+                                @Html.EditorFor(model => model.ReleasedEmployee.Position, new { htmlAttributes =  new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ReleasedEmployee.Position, string.Empty, new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h4>
+            Сosts
+        </h4>
+        <hr />
+        <div class="col-md-6 col-lg-4 col-lg-offset-2">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+
+
+                    <div class="panel-body">
+                        <div class="col-md-10 col-lg-12">
+                            @Html.LabelFor(model => model.AccruedAmount)
+                            @Html.EditorFor(model => model.AccruedAmount, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.AccruedAmount, string.Empty, new { @class = "text-danger" })
+                        </div>
+                        <div class="col-md-10 col-lg-12">
+                            @Html.LabelFor(model => model.PaidAmount)
+                            @Html.EditorFor(model => model.PaidAmount, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.PaidAmount, string.Empty, new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10 col-lg-2 col-lg-offset-7">
+                <input type="submit" value="Release the prisoner" class="btn-primary">
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+

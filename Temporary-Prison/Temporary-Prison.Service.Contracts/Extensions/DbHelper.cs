@@ -28,9 +28,8 @@ namespace Temporary_Prison.Service.Contracts.Extensions
         public static SqlDbType GetDbType(Type type)
         {
             type = Nullable.GetUnderlyingType(type) ?? type;
-            var sqlDbType = default(SqlDbType);
 
-            if (sqlTypeMap.TryGetValue(type, out sqlDbType))
+            if (sqlTypeMap.TryGetValue(type, out SqlDbType sqlDbType))
             {
                 return sqlDbType;
             }
