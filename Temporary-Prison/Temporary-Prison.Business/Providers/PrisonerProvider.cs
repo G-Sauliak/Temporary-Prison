@@ -123,5 +123,11 @@ namespace Temporary_Prison.Business.Providers
         {
             dataService.ReleaseOfPrisoner(release);
         }
+
+        public void EditDetention(Detention detention)
+        {
+            dataService.EditDetention(detention);
+            cacheService.Remove($"Detention_{detention.DetentionID}");
+        }
     }
 }

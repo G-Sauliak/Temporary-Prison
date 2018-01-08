@@ -42,3 +42,25 @@ CREATE TYPE [dbo].[web_UserDt] AS TABLE(
 	[Email] [nvarchar](max) NULL
 )
 GO
+CREATE TYPE [dbo].[EmployeeDt] AS TABLE(
+	[EmployeeID] [int] NULL,
+	[FirstName] [nvarchar](50) NULL,
+	[Surname] [nvarchar](50) NULL,
+	[LastName] [nvarchar](50) NULL,
+	[Position] [nvarchar](50) NULL
+)
+GO
+CREATE TYPE [dbo].[DetentionDt_] AS TABLE(
+	[DetentionID] [int] NOT NULL,
+	[PrisonerID] [int] NOT NULL,
+	[DateOfDetention] [date] NULL,
+	[DateOfArrival] [date] NULL,
+	[DateOfRelease] [date] NULL,
+	[AccruedAmount] [money] NULL,
+	[PaidAmount] [money] NULL,
+	[PlaceofDetention] [nvarchar](50) NULL,
+	[ReleaseProceduresID] [int] NULL,
+	[DetentionProceduresID] [int] NULL,
+	[DeliveredProceduresID] [int] NULL
+)
+GO

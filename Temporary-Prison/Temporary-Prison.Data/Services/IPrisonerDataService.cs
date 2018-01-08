@@ -15,5 +15,6 @@ namespace Temporary_Prison.Data.Services
         void RegisterDetention(RegistDetention registDetention);
         IReadOnlyList<DetentionPagedList> GetDetentionsByPrisonerIdForPagedList(int Id, int skip, int rowSize, out int totalCount);
         Detention GetDetentionById(int id);
+        void EditDetention(Detention detention);
     }
 }

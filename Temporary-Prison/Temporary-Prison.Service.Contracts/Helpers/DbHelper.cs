@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 
-namespace Temporary_Prison.Service.Contracts.Extensions
+namespace Temporary_Prison.Service.Contracts.Helpers
 {
     public static class SqlDbTypeHelper
     {

@@ -231,6 +231,8 @@
     <Content Include="Views\Prisoner\ListOfDetentions.cshtml" />
     <Content Include="Views\Prisoner\DetailsOfDetention.cshtml" />
     <Content Include="Views\Editor\ReleaseOfPrisoner.cshtml" />
+    <Content Include="Views\Editor\EditFullDetention.cshtml" />
+    <Content Include="Views\Editor\EditDetention.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

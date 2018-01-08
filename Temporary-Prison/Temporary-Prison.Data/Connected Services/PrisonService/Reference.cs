@@ -523,7 +523,7 @@ namespace Temporary_Prison.Data.PrisonService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private double AccruedAmountField;
+        private decimal AccruedAmountField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime DateOfReleaseField;
@@ -532,7 +532,7 @@ namespace Temporary_Prison.Data.PrisonService {
         private int DetentionIDField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private double PaidAmountField;
+        private decimal PaidAmountField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private Temporary_Prison.Data.PrisonService.EmployeeDto ReleasedEmployeeField;
@@ -548,7 +548,7 @@ namespace Temporary_Prison.Data.PrisonService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double AccruedAmount {
+        public decimal AccruedAmount {
             get {
                 return this.AccruedAmountField;
             }
@@ -587,7 +587,7 @@ namespace Temporary_Prison.Data.PrisonService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public double PaidAmount {
+        public decimal PaidAmount {
             get {
                 return this.PaidAmountField;
             }
@@ -725,7 +725,7 @@ namespace Temporary_Prison.Data.PrisonService {
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> AccruedAmountField;
+        private System.Nullable<decimal> AccruedAmountField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> DateOfArrivalField;
@@ -746,7 +746,7 @@ namespace Temporary_Prison.Data.PrisonService {
         private int DetentionIDField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> PaidAmountField;
+        private System.Nullable<decimal> PaidAmountField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PlaceofDetentionField;
@@ -768,7 +768,7 @@ namespace Temporary_Prison.Data.PrisonService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> AccruedAmount {
+        public System.Nullable<decimal> AccruedAmount {
             get {
                 return this.AccruedAmountField;
             }
@@ -859,7 +859,7 @@ namespace Temporary_Prison.Data.PrisonService {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> PaidAmount {
+        public System.Nullable<decimal> PaidAmount {
             get {
                 return this.PaidAmountField;
             }
@@ -999,6 +999,13 @@ namespace Temporary_Prison.Data.PrisonService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/GetDetentionById", ReplyAction="http://tempuri.org/IPrisonerService/GetDetentionByIdResponse")]
         System.Threading.Tasks.Task<Temporary_Prison.Data.PrisonService.DetentionDto> GetDetentionByIdAsync(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/EditDetention", ReplyAction="http://tempuri.org/IPrisonerService/EditDetentionResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.PrisonService.DataErrorDto), Action="http://tempuri.org/IPrisonerService/EditDetentionDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        void EditDetention(Temporary_Prison.Data.PrisonService.DetentionDto detention);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/EditDetention", ReplyAction="http://tempuri.org/IPrisonerService/EditDetentionResponse")]
+        System.Threading.Tasks.Task EditDetentionAsync(Temporary_Prison.Data.PrisonService.DetentionDto detention);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -1256,6 +1263,14 @@ namespace Temporary_Prison.Data.PrisonService {
         
         public System.Threading.Tasks.Task<Temporary_Prison.Data.PrisonService.DetentionDto> GetDetentionByIdAsync(int id) {
             return base.Channel.GetDetentionByIdAsync(id);
+        }
+        
+        public void EditDetention(Temporary_Prison.Data.PrisonService.DetentionDto detention) {
+            base.Channel.EditDetention(detention);
+        }
+        
+        public System.Threading.Tasks.Task EditDetentionAsync(Temporary_Prison.Data.PrisonService.DetentionDto detention) {
+            return base.Channel.EditDetentionAsync(detention);
         }
     }
 }

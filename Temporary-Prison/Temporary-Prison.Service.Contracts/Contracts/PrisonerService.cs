@@ -222,5 +222,30 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                 context.ExecNonQuery("ReleaseOfPrisoner", ReleaseOfPrisoner);
             }
         }
+
+        public void EditDetention(DetentionDto detention)
+        {
+            if (detention != null)
+            {
+                var detentionEntity = new Detention()
+                {
+                    DetentionID = detention.DetentionID,
+                    AccruedAmount = detention.AccruedAmount ?? default(decimal),
+                    PaidAmount = detention.PaidAmount ?? default(decimal),
+                    DateOfArrival = detention.DateOfArrival,
+                    DateOfDetention = detention.DateOfDetention,
+                    DateOfRelease = detention.DateOfRelease,
+                    PlaceofDetention = detention.PlaceofDetention
+                };
+                context.ExecNonQuery("EditDetention", detentionEntity);
+
+                context.ExecNonQuery("EditEmployee", detention.DeliveredEmployee);
+                context.ExecNonQuery("EditEmployee", detention.DetainedEmployee);
+                if (detention.ReleasedEmployee != null)
+                {
+                    context.ExecNonQuery("EditEmployee", detention.ReleasedEmployee);
+                }
+            }
+        }
     }
 }

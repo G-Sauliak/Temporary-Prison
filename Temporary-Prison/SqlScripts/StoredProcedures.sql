@@ -440,3 +440,56 @@ BEGIN
 	)
  SELECT * FROM @dt
 END
+GO
+--------------------[EditDetention]----------------------------------------
+---------------------------------------------------------------------------
+CREATE PROC [dbo].[EditDetention]
+@dt AS dbo.DetentionDt_ READONLY
+AS
+BEGIN
+UPDATE
+    ListOfDetentions
+SET
+    DateOfDetention = p.DateOfDetention,
+    DateOfArrival= p.DateOfArrival,
+	DateOfRelease = p.DateOfRelease,
+	PlaceofDetention = p.PlaceofDetention,
+	AccruedAmount = p.AccruedAmount,
+	PaidAmount = p.PaidAmount
+FROM (SELECT 
+         [DetentionID],
+		 DateOfDetention,
+		 DateOfArrival,
+		 DateOfRelease,
+		 PlaceofDetention,
+		 AccruedAmount,
+		 PaidAmount 
+		 FROM @dt) p
+WHERE 
+p.[DetentionID] = ListOfDetentions.[DetentionID]
+END
+--------------------[EditEmployee]----------------------------------------
+---------------------------------------------------------------------------
+CREATE PROC [dbo].[EditEmployee]
+@dt AS dbo.EmployeeDt READONLY
+AS
+BEGIN
+UPDATE
+    Employees
+SET
+    FirstName = p.FirstName,
+    Surname= p.Surname,
+	LastName = p.LastName,
+	Position = p.Position
+
+FROM (SELECT 
+         EmployeeID,
+         FirstName,
+		 Surname,
+		 LastName,
+		 Position
+		 FROM @dt) p
+WHERE 
+p.EmployeeID = Employees.EmployeeID
+END
+

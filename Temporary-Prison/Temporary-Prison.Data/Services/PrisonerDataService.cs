@@ -133,5 +133,11 @@ namespace Temporary_Prison.Data.Services
             var releaseOfPrisonerDto = Mapper.Map<ReleaseOfPrisoner, ReleaseOfPrisonerDto>(release);
             prisonerClient.ReleaseOfPrisoner(releaseOfPrisonerDto);
         }
+
+        public void EditDetention(Detention detention)
+        {
+            var detentionDto = Mapper.Map<Detention, DetentionDto>(detention);
+            prisonerClient.EditDetention(detentionDto);
+        }
     }
 }

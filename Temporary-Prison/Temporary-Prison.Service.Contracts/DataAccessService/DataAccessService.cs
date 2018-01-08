@@ -7,7 +7,7 @@ using System.Reflection;
 using System.ServiceModel;
 using Temporary_Prison.Service.Contracts.Dto;
 using Temporary_Prison.Service.Contracts.Extensions;
-
+using Temporary_Prison.Service.Contracts.Helpers;
 
 namespace Temporary_Prison.Service.Contracts.Contracts
 {
@@ -69,14 +69,17 @@ namespace Temporary_Prison.Service.Contracts.Contracts
 
         private bool IsValidPropertyType(PropertyInfo prop)
         {
-            if (prop.PropertyType.IsPrimitive || prop.PropertyType == typeof(String) 
-                 || prop.PropertyType == typeof(DateTime))
+            if (prop.PropertyType.IsPrimitive 
+                 || prop.PropertyType == typeof(String)
+                 || prop.PropertyType == typeof(DateTime) 
+                 || prop.PropertyType == typeof(decimal)
+                 || prop.PropertyType == typeof(DateTime?))
             {
                 return true;
             }
             return false;
         }
-
+       
         private DataTable ConvertToDataTable<TInput>(TInput objectModel)
         {
             var dataTable = new DataTable();
@@ -88,7 +91,13 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                 {
                     if (IsValidPropertyType(prop))
                     {
-                        dataTable.Columns.Add(prop.Name, prop.PropertyType);
+                        var column = new DataColumn
+                        {
+                            DataType = ValueTypeHelper.GetType(prop.PropertyType),
+                            ColumnName = prop.Name,
+                            AllowDBNull = true
+                        };
+                        dataTable.Columns.Add(column);
                     }
                 }
                 var row = dataTable.NewRow();

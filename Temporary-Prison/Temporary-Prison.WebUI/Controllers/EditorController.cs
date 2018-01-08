@@ -7,8 +7,10 @@ using System.Web;
 using System.Web.Mvc;
 using Temporary_Prison.Business.Providers;
 using Temporary_Prison.Common.Models;
+using Temporary_Prison.Dependencies.MapperRegistry;
 using Temporary_Prison.Enums;
 using Temporary_Prison.Extensions;
+using Temporary_Prison.MapperProfile;
 using Temporary_Prison.Models;
 
 namespace Temporary_Prison.Controllers
@@ -20,11 +22,8 @@ namespace Temporary_Prison.Controllers
 
         public EditorController() : this(new PrisonerProvider())
         {
-            Mapper.Initialize(cfg =>
-            {
-                cfg.CreateMap<Prisoner, CreatePrisonerViewModel>();
-                cfg.CreateMap<User, EditUserViewModel>();
-            });
+            MapperProfiles.Configuration.AddProfile(new WebMapper());
+            MapperProfiles.InitialiseMappers();
         }
 
         public EditorController(IPrisonerProvider prisonerProvider)
@@ -83,7 +82,7 @@ namespace Temporary_Prison.Controllers
                 prisoner.Photo = "/Content/DefaultPhoto/defaultPhotoPrisoner.jpg";
 
                 var newID = default(int);
-                prisonerProvider.AddPrisoner(prisoner,out newID);
+                prisonerProvider.AddPrisoner(prisoner, out newID);
 
                 return RedirectToAction("CreateDetention", "Editor", new { prisonerId = newID });
             }
@@ -162,6 +161,61 @@ namespace Temporary_Prison.Controllers
             };
 
             return View(model);
+        }
+
+        [HttpGet]
+        //GET : Editor/EditDetention
+        public ActionResult EditDetention(int? id)
+        {
+            if (!id.HasValue)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var detention = prisonerProvider.GetDetentionById(id.Value);
+
+            if (detention == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.ReturnUrl = Url.Action("DetailsOfDetention", "Prisoner", new { id = id.Value });
+
+            if (detention.DateOfRelease != null)
+            {
+                var fullDetentionModel = Mapper.Map<Detention, EditFullDetentionViewModel>(detention);
+                return View("EditFullDetention", fullDetentionModel);
+            }
+            var DetentionModel = Mapper.Map<Detention, EditDetentionViewModel>(detention);
+
+            return View(DetentionModel);
+        }
+
+        //GET : Editor/EditDetention
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditDetention(EditDetentionViewModel model, string ReturnUrl)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var detention = Mapper.Map<EditDetentionViewModel, Detention>(model);
+            prisonerProvider.EditDetention(detention);
+            return RedirectToLocal(ReturnUrl);
+        }
+
+        //GET : Editor/EditFullDetention
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditFullDetention(EditFullDetentionViewModel model, string ReturnUrl)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            var detention = Mapper.Map<EditFullDetentionViewModel, Detention>(model);
+            prisonerProvider.EditDetention(detention);
+            return RedirectToLocal(ReturnUrl);
         }
 
         //POST : Editor/CreateListOfDetention

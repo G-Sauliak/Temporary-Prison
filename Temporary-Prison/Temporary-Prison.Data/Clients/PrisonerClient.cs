@@ -70,6 +70,12 @@ namespace Temporary_Prison.Data.Clients
             new PrisonerServiceClient()
                 .Execute(client => client.ReleaseOfPrisoner(release));
         }
+
+        public void EditDetention(DetentionDto detentionDto)
+        {
+            new PrisonerServiceClient()
+                 .Execute(client => client.EditDetention(detentionDto));
+        }
     }
 }
 

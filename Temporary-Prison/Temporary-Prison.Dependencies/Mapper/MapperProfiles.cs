@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using AutoMapper.Configuration;
-using System;
 using Temporary_Prison.Data.MapperProfile;
 
 namespace Temporary_Prison.Dependencies.MapperRegistry
