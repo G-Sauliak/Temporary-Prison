@@ -25,10 +25,15 @@ namespace Temporary_Prison.MapperProfile
             CreateMap<UserAndRoles, UserAndRolesViewModel>();
 
             CreateMap<Detention, DetailsOfDetentionViewModel>()
-                .ForMember(x => x.DateOfArrival,opt => opt.MapFrom(src => src.DateOfArrival.HasValue ? src.DateOfArrival.Value.ToShortDateString() : null))
+                .ForMember(x => x.DateOfArrival, opt => opt.MapFrom(src => src.DateOfArrival.HasValue ? src.DateOfArrival.Value.ToShortDateString() : null))
                 .ForMember(x => x.DateOfDetention, opt => opt.MapFrom(src => src.DateOfDetention.HasValue ? src.DateOfDetention.Value.ToShortDateString() : null))
                 .ForMember(x => x.DateOfRelease, opt => opt.MapFrom(src => src.DateOfRelease.HasValue ? src.DateOfRelease.Value.ToShortDateString() : null));
 
+            CreateMap<DetentionPagedList, DetentionPagedListViewModel>()
+                .ForMember(x => x.DateOfDetention, opt => opt.MapFrom(src => src.DateOfDetention.HasValue ? src.DateOfDetention.Value.ToShortDateString() : string.Empty))
+                .ForMember(x => x.DateOfRelease, opt => opt.MapFrom(src => src.DateOfRelease.HasValue ? src.DateOfRelease.Value.ToShortDateString() : string.Empty));
+
+            CreateMap<ReleaseOfPrisoner, ReleaseOfPrisonerViewModel>();
             CreateMap<ReleaseOfPrisoner, ReleaseOfPrisonerViewModel>();
             CreateMap<Employee, EmployeeViewModel>();
             CreateMap<Prisoner, CreatePrisonerViewModel>();

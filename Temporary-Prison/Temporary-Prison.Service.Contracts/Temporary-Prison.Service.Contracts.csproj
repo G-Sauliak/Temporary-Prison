@@ -69,12 +69,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\SearchService\ISearchService.cs" />
+    <Compile Include="Contracts\SearchService\SearchService.cs" />
     <Compile Include="DataAccessService\DataAccessService.cs" />
-    <Compile Include="Contracts\IPrisonerService.cs" />
-    <Compile Include="Contracts\IUserService.cs" />
-    <Compile Include="Contracts\UserService.cs" />
+    <Compile Include="Contracts\PrisonerService\IPrisonerService.cs" />
+    <Compile Include="Contracts\UserService\IUserService.cs" />
+    <Compile Include="Contracts\UserService\UserService.cs" />
     <Compile Include="Dto\DataErrorDto.cs" />
-    <Compile Include="Contracts\PrisonerService.cs" />
+    <Compile Include="Contracts\PrisonerService\PrisonerService.cs" />
     <Compile Include="Dto\Detention.cs" />
     <Compile Include="Dto\PrisonerDto.cs" />
     <Compile Include="Dto\UserDto.cs" />

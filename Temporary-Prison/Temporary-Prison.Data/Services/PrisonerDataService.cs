@@ -139,5 +139,10 @@ namespace Temporary_Prison.Data.Services
             var detentionDto = Mapper.Map<Detention, DetentionDto>(detention);
             prisonerClient.EditDetention(detentionDto);
         }
+
+        public void DeleteDetention(int id)
+        {
+            prisonerClient.DeleteDetention(id);
+        }
     }
 }

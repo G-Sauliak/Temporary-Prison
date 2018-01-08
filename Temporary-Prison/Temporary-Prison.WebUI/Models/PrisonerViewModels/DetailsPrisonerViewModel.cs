@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Temporary_Prison.Common.Models;
 
 namespace Temporary_Prison.Models
 {
@@ -16,6 +15,6 @@ namespace Temporary_Prison.Models
         public string Surname { get; set; }
         public string LastName { get; set; }
         public string Address { get; set; }
-        public IEnumerable<DetentionPagedList> DetentionPagedList;
+        public IEnumerable<DetentionPagedListViewModel> DetentionPagedList;
     }
 }

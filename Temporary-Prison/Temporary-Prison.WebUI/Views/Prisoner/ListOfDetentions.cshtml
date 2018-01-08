@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Temporary_Prison.Common.Models.DetentionPagedList>
+﻿@model IEnumerable<Temporary_Prison.Models.DetentionPagedListViewModel>
 @using X.PagedList
 @using X.PagedList.Mvc
 <table class="table">
@@ -31,18 +31,29 @@
                 }
             </td>
             <td>
-                @if ((User.IsInRole("Admin") || User.IsInRole("Editor")) && (bool)ViewBag.Guarded)
+
+                @if (User.IsInRole("Admin") || User.IsInRole("Editor"))
+                {
+                    @Html.ActionLink("Edit |", "EditDetention", "Editor", new { id = item.DetentionID }, string.Empty)
+
+                    @Html.ActionLink("Delete", "DeleteDetention", "Editor",
+                   new
+                   {
+                       id = item.DetentionID,
+                       prisonerId = ViewBag.prisonerId,
+                       page = ViewBag.currentPage,
+                       totalCount = ViewBag.totalCount,
+                   }, 
+                   string.Empty)
+                }
+                @Html.ActionLink("Details", "DetailsOfDetention", new { id = item.DetentionID })
+
+                @if ((User.IsInRole("Admin") || User.IsInRole("Editor")) && (bool)ViewBag.Guarded && item.Equals(Model.Last()))
                 {
                     @Html.ActionLink("Release", "ReleaseOfPrisoner", "Editor",
                    new { detentionID = item.DetentionID },
                    new { @class = "btn btn-success btn-xs" })
                 }
-                @if (User.IsInRole("Admin") || User.IsInRole("Editor"))
-                {
-                    @Html.ActionLink("Edit |", "EditDetention", "Editor", new { id = item.DetentionID }, string.Empty)
-                    @Html.ActionLink("Delete |", "DeleteDetention", "Editor", new { id = item.DetentionID }, string.Empty)
-                }
-                @Html.ActionLink("Details", "DetailsOfDetention", new { id = item.DetentionID })
             </td>
         </tr>
     }

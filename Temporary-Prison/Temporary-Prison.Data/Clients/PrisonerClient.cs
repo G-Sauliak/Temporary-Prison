@@ -76,6 +76,12 @@ namespace Temporary_Prison.Data.Clients
             new PrisonerServiceClient()
                  .Execute(client => client.EditDetention(detentionDto));
         }
+
+        public void DeleteDetention(int id)
+        {
+            new PrisonerServiceClient()
+                 .Execute(client => client.DeleteDetention(id));
+        }
     }
 }
 

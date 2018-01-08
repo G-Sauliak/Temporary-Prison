@@ -194,6 +194,7 @@
     <Compile Include="MapperProfile\WebMapper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModels.cs" />
+    <Compile Include="Models\DetentionViewModels\DetentionPagedListViewModel.cs" />
     <Compile Include="Models\EditorViewModels\EditDetentionViewModel.cs" />
     <Compile Include="Models\EditorViewModels\RegistrationOfDetentionViewModels.cs" />
     <Compile Include="Models\EditorViewModels\CreatePrisonerViewModel.cs" />

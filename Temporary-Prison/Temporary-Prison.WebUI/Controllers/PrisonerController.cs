@@ -45,7 +45,7 @@ namespace Temporary_Prison.Controllers
                 return View(listPrisoners.ToPagedList(pageNum, pageSize));
             }
             ViewBag.TotalCountPrisoners = _totalCount;
-
+            
             var model = Mapper.Map<IReadOnlyList<Prisoner>, IReadOnlyList<PrisonerPagedListViewModel>>(listPrisoners);
 
             if (listPrisoners != null)
@@ -79,7 +79,6 @@ namespace Temporary_Prison.Controllers
             {
                 return HttpNotFound();
             }
-
             var pageNum = page ?? 1;
             var skip = (pageNum - 1) * pageSize;
 
@@ -90,15 +89,22 @@ namespace Temporary_Prison.Controllers
             {
                 totalCount = _currentTotal;
             }
-
             var model = Mapper.Map<Prisoner, DetailsPrisonerViewModel>(prisoner);
 
-            var listOfDetentions = prisonerProvider.GetDetentionsByPrisonerIdForPagedList(id.Value, skip, pageSize, ref totalCount);
+            var listOfDetentions = prisonerProvider
+                .GetDetentionsByPrisonerIdForPagedList(id.Value, skip, pageSize, ref totalCount);
 
             if (listOfDetentions != null)
             {
+                var listOfDetentionsModel = Mapper
+                    .Map<IReadOnlyList<DetentionPagedList>, IReadOnlyList<DetentionPagedListViewModel>>(listOfDetentions);
+
+                ViewBag.prisonerId = model.PrisonerId;
+                ViewBag.currentPage = pageNum;
+                ViewBag.totalCount = totalCount;
                 ViewBag.Guarded = listOfDetentions.Last().DateOfRelease != null ? false : true;
-                var pagedListDetention = new StaticPagedList<DetentionPagedList>(listOfDetentions, pageNum, pageSize, totalCount);
+
+                var pagedListDetention = new StaticPagedList<DetentionPagedListViewModel>(listOfDetentionsModel, pageNum, pageSize, totalCount);
                 model.DetentionPagedList = pagedListDetention;
             }
             else

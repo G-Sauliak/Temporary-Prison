@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Temporary_Prison.Attributes;
 using Temporary_Prison.Business.Providers;
 using Temporary_Prison.Common.Models;
 using Temporary_Prison.Dependencies.MapperRegistry;
@@ -12,6 +13,7 @@ using Temporary_Prison.Enums;
 using Temporary_Prison.Extensions;
 using Temporary_Prison.MapperProfile;
 using Temporary_Prison.Models;
+using X.PagedList;
 
 namespace Temporary_Prison.Controllers
 {
@@ -256,13 +258,11 @@ namespace Temporary_Prison.Controllers
                 DetentionID = detentionID.Value
             };
             return View(model);
-
         }
-
         //POST : Editor/ReleaseOfPriosner
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ReleaseOfPrisoner(ReleaseOfPrisonerViewModel model, string redirectUrl)
+        public ActionResult ReleaseOfPrisoner(ReleaseOfPrisonerViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -272,11 +272,30 @@ namespace Temporary_Prison.Controllers
                     var releaseOfPriosner = Mapper.Map<ReleaseOfPrisonerViewModel, ReleaseOfPrisoner>(model);
 
                     prisonerProvider.ReleaseOfPrisoner(releaseOfPriosner);
-                    RedirectToLocal(redirectUrl);
+                    return RedirectToAction("DetailsOfPrisoner", "Prisoner", new { id = detention.PrisonerID });
                 }
             }
             return View(model);
         }
+
+        [HttpGet]
+        public ActionResult DeleteDetention(int? id, int? prisonerId, int page, int totalCount)
+        {
+            if (id.HasValue && prisonerId.HasValue)
+            {
+                prisonerProvider.DeleteDetention(id.Value);
+
+                return RedirectToAction("DetailsOfPrisoner", "Prisoner",
+                    new
+                    {
+                        id = prisonerId.Value,
+                        page = page,
+                        totalCount = totalCount
+                    });
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+       
         private ActionResult RedirectToLocal(string redirectUrl)
         {
             if (Url.IsLocalUrl(redirectUrl))

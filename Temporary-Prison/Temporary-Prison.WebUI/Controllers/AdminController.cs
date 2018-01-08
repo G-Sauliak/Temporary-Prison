@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using log4net;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -9,6 +8,8 @@ using Temporary_Prison.Business.Exceptions;
 using Temporary_Prison.Business.Providers;
 using Temporary_Prison.Business.UserManagers;
 using Temporary_Prison.Common.Models;
+using Temporary_Prison.Dependencies.MapperRegistry;
+using Temporary_Prison.MapperProfile;
 using Temporary_Prison.Models;
 using X.PagedList;
 
@@ -20,6 +21,11 @@ namespace Temporary_Prison.Controllers
         private readonly IUserProvider userProvider;
         private readonly ILog log = LogManager.GetLogger("LOGGER");
         private readonly IUserManager userManager;
+        public AdminController() :this(new UserProvider(), new UserManager())
+        {
+            MapperProfiles.Configuration.AddProfile(new WebMapper());
+            MapperProfiles.InitialiseMappers();
+        }
 
         public AdminController(IUserProvider userProvider, IUserManager userManager)
         {
@@ -77,7 +83,6 @@ namespace Temporary_Prison.Controllers
 
             var userAndRolesViewModel = Mapper.Map<UserAndRoles, UserAndRolesViewModel>(userAdnRoles);
             userEditModel.UserAndRoles = userAndRolesViewModel;
-
 
             var missingRoles = userManager.GetMissingRoles(userName);
             ViewBag.listOfMissingRoles = new SelectList(missingRoles);

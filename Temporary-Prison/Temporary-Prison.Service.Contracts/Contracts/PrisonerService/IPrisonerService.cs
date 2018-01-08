@@ -49,5 +49,9 @@ namespace Temporary_Prison.Service.Contracts.Contracts
         [OperationContract]
         [FaultContract(typeof(DataErrorDto))]
         void EditDetention(DetentionDto detention);
+
+        [OperationContract]
+        [FaultContract(typeof(DataErrorDto))]
+        void DeleteDetention(int id);
     }
 }

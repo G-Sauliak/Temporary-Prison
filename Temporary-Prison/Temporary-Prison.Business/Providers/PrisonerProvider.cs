@@ -57,7 +57,7 @@ namespace Temporary_Prison.Business.Providers
             }
             else
             {
-                listPrisoners = cacheService.GetOrSet(cacheKeyForPageList, 
+                listPrisoners = cacheService.GetOrSet(cacheKeyForPageList,
                     () => dataService.GetPrisonersForPagedList(skip, rowSize, out outTotalCount), DateTime.Now.AddSeconds(20));
 
                 if (totalCount == default(int))
@@ -81,7 +81,7 @@ namespace Temporary_Prison.Business.Providers
         {
             var cacheKey = $"FPBN:{search}";
             var listPrisoner = cacheService
-                .GetOrSet(cacheKey,() => dataService.FindPrisonersByName(search),
+                .GetOrSet(cacheKey, () => dataService.FindPrisonersByName(search),
                 DateTime.Now.AddMinutes(2));
 
             return listPrisoner;
@@ -112,7 +112,7 @@ namespace Temporary_Prison.Business.Providers
         {
             var cacheKey = $"Detention_{id}";
 
-            var detention = cacheService.GetOrSet(cacheKey, 
+            var detention = cacheService.GetOrSet(cacheKey,
                 () => dataService
                 .GetDetentionById(id), DateTime.Now.AddMinutes(3));
 
@@ -122,12 +122,18 @@ namespace Temporary_Prison.Business.Providers
         public void ReleaseOfPrisoner(ReleaseOfPrisoner release)
         {
             dataService.ReleaseOfPrisoner(release);
+            cacheService.Remove($"Detention_{release.DetentionID}");
         }
 
         public void EditDetention(Detention detention)
         {
             dataService.EditDetention(detention);
             cacheService.Remove($"Detention_{detention.DetentionID}");
+        }
+
+        public void DeleteDetention(int id)
+        {
+            dataService.DeleteDetention(id);
         }
     }
 }

@@ -247,5 +247,10 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                 }
             }
         }
+
+        public void DeleteDetention(int id)
+        {
+            context.ExecNonQuery("DeleteDetention", new SqlParameter("@id", id));
+        }
     }
 }

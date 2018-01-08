@@ -16,5 +16,6 @@ namespace Temporary_Prison.Business.Providers
         IReadOnlyList<DetentionPagedList> GetDetentionsByPrisonerIdForPagedList(int Id, int skip, int rowSize, ref int totalCount);
         Detention GetDetentionById(int id);
         void EditDetention(Detention detention);
+        void DeleteDetention(int id);
     }
 }

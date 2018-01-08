@@ -1,6 +1,6 @@
 ﻿@model Temporary_Prison.Models.UserAndRolesViewModel
 <div>
-    @using (Ajax.BeginForm("AddRole", new { userName = Model.UserName } , new AjaxOptions
+    @using (Ajax.BeginForm("AddRole", new { userName = Model.UserName }, new AjaxOptions
     {
         UpdateTargetId = "ListRoles",
         InsertionMode = InsertionMode.Replace,
@@ -8,7 +8,7 @@
         OnFailure = "RoleFailure",
     }))
     {
-        <input type="submit" value="AddRole" class="btn btn-default" id ="AddRole" />
+        <input type="submit" value="AddRole" class="btn btn-default" id="AddRole" />
         @Html.DropDownList("listOfMissingRoles", "Selct new role")
     }
 </div>
@@ -30,9 +30,7 @@
                 @Html.DisplayFor(modelItem => role)
             </td>
             <td>
-                @if (!((Model.UserName ==
-                User.Identity.Name) &&
-                role == "Admin"))
+                @if (!((Model.UserName == User.Identity.Name) && role == "Admin"))
                 {
                     @Ajax.ActionLink("Delete", "DeleteRole",
                     new { UserName = Model.UserName, RoleName = role },

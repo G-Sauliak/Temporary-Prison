@@ -1006,6 +1006,13 @@ namespace Temporary_Prison.Data.PrisonService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/EditDetention", ReplyAction="http://tempuri.org/IPrisonerService/EditDetentionResponse")]
         System.Threading.Tasks.Task EditDetentionAsync(Temporary_Prison.Data.PrisonService.DetentionDto detention);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/DeleteDetention", ReplyAction="http://tempuri.org/IPrisonerService/DeleteDetentionResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.PrisonService.DataErrorDto), Action="http://tempuri.org/IPrisonerService/DeleteDetentionDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        void DeleteDetention(int id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/DeleteDetention", ReplyAction="http://tempuri.org/IPrisonerService/DeleteDetentionResponse")]
+        System.Threading.Tasks.Task DeleteDetentionAsync(int id);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -1271,6 +1278,14 @@ namespace Temporary_Prison.Data.PrisonService {
         
         public System.Threading.Tasks.Task EditDetentionAsync(Temporary_Prison.Data.PrisonService.DetentionDto detention) {
             return base.Channel.EditDetentionAsync(detention);
+        }
+        
+        public void DeleteDetention(int id) {
+            base.Channel.DeleteDetention(id);
+        }
+        
+        public System.Threading.Tasks.Task DeleteDetentionAsync(int id) {
+            return base.Channel.DeleteDetentionAsync(id);
         }
     }
 }

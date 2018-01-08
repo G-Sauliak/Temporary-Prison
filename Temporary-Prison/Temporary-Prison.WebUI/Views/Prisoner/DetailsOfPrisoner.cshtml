@@ -51,7 +51,9 @@
 </div>
 @if (Model.DetentionPagedList != null)
 {
-    @Html.Partial("ListOfDetentions", Model.DetentionPagedList)
+    <div class="container" id="ListDetentions">
+        @Html.Partial("ListOfDetentions", Model.DetentionPagedList)
+    </div>
 }
 
 @if (!(bool)ViewBag.Guarded && (User.IsInRole("Admin") || User.IsInRole("Editor")))
@@ -63,3 +65,11 @@
 <p>
     @Html.ActionLink("Back to List", "ListOfPrisoners")
 </p>
+@section scripts
+{
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+}
+

@@ -15,5 +15,6 @@ namespace Temporary_Prison.Data.Clients
         void DeletePrisoner(int id);
         void ReleaseOfPrisoner(ReleaseOfPrisonerDto release);
         void EditDetention(DetentionDto detention);
+        void DeleteDetention(int id);
     }
 }

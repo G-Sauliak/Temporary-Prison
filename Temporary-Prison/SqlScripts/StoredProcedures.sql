@@ -492,4 +492,14 @@ FROM (SELECT
 WHERE 
 p.EmployeeID = Employees.EmployeeID
 END
+GO
+--------------------[DeleteDetention]-------------------------------------
+---------------------------------------------------------------------------
+CREATE PROC [dbo].[DeleteDetention]
+@id int
+AS
+BEGIN
+DELETE FROM ListOfDetentions WHERE ListOfDetentions.DetentionID = @id 
+END
+
 
