@@ -18,6 +18,7 @@ namespace Temporary_Prison.Common.Models
         public string PlaceofDetention { get; set; }
         public DateTime? DateOfRelease { get; set; }
     }
+
     public class Detention
     {
         public int DetentionID { get; set; }

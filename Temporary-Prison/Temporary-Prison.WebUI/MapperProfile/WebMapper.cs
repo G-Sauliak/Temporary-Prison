@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Temporary_Prison.Models;
 using Temporary_Prison.Common.Models;
+using System;
 
 namespace Temporary_Prison.MapperProfile
 {
@@ -15,17 +16,22 @@ namespace Temporary_Prison.MapperProfile
               .ForMember(p => p.Roles, opt => opt.Ignore());
 
             CreateMap<Prisoner, DetailsPrisonerViewModel>()
-                 .ForMember(p => p.DetentionPagedList, opt => opt.Ignore());
+                 .ForMember(p => p.DetentionPagedList, opt => opt.Ignore())
+                 .ForMember(x => x.BirthDate, opt => opt.MapFrom(src => src.BirthDate.ToShortDateString()));
 
-           CreateMap<Prisoner, PrisonerPagedListViewModel>()
-                .ForMember(p => p.BirthDate, opt => opt.MapFrom(c => c.BirthDate.ToShortDateString()));
+            CreateMap<Prisoner, PrisonerPagedListViewModel>()
+               .ForMember(x => x.BirthDate, opt => opt.MapFrom(src => src.BirthDate.ToShortDateString()));
 
             CreateMap<UserAndRoles, UserAndRolesViewModel>();
-                
+
+            CreateMap<Detention, DetailsOfDetentionViewModel>()
+                .ForMember(x => x.DateOfArrival,opt => opt.MapFrom(src => src.DateOfArrival.HasValue ? src.DateOfArrival.Value.ToShortDateString() : null))
+                .ForMember(x => x.DateOfDetention, opt => opt.MapFrom(src => src.DateOfDetention.HasValue ? src.DateOfDetention.Value.ToShortDateString() : null))
+                .ForMember(x => x.DateOfRelease, opt => opt.MapFrom(src => src.DateOfRelease.HasValue ? src.DateOfRelease.Value.ToShortDateString() : null));
+
             CreateMap<ReleaseOfPrisoner, ReleaseOfPrisonerViewModel>();
             CreateMap<Employee, EmployeeViewModel>();
             CreateMap<Prisoner, CreatePrisonerViewModel>();
-
         }
     }
 

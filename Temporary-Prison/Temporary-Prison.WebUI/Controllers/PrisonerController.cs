@@ -123,8 +123,9 @@ namespace Temporary_Prison.Controllers
             {
                 return HttpNotFound();
             }
+            var model = Mapper.Map<Detention, DetailsOfDetentionViewModel>(detention);
 
-            return View(detention);
+            return View(model);
         }
 
     }

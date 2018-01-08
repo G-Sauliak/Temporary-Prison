@@ -198,6 +198,7 @@
     <Compile Include="Models\EditorViewModels\RegistrationOfDetentionViewModels.cs" />
     <Compile Include="Models\EditorViewModels\CreatePrisonerViewModel.cs" />
     <Compile Include="Models\EditorViewModels\ReleaseOfPrisonerViewModel.cs" />
+    <Compile Include="Models\PrisonerViewModels\DetailsOfDetentionViewModel.cs" />
     <Compile Include="Models\PrisonerViewModels\DetailsPrisonerViewModel.cs" />
     <Compile Include="Models\PrisonerViewModels\PrisonerPagedListViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

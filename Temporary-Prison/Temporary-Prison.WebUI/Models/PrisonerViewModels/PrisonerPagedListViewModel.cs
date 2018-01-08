@@ -7,7 +7,7 @@ namespace Temporary_Prison.Models
     {
         public int PrisonerId { get; set; }
         [Display(Name = "Birth Date")]
-        public DateTime BirthDate { get; set; }
+        public string BirthDate { get; set; }
         [Display(Name = "Name")]
         public string FirstName { get; set; }
         public string Surname { get; set; }

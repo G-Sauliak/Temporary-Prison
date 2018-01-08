@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Temporary_Prison.Common.Models;
 
 namespace Temporary_Prison.Models
@@ -10,7 +9,7 @@ namespace Temporary_Prison.Models
         public string RelationshipStatus { get; set; }
         public string[] PhoneNumbers { get; set; }
         public string PlaceOfWork { get; set; }
-        public DateTime BirthDate { get; set; }
+        public string BirthDate { get; set; }
         public string Photo { get; set; }
         public string AdditionalInformation { get; set; }
         public string FirstName { get; set; }
