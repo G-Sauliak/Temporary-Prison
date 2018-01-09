@@ -42,7 +42,7 @@
                        id = item.DetentionID,
                        prisonerId = ViewBag.prisonerId,
                        page = ViewBag.currentPage,
-                       totalCount = ViewBag.totalCount,
+                       totalCount = ViewBag.totalCountDetentions,
                    }, 
                    string.Empty)
                 }
@@ -59,10 +59,11 @@
     }
 </table>
 
-@Html.PagedListPager(Model as IPagedList, page => Url.Action("Index",
+@Html.PagedListPager(Model as IPagedList, page => Url.Action("DetailsOfPrisoner",
     new
     {
+        id = ViewBag.prisonerId,
         page,
-        currentTotal = ViewBag.CurrentTotalOfDetentions
+        totalCountDetentions = ViewBag.totalCountDetentions
 
     }), PagedListRenderOptions.MinimalWithPageCountText)

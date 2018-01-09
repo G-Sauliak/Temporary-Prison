@@ -5,7 +5,6 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using Temporary_Prison.Attributes;
 using Temporary_Prison.Business.Providers;
 using Temporary_Prison.Common.Models;
 using Temporary_Prison.Dependencies.MapperRegistry;
@@ -13,7 +12,7 @@ using Temporary_Prison.Enums;
 using Temporary_Prison.Extensions;
 using Temporary_Prison.MapperProfile;
 using Temporary_Prison.Models;
-using X.PagedList;
+using Temporary_Prison.SiteConfigService;
 
 namespace Temporary_Prison.Controllers
 {
@@ -21,17 +20,19 @@ namespace Temporary_Prison.Controllers
     public class EditorController : Controller
     {
         private readonly IPrisonerProvider prisonerProvider;
-
-        public EditorController() : this(new PrisonerProvider())
+        private readonly IConfigService siteConfigService;
+        public EditorController() : this(new PrisonerProvider(), new ConfigService())
         {
             MapperProfiles.Configuration.AddProfile(new WebMapper());
             MapperProfiles.InitialiseMappers();
         }
 
-        public EditorController(IPrisonerProvider prisonerProvider)
+        public EditorController(IPrisonerProvider prisonerProvider, IConfigService siteConfigService)
         {
+            this.siteConfigService = siteConfigService;
             this.prisonerProvider = prisonerProvider;
         }
+
         // GET: Editor/AddPrisoner
         [HttpGet]
         public ActionResult AddPrisoner()
@@ -53,7 +54,9 @@ namespace Temporary_Prison.Controllers
                 return View(model);
             }
 
-            if (photo != null && PhotosExtensions.SupportedFormat(photo) && PhotosExtensions.CheckSize(photo))
+            if (photo != null
+                && PhotosExtensions.SupportedFormat(photo, siteConfigService.AllowedPhotoTypes)
+                && PhotosExtensions.CheckSize(photo, siteConfigService.MaxPhotoSize))
             {
                 var photoExtensions = Path.GetExtension(photo.FileName);
                 var photoName = string.Concat(DateTime.Now.Ticks, photoExtensions);
@@ -129,7 +132,9 @@ namespace Temporary_Prison.Controllers
 
             var photo = Request.Files[0];
 
-            if (photo != null && PhotosExtensions.SupportedFormat(photo) && PhotosExtensions.CheckSize(photo))
+            if (photo != null
+                && PhotosExtensions.SupportedFormat(photo, siteConfigService.AllowedPhotoTypes)
+                && PhotosExtensions.CheckSize(photo, siteConfigService.MaxPhotoSize))
             {
                 //TODO
             }
@@ -157,12 +162,19 @@ namespace Temporary_Prison.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var model = new RegistrationOfDetentionViewModel
-            {
-                PrisonerID = prisonerId.Value
-            };
+            var prisoner = prisonerProvider.GetPrisonerById(prisonerId.Value);
 
-            return View(model);
+            if (prisoner != null)
+            {
+                ViewBag.PrisonerFullName = $"{prisoner.FirstName} {prisoner.LastName}";
+                var model = new RegistrationOfDetentionViewModel
+                {
+                    PrisonerID = prisonerId.Value
+                };
+
+                return View(model);
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.NotFound);
         }
 
         [HttpGet]
@@ -279,7 +291,7 @@ namespace Temporary_Prison.Controllers
         }
 
         [HttpGet]
-        public ActionResult DeleteDetention(int? id, int? prisonerId, int page, int totalCount)
+        public ActionResult DeleteDetention(int? id, int? prisonerId, int? page, int? totalCount)
         {
             if (id.HasValue && prisonerId.HasValue)
             {
@@ -295,7 +307,7 @@ namespace Temporary_Prison.Controllers
             }
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
-       
+
         private ActionResult RedirectToLocal(string redirectUrl)
         {
             if (Url.IsLocalUrl(redirectUrl))

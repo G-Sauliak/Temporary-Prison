@@ -18,6 +18,11 @@ namespace Temporary_Prison
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+            routes.MapRoute(
+               name: "ListOfPrisoners",
+               url: "{Prisoner}/{ListOfPrisoner}/{page}",
+               defaults: new { controller = "Prisoner", action = "ListOfPrisoner", page = UrlParameter.Optional }
+           );
         }
     }
 }

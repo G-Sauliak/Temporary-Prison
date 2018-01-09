@@ -398,7 +398,7 @@ AS
 BEGIN
 SELECT DetentionID,DateOfDetention,PlaceofDetention,DateOfRelease FROM [ListOfDetentions] l
 WHERE l.PrisonerID = @PrisonerID
-ORDER BY l.DateOfDetention
+ORDER BY l.DetentionID
 OFFSET @skip ROWS 
 FETCH NEXT @rowSize ROWS ONLY;
 SET @Totalcount = (SELECT COUNT(*) FROM [ListOfDetentions] l WHERE l.PrisonerID = @PrisonerID)
@@ -501,5 +501,6 @@ AS
 BEGIN
 DELETE FROM ListOfDetentions WHERE ListOfDetentions.DetentionID = @id 
 END
+GO
 
 

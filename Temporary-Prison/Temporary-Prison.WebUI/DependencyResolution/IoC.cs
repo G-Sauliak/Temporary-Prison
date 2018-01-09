@@ -18,6 +18,7 @@
 
 namespace Temporary_Prison.DependencyResolution {
     using StructureMap;
+    using Temporary_Prison.SiteConfigService;
     using Temporary_Prison.Dependencies.Registries;
 
     public static class IoC {
@@ -25,6 +26,7 @@ namespace Temporary_Prison.DependencyResolution {
             return new Container(c =>
             {
               c.AddRegistry<CommonRegistry>();
+              c.For<IConfigService>().Use<ConfigService>();
             });
         }
     }

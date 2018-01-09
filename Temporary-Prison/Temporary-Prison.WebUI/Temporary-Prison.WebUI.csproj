@@ -175,6 +175,8 @@
     <Compile Include="App_Start\StructuremapMvc.cs" />
     <Compile Include="Attributes\AjaxOnlyAttribute.cs" />
     <Compile Include="Attributes\PhoneNumberAttribute.cs" />
+    <Compile Include="ConfigService\ConfigService.cs" />
+    <Compile Include="ConfigService\IConfigService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\EditorController.cs" />
@@ -191,9 +193,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HtmlHelpers\PhotoHelper.cs" />
+    <Compile Include="Infrastructure\DefaultConfig.cs" />
     <Compile Include="MapperProfile\WebMapper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\AdminViewModels.cs" />
+    <Compile Include="Models\AdminViewModels\CreateUserViewModel.cs" />
+    <Compile Include="Models\AdminViewModels\EditUserViewModel.cs" />
+    <Compile Include="Models\AdminViewModels\UserAndRolesViewModel.cs" />
     <Compile Include="Models\DetentionViewModels\DetentionPagedListViewModel.cs" />
     <Compile Include="Models\EditorViewModels\EditDetentionViewModel.cs" />
     <Compile Include="Models\EditorViewModels\RegistrationOfDetentionViewModels.cs" />
@@ -202,6 +207,7 @@
     <Compile Include="Models\PrisonerViewModels\DetailsOfDetentionViewModel.cs" />
     <Compile Include="Models\PrisonerViewModels\DetailsPrisonerViewModel.cs" />
     <Compile Include="Models\PrisonerViewModels\PrisonerPagedListViewModel.cs" />
+    <Compile Include="Models\FilterModelView\SerarchModelView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
