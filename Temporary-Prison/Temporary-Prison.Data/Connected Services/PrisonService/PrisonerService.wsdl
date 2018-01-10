@@ -2,10 +2,10 @@
 <wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="PrisonerService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
-      <xsd:import schemaLocation="http://localhost:49365/PrisonService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
-      <xsd:import schemaLocation="http://localhost:49365/PrisonService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" />
-      <xsd:import schemaLocation="http://localhost:49365/PrisonService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost:49365/PrisonService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://localhost:3333/PrisonService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:3333/PrisonService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" />
+      <xsd:import schemaLocation="http://localhost:3333/PrisonService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:3333/PrisonService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IPrisonerService_GetPrisonersForPagedList_InputMessage">
@@ -35,13 +35,13 @@
   <wsdl:message name="IPrisonerService_AddPrisoner_DataErrorDtoFault_FaultMessage">
     <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q3:DataErrorDto" />
   </wsdl:message>
-  <wsdl:message name="IPrisonerService_FindPrisonersByName_InputMessage">
-    <wsdl:part name="parameters" element="tns:FindPrisonersByName" />
+  <wsdl:message name="IPrisonerService_SearchFilter_InputMessage">
+    <wsdl:part name="parameters" element="tns:SearchFilter" />
   </wsdl:message>
-  <wsdl:message name="IPrisonerService_FindPrisonersByName_OutputMessage">
-    <wsdl:part name="parameters" element="tns:FindPrisonersByNameResponse" />
+  <wsdl:message name="IPrisonerService_SearchFilter_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SearchFilterResponse" />
   </wsdl:message>
-  <wsdl:message name="IPrisonerService_FindPrisonersByName_DataErrorDtoFault_FaultMessage">
+  <wsdl:message name="IPrisonerService_SearchFilter_DataErrorDtoFault_FaultMessage">
     <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" name="detail" element="q4:DataErrorDto" />
   </wsdl:message>
   <wsdl:message name="IPrisonerService_EditPrisoner_InputMessage">
@@ -132,10 +132,10 @@
       <wsdl:output wsaw:Action="http://tempuri.org/IPrisonerService/AddPrisonerResponse" message="tns:IPrisonerService_AddPrisoner_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/IPrisonerService/AddPrisonerDataErrorDtoFault" name="DataErrorDtoFault" message="tns:IPrisonerService_AddPrisoner_DataErrorDtoFault_FaultMessage" />
     </wsdl:operation>
-    <wsdl:operation name="FindPrisonersByName">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPrisonerService/FindPrisonersByName" message="tns:IPrisonerService_FindPrisonersByName_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPrisonerService/FindPrisonersByNameResponse" message="tns:IPrisonerService_FindPrisonersByName_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IPrisonerService/FindPrisonersByNameDataErrorDtoFault" name="DataErrorDtoFault" message="tns:IPrisonerService_FindPrisonersByName_DataErrorDtoFault_FaultMessage" />
+    <wsdl:operation name="SearchFilter">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPrisonerService/SearchFilter" message="tns:IPrisonerService_SearchFilter_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPrisonerService/SearchFilterResponse" message="tns:IPrisonerService_SearchFilter_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IPrisonerService/SearchFilterDataErrorDtoFault" name="DataErrorDtoFault" message="tns:IPrisonerService_SearchFilter_DataErrorDtoFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="EditPrisoner">
       <wsdl:input wsaw:Action="http://tempuri.org/IPrisonerService/EditPrisoner" message="tns:IPrisonerService_EditPrisoner_InputMessage" />
@@ -216,8 +216,8 @@
         <soap:fault use="literal" name="DataErrorDtoFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
-    <wsdl:operation name="FindPrisonersByName">
-      <soap:operation soapAction="http://tempuri.org/IPrisonerService/FindPrisonersByName" style="document" />
+    <wsdl:operation name="SearchFilter">
+      <soap:operation soapAction="http://tempuri.org/IPrisonerService/SearchFilter" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -327,7 +327,7 @@
   </wsdl:binding>
   <wsdl:service name="PrisonerService">
     <wsdl:port name="BasicHttpBinding_IPrisonerService" binding="tns:BasicHttpBinding_IPrisonerService">
-      <soap:address location="http://localhost:49365/PrisonService.svc" />
+      <soap:address location="http://localhost:3333/PrisonService.svc" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

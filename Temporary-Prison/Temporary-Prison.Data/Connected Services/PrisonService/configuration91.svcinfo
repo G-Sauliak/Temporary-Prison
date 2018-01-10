@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="ZWMBdQpO17CgyTaT6meABjTq4UY=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="2P65WeUVo8RwvkOqG0JULg6pl2M=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="BasicHttpBinding_IPrisonerService">
       <properties>
@@ -112,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="BasicHttpBinding_IPrisonerService" contract="PrisonService.IPrisonerService" bindingType="basicHttpBinding" address="http://localhost:49365/PrisonService.svc" bindingConfiguration="BasicHttpBinding_IPrisonerService">
+    <endpoint name="BasicHttpBinding_IPrisonerService" contract="PrisonService.IPrisonerService" bindingType="basicHttpBinding" address="http://localhost:3333/PrisonService.svc" bindingConfiguration="BasicHttpBinding_IPrisonerService">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://localhost:49365/PrisonService.svc</serializedValue>
+          <serializedValue>http://localhost:3333/PrisonService.svc</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

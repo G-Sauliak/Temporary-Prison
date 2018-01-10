@@ -11,6 +11,7 @@ using Temporary_Prison.Common.Models;
 using Temporary_Prison.Dependencies.MapperRegistry;
 using Temporary_Prison.MapperProfile;
 using Temporary_Prison.Models;
+using Temporary_Prison.SiteConfigService;
 using X.PagedList;
 
 namespace Temporary_Prison.Controllers
@@ -21,22 +22,25 @@ namespace Temporary_Prison.Controllers
         private readonly IUserProvider userProvider;
         private readonly ILog log = LogManager.GetLogger("LOGGER");
         private readonly IUserManager userManager;
-        public AdminController() :this(new UserProvider(), new UserManager())
+        private readonly IConfigService configService;
+
+        public AdminController() : this(new UserProvider(), new UserManager(), new ConfigService())
         {
             MapperProfiles.Configuration.AddProfile(new WebMapper());
             MapperProfiles.InitialiseMappers();
         }
 
-        public AdminController(IUserProvider userProvider, IUserManager userManager)
+        public AdminController(IUserProvider userProvider, IUserManager userManager, IConfigService configService)
         {
             this.userProvider = userProvider;
             this.userManager = userManager;
+            this.configService = configService;
         }
 
         // GET: Admin/index
         public ActionResult Index(int? page, int? currentTotal)
         {
-            const int pageSize = 4;
+            var pageSize = configService.UserPagedSize;
             var totalCount = default(int);
             var _currentTotal = currentTotal ?? default(int);
 
@@ -211,7 +215,7 @@ namespace Temporary_Prison.Controllers
                 }
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "non-existent role");
             }
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest," please select role");
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest, " please select role");
         }
 
         [AjaxOnly]
@@ -236,7 +240,7 @@ namespace Temporary_Prison.Controllers
                 }
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "non-existent role");
             }
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest,"Please select role");
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Please select role");
         }
 
         private ActionResult RedirectToLocal(string redirectUrl)

@@ -24,8 +24,6 @@ namespace Temporary_Prison.Business.UTest.UserManagerTest
         [TestMethod]
         public void Business_UserManager_CreateUser()
         {
-
-
             var user = new User()
             {
                 UserName = "Test",

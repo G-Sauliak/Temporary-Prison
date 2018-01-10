@@ -7,5 +7,7 @@
         public const string DefaultPhotoPath = "PhotosOfPrisoners";
         public const int DefaultPhotoHeight = 100;
         public const int DefaultPhotoWidth = 100;
+        public const int PrisonerPagedSize = 5;
+        public const int UserPagedSize = 5;
     }
 }

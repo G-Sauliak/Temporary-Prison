@@ -1,39 +1,30 @@
-﻿@model IEnumerable<Temporary_Prison.Models.PrisonerPagedListViewModel>
+﻿@model Temporary_Prison.Models.ListOfPrisonersViewModel
 
 @{
     ViewBag.Title = "list of prisoners";
 }
 
 <div class="form-group">
-    <div class="col-md-8 col-sm-offset-1">
+        @Html.Partial("SearchFilterForm", Model.SearchfilterModel)
+ 
         <div class="row" id="UserListBox">
-            @if (Model != null)
+
+            @if (Model.PagedListOfPriosners != null)
             {
-                @Html.Partial("PrisonerPanel", Model)
+                @Html.Partial("PrisonerPanelPartial", Model.PagedListOfPriosners)
             }
             else
             {
                 @Html.Label("not found")
             }
         </div>
-    </div>
 </div>
-
-<div class="form-horizontal ">
     <div class="form-group">
         <div class="col-md-10">
-            @Html.Label("Find by name:", new { @class = "control-label" })
-            @Html.TextBox("search", ViewBag.CurrentFilter as string,
-           new { @class = "form-control", @id = "findPrisonersByName" })
+            <input class="btn btn-group " type="submit" value="Search" onclick="window.search.SearchFilter()" />
         </div>
     </div>
 
-    <div class="form-group">
-        <div class="col-md-10">
-            <input class="btn btn-group " type="submit" value="Search" onclick="window.search.FindPrisonersByName()" />
-        </div>
-    </div>
-</div>
 
 @Html.ActionLink("Back to Home", "Index", "Home")
 
@@ -45,8 +36,8 @@
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     <script src="~/Scripts/search/search.js"></script>
     <script>
-    window.search = window.FindPriosners(
-            '@Html.Raw(Url.Action("FindPrisonersByName", "Prisoner"))',
+    window.search = window.FindPrisoners(
+            '@Html.Raw(Url.Action("SearchFilter", "Prisoner"))',
     )
     </script>
 }

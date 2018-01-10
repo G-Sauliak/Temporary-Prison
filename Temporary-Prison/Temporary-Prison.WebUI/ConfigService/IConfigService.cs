@@ -7,5 +7,7 @@
         int PhotoWidth { get; set; }
         int MaxPhotoSize { get; set; }
         string AllowedPhotoTypes { get; set; }
+        int PrisonerPagedSize { get; set; }
+        int UserPagedSize { get; set; }
     }
 }

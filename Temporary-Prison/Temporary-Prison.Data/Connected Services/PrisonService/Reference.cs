@@ -947,12 +947,12 @@ namespace Temporary_Prison.Data.PrisonService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/AddPrisoner", ReplyAction="http://tempuri.org/IPrisonerService/AddPrisonerResponse")]
         System.Threading.Tasks.Task<Temporary_Prison.Data.PrisonService.AddPrisonerResponse> AddPrisonerAsync(Temporary_Prison.Data.PrisonService.AddPrisonerRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/FindPrisonersByName", ReplyAction="http://tempuri.org/IPrisonerService/FindPrisonersByNameResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.PrisonService.DataErrorDto), Action="http://tempuri.org/IPrisonerService/FindPrisonersByNameDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
-        Temporary_Prison.Data.PrisonService.PrisonerDto[] FindPrisonersByName(string search);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/SearchFilter", ReplyAction="http://tempuri.org/IPrisonerService/SearchFilterResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.PrisonService.DataErrorDto), Action="http://tempuri.org/IPrisonerService/SearchFilterDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
+        Temporary_Prison.Data.PrisonService.PrisonerDto[] SearchFilter(System.Nullable<System.DateTime> dateOfDetention, string name, string address);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/FindPrisonersByName", ReplyAction="http://tempuri.org/IPrisonerService/FindPrisonersByNameResponse")]
-        System.Threading.Tasks.Task<Temporary_Prison.Data.PrisonService.PrisonerDto[]> FindPrisonersByNameAsync(string search);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/SearchFilter", ReplyAction="http://tempuri.org/IPrisonerService/SearchFilterResponse")]
+        System.Threading.Tasks.Task<Temporary_Prison.Data.PrisonService.PrisonerDto[]> SearchFilterAsync(System.Nullable<System.DateTime> dateOfDetention, string name, string address);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPrisonerService/EditPrisoner", ReplyAction="http://tempuri.org/IPrisonerService/EditPrisonerResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(Temporary_Prison.Data.PrisonService.DataErrorDto), Action="http://tempuri.org/IPrisonerService/EditPrisonerDataErrorDtoFault", Name="DataErrorDto", Namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto")]
@@ -1205,12 +1205,12 @@ namespace Temporary_Prison.Data.PrisonService {
             return base.Channel.AddPrisonerAsync(request);
         }
         
-        public Temporary_Prison.Data.PrisonService.PrisonerDto[] FindPrisonersByName(string search) {
-            return base.Channel.FindPrisonersByName(search);
+        public Temporary_Prison.Data.PrisonService.PrisonerDto[] SearchFilter(System.Nullable<System.DateTime> dateOfDetention, string name, string address) {
+            return base.Channel.SearchFilter(dateOfDetention, name, address);
         }
         
-        public System.Threading.Tasks.Task<Temporary_Prison.Data.PrisonService.PrisonerDto[]> FindPrisonersByNameAsync(string search) {
-            return base.Channel.FindPrisonersByNameAsync(search);
+        public System.Threading.Tasks.Task<Temporary_Prison.Data.PrisonService.PrisonerDto[]> SearchFilterAsync(System.Nullable<System.DateTime> dateOfDetention, string name, string address) {
+            return base.Channel.SearchFilterAsync(dateOfDetention, name, address);
         }
         
         public void EditPrisoner(Temporary_Prison.Data.PrisonService.PrisonerDto prisoner) {

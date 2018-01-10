@@ -66,10 +66,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Clients\IPrisonerClient.cs" />
-    <Compile Include="Clients\IUserClient.cs" />
-    <Compile Include="Clients\PrisonerClient.cs" />
-    <Compile Include="Clients\UserClient.cs" />
+    <Compile Include="Clients\PrisonerClient\IPrisonerClient.cs" />
+    <Compile Include="Clients\UserClient\IUserClient.cs" />
+    <Compile Include="Clients\PrisonerClient\PrisonerClient.cs" />
+    <Compile Include="Clients\UserClient\UserClient.cs" />
     <Compile Include="Connected Services\PrisonService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -83,10 +83,10 @@
     <Compile Include="Container\DataRegistry.cs" />
     <Compile Include="MapperProfile\DataMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\IUserDataService.cs" />
-    <Compile Include="Services\PrisonerDataService.cs" />
-    <Compile Include="Services\IPrisonerDataService.cs" />
-    <Compile Include="Services\UserDataService.cs" />
+    <Compile Include="Services\UserDataService\IUserDataService.cs" />
+    <Compile Include="Services\PrisonerDataService\PrisonerDataService.cs" />
+    <Compile Include="Services\PrisonerDataService\IPrisonerDataService.cs" />
+    <Compile Include="Services\UserDataService\UserDataService.cs" />
     <Compile Include="ClientExtensions\UsingExtensionClient.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -96,7 +96,7 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\PrisonService\PrisonService.wsdl" />
+    <None Include="Connected Services\PrisonService\PrisonerService.wsdl" />
     <None Include="Connected Services\PrisonService\PrisonService.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -149,6 +149,8 @@
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Temporary_Prison.Common.Models.Membership.datasource" />
     <None Include="Properties\DataSources\Temporary_Prison.Common.Models.Membership1.datasource" />
+    <None Include="Properties\DataSources\Temporary_Prison.Service.Contracts.Dto.DetentionDto.datasource" />
+    <None Include="Properties\DataSources\Temporary_Prison.Service.Contracts.Dto.DetentionPagedListDto.datasource" />
     <None Include="Properties\DataSources\Temporary_Prison.Service.Contracts.Dto.MembershipDto.datasource" />
     <None Include="Properties\DataSources\Temporary_Prison.Service.Contracts.Dto.PrisonerDto.datasource" />
     <None Include="Properties\DataSources\Temporary_Prison.Service.Contracts.Dto.PrisonerProfileDto.datasource" />
@@ -173,21 +175,6 @@
     <WCFMetadataStorage Include="Connected Services\UserService\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\PrisonService\PrisonService.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\PrisonService\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\PrisonService\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\PrisonService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Connected Services\UserService\UserService.disco" />
   </ItemGroup>
   <ItemGroup>
@@ -198,6 +185,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\UserService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\PrisonService\PrisonService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\PrisonService\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\PrisonService\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\PrisonService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

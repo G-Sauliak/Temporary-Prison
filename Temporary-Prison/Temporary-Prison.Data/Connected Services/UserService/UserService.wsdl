@@ -671,10 +671,10 @@
   </wsp:Policy>
   <wsdl:types>
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
-      <xsd:import schemaLocation="http://localhost:49365/UserService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
-      <xsd:import schemaLocation="http://localhost:49365/UserService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" />
-      <xsd:import schemaLocation="http://localhost:49365/UserService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost:49365/UserService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://localhost:3333/UserService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:3333/UserService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Temporary_Prison.Service.Contracts.Dto" />
+      <xsd:import schemaLocation="http://localhost:3333/UserService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:3333/UserService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IUserService_IsValidLogin_InputMessage">
@@ -1004,9 +1004,9 @@
   </wsdl:binding>
   <wsdl:service name="UserService">
     <wsdl:port name="WSHttpBinding_IUserService" binding="tns:WSHttpBinding_IUserService">
-      <soap12:address location="http://localhost:49365/UserService.svc" />
+      <soap12:address location="http://localhost:3333/UserService.svc" />
       <wsa10:EndpointReference>
-        <wsa10:Address>http://localhost:49365/UserService.svc</wsa10:Address>
+        <wsa10:Address>http://localhost:3333/UserService.svc</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Upn>PE4\pe4</Upn>
         </Identity>

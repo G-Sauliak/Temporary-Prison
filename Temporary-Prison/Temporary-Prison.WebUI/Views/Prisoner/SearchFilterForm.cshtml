@@ -1,0 +1,29 @@
+﻿@model Temporary_Prison.Models.SearchFilterModelView
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+<div class="col-lg-offset-0 col-lg-10 form-inline">
+    <div class="panel panel-default">
+        <div class="panel-heading"><h4>information on detention</h4></div>
+        <div class="panel-body">
+            <div class="col-md-10 col-lg-3">
+                @Html.LabelFor(model => model.DateOfDetention)
+                @Html.EditorFor(model => model.DateOfDetention, new { htmlAttributes = new { @class = "form-control", @id = "findByDateOfDetention", @onchange = "window.search.SearchFilter()" } })
+                @Html.ValidationMessageFor(model => model.DateOfDetention, string.Empty, new { @class = "text-danger" })
+            </div>
+            <div class="col-md-10 col-lg-3  col-lg-offset-1">
+                @Html.LabelFor(model => model.Name)
+
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control ", @id = "findByName", @onchange = "window.search.SearchFilter()" } })
+                @Html.ValidationMessageFor(model => model.Name, string.Empty, new { @class = "text-danger" })
+            </div>
+            <div class="col-md-10 col-lg-3  col-lg-offset-1">
+                @Html.LabelFor(model => model.Address)
+
+                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control", @id = "findByAddress", @onchange = "window.search.SearchFilter()" } })
+                @Html.ValidationMessageFor(model => model.Address, string.Empty, new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+</div>
+

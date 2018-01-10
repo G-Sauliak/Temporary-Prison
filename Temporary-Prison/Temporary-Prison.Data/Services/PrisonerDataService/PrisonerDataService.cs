@@ -4,6 +4,8 @@ using Temporary_Prison.Data.Clients;
 using Temporary_Prison.Data.PrisonService;
 using log4net;
 using Temporary_Prison.Common.Models;
+using System;
+using Temporary_Prison.Data.MapperProfile;
 
 namespace Temporary_Prison.Data.Services
 {
@@ -16,13 +18,7 @@ namespace Temporary_Prison.Data.Services
         {
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<Prisoner, PrisonerDto>();
-                cfg.CreateMap<RegistDetention, RegistrationOfDetentionDto>();
-                cfg.CreateMap<Employee, EmployeeDto>();
-                cfg.CreateMap<DetentionPagedList, DetentionPagedListDto>();
-                cfg.CreateMap<Detention, DetentionDto>();
-                cfg.CreateMap<DetentionDto, Detention>();
-                cfg.CreateMap<ReleaseOfPrisoner, ReleaseOfPrisonerDto>();
+                cfg.AddProfile(new DataMapper());
             });
         }
 
@@ -66,25 +62,7 @@ namespace Temporary_Prison.Data.Services
             return default(bool);
         }
 
-        public IReadOnlyList<Prisoner> FindPrisonersByName(string search)
-        {
-            var prisonersDto = prisonerClient.FindPrisonersByName(search);
-
-            if (prisonersDto != null)
-            {
-                try
-                {
-                    var prisoners = Mapper.Map<IReadOnlyList<PrisonerDto>, IReadOnlyList<Prisoner>>(prisonersDto);
-                    return prisoners;
-
-                }
-                catch (AutoMapperMappingException me)
-                {
-                    log.Error(me.Message);
-                }
-            }
-            return default(Prisoner[]);
-        }
+      
         public void EditPrisoner(Prisoner prisoner)
         {
             if (prisoner != null)
@@ -143,6 +121,17 @@ namespace Temporary_Prison.Data.Services
         public void DeleteDetention(int id)
         {
             prisonerClient.DeleteDetention(id);
+        }
+
+        public IReadOnlyList<Prisoner> SearchFilter(DateTime? dateOfDetention, string name, string address)
+        {
+            var prisonersDto = prisonerClient.SearchFilter(dateOfDetention, name, address);
+            if(prisonersDto!= null)
+            {
+                var prisoners = Mapper.Map<IReadOnlyList<PrisonerDto>, IReadOnlyList<Prisoner>>(prisonersDto);
+                return prisoners;
+            }
+            return default(IReadOnlyList<Prisoner>);
         }
     }
 }

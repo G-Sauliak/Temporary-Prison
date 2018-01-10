@@ -502,5 +502,25 @@ BEGIN
 DELETE FROM ListOfDetentions WHERE ListOfDetentions.DetentionID = @id 
 END
 GO
+--------------------[SearchFilter]-----------------------------------------
+---------------------------------------------------------------------------
+CREATE PROC [dbo].[SearchFilter]
+@Name nvarchar(100) = null,
+@DateOfDetention date = null,
+@Address nvarchar(100) = null
+AS
+BEGIN 
+SELECT DISTINCT
+     p.PrisonerId,
+	 FirstName,
+	 LastName,
+	 Surname,
+	 BirthDate 
+	 FROM Prisoners p LEFT OUTER JOIN ListOfDetentions l ON p.PrisonerId = l.PrisonerID
+     WHERE 
+	(@Name IS NULL OR (p.FirstName LIKE  CONCAT(RTRIM(@Name),'%') OR p.LastName LIKE  CONCAT(RTRIM(@Name),'%'))) AND
+    (@DateOfDetention IS NULL OR l.DateOfDetention = @DateOfDetention) AND
+	(@Address IS NULL OR  p.Address LIKE CONCAT(RTRIM(@Address),'%')) 
+END
 
 

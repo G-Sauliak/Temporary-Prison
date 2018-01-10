@@ -83,7 +83,6 @@ namespace Temporary_Prison.Controllers
             {
                 var prisoner = Mapper.Map<CreatePrisonerViewModel, Prisoner>(model);
 
-                //TODO add ConfigurationManager
                 prisoner.Photo = "/Content/DefaultPhoto/defaultPhotoPrisoner.jpg";
 
                 var newID = default(int);

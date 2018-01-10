@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using log4net;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -10,6 +11,7 @@ using Temporary_Prison.Common.Models;
 using Temporary_Prison.Dependencies.MapperRegistry;
 using Temporary_Prison.MapperProfile;
 using Temporary_Prison.Models;
+using Temporary_Prison.SiteConfigService;
 using X.PagedList;
 
 namespace Temporary_Prison.Controllers
@@ -19,30 +21,31 @@ namespace Temporary_Prison.Controllers
     {
         private readonly IPrisonerProvider prisonerProvider;
         private readonly ILog log = LogManager.GetLogger("LOGGER");
-        public PrisonerController() : this(new PrisonerProvider())
+        private readonly IConfigService configService;
+        public PrisonerController() : this(new PrisonerProvider(), new ConfigService())
         {
             MapperProfiles.Configuration.AddProfile(new WebMapper());
             MapperProfiles.InitialiseMappers();
         }
 
-        public PrisonerController(IPrisonerProvider prisonerProvider)
+        public PrisonerController(IPrisonerProvider prisonerProvider,IConfigService configService)
         {
+            this.configService = configService;
             this.prisonerProvider = prisonerProvider;
         }
 
         // GET: Prisoner/ListOfPrisoners
         [HttpGet]
-        [Route("Prisoner/ListOfPrisoners/{page:int}")]
         public ActionResult ListOfPrisoners(int? page, int? totalCount, string search)
         {
-            const int pageSize = 4;
+            var pageSize = configService.PrisonerPagedSize;
             var _totalCount = totalCount ?? default(int);
 
             var pageNum = page ?? 1;
             var skip = (pageNum - 1) * pageSize;
 
             var listPrisoners = prisonerProvider.
-                GetPrisonerForPagedList(skip, pageSize, ref _totalCount, search);
+                GetPrisonersForPagedList(skip, pageSize, ref _totalCount, search);
 
             if (!string.IsNullOrEmpty(search))
             {
@@ -50,30 +53,42 @@ namespace Temporary_Prison.Controllers
                 return View(listPrisoners.ToPagedList(pageNum, pageSize));
             }
             ViewBag.TotalCountPrisoners = _totalCount;
-            
+
             var model = Mapper.Map<IReadOnlyList<Prisoner>, IReadOnlyList<PrisonerPagedListViewModel>>(listPrisoners);
 
-            if (listPrisoners != null)
+            if (model != null)
             {
-                var prisonersPagedList = new StaticPagedList<PrisonerPagedListViewModel>(model, pageNum, pageSize, _totalCount);
-                return View(prisonersPagedList);
+                var staticPagedListOfPrisoners = new StaticPagedList<PrisonerPagedListViewModel>(model, pageNum, pageSize, _totalCount);
+
+                var listOfPrisonersModel = new ListOfPrisonersViewModel()
+                {
+                    PagedListOfPriosners = staticPagedListOfPrisoners
+                };
+                return View(listOfPrisonersModel);
             }
+
             return View(default(StaticPagedList<Prisoner>));
         }
 
         [AjaxOnly]
-        public ActionResult FindPrisonersByName(string search)
+        public ActionResult SearchFilter(DateTime? DateOfDetention, string Name, string Address)
         {
-            var listPrisoners = prisonerProvider.FindPrisonersByName(search);
-            var listViewModel = Mapper.Map<IReadOnlyList<Prisoner>, IReadOnlyList<PrisonerPagedListViewModel>>(listPrisoners);
-            ViewBag.Search = search;
-            ViewBag.TotalCountPrisoners = listPrisoners.Count;
+            var foundPrisoners = prisonerProvider.SearchFilter(DateOfDetention, Name, Address);
 
-            return PartialView("PrisonerPanel", listViewModel.ToPagedList(1, 2));
+            // ViewBag.Search = search;
+            // ViewBag.TotalCountPrisoners = foundPrisoners.Count;
+            if (foundPrisoners != null)
+            {
+                var model = Mapper.Map<IReadOnlyList<Prisoner>, IReadOnlyList<PrisonerPagedListViewModel>>(foundPrisoners);
+                var list = new StaticPagedList<PrisonerPagedListViewModel>(model, 1, configService.PrisonerPagedSize, foundPrisoners.Count);
+                return PartialView("PrisonerPanelPartial", list);
+            }
+            return PartialView("PrisonerPanelPartial", new List<PrisonerPagedListViewModel>());
+
         }
         //GET: Prisoner/DetailsOfPrisoner
         [HttpGet]
-        public ActionResult DetailsOfPrisoner(int?  id, int? page, int? totalCountDetentions)
+        public ActionResult DetailsOfPrisoner(int? id, int? page, int? totalCountDetentions)
         {
             const int pageSize = 4;
 

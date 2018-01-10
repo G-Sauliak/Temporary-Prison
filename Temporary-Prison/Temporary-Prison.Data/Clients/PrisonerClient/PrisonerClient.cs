@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Temporary_Prison.Data.PrisonService;
 
 namespace Temporary_Prison.Data.Clients
@@ -38,12 +39,6 @@ namespace Temporary_Prison.Data.Clients
                 .Execute(client => client.RegisterDetention(registrationOfDetention));
         }
 
-        public IReadOnlyList<PrisonerDto> FindPrisonersByName(string search)
-        {
-            return new PrisonerServiceClient()
-                .Execute(clinet => clinet.FindPrisonersByName(search));
-        }
-
         public DetentionPagedListDto[] GetDetentionsByPrisonerIdForPagedList(int Id, int skip, int rowSize, out int totalCount)
         {
             int _totalCount = default(int);
@@ -81,6 +76,12 @@ namespace Temporary_Prison.Data.Clients
         {
             new PrisonerServiceClient()
                  .Execute(client => client.DeleteDetention(id));
+        }
+
+        public IReadOnlyList<PrisonerDto> SearchFilter(DateTime? dateOfDetention, string name, string address)
+        {
+            return new PrisonerServiceClient()
+                .Execute(client => client.SearchFilter(dateOfDetention, name, address));
         }
     }
 }

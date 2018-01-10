@@ -42,33 +42,33 @@ namespace Temporary_Prison.Business.Providers
             return default(Prisoner);
         }
 
-        public IReadOnlyList<Prisoner> GetPrisonerForPagedList(int skip, int rowSize, ref int totalCount, string search)
+        public IReadOnlyList<Prisoner> GetPrisonersForPagedList(int skip, int rowSize, ref int totalCount, string search)
         {
             var cacheKeyForPageList = $"prisonersForPagelist_s_{skip}_r_{rowSize}_t_{totalCount}";
             var outTotalCount = default(int);
             var listPrisoners = default(IReadOnlyList<Prisoner>);
 
-            if (!string.IsNullOrEmpty(search))
-            {
-                var cacheKey = $"FPBN:{search}";
-                listPrisoners = cacheService.GetOrSet(cacheKey,
-                    () => FindPrisonersByName(search), DateTime.Now.AddSeconds(20));
-                return listPrisoners;
-            }
-            else
-            {
-                listPrisoners = cacheService.GetOrSet(cacheKeyForPageList,
-                    () => dataService.GetPrisonersForPagedList(skip, rowSize, out outTotalCount), DateTime.Now.AddSeconds(20));
+            /*if (!string.IsNullOrEmpty(search))
+              {
+                  var cacheKey = $"FPBN:{search}";
+                  listPrisoners = cacheService.GetOrSet(cacheKey,
+                      () => SearchFilter(search), DateTime.Now.AddSeconds(20));
+                  return listPrisoners;
+              }
+              else
+              {*/
+            listPrisoners = cacheService.GetOrSet(cacheKeyForPageList,
+                () => dataService.GetPrisonersForPagedList(skip, rowSize, out outTotalCount), DateTime.Now.AddSeconds(20));
 
-                if (totalCount == default(int))
-                {
-                    cacheService.Remove(cacheKeyForPageList);
-                }
-                if (outTotalCount != default(int))
-                {
-                    totalCount = outTotalCount;
-                }
+            if (totalCount == default(int))
+            {
+                cacheService.Remove(cacheKeyForPageList);
             }
+            if (outTotalCount != default(int))
+            {
+                totalCount = outTotalCount;
+            }
+            // }
             return listPrisoners;
         }
 
@@ -77,15 +77,6 @@ namespace Temporary_Prison.Business.Providers
             dataService.AddPrisoner(prisoner, out newId);
         }
 
-        public IReadOnlyList<Prisoner> FindPrisonersByName(string search)
-        {
-            var cacheKey = $"FPBN:{search}";
-            var listPrisoner = cacheService
-                .GetOrSet(cacheKey, () => dataService.FindPrisonersByName(search),
-                DateTime.Now.AddMinutes(2));
-
-            return listPrisoner;
-        }
 
         public void EditPrisoner(Prisoner prisoner)
         {
@@ -134,6 +125,11 @@ namespace Temporary_Prison.Business.Providers
         public void DeleteDetention(int id)
         {
             dataService.DeleteDetention(id);
+        }
+
+        public IReadOnlyList<Prisoner> SearchFilter(DateTime? dateOfDetention, string name, string address)
+        {
+            return dataService.SearchFilter(dateOfDetention, name, address);
         }
     }
 }

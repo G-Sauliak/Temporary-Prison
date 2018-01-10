@@ -1,4 +1,5 @@
-﻿using System.ServiceModel;
+﻿using System;
+using System.ServiceModel;
 using Temporary_Prison.Service.Contracts.Dto;
 
 namespace Temporary_Prison.Service.Contracts.Contracts
@@ -20,7 +21,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
 
         [OperationContract]
         [FaultContract(typeof(DataErrorDto))]
-        PrisonerDto[] FindPrisonersByName(string search);
+        PrisonerDto[] SearchFilter(DateTime? dateOfDetention, string name, string address);
 
         [OperationContract]
         [FaultContract(typeof(DataErrorDto))]

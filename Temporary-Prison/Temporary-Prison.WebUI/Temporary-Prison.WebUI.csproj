@@ -195,7 +195,7 @@
     <Compile Include="HtmlHelpers\PhotoHelper.cs" />
     <Compile Include="Infrastructure\DefaultConfig.cs" />
     <Compile Include="MapperProfile\WebMapper.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AccountVIewModels\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModels\CreateUserViewModel.cs" />
     <Compile Include="Models\AdminViewModels\EditUserViewModel.cs" />
     <Compile Include="Models\AdminViewModels\UserAndRolesViewModel.cs" />
@@ -206,8 +206,9 @@
     <Compile Include="Models\EditorViewModels\ReleaseOfPrisonerViewModel.cs" />
     <Compile Include="Models\PrisonerViewModels\DetailsOfDetentionViewModel.cs" />
     <Compile Include="Models\PrisonerViewModels\DetailsPrisonerViewModel.cs" />
+    <Compile Include="Models\PrisonerViewModels\ListOfPrisonersViewModel.cs" />
     <Compile Include="Models\PrisonerViewModels\PrisonerPagedListViewModel.cs" />
-    <Compile Include="Models\FilterModelView\SerarchModelView.cs" />
+    <Compile Include="Models\PrisonerViewModels\SerarchModelView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -224,7 +225,7 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Prisoner\ListOfPrisoners.cshtml" />
     <Content Include="Views\Prisoner\DetailsOfPrisoner.cshtml" />
-    <Content Include="Views\Prisoner\PrisonerPanel.cshtml" />
+    <Content Include="Views\Prisoner\PrisonerPanelPartial.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Editor\AddPrisoner.cshtml" />
@@ -240,6 +241,7 @@
     <Content Include="Views\Editor\ReleaseOfPrisoner.cshtml" />
     <Content Include="Views\Editor\EditFullDetention.cshtml" />
     <Content Include="Views\Editor\EditDetention.cshtml" />
+    <Content Include="Views\Prisoner\SearchFilterForm.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
