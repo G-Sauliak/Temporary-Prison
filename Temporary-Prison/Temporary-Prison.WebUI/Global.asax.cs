@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using System.Web.Routing;
 using Temporary_Prison.Dependencies.MapperRegistry;
-using Temporary_Prison.MapperProfile;
+using Temporary_Prison.WebMapperProfile;
 
 namespace Temporary_Prison
 {
@@ -11,8 +11,8 @@ namespace Temporary_Prison
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            MapperProfiles.Configuration.AddProfile(new WebMapper());
-            MapperProfiles.InitialiseMappers();
+            Dependencies.MapperRegistry.MapperProfiles.Configuration.AddProfile(new WebMapper());
+            Dependencies.MapperRegistry.MapperProfiles.InitialiseMappers();
         }
     }
 }

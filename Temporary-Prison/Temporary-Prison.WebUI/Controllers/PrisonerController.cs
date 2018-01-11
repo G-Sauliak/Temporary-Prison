@@ -9,7 +9,7 @@ using Temporary_Prison.Attributes;
 using Temporary_Prison.Business.Providers;
 using Temporary_Prison.Common.Models;
 using Temporary_Prison.Dependencies.MapperRegistry;
-using Temporary_Prison.MapperProfile;
+using Temporary_Prison.WebMapperProfile;
 using Temporary_Prison.Models;
 using Temporary_Prison.SiteConfigService;
 using X.PagedList;
@@ -24,8 +24,8 @@ namespace Temporary_Prison.Controllers
         private readonly IConfigService configService;
         public PrisonerController() : this(new PrisonerProvider(), new ConfigService())
         {
-            MapperProfiles.Configuration.AddProfile(new WebMapper());
-            MapperProfiles.InitialiseMappers();
+            Dependencies.MapperRegistry.MapperProfiles.Configuration.AddProfile(new WebMapper());
+            Dependencies.MapperRegistry.MapperProfiles.InitialiseMappers();
         }
 
         public PrisonerController(IPrisonerProvider prisonerProvider,IConfigService configService)

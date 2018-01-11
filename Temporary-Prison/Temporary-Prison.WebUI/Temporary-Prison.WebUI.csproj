@@ -195,7 +195,7 @@
     </Compile>
     <Compile Include="HtmlHelpers\PhotoHelper.cs" />
     <Compile Include="Infrastructure\DefaultConfig.cs" />
-    <Compile Include="MapperProfile\WebMapper.cs" />
+    <Compile Include="MapperProfiles\WebMapper.cs" />
     <Compile Include="Models\AccountVIewModels\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModels\CreateUserViewModel.cs" />
     <Compile Include="Models\AdminViewModels\EditUserViewModel.cs" />

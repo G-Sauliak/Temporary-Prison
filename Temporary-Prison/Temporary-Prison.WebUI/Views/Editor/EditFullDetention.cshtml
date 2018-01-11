@@ -50,7 +50,7 @@
 
     </div>
 
-    <dl class="dl-horizontal col-lg-5">
+    <dl class="dl-horizontal col-lg-5 ">
              @Html.HiddenFor(model => model.DetainedEmployee.EmployeeID)
 
         <dt> @Html.LabelFor(model => model.DetainedEmployee.FirstName) </dt>
@@ -77,7 +77,7 @@
             @Html.ValidationMessageFor(model => model.DetainedEmployee.Position, string.Empty, new { @class = "text-danger" })
         </dd>
     </dl>
-    <dl class="dl-horizontal col-lg-5">
+    <dl class="dl-horizontal col-lg-5 ">
              @Html.HiddenFor(model => model.DeliveredEmployee.EmployeeID)
         <dt> @Html.LabelFor(model => model.DeliveredEmployee.FirstName) </dt>
         <dd>

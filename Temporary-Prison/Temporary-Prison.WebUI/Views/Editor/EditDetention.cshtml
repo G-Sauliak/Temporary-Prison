@@ -50,7 +50,7 @@
 
     </div>
     @Html.HiddenFor(model => model.DetainedEmployee.EmployeeID)
-    <dl class="dl-horizontal col-lg-5">
+    <dl class="dl-horizontal col-lg-5 col-lg-offset-2">
         <dt> @Html.LabelFor(model => model.DetainedEmployee.FirstName) </dt>
         <dd>
             @Html.EditorFor(model => model.DetainedEmployee.FirstName, new { htmlAttributes = new { @class = "form-control" } })
@@ -101,8 +101,13 @@
             @Html.ValidationMessageFor(model => model.DeliveredEmployee.Position, string.Empty, new { @class = "text-danger" })
         </dd>
     </dl>
+    <dl class="dl-horizontal col-lg-offset-2 col-lg-10">
+        <dt>
+            @Html.EditorFor(model => model.PlaceofDetention, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PlaceofDetention, string.Empty, new { @class = "text-danger" })
+        </dt>
+    </dl>
 
-   
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10 col-lg-2 col-lg-offset-10 ">
             <input type="submit" value="Update detention" class="btn-primary">

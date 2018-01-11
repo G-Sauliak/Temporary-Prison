@@ -9,7 +9,7 @@ using Temporary_Prison.Business.Providers;
 using Temporary_Prison.Business.UserManagers;
 using Temporary_Prison.Common.Models;
 using Temporary_Prison.Dependencies.MapperRegistry;
-using Temporary_Prison.MapperProfile;
+using Temporary_Prison.WebMapperProfile;
 using Temporary_Prison.Models;
 using Temporary_Prison.SiteConfigService;
 using X.PagedList;
@@ -26,8 +26,8 @@ namespace Temporary_Prison.Controllers
 
         public AdminController() : this(new UserProvider(), new UserManager(), new ConfigService())
         {
-            MapperProfiles.Configuration.AddProfile(new WebMapper());
-            MapperProfiles.InitialiseMappers();
+            Dependencies.MapperRegistry.MapperProfiles.Configuration.AddProfile(new WebMapper());
+            Dependencies.MapperRegistry.MapperProfiles.InitialiseMappers();
         }
 
         public AdminController(IUserProvider userProvider, IUserManager userManager, IConfigService configService)

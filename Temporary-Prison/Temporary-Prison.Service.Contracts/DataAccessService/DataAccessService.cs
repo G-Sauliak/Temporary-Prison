@@ -44,7 +44,13 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                 {
                     if (IsValidPropertyType(prop))
                     {
-                        dataTable.Columns.Add(prop.Name, prop.PropertyType);
+                        var column = new DataColumn
+                        {
+                            DataType = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType,
+                            ColumnName = prop.Name,
+                            AllowDBNull = true
+                        };
+                        dataTable.Columns.Add(column);
                     }
                 }
                 foreach (var model in objectModels)
@@ -54,7 +60,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                     {
                         if (IsValidPropertyType(prop))
                         {
-                            row[prop.Name] = prop.GetValue(model, null);
+                            row[prop.Name] = prop.GetValue(model, null) ?? DBNull.Value;
                         }
                     }
                     dataTable.Rows.Add(row);
@@ -62,7 +68,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             }
             else
             {
-                new NullReferenceException($"{typeof(TInput)} is null");
+                new ArgumentException($"{typeof(TInput)} no properties");
             }
             return dataTable;
         }
@@ -105,14 +111,14 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                 {
                     if (IsValidPropertyType(prop))
                     {
-                        row[prop.Name] = prop.GetValue(objectModel, null);
+                        row[prop.Name] = prop.GetValue(objectModel, null) ?? DBNull.Value;
                     }
                 }
                 dataTable.Rows.Add(row);
             }
             else
             {
-                new NullReferenceException($"{typeof(TInput)} is null");
+                new ArgumentException($"{typeof(TInput)} no properties");
             }
             return dataTable;
         }

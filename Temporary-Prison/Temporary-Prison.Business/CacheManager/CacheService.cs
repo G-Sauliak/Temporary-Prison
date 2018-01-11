@@ -7,7 +7,7 @@ namespace Temporary_Prison.Business.CacheManager
     public class CacheService : ICacheService
     {
         private const int cacheDefaultTimeoutInMinute = 30;
-   
+
         public TResult GetOrSet<TResult>(string cacheKey, Func<TResult> getCallback) where TResult : class
         {
             var item = default(TResult);
@@ -19,13 +19,13 @@ namespace Temporary_Prison.Business.CacheManager
             item = getCallback();
             if (item != null)
             {
-                HttpRuntime.Cache.Insert(cacheKey, item, null, DateTime.Now.AddMinutes(cacheDefaultTimeoutInMinute), Cache.NoSlidingExpiration);
+                HttpRuntime.Cache.Insert(cacheKey, item, null, Cache.NoAbsoluteExpiration, TimeSpan.FromMinutes(cacheDefaultTimeoutInMinute));
                 return item;
             }
             return default(TResult);
         }
 
-        public TResult GetOrSet<TResult>(string cacheKey, Func<TResult> getCallback, DateTime expirationTime) where TResult : class
+        public TResult GetOrSet<TResult>(string cacheKey, Func<TResult> getCallback, TimeSpan expirationTime) where TResult : class
         {
             var item = default(TResult);
             if (HttpRuntime.Cache[cacheKey] != null)
@@ -36,7 +36,7 @@ namespace Temporary_Prison.Business.CacheManager
             item = getCallback();
             if (item != null)
             {
-                HttpRuntime.Cache.Insert(cacheKey, item, null, expirationTime, Cache.NoSlidingExpiration);
+                HttpRuntime.Cache.Insert(cacheKey, item, null, Cache.NoAbsoluteExpiration, expirationTime);
                 return item;
             }
             return default(TResult);

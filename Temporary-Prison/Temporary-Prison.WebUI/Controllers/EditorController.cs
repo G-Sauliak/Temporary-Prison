@@ -10,7 +10,7 @@ using Temporary_Prison.Common.Models;
 using Temporary_Prison.Dependencies.MapperRegistry;
 using Temporary_Prison.Enums;
 using Temporary_Prison.Extensions;
-using Temporary_Prison.MapperProfile;
+using Temporary_Prison.WebMapperProfile;
 using Temporary_Prison.Models;
 using Temporary_Prison.SiteConfigService;
 
@@ -23,8 +23,8 @@ namespace Temporary_Prison.Controllers
         private readonly IConfigService siteConfigService;
         public EditorController() : this(new PrisonerProvider(), new ConfigService())
         {
-            MapperProfiles.Configuration.AddProfile(new WebMapper());
-            MapperProfiles.InitialiseMappers();
+            Dependencies.MapperRegistry.MapperProfiles.Configuration.AddProfile(new WebMapper());
+            Dependencies.MapperRegistry.MapperProfiles.InitialiseMappers();
         }
 
         public EditorController(IPrisonerProvider prisonerProvider, IConfigService siteConfigService)
@@ -67,7 +67,7 @@ namespace Temporary_Prison.Controllers
                 {
                     Directory.CreateDirectory(savePath);
                 }
-
+               
                 photo.SaveAs(photoSavePath);
 
                 model.Photo = $"/Content/{siteConfigService.PrisonerPhotoPath}/{photoName}";
@@ -143,7 +143,19 @@ namespace Temporary_Prison.Controllers
         {
             if (id.HasValue)
             {
-                prisonerProvider.DeletePrisoner(id.Value);
+                var prisoner = prisonerProvider.GetPrisonerById(id.Value);
+                if (prisoner != null)
+                {
+                    prisonerProvider.DeletePrisoner(id.Value);
+                    if (!prisoner.Photo.Equals(siteConfigService.defaultPhotoOfPrisonerPath))
+                    {
+                        var deletePhotoPath = Server.MapPath(prisoner.Photo);
+                        if (System.IO.File.Exists(deletePhotoPath))
+                        {
+                            System.IO.File.Delete(deletePhotoPath);
+                        }
+                    }
+                }
             }
 
             return RedirectToAction("ListOfPrisoners", "Prisoner");

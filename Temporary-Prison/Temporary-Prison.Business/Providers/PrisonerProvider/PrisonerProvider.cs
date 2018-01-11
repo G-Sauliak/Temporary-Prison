@@ -48,7 +48,7 @@ namespace Temporary_Prison.Business.Providers
             var listPrisoners = default(IReadOnlyList<Prisoner>);
 
             listPrisoners = cacheService.GetOrSet(cacheKeyForPageList, () =>
-            dataService.GetPrisonersForPagedList(skip, rowSize, out outTotalCount), DateTime.Now.AddSeconds(20));
+            dataService.GetPrisonersForPagedList(skip, rowSize, out outTotalCount), TimeSpan.FromSeconds(10));
 
             if (totalCount == default(int))
             {
@@ -94,7 +94,7 @@ namespace Temporary_Prison.Business.Providers
             var cacheKey = $"Detention_{id}";
 
             var detention = cacheService.GetOrSet(cacheKey, () =>
-             dataService.GetDetentionById(id), DateTime.Now.AddMinutes(3));
+             dataService.GetDetentionById(id), TimeSpan.FromSeconds(10));
 
             return detention;
         }
