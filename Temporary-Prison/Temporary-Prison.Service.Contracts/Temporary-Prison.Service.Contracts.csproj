@@ -80,7 +80,6 @@
     <Compile Include="Dto\UserDto.cs" />
     <Compile Include="Extensions\DataTableExtension.cs" />
     <Compile Include="Helpers\DbHelper.cs" />
-    <Compile Include="Helpers\TypeHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

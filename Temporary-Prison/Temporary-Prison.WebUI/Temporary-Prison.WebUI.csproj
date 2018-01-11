@@ -170,6 +170,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Application_Error.cs" />
     <Compile Include="App_Start\MvcApplication.Auth.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\StructuremapMvc.cs" />
@@ -208,7 +209,7 @@
     <Compile Include="Models\PrisonerViewModels\DetailsPrisonerViewModel.cs" />
     <Compile Include="Models\PrisonerViewModels\ListOfPrisonersViewModel.cs" />
     <Compile Include="Models\PrisonerViewModels\PrisonerPagedListViewModel.cs" />
-    <Compile Include="Models\PrisonerViewModels\SerarchModelView.cs" />
+    <Compile Include="Models\PrisonerViewModels\SearchFilterViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -225,7 +226,6 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Prisoner\ListOfPrisoners.cshtml" />
     <Content Include="Views\Prisoner\DetailsOfPrisoner.cshtml" />
-    <Content Include="Views\Prisoner\PrisonerPanelPartial.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Editor\AddPrisoner.cshtml" />
@@ -236,12 +236,14 @@
     <Content Include="Views\Editor\EditPrisoner.cshtml" />
     <Content Include="Views\Admin\ListExistingRoles.cshtml" />
     <Content Include="Views\Editor\CreateDetention.cshtml" />
-    <Content Include="Views\Prisoner\ListOfDetentions.cshtml" />
+    <Content Include="Views\Prisoner\ListOfDetentionsPartial.cshtml" />
     <Content Include="Views\Prisoner\DetailsOfDetention.cshtml" />
     <Content Include="Views\Editor\ReleaseOfPrisoner.cshtml" />
     <Content Include="Views\Editor\EditFullDetention.cshtml" />
     <Content Include="Views\Editor\EditDetention.cshtml" />
-    <Content Include="Views\Prisoner\SearchFilterForm.cshtml" />
+    <Content Include="Views\Prisoner\SearchFilterFormPartial.cshtml" />
+    <Content Include="Views\Prisoner\InmateSearches.cshtml" />
+    <Content Include="Views\Prisoner\SearchResultOfInmatesPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

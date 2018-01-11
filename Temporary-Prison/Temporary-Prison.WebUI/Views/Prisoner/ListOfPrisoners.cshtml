@@ -1,43 +1,99 @@
-﻿@model Temporary_Prison.Models.ListOfPrisonersViewModel
-
+﻿@model IEnumerable<Temporary_Prison.Models.PrisonerPagedListViewModel>
+@using X.PagedList
+@using X.PagedList.Mvc
 @{
     ViewBag.Title = "list of prisoners";
 }
+<style>
+    i {
+        vertical-align: middle;
+    }
 
+    .table-users tbody tr:hover {
+        cursor: pointer;
+        background-color: #eee;
+    }
+
+    .nav-user-photo {
+        vertical-align: middle;
+    }
+
+    .user_panel {
+        width: 100%;
+    }
+</style>
 <div class="form-group">
-        @Html.Partial("SearchFilterForm", Model.SearchfilterModel)
- 
-        <div class="row" id="UserListBox">
+    <div class="col-md-10">
+        <div class="panel panel-default">
+            <div class="panel-body col-lg-offset-0 col-lg-12">
+                <div class="panel panel-default user_panel ">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">List of Inmates</h3>
+                    </div>
+                    <div class="table-container">
+                        <table class="table-users table">
+                            <tbody>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.FirstName)
+                                    </th>
 
-            @if (Model.PagedListOfPriosners != null)
-            {
-                @Html.Partial("PrisonerPanelPartial", Model.PagedListOfPriosners)
-            }
-            else
-            {
-                @Html.Label("not found")
-            }
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.BirthDate)
+                                    </th>
+                                </tr>
+
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.BirthDate)
+                                        </td>
+                                        <td align="center">
+                                            @Html.ActionLink("Details", "DetailsOfPrisoner",
+                                         new { id = item.PrisonerId })
+                                        </td>
+                                        @if (User.IsInRole("Editor") || (User.IsInRole("Admin")))
+                                        {
+                                            <td align="center">
+                                                @Html.ActionLink("Edit", "EditPrisoner", "Editor",
+                                          new { id = item.PrisonerId }, string.Empty)
+                                            </td>
+                                            <td align="center">
+                                                @Html.ActionLink("Delete", "DeletePrisoner", "Editor",
+                                          new { id = item.PrisonerId },
+                                          new { onclick = "return confirm('Are you sure you wish to delete this prisoner?');" })
+                                            </td>
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="col-md-6">
+                        <h4>
+                            Total Count: <span class="label label-info" id="total-count">@ViewBag.TotalCountPrisoners</span>
+                        </h4>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="pagination pagination-sm pull-right">
+                            @Html.PagedListPager(Model as IPagedList, page =>
+              Url.Action("ListOfPrisoners", new
+              {
+                  page,
+                  currentTotal = ViewBag.TotalCountPrisoners,
+                  search = ViewBag.Search
+              }),
+             PagedListRenderOptions.MinimalWithPageCountText)
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-</div>
-    <div class="form-group">
-        <div class="col-md-10">
-            <input class="btn btn-group " type="submit" value="Search" onclick="window.search.SearchFilter()" />
         </div>
     </div>
-
-
-@Html.ActionLink("Back to Home", "Index", "Home")
-
-@section scripts
-{
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
-    <script src="~/Scripts/search/search.js"></script>
-    <script>
-    window.search = window.FindPrisoners(
-            '@Html.Raw(Url.Action("SearchFilter", "Prisoner"))',
-    )
-    </script>
-}
+        @Html.ActionLink("Back to Home", "Index", "Home")

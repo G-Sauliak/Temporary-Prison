@@ -1,31 +1,6 @@
 ﻿@model IEnumerable<Temporary_Prison.Models.PrisonerPagedListViewModel>
-@using X.PagedList
-@using X.PagedList.Mvc
-
-@{
-    ViewBag.Title = "list of prisoners";
-}
-<style>
-    i {
-        vertical-align: middle;
-    }
-
-    .table-users tbody tr:hover {
-        cursor: pointer;
-        background-color: #eee;
-    }
-
-    .nav-user-photo {
-        vertical-align: middle;
-    }
-
-    .user_panel {
-        width: 100%;
-    }
-</style>
 
 <div class="panel panel-default">
-
     <div class="panel-body col-lg-10 col-lg-offset-2">
         <div class="table-container">
             <table class="table-users table">
@@ -51,18 +26,18 @@
                             </td>
                             <td align="center">
                                 @Html.ActionLink("Details", "DetailsOfPrisoner",
-                                       new { id = item.PrisonerId })
+                                         new { id = item.PrisonerId })
                             </td>
                             @if (User.IsInRole("Editor") || (User.IsInRole("Admin")))
                             {
                                 <td align="center">
                                     @Html.ActionLink("Edit", "EditPrisoner", "Editor",
-                                           new { id = item.PrisonerId }, string.Empty)
+                                          new { id = item.PrisonerId }, string.Empty)
                                 </td>
                                 <td align="center">
                                     @Html.ActionLink("Delete", "DeletePrisoner", "Editor",
-                                           new { id = item.PrisonerId },
-                                           new { onclick = "return confirm('Are you sure you wish to delete this prisoner?');" })
+                                          new { id = item.PrisonerId },
+                                          new { onclick = "return confirm('Are you sure you wish to delete this prisoner?');" })
                                 </td>
                             }
                         </tr>
@@ -70,27 +45,5 @@
                 </tbody>
             </table>
         </div>
-
-        <div class="col-md-6">
-            <h4>
-                Total Count: <span class="label label-info" id="total-count">@ViewBag.TotalCountPrisoners</span>
-            </h4>
-        </div>
-        <div class="col-md-6">
-            <div class="pagination pagination-sm pull-right">
-                @Html.PagedListPager(Model as IPagedList,
-                               page => Url.Action("ListOfPrisoners",
-                               new
-                               {
-                                   page,
-                                   currentTotal = ViewBag.TotalCountPrisoners,
-                                   search = ViewBag.Search
-
-                               }),
-                               PagedListRenderOptions.MinimalWithPageCountText)
-            </div>
-        </div>
     </div>
 </div>
-
-

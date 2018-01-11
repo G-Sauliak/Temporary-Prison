@@ -39,13 +39,13 @@ namespace Temporary_Prison.Controllers
         {
             ViewBag.RelationshipStatus = Enum.GetValues(typeof(RelationshipStatus)).Cast<RelationshipStatus>();
             ViewBag.RedirectUrl = Url.Action("ListOfPrisoners", "Prisoner");
-            return View(new CreatePrisonerViewModel());
+            return View(new CreateOrUpdatePrisonerViewModel());
         }
 
         // POST: Editor/Addrisoner
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AddPrisoner(HttpPostedFileBase photo, CreatePrisonerViewModel model, string RedirectUrl)
+        public ActionResult AddPrisoner(HttpPostedFileBase photo, CreateOrUpdatePrisonerViewModel model, string RedirectUrl)
         {
             if (!ModelState.IsValid)
             {
@@ -60,7 +60,7 @@ namespace Temporary_Prison.Controllers
             {
                 var photoExtensions = Path.GetExtension(photo.FileName);
                 var photoName = string.Concat(DateTime.Now.Ticks, photoExtensions);
-                var savePath = Server.MapPath("~/Content/PhotosOfPrisoners");
+                var savePath = Server.MapPath($"~/Content/{siteConfigService.PrisonerPhotoPath}");
                 var photoSavePath = Path.Combine(savePath, photoName);
 
                 if (!Directory.Exists(savePath))
@@ -70,9 +70,9 @@ namespace Temporary_Prison.Controllers
 
                 photo.SaveAs(photoSavePath);
 
-                model.Photo = $"/Content/PhotosOfPrisoners/{photoName}";
+                model.Photo = $"/Content/{siteConfigService.PrisonerPhotoPath}/{photoName}";
 
-                var prisoner = Mapper.Map<CreatePrisonerViewModel, Prisoner>(model);
+                var prisoner = Mapper.Map<CreateOrUpdatePrisonerViewModel, Prisoner>(model);
 
                 var newID = default(int);
                 prisonerProvider.AddPrisoner(prisoner, out newID);
@@ -81,9 +81,9 @@ namespace Temporary_Prison.Controllers
             }
             else if (photo == null)
             {
-                var prisoner = Mapper.Map<CreatePrisonerViewModel, Prisoner>(model);
+                var prisoner = Mapper.Map<CreateOrUpdatePrisonerViewModel, Prisoner>(model);
 
-                prisoner.Photo = "/Content/DefaultPhoto/defaultPhotoPrisoner.jpg";
+                prisoner.Photo = $"/Content/{siteConfigService.defaultPhotoOfPrisonerPath}";
 
                 var newID = default(int);
                 prisonerProvider.AddPrisoner(prisoner, out newID);
@@ -109,19 +109,17 @@ namespace Temporary_Prison.Controllers
 
             if (prisoner != null)
             {
-                TempData["photo"] = prisoner.Photo;
-                var model = Mapper.Map<Prisoner, CreatePrisonerViewModel>(prisoner);
+                var model = Mapper.Map<Prisoner, CreateOrUpdatePrisonerViewModel>(prisoner);
                 ViewBag.RelationshipStatus = Enum.GetValues(typeof(RelationshipStatus)).Cast<RelationshipStatus>();
                 return View(model);
             }
-
             return HttpNotFound();
         }
 
         //POST: Editor/EditPriosner
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditPrisoner(CreatePrisonerViewModel model, string redirectUrl)
+        public ActionResult EditPrisoner(CreateOrUpdatePrisonerViewModel model, HttpPostedFileBase photo, string redirectUrl)
         {
             if (!ModelState.IsValid)
             {
@@ -129,15 +127,13 @@ namespace Temporary_Prison.Controllers
                 return View(model);
             }
 
-            var photo = Request.Files[0];
-
             if (photo != null
                 && PhotosExtensions.SupportedFormat(photo, siteConfigService.AllowedPhotoTypes)
                 && PhotosExtensions.CheckSize(photo, siteConfigService.MaxPhotoSize))
             {
                 //TODO
             }
-            var prisoner = Mapper.Map<CreatePrisonerViewModel, Prisoner>(model);
+            var prisoner = Mapper.Map<CreateOrUpdatePrisonerViewModel, Prisoner>(model);
             prisonerProvider.EditPrisoner(prisoner);
 
             return RedirectToAction("ListOfPrisoners", "Prisoner");

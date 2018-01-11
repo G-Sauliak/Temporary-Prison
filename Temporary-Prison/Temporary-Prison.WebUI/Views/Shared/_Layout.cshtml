@@ -1,5 +1,4 @@
-﻿@using System.Web.Optimization
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -24,7 +23,7 @@
                 <ul class="nav navbar-nav">
                     @if (User.IsInRole("Editor") || User.IsInRole("Admin"))
                     {
-                        <li>@Html.ActionLink("Add prisoner", "AddPrisoner", "Editor")</li>
+                        <li>@Html.ActionLink("Add a detainee", "AddPrisoner", "Editor")</li>
                     }
                     @if (User.IsInRole("Admin"))
                     {
@@ -40,13 +39,12 @@
         @if (Request.IsAuthenticated)
         {
             <div class="well col-lg-2">
-                <h3 class="text-left">Navigation</h3>
                 <div class="form-horizontal">
                     <div class="form-group">
-                        <a href="@Url.Action("ListOfPrisoners", "Prisoner")">List Of Prisoners</a>
+                        <a href="@Url.Action("ListOfPrisoners", "Prisoner")">List of Inmates</a>
                     </div>
                     <div class="form-group">
-                        <a href="#">Find prisoner</a>
+                        <a href="@Url.Action("InmateSearches", "Prisoner")">Inmate searches</a>
                     </div>
                     <div class="form-group">
                         <a href="#">Date</a>
@@ -66,8 +64,6 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>

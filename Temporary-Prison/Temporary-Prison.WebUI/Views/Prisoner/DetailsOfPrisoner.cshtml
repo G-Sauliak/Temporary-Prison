@@ -46,9 +46,11 @@
                             <div class="col-sm-5 col-xs-6 tital ">@Html.LabelFor(model => model.PlaceOfWork)</div>
                             <div class="col-sm-7">@Html.DisplayFor(model => model.PlaceOfWork)</div>
                             <div class="clearfix"></div>
-                            <div class="col-sm-5 col-xs-6 tital ">@Html.LabelFor(model => model.RelationshipStatus)</div>
-                            <div class="col-sm-7">@Html.DisplayFor(model => model.RelationshipStatus)</div>
-
+                            <div class="col-sm-5 col-xs-6 tital ">@Html.LabelFor(model => model.Address)</div>
+                            <div class="col-sm-7">@Html.DisplayFor(model => model.Address)</div>
+                            <div class="clearfix"></div>
+                            <div class="col-sm-5 col-xs-6 tital ">@Html.LabelFor(model => model.AdditionalInformation)</div>
+                            <div class="col-sm-7" style="overflow-y: auto">@Html.DisplayFor(model => model.AdditionalInformation)</div>
                         </div>
                     </div>
                 </div>
@@ -59,7 +61,7 @@
 @if (Model.DetentionPagedList != null)
 {
     <div class="container" id="ListDetentions">
-        @Html.Partial("ListOfDetentions", Model.DetentionPagedList)
+        @Html.Partial("ListOfDetentionsPartial", Model.DetentionPagedList)
     </div>
 }
 

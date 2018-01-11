@@ -41,24 +41,18 @@ namespace Temporary_Prison.Controllers
         public ActionResult Index(int? page, int? currentTotal)
         {
             var pageSize = configService.UserPagedSize;
-            var totalCount = default(int);
             var _currentTotal = currentTotal ?? default(int);
-
-            if (_currentTotal != default(int))
-            {
-                totalCount = _currentTotal;
-            }
 
             var pageNum = page ?? 1;
             var skip = (pageNum - 1) * pageSize;
 
             ViewBag.RedirectUrl = Url.Action("Index", "Admin");
 
-            var listUsers = userProvider.GetUsersForPagedList(skip, pageSize, ref totalCount);
+            var listUsers = userProvider.GetUsersForPagedList(skip, pageSize, ref _currentTotal);
 
             if (listUsers != null)
             {
-                var usersPagedList = new StaticPagedList<User>(listUsers, pageNum, pageSize, totalCount);
+                var usersPagedList = new StaticPagedList<User>(listUsers, pageNum, pageSize, _currentTotal);
                 return View(usersPagedList);
             }
             return View(default(StaticPagedList<User>));

@@ -1,7 +1,6 @@
 ﻿using log4net;
 using System;
 using System.ServiceModel;
-using Temporary_Prison.Service.Contracts.Dto;
 
 namespace Temporary_Prison.Data.Clients
 {
@@ -14,8 +13,6 @@ namespace Temporary_Prison.Data.Clients
         {
             try
             {
-                log.Info($"ServiceClent: {typeof(TServiceClient)}, GetResponce: {typeof(TResult)} ");
-
                 var result = clientFunction(client);
 
                 client.Close();
@@ -26,7 +23,6 @@ namespace Temporary_Prison.Data.Clients
             {
                 log.Error(e.Message);
                 client.Abort();
-                throw;
             }
             catch (CommunicationException e)
             {
@@ -63,8 +59,6 @@ namespace Temporary_Prison.Data.Clients
         {
             try
             {
-                log.Info($"ServiceClent: {typeof(TServiceClient)}");
-
                 clientMethod(client);
 
                 client.Close();
@@ -73,7 +67,6 @@ namespace Temporary_Prison.Data.Clients
             {
                 log.Error(e.Message);
                 client.Abort();
-                throw;
             }
             catch (CommunicationException e)
             {

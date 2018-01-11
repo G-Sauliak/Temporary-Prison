@@ -5,7 +5,7 @@ namespace Temporary_Prison.SiteConfigService
 {
     public class ConfigService : IConfigService
     {
-        public string PhotoImagePath
+        public string PrisonerPhotoPath
         {
             get
             {
@@ -145,6 +145,26 @@ namespace Temporary_Prison.SiteConfigService
                 else
                 {
                     ConfigurationManager.AppSettings["UserPagedSize"] = DefaultConfig.UserPagedSize.ToString();
+                }
+            }
+        }
+
+        public string defaultPhotoOfPrisonerPath
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["defaultPhotoOfPrisonerPath"];
+            }
+
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    ConfigurationManager.AppSettings["defaultPhotoOfPrisonerPath"] = value;
+                }
+                else
+                {
+                    ConfigurationManager.AppSettings["defaultPhotoOfPrisonerPath"] = DefaultConfig.defaultPhotoOfPrisonerPath;
                 }
             }
         }

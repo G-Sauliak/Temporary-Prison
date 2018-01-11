@@ -19,8 +19,8 @@ namespace Temporary_Prison.Controllers
     [Authorize]
     public class PrisonerController : Controller
     {
-        private readonly IPrisonerProvider prisonerProvider;
         private readonly ILog log = LogManager.GetLogger("LOGGER");
+        private readonly IPrisonerProvider prisonerProvider;
         private readonly IConfigService configService;
         public PrisonerController() : this(new PrisonerProvider(), new ConfigService())
         {
@@ -36,7 +36,7 @@ namespace Temporary_Prison.Controllers
 
         // GET: Prisoner/ListOfPrisoners
         [HttpGet]
-        public ActionResult ListOfPrisoners(int? page, int? totalCount, string search)
+        public ActionResult ListOfPrisoners(int? page, int? totalCount)
         {
             var pageSize = configService.PrisonerPagedSize;
             var _totalCount = totalCount ?? default(int);
@@ -45,13 +45,8 @@ namespace Temporary_Prison.Controllers
             var skip = (pageNum - 1) * pageSize;
 
             var listPrisoners = prisonerProvider.
-                GetPrisonersForPagedList(skip, pageSize, ref _totalCount, search);
+                GetPrisonersForPagedList(skip, pageSize, ref _totalCount);
 
-            if (!string.IsNullOrEmpty(search))
-            {
-                ViewBag.Search = search;
-                return View(listPrisoners.ToPagedList(pageNum, pageSize));
-            }
             ViewBag.TotalCountPrisoners = _totalCount;
 
             var model = Mapper.Map<IReadOnlyList<Prisoner>, IReadOnlyList<PrisonerPagedListViewModel>>(listPrisoners);
@@ -60,31 +55,32 @@ namespace Temporary_Prison.Controllers
             {
                 var staticPagedListOfPrisoners = new StaticPagedList<PrisonerPagedListViewModel>(model, pageNum, pageSize, _totalCount);
 
-                var listOfPrisonersModel = new ListOfPrisonersViewModel()
-                {
-                    PagedListOfPriosners = staticPagedListOfPrisoners
-                };
-                return View(listOfPrisonersModel);
+                return View(staticPagedListOfPrisoners);
             }
-
+            
             return View(default(StaticPagedList<Prisoner>));
+        }
+
+        [HttpGet]
+        public ActionResult InmateSearches()
+        {
+            return View(new SearchFilterModelView());
         }
 
         [AjaxOnly]
         public ActionResult SearchFilter(DateTime? DateOfDetention, string Name, string Address)
         {
-            var foundPrisoners = prisonerProvider.SearchFilter(DateOfDetention, Name, Address);
-
-            // ViewBag.Search = search;
-            // ViewBag.TotalCountPrisoners = foundPrisoners.Count;
-            if (foundPrisoners != null)
+            if (DateOfDetention != null || !string.IsNullOrEmpty(Name) || !string.IsNullOrEmpty(Address))
             {
-                var model = Mapper.Map<IReadOnlyList<Prisoner>, IReadOnlyList<PrisonerPagedListViewModel>>(foundPrisoners);
-                var list = new StaticPagedList<PrisonerPagedListViewModel>(model, 1, configService.PrisonerPagedSize, foundPrisoners.Count);
-                return PartialView("PrisonerPanelPartial", list);
-            }
-            return PartialView("PrisonerPanelPartial", new List<PrisonerPagedListViewModel>());
+                var foundPrisoners = prisonerProvider.SearchFilter(DateOfDetention, Name, Address);
+                if (foundPrisoners != null)
+                {
+                    var model = Mapper.Map<IReadOnlyList<Prisoner>, IReadOnlyList<PrisonerPagedListViewModel>>(foundPrisoners);
 
+                    return PartialView("SearchResultOfInmatesPartial", model.ToPagedList(1, configService.PrisonerPagedSize));
+                }
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.NotFound);
         }
         //GET: Prisoner/DetailsOfPrisoner
         [HttpGet]

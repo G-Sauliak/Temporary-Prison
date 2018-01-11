@@ -36,7 +36,7 @@ namespace Temporary_Prison.MapperProfile
             CreateMap<ReleaseOfPrisoner, ReleaseOfPrisonerViewModel>();
             CreateMap<ReleaseOfPrisoner, ReleaseOfPrisonerViewModel>();
             CreateMap<Employee, EmployeeViewModel>();
-            CreateMap<Prisoner, CreatePrisonerViewModel>();
+            CreateMap<Prisoner, CreateOrUpdatePrisonerViewModel>();
         }
     }
 

@@ -2,7 +2,11 @@
     var _serachUrl = serachUrl;
 
     function _Request(reqUrl, targetLoad, searchString) {
-        targetLoad.load(reqUrl, searchString)
+        targetLoad.load(reqUrl, searchString, function (response, status, xhr) {
+            if (status == "error") {
+                targetLoad.empty();
+            }
+        });
     }
 
     function SearchFilter() {

@@ -69,9 +69,9 @@ namespace Temporary_Prison.Service.Contracts.Contracts
 
         private bool IsValidPropertyType(PropertyInfo prop)
         {
-            if (prop.PropertyType.IsPrimitive 
+            if (prop.PropertyType.IsPrimitive
                  || prop.PropertyType == typeof(String)
-                 || prop.PropertyType == typeof(DateTime) 
+                 || prop.PropertyType == typeof(DateTime)
                  || prop.PropertyType == typeof(decimal)
                  || prop.PropertyType == typeof(DateTime?))
             {
@@ -79,7 +79,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             }
             return false;
         }
-       
+
         private DataTable ConvertToDataTable<TInput>(TInput objectModel)
         {
             var dataTable = new DataTable();
@@ -93,7 +93,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                     {
                         var column = new DataColumn
                         {
-                            DataType = ValueTypeHelper.GetType(prop.PropertyType),
+                            DataType = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType,
                             ColumnName = prop.Name,
                             AllowDBNull = true
                         };
@@ -218,14 +218,11 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                 using (var sqlConnection = new SqlConnection(GetConnectionString))
                 {
                     sqlConnection.Open();
-
                     using (var sqlCommand = new SqlCommand(sqlCommandString, sqlConnection))
                     {
                         sqlCommand.CommandType = CommandType.StoredProcedure;
-
                         var param = sqlCommand.Parameters.AddWithValue("@dt", dataTable);
                         param.SqlDbType = SqlDbType.Structured;
-
                         sqlCommand.ExecuteNonQuery();
                     }
                 }
@@ -245,21 +242,18 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             try
             {
                 var dataTable = ConvertToDataTable(objectmodel);
-
                 using (var sqlConnection = new SqlConnection(GetConnectionString))
                 {
                     sqlConnection.Open();
                     using (var sqlCommand = new SqlCommand(sqlCommandString, sqlConnection))
                     {
                         sqlCommand.CommandType = CommandType.StoredProcedure;
-
                         var param = sqlCommand.Parameters.AddWithValue("@dt", dataTable);
                         if (parametrs != null)
                         {
                             sqlCommand.Parameters.AddRange(parametrs);
                         }
                         param.SqlDbType = SqlDbType.Structured;
-
                         sqlCommand.ExecuteNonQuery();
                     }
                 }
@@ -288,7 +282,6 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                         sqlCommand.CommandType = CommandType.StoredProcedure;
                         var outPutParametr = sqlCommand.Parameters.Add($"@{outPutName}", SqlDbTypeHelper.GetDbType(typeof(TOut)));
                         outPutParametr.Direction = ParameterDirection.Output;
-
                         sqlCommand.Parameters.AddRange(inputParametrs);
 
                         using (var dataTable = new DataTable())
@@ -324,7 +317,6 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                     {
                         sqlCommand.CommandType = CommandType.StoredProcedure;
                         sqlCommand.Parameters.AddRange(inputParametrs);
-
                         using (var dataTable = new DataTable())
                         {
                             dataTable.Load(sqlCommand.ExecuteReader());
@@ -358,7 +350,6 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                     {
                         sqlCommand.CommandType = CommandType.StoredProcedure;
                         sqlCommand.Parameters.AddRange(inputParametrs);
-
                         using (var dataTable = new DataTable())
                         {
                             dataTable.Load(sqlCommand.ExecuteReader());
@@ -421,7 +412,6 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                 using (var sqlConnection = new SqlConnection(GetConnectionString))
                 {
                     sqlConnection.Open();
-
                     using (var sqlCommand = new SqlCommand(sqlCommandString, sqlConnection))
                     {
                         sqlCommand.CommandType = CommandType.Text;

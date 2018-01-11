@@ -13,10 +13,10 @@
     function AddPhone() {
         var lastPhoneNumber = $('p.number:last');
         var lastId = lastPhoneNumber.attr("id").valueOf();
-        lastPhoneNumber.
-            after('<p class="number" id=" ">'.
-                concat($('p.number').html()).
-                concat('</p>'));
+        lastPhoneNumber
+            .after('<p class="number" id=" ">'
+                .concat($('p.number').html())
+                .concat('</p>'));
         var newPhoneNumber = $('p.number:last');
         newPhoneNumber.attr("id", ++lastId);
         newPhoneNumber.children().val("");

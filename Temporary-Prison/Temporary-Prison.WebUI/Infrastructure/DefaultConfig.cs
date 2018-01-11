@@ -9,5 +9,6 @@
         public const int DefaultPhotoWidth = 100;
         public const int PrisonerPagedSize = 5;
         public const int UserPagedSize = 5;
+        public const string defaultPhotoOfPrisonerPath = "DefaultPhoto/defaultPhotoPrisoner.jpg";
     }
 }

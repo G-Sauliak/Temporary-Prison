@@ -12,7 +12,7 @@ namespace Temporary_Prison.Business.Providers
         void DeletePrisoner(int id);
         void ReleaseOfPrisoner(ReleaseOfPrisoner release);
         void RegisterDetention(RegistDetention registDetention);
-        IReadOnlyList<Prisoner> GetPrisonersForPagedList(int skip, int rowSize, ref int totalCount, string srarch);
+        IReadOnlyList<Prisoner> GetPrisonersForPagedList(int skip, int rowSize, ref int totalCount);
         IReadOnlyList<Prisoner> SearchFilter(DateTime? dateOfDetention, string name, string address);
         IReadOnlyList<DetentionPagedList> GetDetentionsByPrisonerIdForPagedList(int Id, int skip, int rowSize, ref int totalCount);
         Detention GetDetentionById(int id);

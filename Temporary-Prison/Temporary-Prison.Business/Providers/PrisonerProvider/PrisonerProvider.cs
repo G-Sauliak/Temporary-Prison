@@ -30,8 +30,7 @@ namespace Temporary_Prison.Business.Providers
             var priosner = default(Prisoner);
             try
             {
-                priosner = cacheService.GetOrSet(cacheKey,
-                    () => dataService.GetPrisonerById(id));
+                priosner = cacheService.GetOrSet(cacheKey, () => dataService.GetPrisonerById(id));
 
                 return priosner;
             }
@@ -42,23 +41,14 @@ namespace Temporary_Prison.Business.Providers
             return default(Prisoner);
         }
 
-        public IReadOnlyList<Prisoner> GetPrisonersForPagedList(int skip, int rowSize, ref int totalCount, string search)
+        public IReadOnlyList<Prisoner> GetPrisonersForPagedList(int skip, int rowSize, ref int totalCount)
         {
             var cacheKeyForPageList = $"prisonersForPagelist_s_{skip}_r_{rowSize}_t_{totalCount}";
             var outTotalCount = default(int);
             var listPrisoners = default(IReadOnlyList<Prisoner>);
 
-            /*if (!string.IsNullOrEmpty(search))
-              {
-                  var cacheKey = $"FPBN:{search}";
-                  listPrisoners = cacheService.GetOrSet(cacheKey,
-                      () => SearchFilter(search), DateTime.Now.AddSeconds(20));
-                  return listPrisoners;
-              }
-              else
-              {*/
-            listPrisoners = cacheService.GetOrSet(cacheKeyForPageList,
-                () => dataService.GetPrisonersForPagedList(skip, rowSize, out outTotalCount), DateTime.Now.AddSeconds(20));
+            listPrisoners = cacheService.GetOrSet(cacheKeyForPageList, () =>
+            dataService.GetPrisonersForPagedList(skip, rowSize, out outTotalCount), DateTime.Now.AddSeconds(20));
 
             if (totalCount == default(int))
             {
@@ -68,7 +58,7 @@ namespace Temporary_Prison.Business.Providers
             {
                 totalCount = outTotalCount;
             }
-            // }
+
             return listPrisoners;
         }
 
@@ -103,9 +93,8 @@ namespace Temporary_Prison.Business.Providers
         {
             var cacheKey = $"Detention_{id}";
 
-            var detention = cacheService.GetOrSet(cacheKey,
-                () => dataService
-                .GetDetentionById(id), DateTime.Now.AddMinutes(3));
+            var detention = cacheService.GetOrSet(cacheKey, () =>
+             dataService.GetDetentionById(id), DateTime.Now.AddMinutes(3));
 
             return detention;
         }
