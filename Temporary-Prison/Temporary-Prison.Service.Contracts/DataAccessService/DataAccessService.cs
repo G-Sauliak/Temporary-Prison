@@ -3,6 +3,7 @@ using System;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.ServiceModel;
 using Temporary_Prison.Service.Contracts.Dto;
@@ -123,8 +124,8 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             return dataTable;
         }
 
-        public void ExecNonQuery<TypeModel, TOut>(string sqlCommandString, TypeModel objectmodel, string outPutName,
-            out TOut outPutValue) where TypeModel : class
+        public void ExecNonQuery<TModel, TOut>(string sqlCommandString, TModel objectmodel, string outPutName,
+            out TOut outPutValue) where TModel : class
         {
             try
             {
@@ -215,7 +216,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
 
 
 
-        public void ExecNonQuery<TypeModel>(string sqlCommandString, TypeModel[] objectModels)
+        public void ExecNonQuery<TModel>(string sqlCommandString, TModel[] objectModels)
         {
             try
             {
@@ -243,7 +244,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             }
         }
 
-        public void ExecNonQuery<TypeModel>(string sqlCommandString, TypeModel objectmodel, params SqlParameter[] parametrs)
+        public void ExecNonQuery<TModel>(string sqlCommandString, TModel objectmodel, params SqlParameter[] parametrs)
         {
             try
             {
@@ -274,10 +275,10 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             }
         }
 
-        public TypeModel[] ExecProcGetModels<TypeModel, TOut>(string sqlCommandString, string outPutName, out TOut outPutValue,
-            params SqlParameter[] inputParametrs) where TypeModel : class, new()
+        public TModel[] ExecProcGetModels<TModel, TOut>(string sqlCommandString, string outPutName, out TOut outPutValue,
+            params SqlParameter[] inputParametrs) where TModel : class, new()
         {
-            var result = default(TypeModel[]);
+            var result = default(TModel[]);
             try
             {
                 using (var sqlConnection = new SqlConnection(GetConnectionString))
@@ -293,7 +294,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                         using (var dataTable = new DataTable())
                         {
                             dataTable.Load(sqlCommand.ExecuteReader());
-                            result = dataTable.ConvertToArrayOfModels<TypeModel>();
+                            result = dataTable.ConvertToArrayOfModels<TModel>();
                             outPutValue = (TOut)outPutParametr.Value;
                         }
                         return result;
@@ -310,10 +311,10 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             }
         }
 
-        public TypeModel[] ExecProcGetModels<TypeModel>(string sqlCommandString, params SqlParameter[] inputParametrs)
-            where TypeModel : class, new()
+        public TModel[] ExecProcGetModels<TModel>(string sqlCommandString, params SqlParameter[] inputParametrs)
+            where TModel : class, new()
         {
-            var result = default(TypeModel[]);
+            var result = default(TModel[]);
             try
             {
                 using (var sqlConnection = new SqlConnection(GetConnectionString))
@@ -326,7 +327,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                         using (var dataTable = new DataTable())
                         {
                             dataTable.Load(sqlCommand.ExecuteReader());
-                            result = dataTable.ConvertToArrayOfModels<TypeModel>();
+                            result = dataTable.ConvertToArrayOfModels<TModel>();
                         }
                         return result;
                     }
@@ -342,11 +343,10 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             }
         }
 
-
-        public TypeModel ExecProcGetModel<TypeModel>(string sqlCommandString, params SqlParameter[] inputParametrs)
-            where TypeModel : class, new()
+        public TModel ExecProcGetModel<TModel>(string sqlCommandString, params SqlParameter[] inputParametrs)
+            where TModel : class, new()
         {
-            var result = default(TypeModel);
+            var result = default(TModel);
             try
             {
                 using (var sqlConnection = new SqlConnection(GetConnectionString))
@@ -359,7 +359,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                         using (var dataTable = new DataTable())
                         {
                             dataTable.Load(sqlCommand.ExecuteReader());
-                            result = dataTable.ConvertToModel<TypeModel>();
+                            result = dataTable.ConvertToModel<TModel>();
                         }
                     }
                 }
@@ -375,9 +375,9 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             }
         }
 
-        public TypeArray[] GetArrayByColumn<TypeArray>(string sqlCommandString, string columnName, params SqlParameter[] inputParametrs)
+        public TArray[] GetArrayByColumn<TArray>(string sqlCommandString, string columnName, params SqlParameter[] inputParametrs)
         {
-            var result = default(TypeArray[]);
+            var result = default(TArray[]);
             try
             {
                 using (var sqlConnection = new SqlConnection(GetConnectionString))
@@ -393,7 +393,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                         using (var dataTable = new DataTable())
                         {
                             dataTable.Load(sqlCommand.ExecuteReader());
-                            result = dataTable.ConvertToArrayByColumn<TypeArray>(columnName);
+                            result = dataTable.ConvertToArrayByColumn<TArray>(columnName);
                         }
                     }
                 }

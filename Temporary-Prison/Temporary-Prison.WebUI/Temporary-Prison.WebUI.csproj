@@ -170,8 +170,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Application_Error.cs" />
-    <Compile Include="App_Start\MvcApplication.Auth.cs" />
+    <Compile Include="HttpModules\ApplicationError.cs" />
+    <Compile Include="HttpModules\Auth.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\StructuremapMvc.cs" />
     <Compile Include="Attributes\AjaxOnlyAttribute.cs" />

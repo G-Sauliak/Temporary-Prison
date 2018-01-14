@@ -5,50 +5,50 @@ namespace Temporary_Prison.Service.Contracts.Extensions
 {
     public static class DataTableExtension
     {
-        public static TypeArray[] ConvertToArrayByColumn<TypeArray>(this DataTable dataTable, string columName)
+        public static TArray[] ConvertToArrayByColumn<TArray>(this DataTable dataTable, string columName)
         {
-            TypeArray[] data = new TypeArray[dataTable.Rows.Count];
+            TArray[] data = new TArray[dataTable.Rows.Count];
             int i = 0;
             foreach (DataRow row in dataTable.Rows)
             {
-                data[i] = (TypeArray)row[columName];
+                data[i] = (TArray)row[columName];
                 i++;
             }
             return data;
         }
 
-        public static TypeModel ConvertToModel<TypeModel>(this DataTable dataTable) where TypeModel : class, new()
+        public static TModel ConvertToModel<TModel>(this DataTable dataTable) where TModel : class, new()
         {
             if (dataTable.Rows.Count > 0)
             {
                 var row = dataTable.Rows[0];
-                return GetItem<TypeModel>(row);
+                return GetItem<TModel>(row);
             }
-            return default(TypeModel);
+            return default(TModel);
         }
 
-        public static TypeModel[] ConvertToArrayOfModels<TypeModel>(this DataTable dataTable)
-            where TypeModel : class, new()
+        public static TModel[] ConvertToArrayOfModels<TModel>(this DataTable dataTable)
+            where TModel : class, new()
         {
             if (dataTable.Rows.Count > 0)
             {
-                TypeModel[] data = new TypeModel[dataTable.Rows.Count];
+                TModel[] data = new TModel[dataTable.Rows.Count];
                 int i = 0;
                 foreach (DataRow row in dataTable.Rows)
                 {
-                    TypeModel item = GetItem<TypeModel>(row);
+                    TModel item = GetItem<TModel>(row);
                     data[i] = item;
                     i++;
                 }
                 return data;
             }
-            return default(TypeModel[]);
+            return default(TModel[]);
         }
 
-        private static TypeModel GetItem<TypeModel>(DataRow row) where TypeModel : class, new()
+        private static TModel GetItem<TModel>(DataRow row) where TModel : class, new()
         {
-            var temp = typeof(TypeModel);
-            var obj = new TypeModel();
+            var temp = typeof(TModel);
+            var obj = new TModel();
             foreach (DataColumn colum in row.Table.Columns)
             {
                 foreach (var property in temp.GetProperties())

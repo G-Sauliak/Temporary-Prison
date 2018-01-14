@@ -3,7 +3,7 @@
 
     function _Request(reqUrl, targetLoad, searchString) {
         targetLoad.load(reqUrl, searchString, function (response, status, xhr) {
-            if (status == "error") {
+            if (status === "error") {
                 targetLoad.empty();
             }
         });

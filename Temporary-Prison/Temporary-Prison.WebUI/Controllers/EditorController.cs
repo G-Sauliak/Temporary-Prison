@@ -7,12 +7,12 @@ using System.Web;
 using System.Web.Mvc;
 using Temporary_Prison.Business.Providers;
 using Temporary_Prison.Common.Models;
-using Temporary_Prison.Dependencies.MapperRegistry;
 using Temporary_Prison.Enums;
 using Temporary_Prison.Extensions;
 using Temporary_Prison.WebMapperProfile;
 using Temporary_Prison.Models;
-using Temporary_Prison.SiteConfigService;
+using Temporary_Prison.Business.SiteConfigService;
+using Temporary_Prison.Business.PrisonManager;
 
 namespace Temporary_Prison.Controllers
 {
@@ -21,14 +21,16 @@ namespace Temporary_Prison.Controllers
     {
         private readonly IPrisonerProvider prisonerProvider;
         private readonly IConfigService siteConfigService;
-        public EditorController() : this(new PrisonerProvider(), new ConfigService())
+        private readonly IPrisonManager prisonManager;
+        public EditorController() : this(new PrisonerProvider(), new ConfigService(), new PrisonManager())
         {
             Dependencies.MapperRegistry.MapperProfiles.Configuration.AddProfile(new WebMapper());
             Dependencies.MapperRegistry.MapperProfiles.InitialiseMappers();
         }
 
-        public EditorController(IPrisonerProvider prisonerProvider, IConfigService siteConfigService)
+        public EditorController(IPrisonerProvider prisonerProvider, IConfigService siteConfigService, IPrisonManager prisonManager)
         {
+            this.prisonManager = prisonManager;
             this.siteConfigService = siteConfigService;
             this.prisonerProvider = prisonerProvider;
         }
@@ -53,6 +55,12 @@ namespace Temporary_Prison.Controllers
                 ViewBag.RelationshipStatus = Enum.GetValues(typeof(RelationshipStatus)).Cast<RelationshipStatus>(); ;
                 return View(model);
             }
+            var photoPath = default(string);
+
+            if (prisonManager.TryUploadPhoto(photo, out photoPath))
+            {
+                var s = 1;
+            }
 
             if (photo != null
                 && PhotosExtensions.SupportedFormat(photo, siteConfigService.AllowedPhotoTypes)
@@ -67,6 +75,7 @@ namespace Temporary_Prison.Controllers
                 {
                     Directory.CreateDirectory(savePath);
                 }
+             
                
                 photo.SaveAs(photoSavePath);
 
@@ -83,7 +92,7 @@ namespace Temporary_Prison.Controllers
             {
                 var prisoner = Mapper.Map<CreateOrUpdatePrisonerViewModel, Prisoner>(model);
 
-                prisoner.Photo = $"/Content/{siteConfigService.defaultPhotoOfPrisonerPath}";
+                prisoner.Photo = $"/Content/{siteConfigService.DefaultPhotoOfPrisonerPath}";
 
                 var newID = default(int);
                 prisonerProvider.AddPrisoner(prisoner, out newID);
@@ -147,7 +156,7 @@ namespace Temporary_Prison.Controllers
                 if (prisoner != null)
                 {
                     prisonerProvider.DeletePrisoner(id.Value);
-                    if (!prisoner.Photo.Equals(siteConfigService.defaultPhotoOfPrisonerPath))
+                    if (!prisoner.Photo.Equals(siteConfigService.DefaultPhotoOfPrisonerPath))
                     {
                         var deletePhotoPath = Server.MapPath(prisoner.Photo);
                         if (System.IO.File.Exists(deletePhotoPath))

@@ -26,8 +26,8 @@ namespace Temporary_Prison.Controllers
 
         public AdminController() : this(new UserProvider(), new UserManager(), new ConfigService())
         {
-            Dependencies.MapperRegistry.MapperProfiles.Configuration.AddProfile(new WebMapper());
-            Dependencies.MapperRegistry.MapperProfiles.InitialiseMappers();
+            MapperProfiles.Configuration.AddProfile(new WebMapper());
+            MapperProfiles.InitialiseMappers();
         }
 
         public AdminController(IUserProvider userProvider, IUserManager userManager, IConfigService configService)

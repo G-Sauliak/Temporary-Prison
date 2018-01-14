@@ -14,5 +14,6 @@ namespace Temporary_Prison
             Dependencies.MapperRegistry.MapperProfiles.Configuration.AddProfile(new WebMapper());
             Dependencies.MapperRegistry.MapperProfiles.InitialiseMappers();
         }
+      
     }
 }

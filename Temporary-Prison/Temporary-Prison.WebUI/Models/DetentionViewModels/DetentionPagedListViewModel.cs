@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace Temporary_Prison.Models
@@ -8,10 +9,16 @@ namespace Temporary_Prison.Models
         [HiddenInput(DisplayValue =false)]
         public int DetentionID { get; set; }
         [Display(Name = "Date Of Detention")]
-        public string DateOfDetention { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(NullDisplayText = "", DataFormatString = "{0:dd-MMMM-yyyy}")]
+        public DateTime? DateOfDetention { get; set; }
         [Display(Name = "Place Of Detention")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(NullDisplayText = "", DataFormatString = "{0:dd-MMMM-yyyy}")]
         public string PlaceofDetention { get; set; }
         [Display(Name = "Date Of Release")]
-        public string DateOfRelease { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(NullDisplayText = "", DataFormatString = "{0:dd-MMMM-yyyy}")]
+        public DateTime? DateOfRelease { get; set; }
     }
 }

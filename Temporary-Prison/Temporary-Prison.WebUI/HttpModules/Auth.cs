@@ -4,13 +4,25 @@ using System.Web.Security;
 using Temporary_Prison.Business.SecurityPrincipal;
 using Temporary_Prison.Common.Entities;
 
-namespace Temporary_Prison
-{
-    public partial class MvcApplication 
+
+namespace Temporary_Prison.HttpModule
+{ 
+
+    public class Auth : IHttpModule
     {
-        protected void Application_PostAuthenticateRequest()
+        public void Dispose()
         {
-            var authCookies = Request.Cookies[FormsAuthentication.FormsCookieName];
+           
+        }
+
+        public void Init(HttpApplication context)
+        {
+            context.PostAuthenticateRequest += Context_PostAuthenticateRequest;
+        }
+
+        private void Context_PostAuthenticateRequest(object sender, System.EventArgs e)
+        {
+            var authCookies = HttpContext.Current.Request.Cookies[FormsAuthentication.FormsCookieName];
             if (authCookies != null)
             {
                 var ticket = FormsAuthentication.Decrypt(authCookies.Value);
