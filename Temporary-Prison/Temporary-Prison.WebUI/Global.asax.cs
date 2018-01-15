@@ -11,8 +11,8 @@ namespace Temporary_Prison
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            Dependencies.MapperRegistry.MapperProfiles.Configuration.AddProfile(new WebMapper());
-            Dependencies.MapperRegistry.MapperProfiles.InitialiseMappers();
+            MapperProfiles.Configuration.AddProfile(new WebMapper());
+            MapperProfiles.InitialiseMappers();
         }
       
     }

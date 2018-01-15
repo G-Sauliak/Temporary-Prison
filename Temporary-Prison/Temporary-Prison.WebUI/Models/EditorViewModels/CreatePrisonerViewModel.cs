@@ -14,7 +14,7 @@ namespace Temporary_Prison.Models
         public int PrisonerID { get; set; }
 
         [DataType(DataType.ImageUrl)]
-        [Display(Name = "Photo")]
+        [Display(Name = "Avatar")]
         public string Photo { get; set; }
 
         [Required]

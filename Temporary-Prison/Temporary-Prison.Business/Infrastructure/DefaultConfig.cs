@@ -10,5 +10,7 @@
         public const int PrisonerPagedSize = 5;
         public const int UserPagedSize = 5;
         public const string DefaultPhotoOfPrisonerPath = "DefaultPhoto/defaultPhotoPrisoner.jpg";
+        public const string DefaultNoAvatar = "DefaultPhoto/no-avatar.jpg";
+        public const string ContentPath = "Content";
     }
 }

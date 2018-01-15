@@ -1,5 +1,5 @@
 ﻿@model Temporary_Prison.Models.CreateOrUpdatePrisonerViewModel
-
+@using Temporary_Prison.Enums;
 @{
     ViewBag.Title = "AddPrisoner";
 }
@@ -70,7 +70,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.RelationshipStatus, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.RelationshipStatus, new SelectList(ViewBag.RelationshipStatus), "Select Relationship Status", htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownListFor(model => model.RelationshipStatus, EnumHelper.GetSelectList(typeof(RelationshipStatus)), "Select Relationship Status", htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.RelationshipStatus, string.Empty, new { @class = "text-danger" })
             </div>
         </div>

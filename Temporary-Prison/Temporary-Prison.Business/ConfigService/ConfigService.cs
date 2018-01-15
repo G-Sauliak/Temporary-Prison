@@ -70,18 +70,18 @@ namespace Temporary_Prison.Business.SiteConfigService
         {
             get
             {
-                return int.Parse(ConfigurationManager.AppSettings["PrisonerPhotoHeight"]);
+                return int.Parse(ConfigurationManager.AppSettings["PrisonerAvatarHeight"]);
             }
 
             set
             {
                 if (value != default(int))
                 {
-                    ConfigurationManager.AppSettings["PrisonerPhotoHeight"] = value.ToString();
+                    ConfigurationManager.AppSettings["PrisonerAvatarHeight"] = value.ToString();
                 }
                 else
                 {
-                    ConfigurationManager.AppSettings["PrisonerPhotoHeight"] = DefaultConfig.DefaultPhotoHeight.ToString();
+                    ConfigurationManager.AppSettings["PrisonerAvatarHeight"] = DefaultConfig.DefaultPhotoHeight.ToString();
                 }
             }
         }
@@ -91,17 +91,17 @@ namespace Temporary_Prison.Business.SiteConfigService
 
             get
             {
-                return int.Parse(ConfigurationManager.AppSettings["PrisonerPhotoWidth"]);
+                return int.Parse(ConfigurationManager.AppSettings["PrisonerAvatarWidth"]);
             }
             set
             {
                 if (value != default(int))
                 {
-                    ConfigurationManager.AppSettings["PrisonerPhotoWidth"] = value.ToString();
+                    ConfigurationManager.AppSettings["PrisonerAvatarWidth"] = value.ToString();
                 }
                 else
                 {
-                    ConfigurationManager.AppSettings["PrisonerPhotoWidth"] = DefaultConfig.DefaultPhotoHeight.ToString();
+                    ConfigurationManager.AppSettings["PrisonerAvatarWidth"] = DefaultConfig.DefaultPhotoHeight.ToString();
                 }
             }
 
@@ -168,5 +168,47 @@ namespace Temporary_Prison.Business.SiteConfigService
                 }
             }
         }
+
+        public string ContentPath
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["ContentPath"];
+            }
+
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    ConfigurationManager.AppSettings["ContentPath"] = value;
+                }
+                else
+                {
+                    ConfigurationManager.AppSettings["ContentPath"] = DefaultConfig.ContentPath;
+                }
+            }
+        }
+
+        public string DefaultNoAvatar
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["no-avatar"];
+            }
+
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    ConfigurationManager.AppSettings["no-avatar"] = value;
+                }
+                else
+                {
+                    ConfigurationManager.AppSettings["no-avatar"] = DefaultConfig.DefaultNoAvatar;
+                }
+            }
+        }
+
+    
     }
 }

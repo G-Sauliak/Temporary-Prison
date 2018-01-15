@@ -18,11 +18,16 @@
         vertical-align: middle;
     }
 
+    .img-thumbnail {
+    
+    }
     .user_panel {
         width: 100%;
     }
 </style>
-<div class="form-group">
+@if (Model != null)
+{
+    <div class="form-group">
     <div class="col-md-10">
         <div class="panel panel-default">
             <div class="panel-body col-lg-offset-0 col-lg-12">
@@ -34,6 +39,9 @@
                         <table class="table-users table">
                             <tbody>
                                 <tr>
+                                    <th>
+                                        
+                                    </th>
                                     <th>
                                         @Html.DisplayNameFor(model => model.FirstName)
                                     </th>
@@ -47,25 +55,28 @@
                                 {
                                     <tr>
                                         <td>
+                                            @Html.Avatar(item.Avatar, new { @class = "img-thumbnail"})  
+                                        </td>
+                                        <td>
                                             @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.BirthDate)
                                         </td>
                                         <td align="center">
-                                            @Html.ActionLink("Details", "DetailsOfPrisoner",
-                                         new { id = item.PrisonerId })
+                                            @Html.ActionLink("Details", "DetailsOfPrisoner",                 
+                                           new { id = item.PrisonerId })
                                         </td>
                                         @if (User.IsInRole("Editor") || (User.IsInRole("Admin")))
                                         {
                                             <td align="center">
                                                 @Html.ActionLink("Edit", "EditPrisoner", "Editor",
-                                          new { id = item.PrisonerId }, string.Empty)
+                                              new { id = item.PrisonerId }, string.Empty)
                                             </td>
                                             <td align="center">
                                                 @Html.ActionLink("Delete", "DeletePrisoner", "Editor",
-                                          new { id = item.PrisonerId },
-                                          new { onclick = "return confirm('Are you sure you wish to delete this prisoner?');" })
+                                              new { id = item.PrisonerId },
+                                              new { onclick = "return confirm('Are you sure you wish to delete this prisoner?');" })
                                             </td>
                                         }
                                     </tr>
@@ -82,13 +93,12 @@
                     <div class="col-md-6">
                         <div class="pagination pagination-sm pull-right">
                             @Html.PagedListPager(Model as IPagedList, page =>
-              Url.Action("ListOfPrisoners", new
-              {
-                  page,
-                  currentTotal = ViewBag.TotalCountPrisoners,
-                  search = ViewBag.Search
-              }),
-             PagedListRenderOptions.MinimalWithPageCountText)
+                        Url.Action("ListOfPrisoners", new
+                        {
+                            page,
+                            currentTotal = ViewBag.TotalCountPrisoners,
+                            search = ViewBag.Search
+                        }), PagedListRenderOptions.MinimalWithPageCountText)
                         </div>
                     </div>
                 </div>
@@ -96,4 +106,8 @@
         </div>
         </div>
     </div>
+}
+else
+{
+}
         @Html.ActionLink("Back to Home", "Index", "Home")

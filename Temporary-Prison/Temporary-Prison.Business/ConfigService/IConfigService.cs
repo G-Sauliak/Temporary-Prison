@@ -10,5 +10,7 @@
         string AllowedPhotoTypes { get; set; }
         int PrisonerPagedSize { get; set; }
         int UserPagedSize { get; set; }
+        string ContentPath { get; set; }
+        string DefaultNoAvatar { get; set; }
     }
 }

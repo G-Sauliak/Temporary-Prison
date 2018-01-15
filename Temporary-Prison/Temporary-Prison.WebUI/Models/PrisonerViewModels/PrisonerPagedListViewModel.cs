@@ -5,6 +5,8 @@ namespace Temporary_Prison.Models
 {
     public class PrisonerPagedListViewModel
     {
+        [Display(Name = "Avatar")]
+        public string Avatar { get; set; }
         public int PrisonerId { get; set; }
         [Display(Name = "Birth Date")]
         [DataType(DataType.Date)]

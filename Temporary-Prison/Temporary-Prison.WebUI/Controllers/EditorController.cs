@@ -13,12 +13,14 @@ using Temporary_Prison.WebMapperProfile;
 using Temporary_Prison.Models;
 using Temporary_Prison.Business.SiteConfigService;
 using Temporary_Prison.Business.PrisonManager;
+using log4net;
 
 namespace Temporary_Prison.Controllers
 {
     [Authorize(Roles = "Admin, Editor")]
     public class EditorController : Controller
     {
+        private readonly ILog log = LogManager.GetLogger("LOGGER");
         private readonly IPrisonerProvider prisonerProvider;
         private readonly IConfigService siteConfigService;
         private readonly IPrisonManager prisonManager;
@@ -39,7 +41,7 @@ namespace Temporary_Prison.Controllers
         [HttpGet]
         public ActionResult AddPrisoner()
         {
-            ViewBag.RelationshipStatus = Enum.GetValues(typeof(RelationshipStatus)).Cast<RelationshipStatus>();
+            
             ViewBag.RedirectUrl = Url.Action("ListOfPrisoners", "Prisoner");
             return View(new CreateOrUpdatePrisonerViewModel());
         }
@@ -51,59 +53,25 @@ namespace Temporary_Prison.Controllers
         {
             if (!ModelState.IsValid)
             {
-                if (model.PhoneNumbers.Count < 1) model.PhoneNumbers = new string[] { string.Empty };
-                ViewBag.RelationshipStatus = Enum.GetValues(typeof(RelationshipStatus)).Cast<RelationshipStatus>(); ;
+                if (model.PhoneNumbers.Count < 1) model.PhoneNumbers = new string[] { string.Empty};
                 return View(model);
             }
-            var photoPath = default(string);
 
-            if (prisonManager.TryUploadPhoto(photo, out photoPath))
+            var prisoner = Mapper.Map<CreateOrUpdatePrisonerViewModel, Prisoner>(model);
+
+            var newID = default(int);
+            try
             {
-                var s = 1;
+                prisonManager.AddPrisoner(prisoner, photo, out newID);
+            }
+            catch (ArgumentException ae)
+            {
+                ModelState.AddModelError(string.Empty, "incorrect photo format");
+                log.Error(ae.Message);
+                return View(model);
             }
 
-            if (photo != null
-                && PhotosExtensions.SupportedFormat(photo, siteConfigService.AllowedPhotoTypes)
-                && PhotosExtensions.CheckSize(photo, siteConfigService.MaxPhotoSize))
-            {
-                var photoExtensions = Path.GetExtension(photo.FileName);
-                var photoName = string.Concat(DateTime.Now.Ticks, photoExtensions);
-                var savePath = Server.MapPath($"~/Content/{siteConfigService.PrisonerPhotoPath}");
-                var photoSavePath = Path.Combine(savePath, photoName);
-
-                if (!Directory.Exists(savePath))
-                {
-                    Directory.CreateDirectory(savePath);
-                }
-             
-               
-                photo.SaveAs(photoSavePath);
-
-                model.Photo = $"/Content/{siteConfigService.PrisonerPhotoPath}/{photoName}";
-
-                var prisoner = Mapper.Map<CreateOrUpdatePrisonerViewModel, Prisoner>(model);
-
-                var newID = default(int);
-                prisonerProvider.AddPrisoner(prisoner, out newID);
-
-                return RedirectToAction("CreateDetention", "Editor", new { prisonerId = newID });
-            }
-            else if (photo == null)
-            {
-                var prisoner = Mapper.Map<CreateOrUpdatePrisonerViewModel, Prisoner>(model);
-
-                prisoner.Photo = $"/Content/{siteConfigService.DefaultPhotoOfPrisonerPath}";
-
-                var newID = default(int);
-                prisonerProvider.AddPrisoner(prisoner, out newID);
-
-                return RedirectToAction("CreateDetention", "Editor", new { prisonerId = newID });
-            }
-
-            ModelState.AddModelError(string.Empty, "Incorrect file");
-            ViewBag.RelationshipStatus = Enum.GetValues(typeof(RelationshipStatus)).Cast<RelationshipStatus>();
-
-            return View(model);
+            return RedirectToAction("CreateDetention", "Editor", new { prisonerId = newID });
         }
 
         //GET: Editor/EditPriosner
@@ -119,7 +87,6 @@ namespace Temporary_Prison.Controllers
             if (prisoner != null)
             {
                 var model = Mapper.Map<Prisoner, CreateOrUpdatePrisonerViewModel>(prisoner);
-                ViewBag.RelationshipStatus = Enum.GetValues(typeof(RelationshipStatus)).Cast<RelationshipStatus>();
                 return View(model);
             }
             return HttpNotFound();
@@ -132,7 +99,6 @@ namespace Temporary_Prison.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.RelationshipStatus = Enum.GetValues(typeof(RelationshipStatus)).Cast<RelationshipStatus>();
                 return View(model);
             }
 
@@ -156,7 +122,8 @@ namespace Temporary_Prison.Controllers
                 if (prisoner != null)
                 {
                     prisonerProvider.DeletePrisoner(id.Value);
-                    if (!prisoner.Photo.Equals(siteConfigService.DefaultPhotoOfPrisonerPath))
+
+                    if (prisoner.Photo != null && !prisoner.Photo.Equals(siteConfigService.DefaultPhotoOfPrisonerPath))
                     {
                         var deletePhotoPath = Server.MapPath(prisoner.Photo);
                         if (System.IO.File.Exists(deletePhotoPath))

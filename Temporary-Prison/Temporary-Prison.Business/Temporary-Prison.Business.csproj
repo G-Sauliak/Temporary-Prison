@@ -83,7 +83,7 @@
     <Compile Include="Enums\LogInStatus.cs" />
     <Compile Include="Enums\MembershipCreateStatus.cs" />
     <Compile Include="Exceptions\CreateAndUpdateUserException.cs" />
-    <Compile Include="Extensions\ImageHelperExtension.cs" />
+    <Compile Include="Extensions\ImageHelper.cs" />
     <Compile Include="Infrastructure\DefaultConfig.cs" />
     <Compile Include="PrisonManager\IPrisonManager.cs" />
     <Compile Include="PrisonManager\PrisonManager.cs" />

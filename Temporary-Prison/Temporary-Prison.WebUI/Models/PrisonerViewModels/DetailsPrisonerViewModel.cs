@@ -19,7 +19,7 @@ namespace Temporary_Prison.Models
         [DataType(DataType.Date)]
         [DisplayFormat(NullDisplayText = "", DataFormatString = "{0:dd-MMMM-yyyy}")]
         public DateTime? BirthDate { get; set; }
-        [Display(Name = "Photo")]
+        [Display(Name = "Avatar")]
         public string Photo { get; set; }
         [Display(Name = "Additional information")]
         public string AdditionalInformation { get; set; }

@@ -41,7 +41,7 @@ CREATE PROC [dbo].[GetPrisonersToPagedList]
 @skip int,
 @rowSize int
 AS
-SELECT PrisonerId,FirstName,LastName,Surname,BirthDate FROM Prisoners p
+SELECT PrisonerId,Photo,FirstName,LastName,Surname,BirthDate FROM Prisoners p
 ORDER BY p.FirstName 
 OFFSET @skip ROWS 
 FETCH NEXT @rowSize ROWS ONLY;

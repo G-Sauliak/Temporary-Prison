@@ -22,13 +22,14 @@ namespace Temporary_Prison.Controllers
         private readonly ILog log = LogManager.GetLogger("LOGGER");
         private readonly IPrisonerProvider prisonerProvider;
         private readonly IConfigService configService;
+
         public PrisonerController() : this(new PrisonerProvider(), new ConfigService())
         {
             MapperProfiles.Configuration.AddProfile(new WebMapper());
             MapperProfiles.InitialiseMappers();
         }
 
-        public PrisonerController(IPrisonerProvider prisonerProvider,IConfigService configService)
+        public PrisonerController(IPrisonerProvider prisonerProvider, IConfigService configService)
         {
             this.configService = configService;
             this.prisonerProvider = prisonerProvider;
@@ -49,15 +50,14 @@ namespace Temporary_Prison.Controllers
 
             ViewBag.TotalCountPrisoners = _totalCount;
 
-            var model = Mapper.Map<IReadOnlyList<Prisoner>, IReadOnlyList<PrisonerPagedListViewModel>>(listPrisoners);
-
-            if (model != null)
+            if (listPrisoners != null)
             {
+                var model = Mapper.Map<IReadOnlyList<Prisoner>, IReadOnlyList<PrisonerPagedListViewModel>>(listPrisoners);
                 var staticPagedListOfPrisoners = new StaticPagedList<PrisonerPagedListViewModel>(model, pageNum, pageSize, _totalCount);
 
                 return View(staticPagedListOfPrisoners);
             }
-            
+
             return View(default(StaticPagedList<Prisoner>));
         }
 
@@ -98,6 +98,7 @@ namespace Temporary_Prison.Controllers
             {
                 return HttpNotFound();
             }
+
             var pageNum = page ?? 1;
             var skip = (pageNum - 1) * pageSize;
             var _currentTotal = totalCountDetentions ?? default(int);
@@ -105,7 +106,7 @@ namespace Temporary_Prison.Controllers
             var model = Mapper.Map<Prisoner, DetailsPrisonerViewModel>(prisoner);
 
             var listOfDetentions = prisonerProvider
-                .GetDetentionsByPrisonerIdForPagedList(id.Value, skip, pageSize, ref _currentTotal);
+                .GetDetentionsByPrisonerIdForPagedList(prisoner.PrisonerId, skip, pageSize, ref _currentTotal);
 
             if (listOfDetentions != null)
             {

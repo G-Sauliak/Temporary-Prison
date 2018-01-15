@@ -1,12 +1,16 @@
 ﻿using AutoMapper;
 using Temporary_Prison.Models;
 using Temporary_Prison.Common.Models;
+using Temporary_Prison.Business.SiteConfigService;
+using System.IO;
 
 namespace Temporary_Prison.WebMapperProfile
 {
-    public partial class WebMapper : Profile
+    public class WebMapper : Profile
     {
-        public WebMapper()
+        private readonly IConfigService siteConfigService;
+
+        public WebMapper() : this(new ConfigService())
         {
             #region Map for admin
             CreateMap<User, EditUserViewModel>()
@@ -17,8 +21,22 @@ namespace Temporary_Prison.WebMapperProfile
             #endregion
 
             #region Map for prisoner
-            CreateMap<Prisoner, DetailsPrisonerViewModel>();
-            CreateMap<Prisoner, PrisonerPagedListViewModel>();
+            CreateMap<Prisoner, DetailsPrisonerViewModel>()
+               .ForMember(x => x.Photo, opt => opt.MapFrom(src =>
+               (src.Photo != null)
+               ? Path.Combine($"/{siteConfigService.ContentPath}/", $"{siteConfigService.PrisonerPhotoPath}/", src.Photo)
+               : Path.Combine($"/{siteConfigService.ContentPath}/", $"{siteConfigService.PrisonerPhotoPath}/",
+               siteConfigService.DefaultPhotoOfPrisonerPath)
+               ));
+
+            CreateMap<Prisoner, PrisonerPagedListViewModel>()
+                .ForMember(x => x.Avatar, opt => opt.MapFrom(src =>
+               (src.Photo != null)
+               ? Path.Combine($"/{siteConfigService.ContentPath}/", $"{siteConfigService.PrisonerPhotoPath}/", src.Photo)
+               : Path.Combine($"/{siteConfigService.ContentPath}/", $"{siteConfigService.PrisonerPhotoPath}/", 
+               siteConfigService.DefaultNoAvatar)
+               ));
+
             CreateMap<Detention, DetailsOfDetentionViewModel>();
             CreateMap<DetentionPagedList, DetentionPagedListViewModel>();
             CreateMap<EditDetentionViewModel, Detention>();
@@ -27,6 +45,11 @@ namespace Temporary_Prison.WebMapperProfile
             CreateMap<Prisoner, CreateOrUpdatePrisonerViewModel>();
             #endregion
         }
+        public WebMapper(IConfigService siteConfigService)
+        {
+            this.siteConfigService = siteConfigService;
+        }
+
     }
 
 }
