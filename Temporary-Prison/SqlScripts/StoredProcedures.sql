@@ -28,24 +28,24 @@ END
 ---------------------------------------------------------------
 GO
 CREATE PROCEDURE [dbo].[GetPrisonerById]
-	@ID int
+	@prisonerId int
 AS
-SELECT * FROM Prisoners p WHERE  p.PrisonerId = @ID
+SELECT * FROM Prisoners p WHERE  p.PrisonerId = @prisonerId
 
 SELECT PhoneNumber FROM PhoneNumbers ph, Prisoners pr
-WHERE ph.PrisonerID = pr.PrisonerId AND ph.PrisonerID = @ID
+WHERE ph.PrisonerID = pr.PrisonerId AND ph.PrisonerID = @prisonerId
 ---------------------GetPrisonersForPageList--------------------
 ---------------------------------------------------------------
 GO
 CREATE PROC [dbo].[GetPrisonersToPagedList]
 @skip int,
-@rowSize int
+@rowSize int,
+@TotalCount int output
 AS
 SELECT PrisonerId,Photo,FirstName,LastName,Surname,BirthDate FROM Prisoners p
 ORDER BY p.FirstName 
 OFFSET @skip ROWS 
 FETCH NEXT @rowSize ROWS ONLY;
-DECLARE @TotalCount int
 SET @Totalcount = (SELECT COUNT(*) FROM Prisoners p)
 
 RETURN @Totalcount

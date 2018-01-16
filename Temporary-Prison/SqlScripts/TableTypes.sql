@@ -26,6 +26,7 @@ CREATE TYPE [dbo].[PrisonerDt] AS TABLE(
 	[Address] [nvarchar](max) NULL
 )
 GO
+
 CREATE TYPE [dbo].[RegistrationOfDetentionDt] AS TABLE(
 	[PrisonerID] [int] NULL,
 	[DateOfDetention] [date] NULL,
@@ -62,5 +63,16 @@ CREATE TYPE [dbo].[DetentionDt_] AS TABLE(
 	[ReleaseProceduresID] [int] NULL,
 	[DetentionProceduresID] [int] NULL,
 	[DeliveredProceduresID] [int] NULL
+)
+GO
+USE [PrisonDb]
+GO
+
+CREATE TYPE [dbo].[ReleaseOfPrisoner] AS TABLE(
+	[DetentionID] [int] NULL,
+	[DateOfRelease] [date] NULL,
+	[AccruedAmount] [money] NULL,
+	[PaidAmount] [money] NULL,
+	[ReleaseProceduresID] [int] NULL
 )
 GO
