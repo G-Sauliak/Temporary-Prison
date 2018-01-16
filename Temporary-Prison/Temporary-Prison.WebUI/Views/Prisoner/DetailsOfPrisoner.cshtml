@@ -10,7 +10,7 @@
                         <div class="box-body">
                             <div class="col-sm-6">
                                 <div align="center">
-                                    @Html.Avatar(Model.Photo, new { @class = "img-thumbnail" })
+                                    @Html.Photo(Model.Photo, new { @class = "img-thumbnail", @width = 300, @height = 400})
                                     <input id="profile-image-upload" class="hidden" type="file">
                                 </div>
 

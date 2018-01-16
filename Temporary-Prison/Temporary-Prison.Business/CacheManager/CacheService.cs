@@ -6,8 +6,6 @@ namespace Temporary_Prison.Business.CacheManager
 {
     public class CacheService : ICacheService
     {
-        private const int cacheDefaultTimeoutInMinute = 30;
-
         public TResult GetOrSet<TResult>(string cacheKey, Func<TResult> getCallback) where TResult : class
         {
             var item = default(TResult);
@@ -19,7 +17,7 @@ namespace Temporary_Prison.Business.CacheManager
             item = getCallback();
             if (item != null)
             {
-                HttpRuntime.Cache.Insert(cacheKey, item, null, Cache.NoAbsoluteExpiration, TimeSpan.FromMinutes(cacheDefaultTimeoutInMinute));
+                HttpRuntime.Cache.Insert(cacheKey, item, null, Cache.NoAbsoluteExpiration, Cache.NoSlidingExpiration, CacheItemPriority.Normal, null);
                 return item;
             }
             return default(TResult);

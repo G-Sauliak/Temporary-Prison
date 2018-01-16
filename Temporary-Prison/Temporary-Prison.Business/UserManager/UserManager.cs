@@ -41,10 +41,6 @@ namespace Temporary_Prison.Business.UserManagers
 
         }
 
-        public void EditUserRoles(string userName, string[] roles)
-        {
-            throw new NotImplementedException();
-        }
 
         public void EditUser(User updatedUser)
         {

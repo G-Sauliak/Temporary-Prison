@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 using Temporary_Prison.Business.Attributes;
+using Temporary_Prison.Enums;
 
 namespace Temporary_Prison.Models
 {
@@ -13,8 +14,8 @@ namespace Temporary_Prison.Models
         [HiddenInput]
         public int PrisonerID { get; set; }
 
-        [DataType(DataType.ImageUrl)]
-        [Display(Name = "Avatar")]
+        [Display(Name = "Photo")]
+        [HiddenInput(DisplayValue = false)]
         public string Photo { get; set; }
 
         [Required]
@@ -46,7 +47,8 @@ namespace Temporary_Prison.Models
 
         [Required]
         [Display(Name = "Relationship Status")]
-        public string RelationshipStatus { get; set; }
+        [EnumDataType(typeof(RelationshipStatus))]
+        public RelationshipStatus RelationshipStatus { get; set; }
 
         [Required]
         [Display(Name = "Place of work")]

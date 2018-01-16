@@ -5,7 +5,7 @@ namespace Temporary_Prison.Business.SiteConfigService
 {
     public class ConfigService : IConfigService
     {
-        public string PrisonerPhotoPath
+        public string PhotoPath
         {
             get
             {
@@ -66,7 +66,7 @@ namespace Temporary_Prison.Business.SiteConfigService
             }
         }
 
-        public int PhotoHeight
+        public int AvatarHeight
         {
             get
             {
@@ -81,12 +81,12 @@ namespace Temporary_Prison.Business.SiteConfigService
                 }
                 else
                 {
-                    ConfigurationManager.AppSettings["PrisonerAvatarHeight"] = DefaultConfig.DefaultPhotoHeight.ToString();
+                    ConfigurationManager.AppSettings["PrisonerAvatarHeight"] = DefaultConfig.DefaultAvatarHeight.ToString();
                 }
             }
         }
 
-        public int PhotoWidth
+        public int AvatarWidth
         {
 
             get
@@ -101,7 +101,7 @@ namespace Temporary_Prison.Business.SiteConfigService
                 }
                 else
                 {
-                    ConfigurationManager.AppSettings["PrisonerAvatarWidth"] = DefaultConfig.DefaultPhotoHeight.ToString();
+                    ConfigurationManager.AppSettings["PrisonerAvatarWidth"] = DefaultConfig.DefaultAvatarHeight.ToString();
                 }
             }
 
@@ -204,11 +204,69 @@ namespace Temporary_Prison.Business.SiteConfigService
                 }
                 else
                 {
-                    ConfigurationManager.AppSettings["no-avatar"] = DefaultConfig.DefaultNoAvatar;
+                    ConfigurationManager.AppSettings["no-avatar"] = DefaultConfig.DefaultNoAvatarPath;
                 }
             }
         }
 
-    
+        public int PhotoHeight
+        {
+            get
+            {
+                return int.Parse(ConfigurationManager.AppSettings["PrisonerPhotoHeight"]);
+            }
+
+            set
+            {
+                if (value != default(int))
+                {
+                    ConfigurationManager.AppSettings["PrisonerPhotoHeight"] = value.ToString();
+                }
+                else
+                {
+                    ConfigurationManager.AppSettings["PrisonerPhotoHeight"] = DefaultConfig.DefaultAvatarHeight.ToString();
+                }
+            }
+        }
+
+        public int PhotoWidth
+        {
+
+            get
+            {
+                return int.Parse(ConfigurationManager.AppSettings["PrisonerPhotoWidth"]);
+            }
+            set
+            {
+                if (value != default(int))
+                {
+                    ConfigurationManager.AppSettings["PrisonerPhotoWidth"] = value.ToString();
+                }
+                else
+                {
+                    ConfigurationManager.AppSettings["PrisonerPhotoWidth"] = DefaultConfig.DefaultAvatarHeight.ToString();
+                }
+            }
+
+        }
+        public string AvatarPath
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["AvatarPath"];
+            }
+
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    ConfigurationManager.AppSettings["AvatarPath"] = value;
+                }
+                else
+                {
+                    ConfigurationManager.AppSettings["AvatarPath"] = DefaultConfig.ContentPath;
+                }
+            }
+        }
     }
 }

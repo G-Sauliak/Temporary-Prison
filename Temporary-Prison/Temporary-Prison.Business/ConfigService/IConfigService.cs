@@ -2,8 +2,11 @@
 {
     public interface IConfigService
     {
-        string PrisonerPhotoPath { get; set; }
+        string PhotoPath { get; set; }
+        string AvatarPath { get; set; }
         string DefaultPhotoOfPrisonerPath { get; set; }
+        int AvatarHeight { get; set; }
+        int AvatarWidth { get; set; }
         int PhotoHeight { get; set; }
         int PhotoWidth { get; set; }
         int MaxPhotoSize { get; set; }

@@ -20,13 +20,13 @@ namespace Temporary_Prison.Business.Exceptions
             {
 
                 case UserCreateStatus.InvalidEmail:
-                    return "he e-mail address provided is invalid. Please check the value and try again.";
+                    return "he e-mail address provided is invalid.";
 
                 case UserCreateStatus.DuplicateUserName:
-                    return "User name already exists. Please enter a different user name.";
+                    return "User name already exists.";
 
                 case UserCreateStatus.DuplicateEmail:
-                    return "A user name for that e-mail address already exists.Please enter a different e - mail address";
+                    return "A user name for that e-mail address already exists.";
 
             }
 

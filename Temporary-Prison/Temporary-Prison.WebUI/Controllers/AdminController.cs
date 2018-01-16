@@ -11,8 +11,8 @@ using Temporary_Prison.Common.Models;
 using Temporary_Prison.Dependencies.MapperRegistry;
 using Temporary_Prison.WebMapperProfile;
 using Temporary_Prison.Models;
-using Temporary_Prison.SiteConfigService;
 using X.PagedList;
+using Temporary_Prison.Business.SiteConfigService;
 
 namespace Temporary_Prison.Controllers
 {

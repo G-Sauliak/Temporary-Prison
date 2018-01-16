@@ -1,8 +1,10 @@
-﻿namespace Temporary_Prison.Enums
+﻿using System.ComponentModel;
+
+namespace Temporary_Prison.Enums
 {
     public enum RelationshipStatus
     {
-        Single = 0,
-        Married = 1,
+        Single = 1,
+        Married = 2
     }
 }

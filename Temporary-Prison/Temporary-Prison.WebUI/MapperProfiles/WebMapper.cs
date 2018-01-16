@@ -23,17 +23,17 @@ namespace Temporary_Prison.WebMapperProfile
             #region Map for prisoner
             CreateMap<Prisoner, DetailsPrisonerViewModel>()
                .ForMember(x => x.Photo, opt => opt.MapFrom(src =>
-               (src.Photo != null)
-               ? Path.Combine($"/{siteConfigService.ContentPath}/", $"{siteConfigService.PrisonerPhotoPath}/", src.Photo)
-               : Path.Combine($"/{siteConfigService.ContentPath}/", $"{siteConfigService.PrisonerPhotoPath}/",
+               (!string.IsNullOrEmpty(src.Photo))
+               ? Path.Combine($"/{siteConfigService.ContentPath}/", $"{siteConfigService.PhotoPath}/", src.Photo)
+               : Path.Combine($"/{siteConfigService.ContentPath}/", $"{siteConfigService.PhotoPath}/",
                siteConfigService.DefaultPhotoOfPrisonerPath)
                ));
 
             CreateMap<Prisoner, PrisonerPagedListViewModel>()
-                .ForMember(x => x.Avatar, opt => opt.MapFrom(src =>
-               (src.Photo != null)
-               ? Path.Combine($"/{siteConfigService.ContentPath}/", $"{siteConfigService.PrisonerPhotoPath}/", src.Photo)
-               : Path.Combine($"/{siteConfigService.ContentPath}/", $"{siteConfigService.PrisonerPhotoPath}/", 
+               .ForMember(x => x.Avatar, opt => opt.MapFrom(src =>
+               (!string.IsNullOrEmpty(src.Photo))
+               ? Path.Combine($"/{siteConfigService.ContentPath}/", $"{siteConfigService.AvatarPath}/", src.Photo)
+               : Path.Combine($"/{siteConfigService.ContentPath}/", $"{siteConfigService.AvatarPath}/", 
                siteConfigService.DefaultNoAvatar)
                ));
 
@@ -42,7 +42,13 @@ namespace Temporary_Prison.WebMapperProfile
             CreateMap<EditDetentionViewModel, Detention>();
             CreateMap<ReleaseOfPrisoner, ReleaseOfPrisonerViewModel>();
             CreateMap<Employee, EmployeeViewModel>();
-            CreateMap<Prisoner, CreateOrUpdatePrisonerViewModel>();
+
+            CreateMap<Prisoner, CreateOrUpdatePrisonerViewModel>()
+               .ForMember(x => x.Photo, opt => opt.MapFrom(src =>
+               (!string.IsNullOrEmpty(src.Photo))
+               ? Path.Combine($"/{siteConfigService.ContentPath}/", $"{siteConfigService.PhotoPath}/", src.Photo)
+               : default(string)
+               ));
             #endregion
         }
         public WebMapper(IConfigService siteConfigService)

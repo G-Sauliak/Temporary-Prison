@@ -6,7 +6,7 @@ namespace Temporary_Prison.Business.PrisonManager
     public interface IPrisonManager
     {
         void AddPrisoner(Prisoner prisoner, HttpPostedFileBase postImage, out int newId);
-        void EditPrisoner(Prisoner prisoner);
+        void EditPrisoner(Prisoner prisoner, HttpPostedFileBase postImage);
         void DeletePrisoner(int id);
         void ReleaseOfPrisoner(ReleaseOfPrisoner release);
         void RegisterDetention(RegistDetention registDetention);

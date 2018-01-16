@@ -9,36 +9,25 @@ namespace Temporary_Prison.Business.Providers
 {
     public class PrisonerProvider : IPrisonerProvider
     {
-        private readonly IPrisonerDataService dataService;
+        private readonly IPrisonerDataService prisonerDataService;
         private readonly ICacheService cacheService;
         private readonly ILog log = LogManager.GetLogger("LOGGER");
 
         public PrisonerProvider() : this(new PrisonerDataService(), new CacheService())
-        {
-
-        }
+        { }
 
         public PrisonerProvider(IPrisonerDataService prisonerDataService, ICacheService cacheService)
         {
             this.cacheService = cacheService;
-            this.dataService = prisonerDataService;
+            this.prisonerDataService = prisonerDataService;
         }
 
         public Prisoner GetPrisonerById(int id)
         {
             var cacheKey = $"prisoner_{id}";
-            var priosner = default(Prisoner);
-            try
-            {
-                priosner = cacheService.GetOrSet(cacheKey, () => dataService.GetPrisonerById(id));
 
-                return priosner;
-            }
-            catch (Exception ex)
-            {
-                log.Fatal(ex.Message);
-            }
-            return default(Prisoner);
+            return cacheService.GetOrSet(cacheKey, () => prisonerDataService.GetPrisonerById(id));
+
         }
 
         public IReadOnlyList<Prisoner> GetPrisonersForPagedList(int skip, int rowSize, ref int totalCount)
@@ -48,7 +37,7 @@ namespace Temporary_Prison.Business.Providers
             var listPrisoners = default(IReadOnlyList<Prisoner>);
 
             listPrisoners = cacheService.GetOrSet(cacheKeyForPageList, () =>
-            dataService.GetPrisonersForPagedList(skip, rowSize, out outTotalCount), TimeSpan.FromSeconds(10));
+            prisonerDataService.GetPrisonersForPagedList(skip, rowSize, out outTotalCount), TimeSpan.FromSeconds(10));
 
             if (totalCount == default(int))
             {
@@ -62,63 +51,26 @@ namespace Temporary_Prison.Business.Providers
             return listPrisoners;
         }
 
-        public void AddPrisoner(Prisoner prisoner, out int newId)
-        {
-            dataService.AddPrisoner(prisoner, out newId);
-        }
-
-
-        public void EditPrisoner(Prisoner prisoner)
-        {
-            cacheService.Remove($"prisoner_{prisoner.PrisonerId}");
-            dataService.EditPrisoner(prisoner);
-        }
-
-        public void DeletePrisoner(int id)
-        {
-            dataService.DeletePrisoner(id);
-        }
-
-        public void RegisterDetention(RegistDetention registDetention)
-        {
-            dataService.RegisterDetention(registDetention);
-        }
-
         public IReadOnlyList<DetentionPagedList> GetDetentionsByPrisonerIdForPagedList(int Id, int skip, int rowSize, ref int totalCount)
         {
-            return dataService.GetDetentionsByPrisonerIdForPagedList(Id, skip, rowSize, out totalCount);
+           
+          //  var cacheKeyForPageList = $"GetDBPIdForPagedList_s_{skip}_r_{rowSize}_t_{totalCount}";
+         //   var outParam = totalCount;
+            return prisonerDataService.GetDetentionsByPrisonerIdForPagedList(Id, skip, rowSize, out totalCount);
         }
 
         public Detention GetDetentionById(int id)
         {
             var cacheKey = $"Detention_{id}";
 
-            var detention = cacheService.GetOrSet(cacheKey, () =>
-             dataService.GetDetentionById(id), TimeSpan.FromSeconds(10));
+            var detention = cacheService.GetOrSet(cacheKey, () => prisonerDataService.GetDetentionById(id));
 
             return detention;
         }
 
-        public void ReleaseOfPrisoner(ReleaseOfPrisoner release)
-        {
-            dataService.ReleaseOfPrisoner(release);
-            cacheService.Remove($"Detention_{release.DetentionID}");
-        }
-
-        public void EditDetention(Detention detention)
-        {
-            dataService.EditDetention(detention);
-            cacheService.Remove($"Detention_{detention.DetentionID}");
-        }
-
-        public void DeleteDetention(int id)
-        {
-            dataService.DeleteDetention(id);
-        }
-
         public IReadOnlyList<Prisoner> SearchFilter(DateTime? dateOfDetention, string name, string address)
         {
-            return dataService.SearchFilter(dateOfDetention, name, address);
+            return prisonerDataService.SearchFilter(dateOfDetention, name, address);
         }
     }
 }

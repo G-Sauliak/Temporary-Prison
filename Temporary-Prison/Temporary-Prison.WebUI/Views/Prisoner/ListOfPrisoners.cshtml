@@ -55,7 +55,7 @@
                                 {
                                     <tr>
                                         <td>
-                                            @Html.Avatar(item.Avatar, new { @class = "img-thumbnail"})  
+                                            @Html.Photo(item.Avatar, new { @class = "img-thumbnail", @width = 77, @height = 77 })  
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)

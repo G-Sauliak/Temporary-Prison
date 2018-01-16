@@ -14,7 +14,9 @@ namespace Temporary_Prison.Models
         public DateTime? BirthDate { get; set; }
         [Display(Name = "Name")]
         public string FirstName { get; set; }
+        [Display(Name = "Name")]
         public string Surname { get; set; }
+        [Display(Name = "Name")]
         public string LastName { get; set; }
     }
 }

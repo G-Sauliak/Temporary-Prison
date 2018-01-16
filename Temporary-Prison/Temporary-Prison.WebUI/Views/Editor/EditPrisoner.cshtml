@@ -7,33 +7,67 @@
 
 <h2>EditPrisoner</h2>
 
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
 
 @using (Html.BeginForm("EditPrisoner", "Editor", new { RedirectUrl = ViewBag.RedirectUrl }, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal col-md-10">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.ValidationSummary(true, string.Empty, new { @class = "text-danger" })
         <hr />
         @Html.HiddenFor(model => model.PrisonerID)
+        @Html.HiddenFor(model => model.Photo, new { id = "currentPhoto" })
         <div class="form-group">
-            <div class="col-md-10 col-lg-6">
-                @Html.LabelFor(model => model.Photo, htmlAttributes: new { @class = "control-label control-label col-md-2", })
-                <div class="col-sm-6 col-lg-offset-2 col-lg-8">
-                    @Html.Avatar(Model.Photo, new { @class = "img-thumbnail" })
-                    @Html.EditorFor(model => model.Photo, new { htmlAttributes = new { @class = "form-control", type = "file", id = "photoUpload" } })
+            <div class="form-inline">
+                <div class="form-group">
+
+                    @Html.Photo(Model.Photo,
+                   new
+                   {
+                       @class = "img-thumbnail",
+                       @id = "photoOfPrisoner",
+                       @width = 100,
+                       @height = 100
+                   })
+                    @if (string.IsNullOrEmpty(Model.Photo))
+                    {
+                        @Html.Link("javascript:RemovePhoto()", "Remove", new { @style = "display:none", @id = "btnRemove" })
+                    }
+                    else
+                    {
+                        @Html.Link("javascript:RemovePhoto()", "Remove", new { @id = "btnRemove" })
+                    }
+
                 </div>
-                @Html.ValidationMessageFor(model => model.Photo, "", new { @class = "text-danger" })
+                @Html.LabelFor(model => model.Photo, htmlAttributes: new { @class = "control-label control-label col-md-2", })
+
+                <div class="col-sm-6  col-lg-4">
+                    @Html.Editor("postImage",
+                   new
+                   {
+                       htmlAttributes =
+                   new
+                   {
+                       @class = "form-control",
+                       type = "file",
+                       id = "photoUpload",
+                       @value = Model.Photo,
+                       @onchange = "PreviewImage()"
+
+                   }
+                   })
+
+
+                </div>
+
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.FirstName, string.Empty, new { @class = "text-danger" })
             </div>
         </div>
 
@@ -41,7 +75,7 @@
             @Html.LabelFor(model => model.Surname, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Surname, string.Empty, new { @class = "text-danger" })
             </div>
         </div>
 
@@ -49,7 +83,7 @@
             @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.LastName, string.Empty, new { @class = "text-danger" })
             </div>
         </div>
 
@@ -57,7 +91,7 @@
             @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Address, string.Empty, new { @class = "text-danger" })
             </div>
         </div>
 
@@ -80,18 +114,26 @@
                        })
                     </p>
                 }
-                @Html.ValidationMessageFor(model => model.PhoneNumbers, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.PhoneNumbers, string.Empty, new { @class = "text-danger" })
                 <div class="form-inline">
-                <a href="javascript:window.phone.AddPhone();" class="add_phone">Add more</a> &nbsp;
-                <a href="javascript:window.phone.RemovePhone();" class="delete_phone">Remove</a></div>
+                    <a href="javascript:window.phone.AddPhone();" class="add_phone">Add more</a> &nbsp;
+                    <a href="javascript:window.phone.RemovePhone();" class="delete_phone">Remove</a>
+                </div>
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.RelationshipStatus, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.RelationshipStatus, EnumHelper.GetSelectList(typeof(RelationshipStatus)), "Select Relationship Status", htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.RelationshipStatus, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.RelationshipStatus,
+               EnumHelper.GetSelectList(typeof(RelationshipStatus), (RelationshipStatus)ViewBag.RelShipStatus),
+               "Select Relationship Status",
+               htmlAttributes:
+               new
+               {
+                   @class = "form-control"
+               })
+                @Html.ValidationMessageFor(model => model.RelationshipStatus, string.Empty, new { @class = "text-danger" })
             </div>
         </div>
 
@@ -99,7 +141,7 @@
             @Html.LabelFor(model => model.PlaceOfWork, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.PlaceOfWork, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PlaceOfWork, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.PlaceOfWork, string.Empty, new { @class = "text-danger" })
             </div>
         </div>
 
@@ -107,7 +149,7 @@
             @Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.BirthDate, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.BirthDate, string.Empty, new { @class = "text-danger" })
             </div>
         </div>
 
@@ -115,7 +157,7 @@
             @Html.LabelFor(model => model.AdditionalInformation, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.AdditionalInformation, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AdditionalInformation, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.AdditionalInformation, string.Empty, new { @class = "text-danger" })
             </div>
         </div>
 
@@ -127,14 +169,27 @@
     </div>
 }
 <div>
-    @Html.ActionLink("Back to List", "ListOfPrisoners", "Prisoner", "", new { @class = "btn btn-default" })
+    @Html.ActionLink("Back to List", "ListOfPrisoners", "Prisoner", string.Empty, new { @class = "btn btn-default" })
 </div>
 
 @section scripts
 {
 
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/Scripts/Phone/phoneNumbers.js"></script>
+    <script src="~/Scripts/ImagePreview/imagePreview.js"></script>
     <script>window.phone = window.MultiplePhones()</script>
+
+    <script>
+        function RemovePhoto() {
+            $("#photoOfPrisoner").hide();
+            $("#currentPhoto").remove();
+            $("#photoUpload").val('');
+            $("#btnRemove").hide();
+        }
+    </script>
 }
 
 

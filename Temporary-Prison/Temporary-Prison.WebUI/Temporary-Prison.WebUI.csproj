@@ -142,10 +142,10 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\PhotosOfPrisoner\defaultPhotoPrisoner.jpg" />
+    <Content Include="Content\PhotosOfPrisoners\defaultPhotoPrisoner.jpg" />
     <Content Include="Content\Icons\no-icon.png" />
     <Content Include="Content\Icons\ok-apply-icon.png" />
-    <Content Include="Content\PhotosOfPrisoner\no-avatar.jpg" />
+    <Content Include="Content\AvatarsOfPrisoners\no-avatar.jpg" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -153,6 +153,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\ImagePreview\imagePreview.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -171,14 +172,13 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HtmlHelpers\LinkHelper.cs" />
     <Compile Include="HttpModules\ApplicationError.cs" />
     <Compile Include="HttpModules\Auth.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\StructuremapMvc.cs" />
     <Compile Include="Attributes\AjaxOnlyAttribute.cs" />
     <Compile Include="Attributes\PhoneNumberAttribute.cs" />
-    <Compile Include="ConfigService\ConfigService.cs" />
-    <Compile Include="ConfigService\IConfigService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\EditorController.cs" />
@@ -190,12 +190,10 @@
     <Compile Include="DependencyResolution\StructureMapDependencyScope.cs" />
     <Compile Include="DependencyResolution\StructureMapScopeModule.cs" />
     <Compile Include="Enums\RelationshipStatus.cs" />
-    <Compile Include="Extensions\PhotosExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HtmlHelpers\PhotoHelper.cs" />
-    <Compile Include="Infrastructure\DefaultConfig.cs" />
     <Compile Include="MapperProfiles\WebMapper.cs" />
     <Compile Include="Models\AccountVIewModels\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModels\CreateUserViewModel.cs" />

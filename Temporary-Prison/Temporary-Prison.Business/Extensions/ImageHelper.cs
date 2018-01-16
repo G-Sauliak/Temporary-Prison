@@ -9,11 +9,17 @@ namespace Temporary_Prison.Business.Extensions
     public static class ImageHelper
     {
 
-        public static void SaveToFolder(this Image image, string savePath)
+        public static void SaveToFolder(this Image image, string ImageSavePath)
         {
             if (image != null)
             {
-                image.Save(savePath);
+                var directoryName =  Path.GetDirectoryName(ImageSavePath);
+
+                if (!Directory.Exists(directoryName))
+                {
+                    Directory.CreateDirectory(directoryName);
+                }
+                image.Save(ImageSavePath);
             }
         }
 
@@ -33,14 +39,19 @@ namespace Temporary_Prison.Business.Extensions
             return false;
         }
 
-        public static Image ResizeMinimal(this Image img, Size maxSize)
+        public static Image ResizeProportional(this Image image, Size maxSize)
         {
-            var bit = new Bitmap(maxSize.Width, maxSize.Height);
-            var graphics = Graphics.FromImage(bit);
-            graphics.DrawImage(img, 0, 0, maxSize.Width, maxSize.Height);
-            graphics.Dispose();
-            return bit;
-        }
+            // if the input image width or height are already less than the required dimensions
+            if ((maxSize.Height == 0 || maxSize.Height >= image.Height)
+                && (maxSize.Width == 0 || maxSize.Width >= image.Width))
+            {
+                return image;
+            }
 
+            else
+            {
+                return new Bitmap(image, maxSize) as Image;
+            }
+        }
     }
 }
