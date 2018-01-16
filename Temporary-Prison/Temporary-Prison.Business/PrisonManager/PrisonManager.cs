@@ -30,7 +30,7 @@ namespace Temporary_Prison.Business.PrisonManager
         public void AddPrisoner(Prisoner prisoner, HttpPostedFileBase postImage, out int newId)
         {
             string fileName = default(string);
-            if (postImage.ContentLength > 0 && postImage != null)
+            if (postImage != null && postImage.ContentLength > 0)
             {
                 TryUploadImage(postImage, out fileName);
             }

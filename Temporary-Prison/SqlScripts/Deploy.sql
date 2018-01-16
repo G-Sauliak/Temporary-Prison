@@ -34,21 +34,22 @@ CREATE TABLE [dbo].[Employees] (
 
 
 CREATE TABLE [dbo].[DetentionProcedures] (
-    [DetentionID] INT  IDENTITY (1, 1) NOT NULL,
-    [EmployeeID]  INT NOT NULL,
-    CONSTRAINT [PK_Detention] PRIMARY KEY CLUSTERED ([DetentionID] ASC),
+    [DetentionProceduresID] INT IDENTITY (1, 1) NOT NULL,
+    [EmployeeID]            INT NOT NULL,
+    CONSTRAINT [PK_Detention] PRIMARY KEY CLUSTERED ([DetentionProceduresID] ASC),
     CONSTRAINT [FK_DetentionProcedures_Employees] FOREIGN KEY ([EmployeeID]) REFERENCES [dbo].[Employees] ([EmployeeID])
 );
 
 CREATE TABLE [dbo].[DeliveryProcedures] (
-    [DeliveredID] INT  IDENTITY (1, 1) NOT NULL,
-    [EmployeeID]  INT NOT NULL,
-    CONSTRAINT [PK_Delivered] PRIMARY KEY CLUSTERED ([DeliveredID] ASC),
+    [DeliveredProceduresID] INT IDENTITY (1, 1) NOT NULL,
+    [EmployeeID]            INT NOT NULL,
+    CONSTRAINT [PK_Delivered] PRIMARY KEY CLUSTERED ([DeliveredProceduresID] ASC),
     CONSTRAINT [FK_DeliveryProcedures_Employees] FOREIGN KEY ([EmployeeID]) REFERENCES [dbo].[Employees] ([EmployeeID])
 );
 
+
 CREATE TABLE [dbo].[ReleaseProcedures] (
-    [ReleaseProceduresID] INT  IDENTITY (1, 1) NOT NULL,
+    [ReleaseProceduresID] INT IDENTITY (1, 1) NOT NULL,
     [EmployeesID]         INT NOT NULL,
     CONSTRAINT [PK_ReleaseProcedures] PRIMARY KEY CLUSTERED ([ReleaseProceduresID] ASC),
     CONSTRAINT [FK_ReleaseProcedures_Employees] FOREIGN KEY ([EmployeesID]) REFERENCES [dbo].[Employees] ([EmployeeID])
@@ -57,7 +58,7 @@ CREATE TABLE [dbo].[ReleaseProcedures] (
 CREATE TABLE [dbo].[ListOfDetentions] (
     [DetentionID]           INT           IDENTITY (1, 1) NOT NULL,
     [PrisonerID]            INT           NOT NULL,
-    [DateOfDetention]       DATE          NOT NULL,
+    [DateOfDetention]       DATE          NULL,
     [DateOfArrival]         DATE          NULL,
     [DateOfRelease]         DATE          NULL,
     [AccruedAmount]         MONEY         NULL,
@@ -67,9 +68,9 @@ CREATE TABLE [dbo].[ListOfDetentions] (
     [DetentionProceduresID] INT           NULL,
     [DeliveredProceduresID] INT           NULL,
     PRIMARY KEY CLUSTERED ([DetentionID] ASC),
+    CONSTRAINT [FK_ListOfDetentions_DeliveryProcedures1] FOREIGN KEY ([DeliveredProceduresID]) REFERENCES [dbo].[DeliveryProcedures] ([DeliveredProceduresID]) ON DELETE CASCADE,
     CONSTRAINT [FK_ListOfDetentions_DetentionProcedures] FOREIGN KEY ([DetentionProceduresID]) REFERENCES [dbo].[DetentionProcedures] ([DetentionProceduresID]) ON DELETE CASCADE,
     CONSTRAINT [FK_ListOfDetentions_Prisoners] FOREIGN KEY ([PrisonerID]) REFERENCES [dbo].[Prisoners] ([PrisonerId]) ON DELETE CASCADE,
-    CONSTRAINT [FK_ListOfDetentions_DeliveryProcedures1] FOREIGN KEY ([DeliveredProceduresID]) REFERENCES [dbo].[DeliveryProcedures] ([DeliveredProceduresID]) ON DELETE CASCADE,
     CONSTRAINT [FK_ListOfDetentions_ReleaseProcedures] FOREIGN KEY ([ReleaseProceduresID]) REFERENCES [dbo].[ReleaseProcedures] ([ReleaseProceduresID]) ON DELETE CASCADE
 );
 
