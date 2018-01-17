@@ -23,8 +23,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Temporary-Prison.Data", "Te
 		{6CF831B5-7EA4-4686-9380-C98441F0F492} = {6CF831B5-7EA4-4686-9380-C98441F0F492}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Temporary-Prison.Service.Contracts.UTest", "Temporary-Prison.Service.Contracts.UTest\Temporary-Prison.Service.Contracts.UTest.csproj", "{AC873792-ECCF-4F20-B1A4-EE4B4194C37F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Temporary-Prison.Data.UTest", "Temporary-Prison.Data.UTest\Temporary-Prison.Data.UTest.csproj", "{6FF69B0A-C36C-4E9D-95B1-321BC2F2B313}"
 	ProjectSection(ProjectDependencies) = postProject
 		{6CF831B5-7EA4-4686-9380-C98441F0F492} = {6CF831B5-7EA4-4686-9380-C98441F0F492}
@@ -66,10 +64,6 @@ Global
 		{89156652-FA00-4856-88B0-D16B00E450C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89156652-FA00-4856-88B0-D16B00E450C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89156652-FA00-4856-88B0-D16B00E450C0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AC873792-ECCF-4F20-B1A4-EE4B4194C37F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AC873792-ECCF-4F20-B1A4-EE4B4194C37F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AC873792-ECCF-4F20-B1A4-EE4B4194C37F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AC873792-ECCF-4F20-B1A4-EE4B4194C37F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6FF69B0A-C36C-4E9D-95B1-321BC2F2B313}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6FF69B0A-C36C-4E9D-95B1-321BC2F2B313}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FF69B0A-C36C-4E9D-95B1-321BC2F2B313}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -21,7 +21,7 @@ namespace Temporary_Prison.Data.UTest.PriosnerClient
         public void TestInitialize()
         {
             prisonerClient = new Mock<IPrisonerClient>();
-          //  prisonerDataService = new PrisonerDataService(prisonerClient.Object);
+            prisonerDataService = new PrisonerDataService(prisonerClient.Object);
             prisonerDataService = new PrisonerDataService();
         }
 

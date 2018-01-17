@@ -37,11 +37,11 @@ namespace Temporary_Prison.Controllers
             });
         }
 
-        public AdminController(IUserProvider userProvider, IUserManager userManager, IConfigService configService)
+        public AdminController(IUserProvider userProvider, IUserManager userManager, IConfigService siteConfigService)
         {
             this.userProvider = userProvider;
             this.userManager = userManager;
-            this.siteConfigService = configService;
+            this.siteConfigService = siteConfigService;
         }
 
         // GET: Admin/index

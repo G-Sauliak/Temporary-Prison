@@ -122,7 +122,36 @@ INSERT INTO web_UserRoles(UserID,RoleID)
 	VALUES(
 	1,2
 	)
+	
+   INSERT INTO Prisoners(FirstName,LastName,Surname,RelationshipStatus,Address,PlaceOfWork,AdditionalInformation)
+	VALUES(
+	'vasya','pupkin','borisovich','Married','puskina 3d','zpt','info'
+	)
+	
+	INSERT INTO Prisoners(FirstName,LastName,Surname,RelationshipStatus,Address,PlaceOfWork,AdditionalInformation)
+	VALUES(
+	'isavir','ganenamo','xaelg','Married','puskina 3d','zpt','info'
+	)
+	
+	INSERT INTO Prisoners(FirstName,LastName,Surname,RelationshipStatus,Address,PlaceOfWork,AdditionalInformation)
+	VALUES(
+	'jon','pupkin','borisovich','Married','puskina 3d','zpt','info'
+	)
+	
+	INSERT INTO Prisoners(FirstName,LastName,Surname,RelationshipStatus,Address,PlaceOfWork,AdditionalInformation)
+	VALUES(
+	'poliv','pobegov','pobegovich','Married','puskina 3d','zpt','info'
+	)
+	
+	INSERT INTO Prisoners(FirstName,LastName,Surname,RelationshipStatus,Address,PlaceOfWork,AdditionalInformation)
+	VALUES(
+	'pobeg','zlodeev','zlodevich','Married','puskina 3d','zpt','info'
+	)
 
+	INSERT INTO Prisoners(FirstName,LastName,Surname,RelationshipStatus,Address,PlaceOfWork,AdditionalInformation)
+	VALUES(
+	'razbor','poletov','poletovich','Married','puskina 3d','zpt','info'
+	)
 IF @@ERROR != 0
 BEGIN
 	ROLLBACK

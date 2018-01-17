@@ -20,7 +20,7 @@ namespace Temporary_Prison.HttpModule
 
         private void Application_Error(object sender, EventArgs e)
         {
-            Exception ex = HttpContext.Current.Server.GetLastError().GetBaseException();
+            var ex = HttpContext.Current.Server.GetLastError().GetBaseException();
             
             log.Error($"Application_Error \n Message: {ex.Message} \n StackTrace: {ex.StackTrace}");
         }
