@@ -128,29 +128,52 @@ INSERT INTO web_UserRoles(UserID,RoleID)
 	'vasya','pupkin','borisovich','Married','puskina 3d','zpt','info'
 	)
 	
+INSERT INTO PhoneNumbers(PhoneNumber,PrisonerID)
+	VALUES(
+	'22222222','1'
+	)
 	INSERT INTO Prisoners(FirstName,LastName,Surname,RelationshipStatus,Address,PlaceOfWork,AdditionalInformation)
 	VALUES(
 	'isavir','ganenamo','xaelg','Married','puskina 3d','zpt','info'
 	)
-	
+	INSERT INTO PhoneNumbers(PhoneNumber,PrisonerID)
+	VALUES(
+	'36252185','2'
+	)
 	INSERT INTO Prisoners(FirstName,LastName,Surname,RelationshipStatus,Address,PlaceOfWork,AdditionalInformation)
 	VALUES(
 	'jon','pupkin','borisovich','Married','puskina 3d','zpt','info'
+	)
+INSERT INTO PhoneNumbers(PhoneNumber,PrisonerID)
+	VALUES(
+	'2222123222','3'
 	)
 	
 	INSERT INTO Prisoners(FirstName,LastName,Surname,RelationshipStatus,Address,PlaceOfWork,AdditionalInformation)
 	VALUES(
 	'poliv','pobegov','pobegovich','Married','puskina 3d','zpt','info'
 	)
+INSERT INTO PhoneNumbers(PhoneNumber,PrisonerID)
+	VALUES(
+	'22222222','4'
+	)
 	
 	INSERT INTO Prisoners(FirstName,LastName,Surname,RelationshipStatus,Address,PlaceOfWork,AdditionalInformation)
 	VALUES(
 	'pobeg','zlodeev','zlodevich','Married','puskina 3d','zpt','info'
 	)
+INSERT INTO PhoneNumbers(PhoneNumber,PrisonerID)
+	VALUES(
+	'22222222','5'
+	)
 
 	INSERT INTO Prisoners(FirstName,LastName,Surname,RelationshipStatus,Address,PlaceOfWork,AdditionalInformation)
 	VALUES(
 	'razbor','poletov','poletovich','Married','puskina 3d','zpt','info'
+	)
+INSERT INTO PhoneNumbers(PhoneNumber,PrisonerID)
+	VALUES(
+	'22222222','6'
 	)
 IF @@ERROR != 0
 BEGIN

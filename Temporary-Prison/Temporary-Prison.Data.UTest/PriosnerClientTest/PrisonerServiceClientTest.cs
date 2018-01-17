@@ -64,28 +64,6 @@ namespace Temporary_Prison.Data.UTest.PriosnerClient
             Assert.IsNotNull(actualResult);
      
         }
-        [TestMethod]
-        public void registerDetent()
-        {
-            int id = 0;
-            var emp = new Employee()
-            {
-                FirstName = "sfirstname",
-                Position = "sposition",
-                LastName = "slasname",
-                Surname = "ssurname"
-            };
-            var regist = new RegistDetention()
-            {
-                PrisonerID = 19,
-                DateOfArrival = DateTime.Now.Date,
-                DateOfDetention = DateTime.Now.Date,
-                PlaceofDetention = "stest PlaceofDetention",
-                DeliveredEmployee = emp,
-                DetainedEmployee = emp
-            };
 
-            prisonerDataService.RegisterDetention(regist);
-        }
     }
 }

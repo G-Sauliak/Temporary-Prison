@@ -1,11 +1,11 @@
 CREATE DATABASE PrisonDb
 ON (
   NAME = dbName_dat,
-  FILENAME = 'q:\PrisonDb.mdf'
+  FILENAME = 'd:\PrisonDb.mdf'
 )
 LOG ON (
   NAME = dbName_log,
-  FILENAME = 'q:\PrisonDb.ldf'
+  FILENAME = 'd:\PrisonDb.ldf'
 )
 GO
 USE PrisonDb

@@ -65,8 +65,6 @@ CREATE TYPE [dbo].[DetentionDt_] AS TABLE(
 	[DeliveredProceduresID] [int] NULL
 )
 GO
-USE [PrisonDb]
-GO
 
 CREATE TYPE [dbo].[ReleaseOfPrisoner] AS TABLE(
 	[DetentionID] [int] NULL,
