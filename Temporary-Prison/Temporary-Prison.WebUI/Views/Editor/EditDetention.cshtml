@@ -50,7 +50,7 @@
 
     </div>
     @Html.HiddenFor(model => model.DetainedEmployee.EmployeeID)
-    <dl class="dl-horizontal col-lg-5 col-lg-offset-2">
+    <dl class="dl-horizontal col-lg-5">
         <dt> @Html.LabelFor(model => model.DetainedEmployee.FirstName) </dt>
         <dd>
             @Html.EditorFor(model => model.DetainedEmployee.FirstName, new { htmlAttributes = new { @class = "form-control" } })

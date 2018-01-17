@@ -158,7 +158,7 @@ FROM (SELECT PrisonerId,FirstName,Surname,LastName,RelationshipStatus,PlaceOfWor
 WHERE 
 p.PrisonerId = Prisoners.PrisonerId
 
-DELETE FROM PhoneNumbers WHERE PhoneNumbers.PrisonerID = p.PrisonerId
+DELETE FROM PhoneNumbers WHERE PrisonerID = (SELECT PrisonerID FROM @dt)
 END
 ---------------------DELETE PRISONER--------------------------------------
 ----------------------------------------------------------------------
@@ -393,7 +393,7 @@ BEGIN
 			    THEN (SELECT rp.EmployeeID FROM DetentionProcedures rp 
 				             WHERE rp.DetentionProceduresID = @ExecProcedureID)
 	END  
-SELECT e.EmployeeID FROM Employees e WHERE e.EmployeeID = @EmployeeID
+SELECT * FROM Employees e WHERE e.EmployeeID = @EmployeeID
 END
 --------------------[GetEmployeeByExecutionProcedureID]--------------------
 ---------------------------------------------------------------------------
@@ -477,6 +477,7 @@ FROM (SELECT
 WHERE 
 p.[DetentionID] = ListOfDetentions.[DetentionID]
 END
+GO
 --------------------[EditEmployee]----------------------------------------
 ---------------------------------------------------------------------------
 CREATE PROC [dbo].[EditEmployee]
@@ -532,4 +533,14 @@ SELECT DISTINCT
 	(@Address IS NULL OR  p.Address LIKE CONCAT(RTRIM(@Address),'%')) 
 END
 
-
+GO
+CREATE PROC [dbo].[InsertReleaseProcedures] 
+@employeeID int,
+@ReleaseProceduresID int output
+AS
+BEGIN
+     INSERT INTO ReleaseProcedures(EmployeesID)
+     VALUES(@employeeID);
+     set @ReleaseProceduresID = SCOPE_IDENTITY();
+END
+go

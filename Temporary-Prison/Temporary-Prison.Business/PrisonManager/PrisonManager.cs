@@ -103,6 +103,8 @@ namespace Temporary_Prison.Business.PrisonManager
         public void ReleaseOfPrisoner(ReleaseOfPrisoner release)
         {
             prisonerDataService.ReleaseOfPrisoner(release);
+            var cacheKey = $"Detention_{release.DetentionID}";
+            HttpRuntime.Cache.Remove(cacheKey);
         }
 
         private bool TryUploadImage(HttpPostedFileBase postImage, out string fileName)
