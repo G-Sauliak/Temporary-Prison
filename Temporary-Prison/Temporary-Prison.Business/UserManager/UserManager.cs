@@ -34,9 +34,7 @@ namespace Temporary_Prison.Business.UserManagers
             {
                 throw new CreateOrUpdateUserException(UserCreateStatus.DuplicateEmail);
             }
-            //Encrypt pass
-            //user.Password
-
+    
             userDataService.AddUser(user);
 
         }

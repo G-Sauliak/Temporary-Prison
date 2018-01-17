@@ -39,9 +39,10 @@ namespace Temporary_Prison.Data.Services
             return default(Prisoner);
         }
 
-        public IReadOnlyList<Prisoner> GetPrisonersForPagedList(int skip, int rowSize, out int totalCount)
+        public IReadOnlyList<Prisoner> GetPrisonersForPagedList(int skip, int rowSize, out int totalCount,
+            DateTime? filterByDetainedDate, DateTime? filterByReleasedDate)
         {
-            var prisonersDto = prisonerClient.GetPrisonersForPagedList(skip, rowSize, out totalCount);
+            var prisonersDto = prisonerClient.GetPrisonersForPagedList(skip, rowSize, out totalCount, filterByDetainedDate, filterByReleasedDate);
             if (prisonersDto != null)
             {
                 var prisoners = Mapper.Map<IReadOnlyList<PrisonerDto>, IReadOnlyList<Prisoner>>(prisonersDto);

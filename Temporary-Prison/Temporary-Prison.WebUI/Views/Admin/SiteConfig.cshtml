@@ -1,0 +1,211 @@
+﻿@model Temporary_Prison.Models.SiteConfigViewModel
+
+@{
+    ViewBag.Title = "SiteConfig";
+}
+
+<h2>SiteConfig</h2>
+
+
+@using (Html.BeginForm(Html.BeginForm("SiteConfig", "Admin", string.Empty , FormMethod.Post, new { enctype = "multipart/form-data" })))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal col-md-10">
+        @Html.ValidationSummary(true, string.Empty, new { @class = "text-danger" })
+        <hr />
+        <div class="form-group">
+            <div class="form-inline">
+                <div class="form-group">
+                    @Html.HiddenFor(model => model.DefaultNoAvatar, new { id = "currentDefaultAvatar" })
+                    @Html.HiddenFor(model => model.DefaultPhotoOfPrisoner, new { id = "currentDefaultPhoto" })
+                    @Html.Photo(Model.DefaultPhotoOfPrisoner,
+                   new
+                   {
+                       @class = "img-thumbnail",
+                       @id = "photoOfPrisoner",
+                       @width = 100,
+                       @height = 100
+                   })
+                    @if (string.IsNullOrEmpty(Model.DefaultPhotoOfPrisoner))
+                    {
+                        @Html.Link("javascript:RemoveDefaultPhotoPhoto()", "Remove", new { @style = "display:none", @id = "btnRemove" })
+                    }
+                    else
+                    {
+                        @Html.Link("javascript:RemoveDefaultPhotoPhoto()", "Remove", new { @id = "btnPhotoRemove" })
+                    }
+
+                </div>
+                @Html.LabelFor(model => model.DefaultPhotoOfPrisoner, htmlAttributes: new { @class = "control-label control-label col-md-2", })
+
+                <div class="col-sm-6  col-lg-4">
+                    @Html.Editor("postPhotoImage",
+                   new
+                   {
+                       htmlAttributes =
+                   new
+                   {
+                       @class = "form-control",
+                       type = "file",
+                       id = "fileDefaultPhotoOfPrisoner",
+                       @value = Model.DefaultPhotoOfPrisoner,
+                       @onchange = "window.image.PreviewPhoto()"
+
+                   }
+                   })
+                </div>
+
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="form-inline">
+                <div class="form-group">
+
+                    @Html.Photo(Model.DefaultNoAvatar,
+                   new
+                   {
+                       @class = "img-thumbnail",
+                       @id = "AvatarOfPrisoner",
+                       @width = 100,
+                       @height = 100
+                   })
+                    @if (string.IsNullOrEmpty(Model.DefaultNoAvatar))
+                    {
+                        @Html.Link("javascript:RemoveDefaultAvatarPhoto()", "Remove", new { @style = "display:none", @id = "btnRemove" })
+                    }
+                    else
+                    {
+                        @Html.Link("javascript:RemoveDefaultAvatarPhoto()", "Remove", new { @id = "btnAvatarRemove" })
+                    }
+
+                </div>
+                @Html.LabelFor(model => model.DefaultNoAvatar, htmlAttributes: new { @class = "control-label control-label col-md-2", })
+
+                <div class="col-sm-6  col-lg-4">
+                    @Html.Editor("postAvatarImage",
+                   new
+                   {
+                       htmlAttributes =
+                   new
+                   {
+                       @class = "form-control",
+                       type = "file",
+                       id = "fileDefaultAvatarOfPrisoner",
+                       @value = Model.DefaultNoAvatar,
+                       @onchange = "window.image.PreviewAvatar()"
+
+                   }
+                   })
+                </div>
+
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.MaxPhotoSize, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MaxPhotoSize, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MaxPhotoSize, string.Empty, new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PhotoPath, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PhotoPath, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PhotoPath, string.Empty, new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AvatarPath, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AvatarPath, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AvatarPath, string.Empty, new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AvatarWidth, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AvatarWidth, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AvatarWidth, string.Empty, new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AvatarHeight, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AvatarHeight, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AvatarHeight, string.Empty, new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PhotoHeight, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+              @Html.EditorFor(model => model.PhotoHeight, "Phones", new { htmlAttributes = new { @class = "form-control" } })
+              @Html.ValidationMessageFor(model => model.PhotoHeight, string.Empty, new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PhotoWidth, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PhotoWidth, "Phones", new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PhotoWidth, string.Empty, new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PrisonerPagedSize, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PrisonerPagedSize, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PrisonerPagedSize, string.Empty, new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserPagedSize, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UserPagedSize, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.UserPagedSize, string.Empty, new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @Html.ActionLink("Reset to defaults", "ResetConfigSite", "Admin", new { @class = "col-lg-offset-6" })
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+@section scripts
+{
+
+    <script src="~/Scripts/Admin/imagePreview.js"></script>
+    <script src="~/Scripts/Phone/phoneNumbers.js"></script>
+    <script>window.phone = window.MultiplePhones()</script>
+    <script>window.image = window.PreviewImages()</script>
+    <script>
+        function RemoveDefaultAvatarPhoto() {
+            $("#AvatarOfPrisoner").hide();
+            $("#fileDefaultAvatarOfPrisoner").val('');
+            $("#btnAvatarRemove").hide();
+        }
+        function RemoveDefaultPhotoPhoto() {
+            $("#photoOfPrisoner").hide();
+            $("#fileDefaultPhotoOfPrisoner").val('');
+            $("#btnPhotoRemove").hide();
+        }
+    </script>
+}

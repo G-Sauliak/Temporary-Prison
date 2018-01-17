@@ -1026,12 +1026,20 @@ namespace Temporary_Prison.Data.PrisonService {
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=1)]
         public int rowSize;
         
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=2)]
+        public System.Nullable<System.DateTime> filterByDetainedDate;
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://tempuri.org/", Order=3)]
+        public System.Nullable<System.DateTime> filterByReleasedDate;
+        
         public GetPrisonersForPagedListRequest() {
         }
         
-        public GetPrisonersForPagedListRequest(int skip, int rowSize) {
+        public GetPrisonersForPagedListRequest(int skip, int rowSize, System.Nullable<System.DateTime> filterByDetainedDate, System.Nullable<System.DateTime> filterByReleasedDate) {
             this.skip = skip;
             this.rowSize = rowSize;
+            this.filterByDetainedDate = filterByDetainedDate;
+            this.filterByReleasedDate = filterByReleasedDate;
         }
     }
     
@@ -1167,10 +1175,12 @@ namespace Temporary_Prison.Data.PrisonService {
             return base.Channel.GetPrisonersForPagedList(request);
         }
         
-        public Temporary_Prison.Data.PrisonService.PrisonerDto[] GetPrisonersForPagedList(int skip, int rowSize, out int totalCount) {
+        public Temporary_Prison.Data.PrisonService.PrisonerDto[] GetPrisonersForPagedList(int skip, int rowSize, System.Nullable<System.DateTime> filterByDetainedDate, System.Nullable<System.DateTime> filterByReleasedDate, out int totalCount) {
             Temporary_Prison.Data.PrisonService.GetPrisonersForPagedListRequest inValue = new Temporary_Prison.Data.PrisonService.GetPrisonersForPagedListRequest();
             inValue.skip = skip;
             inValue.rowSize = rowSize;
+            inValue.filterByDetainedDate = filterByDetainedDate;
+            inValue.filterByReleasedDate = filterByReleasedDate;
             Temporary_Prison.Data.PrisonService.GetPrisonersForPagedListResponse retVal = ((Temporary_Prison.Data.PrisonService.IPrisonerService)(this)).GetPrisonersForPagedList(inValue);
             totalCount = retVal.totalCount;
             return retVal.GetPrisonersForPagedListResult;

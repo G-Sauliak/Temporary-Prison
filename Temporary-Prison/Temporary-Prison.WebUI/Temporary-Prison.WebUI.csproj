@@ -148,11 +148,12 @@
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\Admin\imagePreview.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\ImagePreview\imagePreview.js" />
+    <Content Include="Scripts\Editor\imagePreview.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -208,6 +209,7 @@
     <Compile Include="Models\PrisonerViewModels\ListOfPrisonersViewModel.cs" />
     <Compile Include="Models\PrisonerViewModels\PrisonerPagedListViewModel.cs" />
     <Compile Include="Models\PrisonerViewModels\SearchFilterViewModel.cs" />
+    <Compile Include="Models\AdminViewModels\SiteConfigViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -242,6 +244,7 @@
     <Content Include="Views\Prisoner\SearchFilterFormPartial.cshtml" />
     <Content Include="Views\Prisoner\InmateSearches.cshtml" />
     <Content Include="Views\Prisoner\SearchResultOfInmatesPartial.cshtml" />
+    <Content Include="Views\Admin\SiteConfig.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

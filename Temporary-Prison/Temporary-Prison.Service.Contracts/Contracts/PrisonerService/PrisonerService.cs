@@ -32,7 +32,8 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             return default(PrisonerDto);
         }
 
-        public PrisonerDto[] GetPrisonersForPagedList(int skip, int rowSize, out int totalCount)
+        public PrisonerDto[] GetPrisonersForPagedList(int skip, int rowSize, out int totalCount, 
+            DateTime? filterByDetainedDate, DateTime? filterByReleasedDate)
         {
             if (rowSize != default(int))
             {
@@ -40,6 +41,8 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                      {
                         new SqlParameter(@"skip",skip),
                         new SqlParameter(@"rowSize",rowSize),
+                        new SqlParameter(@"filterByDetainedDate",filterByDetainedDate),
+                        new SqlParameter(@"filterByReleasedDate",filterByReleasedDate)
                      };
                 return dataService.ExecProcGetModels<PrisonerDto, int>("GetPrisonersToPagedList", "TotalCount", out totalCount, param);
             }

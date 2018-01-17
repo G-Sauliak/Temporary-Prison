@@ -7,7 +7,6 @@ using Temporary_Prison.Business.Providers;
 using Temporary_Prison.Common.Models;
 using Temporary_Prison.WebMapperProfile;
 using Temporary_Prison.Models;
-using Temporary_Prison.Business.SiteConfigService;
 using Temporary_Prison.Business.PrisonManager;
 using log4net;
 using Temporary_Prison.Enums;
@@ -19,19 +18,19 @@ namespace Temporary_Prison.Controllers
     {
         private readonly ILog log = LogManager.GetLogger("LOGGER");
         private readonly IPrisonerProvider prisonerProvider;
-        private readonly IConfigService siteConfigService;
         private readonly IPrisonManager prisonManager;
 
-        public EditorController() : this(new PrisonerProvider(), new ConfigService(), new PrisonManager())
+        public EditorController() : this(new PrisonerProvider(), new PrisonManager())
         {
-            Dependencies.MapperRegistry.MapperProfiles.Configuration.AddProfile(new WebMapper());
-            Dependencies.MapperRegistry.MapperProfiles.InitialiseMappers();
+            Mapper.Initialize(cfg =>
+            {
+                cfg.AddProfile(new WebMapper());
+            });
         }
 
-        public EditorController(IPrisonerProvider prisonerProvider, IConfigService siteConfigService, IPrisonManager prisonManager)
+        public EditorController(IPrisonerProvider prisonerProvider, IPrisonManager prisonManager)
         {
             this.prisonManager = prisonManager;
-            this.siteConfigService = siteConfigService;
             this.prisonerProvider = prisonerProvider;
         }
 
@@ -125,15 +124,6 @@ namespace Temporary_Prison.Controllers
                 if (prisoner != null)
                 {
                     prisonManager.DeletePrisoner(id.Value);
-
-                    if (prisoner.Photo != null && !prisoner.Photo.Equals(siteConfigService.DefaultPhotoOfPrisonerPath))
-                    {
-                        var deletePhotoPath = Server.MapPath(prisoner.Photo);
-                        if (System.IO.File.Exists(deletePhotoPath))
-                        {
-                            System.IO.File.Delete(deletePhotoPath);
-                        }
-                    }
                 }
             }
 

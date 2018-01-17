@@ -9,7 +9,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
     {
         [OperationContract]
         [FaultContract(typeof(DataErrorDto))]
-        PrisonerDto[] GetPrisonersForPagedList(int skip, int rowSize, out int totalCount);
+        PrisonerDto[] GetPrisonersForPagedList(int skip, int rowSize, out int totalCount, DateTime? filterByDetainedDate, DateTime? filterByReleasedDate);
 
         [OperationContract]
         [FaultContract(typeof(DataErrorDto))]

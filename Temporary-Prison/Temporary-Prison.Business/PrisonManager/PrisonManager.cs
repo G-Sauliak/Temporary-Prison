@@ -30,6 +30,7 @@ namespace Temporary_Prison.Business.PrisonManager
         public void AddPrisoner(Prisoner prisoner, HttpPostedFileBase postImage, out int newId)
         {
             string fileName = default(string);
+
             if (postImage != null && postImage.ContentLength > 0)
             {
                 TryUploadImage(postImage, out fileName);
@@ -49,10 +50,18 @@ namespace Temporary_Prison.Business.PrisonManager
         public void DeletePrisoner(int id)
         {
 
+            var prisoner = prisonerProvider.GetPrisonerById(id);
+
+            if (!string.IsNullOrEmpty(prisoner.Photo))
+            {
+                RemovePhotos(prisoner.Photo);
+            }
+
+            prisonerDataService.DeletePrisoner(id);
+
             var cacheKey = $"prisoner_{id}";
 
             HttpRuntime.Cache.Remove(cacheKey);
-            HttpRuntime.Cache.Remove("prisonersForPagelist");
         }
 
         public void EditDetention(Detention detention)
@@ -66,37 +75,24 @@ namespace Temporary_Prison.Business.PrisonManager
         public void EditPrisoner(Prisoner updatedPrisoner, HttpPostedFileBase postImage)
         {
             var currentPrisoner = prisonerProvider.GetPrisonerById(updatedPrisoner.PrisonerId);
-            var fileName = default(string);
-
+            
             if (postImage != null && postImage.ContentLength > 0 && string.IsNullOrEmpty(updatedPrisoner.Photo))
             {
-                if (TryUploadImage(postImage, out fileName))
+                if (TryUploadImage(postImage, out string fileName))
                 {
+                    updatedPrisoner.Photo = fileName;
+
                     if (!string.IsNullOrEmpty(currentPrisoner.Photo))
                     {
-                        var deletePhotoPath = Path
-                            .Combine(HostingEnvironment
-                            .MapPath($"~/{siteConfigService.ContentPath}/{siteConfigService.PhotoPath}"), currentPrisoner.Photo);
-
-                        var deleteAvatarPath = Path
-                            .Combine(HostingEnvironment
-                            .MapPath($"~/{siteConfigService.ContentPath}/{siteConfigService.AvatarPath}"), currentPrisoner.Photo);
-
-                        if (File.Exists(deletePhotoPath) && File.Exists(deleteAvatarPath))
-                        {
-                            File.Delete(deletePhotoPath);
-                            File.Delete(deleteAvatarPath);
-                        }
+                        RemovePhotos(currentPrisoner.Photo);
                     }
                 }
             }
 
-            updatedPrisoner.Photo = fileName;
-
             prisonerDataService.EditPrisoner(updatedPrisoner);
-
             var cacheKey = $"prisoner_{updatedPrisoner.PrisonerId}";
             HttpRuntime.Cache.Remove(cacheKey);
+            HttpRuntime.Cache.Remove("prisonersForPagelist");
         }
 
         public void RegisterDetention(RegistDetention registDetention)
@@ -116,7 +112,7 @@ namespace Temporary_Prison.Business.PrisonManager
                && ImageHelper.IsValidSize(postImage, siteConfigService.MaxPhotoSize))
             {
                 var photo = Image.FromStream(postImage.InputStream);
-
+               
                 var photoExtensions = Path.GetExtension(postImage.FileName);
                 var photoName = string.Concat(DateTime.Now.Ticks, photoExtensions);
 
@@ -144,5 +140,21 @@ namespace Temporary_Prison.Business.PrisonManager
             }
         }
 
+        private void RemovePhotos(string photoName)
+        {
+            var deletePhotoPath = Path
+                       .Combine(HostingEnvironment
+                       .MapPath($"~/{siteConfigService.ContentPath}/{siteConfigService.PhotoPath}"), photoName);
+
+            var deleteAvatarPath = Path
+                .Combine(HostingEnvironment
+                .MapPath($"~/{siteConfigService.ContentPath}/{siteConfigService.AvatarPath}"), photoName);
+
+            if (File.Exists(deletePhotoPath) && File.Exists(deleteAvatarPath))
+            {
+                File.Delete(deletePhotoPath);
+                File.Delete(deleteAvatarPath);
+            }
+        }
     }
 }

@@ -30,32 +30,13 @@ namespace Temporary_Prison.Business.Providers
 
         }
 
-        public IReadOnlyList<Prisoner> GetPrisonersForPagedList(int skip, int rowSize, ref int totalCount)
+        public IReadOnlyList<Prisoner> GetPrisonersForPagedList(int skip, int rowSize, out int totalCount, DateTime? filterByDetainedDate, DateTime? filterByReleasedDate)
         {
-            var cacheKeyForPageList = $"prisonersForPagelist_s_{skip}_r_{rowSize}_t_{totalCount}";
-            var outTotalCount = default(int);
-            var listPrisoners = default(IReadOnlyList<Prisoner>);
-
-            listPrisoners = cacheService.GetOrSet(cacheKeyForPageList, () =>
-            prisonerDataService.GetPrisonersForPagedList(skip, rowSize, out outTotalCount), TimeSpan.FromSeconds(10));
-
-            if (totalCount == default(int))
-            {
-                cacheService.Remove(cacheKeyForPageList);
-            }
-            if (outTotalCount != default(int))
-            {
-                totalCount = outTotalCount;
-            }
-
-            return listPrisoners;
+            return prisonerDataService.GetPrisonersForPagedList(skip, rowSize, out totalCount, filterByDetainedDate, filterByReleasedDate);
         }
 
         public IReadOnlyList<DetentionPagedList> GetDetentionsByPrisonerIdForPagedList(int Id, int skip, int rowSize, ref int totalCount)
         {
-           
-          //  var cacheKeyForPageList = $"GetDBPIdForPagedList_s_{skip}_r_{rowSize}_t_{totalCount}";
-         //   var outParam = totalCount;
             return prisonerDataService.GetDetentionsByPrisonerIdForPagedList(Id, skip, rowSize, out totalCount);
         }
 

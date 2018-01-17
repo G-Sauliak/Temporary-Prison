@@ -9,6 +9,14 @@
         });
     }
 
+    function Reset()
+    {
+        $("#UserListBox").empty();
+        $("#findByName").val('');
+        $("#findByDateOfDetention").val('');
+        $("#findByAddress").val('');
+    }
+
     function SearchFilter() {
         var Name = $("#findByName");
         var DateOfDetention = $("#findByDateOfDetention");
@@ -25,5 +33,6 @@
 
     return {
         SearchFilter: SearchFilter,
+        Reset: Reset
     };
 }

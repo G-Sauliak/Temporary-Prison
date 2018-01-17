@@ -149,22 +149,22 @@ namespace Temporary_Prison.Business.SiteConfigService
             }
         }
 
-        public string DefaultPhotoOfPrisonerPath
+        public string DefaultPhotoOfPrisoner
         {
             get
             {
-                return ConfigurationManager.AppSettings["defaultPhotoOfPrisonerPath"];
+                return ConfigurationManager.AppSettings["defaultPhotoOfPrisoner"];
             }
 
             set
             {
                 if (!string.IsNullOrEmpty(value))
                 {
-                    ConfigurationManager.AppSettings["defaultPhotoOfPrisonerPath"] = value;
+                    ConfigurationManager.AppSettings["defaultPhotoOfPrisoner"] = value;
                 }
                 else
                 {
-                    ConfigurationManager.AppSettings["defaultPhotoOfPrisonerPath"] = DefaultConfig.DefaultPhotoOfPrisonerPath;
+                    ConfigurationManager.AppSettings["defaultPhotoOfPrisoner"] = DefaultConfig.DefaultPhotoOfPrisonerPath;
                 }
             }
         }

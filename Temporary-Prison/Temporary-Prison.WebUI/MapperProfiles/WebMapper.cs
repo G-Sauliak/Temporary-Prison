@@ -18,7 +18,14 @@ namespace Temporary_Prison.WebMapperProfile
             CreateMap<EditUserViewModel, User>()
               .ForMember(p => p.Roles, opt => opt.Ignore());
             CreateMap<UserAndRoles, UserAndRolesViewModel>();
-            #endregion
+
+            CreateMap<ConfigService, SiteConfigViewModel>().ForMember(x => x.DefaultNoAvatar, opt => opt.MapFrom(src =>
+               Path.Combine($"/{siteConfigService.ContentPath}/", $"{siteConfigService.AvatarPath}/",siteConfigService.DefaultNoAvatar)))
+                .ForMember(x => x.DefaultPhotoOfPrisoner, opt => opt.MapFrom(src =>
+               Path.Combine($"/{siteConfigService.ContentPath}/", $"{siteConfigService.PhotoPath}/",
+                siteConfigService.DefaultPhotoOfPrisoner)));
+
+                #endregion
 
             #region Map for prisoner
             CreateMap<Prisoner, DetailsPrisonerViewModel>()
@@ -26,7 +33,7 @@ namespace Temporary_Prison.WebMapperProfile
                (!string.IsNullOrEmpty(src.Photo))
                ? Path.Combine($"/{siteConfigService.ContentPath}/", $"{siteConfigService.PhotoPath}/", src.Photo)
                : Path.Combine($"/{siteConfigService.ContentPath}/", $"{siteConfigService.PhotoPath}/",
-               siteConfigService.DefaultPhotoOfPrisonerPath)
+               siteConfigService.DefaultPhotoOfPrisoner)
                ));
 
             CreateMap<Prisoner, PrisonerPagedListViewModel>()
@@ -49,6 +56,11 @@ namespace Temporary_Prison.WebMapperProfile
                ? Path.Combine($"/{siteConfigService.ContentPath}/", $"{siteConfigService.PhotoPath}/", src.Photo)
                : default(string)
                ));
+            CreateMap<CreateOrUpdatePrisonerViewModel, Prisoner>().ForMember(x => x.Photo, opt => opt.MapFrom(src =>
+              (!string.IsNullOrEmpty(src.Photo))
+              ? Path.GetFileName(src.Photo)
+              : default(string)
+              ));
             #endregion
         }
         public WebMapper(IConfigService siteConfigService)

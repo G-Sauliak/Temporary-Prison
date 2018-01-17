@@ -97,7 +97,7 @@
         <dd> @Html.DisplayFor(model => model.PaidAmount) </dd>
     </dl>
 }
-else
+else if(User.IsInRole("Editor") || User.IsInRole("Admin"))
 {
     <div>
         <h4 class="col-lg-10 col-lg-offset-2">Place Of Detention</h4>
@@ -106,10 +106,11 @@ else
     <dl class="dl-horizontal col-lg-offset-2 col-lg-10">
         <dt> @Html.DisplayFor(model => model.PlaceofDetention) </dt>
     </dl>
-
+   
     @Html.ActionLink("Release the prisoner", "ReleaseOfPrisoner", "Editor",
     new { detentionID = Model.DetentionID },
     new { @class = "btn btn-default col-lg-2 col-lg-offset-10" })
+    
 }
 <p>
     @Html.ActionLink("Back", "DetailsOfPrisoner", "Prisoner",

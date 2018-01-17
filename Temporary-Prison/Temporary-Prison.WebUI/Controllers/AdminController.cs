@@ -13,6 +13,11 @@ using Temporary_Prison.WebMapperProfile;
 using Temporary_Prison.Models;
 using X.PagedList;
 using Temporary_Prison.Business.SiteConfigService;
+using System.Web;
+using Temporary_Prison.Business.Extensions;
+using System;
+using System.Drawing;
+using System.IO;
 
 namespace Temporary_Prison.Controllers
 {
@@ -22,25 +27,27 @@ namespace Temporary_Prison.Controllers
         private readonly IUserProvider userProvider;
         private readonly ILog log = LogManager.GetLogger("LOGGER");
         private readonly IUserManager userManager;
-        private readonly IConfigService configService;
+        private readonly IConfigService siteConfigService;
 
         public AdminController() : this(new UserProvider(), new UserManager(), new ConfigService())
         {
-            MapperProfiles.Configuration.AddProfile(new WebMapper());
-            MapperProfiles.InitialiseMappers();
+            Mapper.Initialize(cfg =>
+            {
+                cfg.AddProfile(new WebMapper());
+            });
         }
 
         public AdminController(IUserProvider userProvider, IUserManager userManager, IConfigService configService)
         {
             this.userProvider = userProvider;
             this.userManager = userManager;
-            this.configService = configService;
+            this.siteConfigService = configService;
         }
 
         // GET: Admin/index
         public ActionResult Index(int? page, int? currentTotal)
         {
-            var pageSize = configService.UserPagedSize;
+            var pageSize = siteConfigService.UserPagedSize;
             var _currentTotal = currentTotal ?? default(int);
 
             var pageNum = page ?? 1;
@@ -246,5 +253,83 @@ namespace Temporary_Prison.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+
+        [HttpGet]
+        public ActionResult SiteConfig()
+        {
+            ViewBag.CurrentEdit = "Site";
+
+            var model = Mapper.Map<ConfigService, SiteConfigViewModel>(siteConfigService as ConfigService);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SiteConfig(SiteConfigViewModel model, HttpPostedFileBase postPhotoImage, HttpPostedFileBase postAvatarImage)
+        {
+            if (ModelState.IsValid)
+            {
+                var newDefaultAvatarPath = default(string);
+                var newDefaulPhotoOfPriosnersPath = default(string);
+
+                if (!string.IsNullOrEmpty(model.AvatarPath) && model.AvatarPath != siteConfigService.AvatarPath)
+                {
+                    newDefaultAvatarPath = Server.MapPath($"~/{siteConfigService.ContentPath}/{model.AvatarPath}");
+                    if (!Directory.Exists(newDefaultAvatarPath))
+                    {
+                        Directory.CreateDirectory(newDefaultAvatarPath);
+                    }
+                }
+                if (!string.IsNullOrEmpty(model.PhotoPath) && model.PhotoPath != siteConfigService.PhotoPath)
+                {
+                    newDefaulPhotoOfPriosnersPath = Server.MapPath($"~/{siteConfigService.ContentPath}/{model.PhotoPath}");
+                    if (!Directory.Exists(newDefaulPhotoOfPriosnersPath))
+                    {
+                        Directory.CreateDirectory(newDefaulPhotoOfPriosnersPath);
+                    }
+                }
+
+                try
+                {
+
+                    if (postAvatarImage != null && postAvatarImage.ContentLength > 0)
+                    {
+                        var photoExtensions = Path.GetExtension(postAvatarImage.FileName);
+                        var avatarName = string.Concat(postAvatarImage.FileName, photoExtensions);
+                        if (avatarName != siteConfigService.DefaultNoAvatar)
+                        {
+                            var newDefaultAvatar = Image.FromStream(postAvatarImage.InputStream);
+
+                            if (ImageHelper.IsSupportedFormat(postAvatarImage, model.AllowedPhotoTypes ?? siteConfigService.AllowedPhotoTypes))
+                            {
+                                var avatarSavePath = Path
+                                 .Combine(Server.MapPath($"~/{siteConfigService.ContentPath}/{newDefaultAvatarPath ?? siteConfigService.AvatarPath}"), avatarName);
+
+                                newDefaultAvatar.ResizeProportional(new Size( 
+                                (model.AvatarWidth.HasValue)
+                                ? model.AvatarWidth.Value
+                                : siteConfigService.AvatarWidth,
+                                (model.AvatarHeight.HasValue)
+                                ? model.AvatarHeight.Value
+                                : siteConfigService.AvatarHeight
+                                ))
+                                .SaveToFolder(avatarSavePath);
+                                model.DefaultNoAvatar = avatarName;
+                            }
+                        }
+                    }
+                }
+                catch (ArgumentException ae)
+                {
+                    ModelState.AddModelError(string.Empty, "incorrect file");
+                }
+              
+                Mapper.Map<SiteConfigViewModel, ConfigService>(model);
+
+                Redirect("SiteConfig");
+            }
+            return View(model);
+        }
     }
 }

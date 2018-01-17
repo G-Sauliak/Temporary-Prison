@@ -8,7 +8,7 @@ namespace Temporary_Prison.Data.Clients
     {
         PrisonerDto GetPrisonerById(int id);
         bool AddPrisoner(PrisonerDto prisoner, out int newId);
-        IReadOnlyList<PrisonerDto> GetPrisonersForPagedList(int skip, int rowSize, out int totalCount);
+        IReadOnlyList<PrisonerDto> GetPrisonersForPagedList(int skip, int rowSize, out int totalCount, DateTime? filterByDetainedDate, DateTime? filterByReleasedDate);
         void RegisterDetention(RegistrationOfDetentionDto registrationOfDetention);
         IReadOnlyList<PrisonerDto> SearchFilter(DateTime? dateOfDetention, string name, string address);
         DetentionPagedListDto[] GetDetentionsByPrisonerIdForPagedList(int Id, int skip, int rowSize, out int totalCount);

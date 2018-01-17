@@ -33,7 +33,7 @@
             <div class="panel-body col-lg-offset-0 col-lg-12">
                 <div class="panel panel-default user_panel ">
                     <div class="panel-heading">
-                        <h3 class="panel-title">List of Inmates</h3>
+                        <h3 class="panel-title">List of prisoners</h3>
                     </div>
                     <div class="table-container">
                         <table class="table-users table">
@@ -55,7 +55,7 @@
                                 {
                                     <tr>
                                         <td>
-                                            @Html.Photo(item.Avatar, new { @class = "img-thumbnail", @width = 77, @height = 77 })  
+                                            @Html.Photo(item.Avatar, new { @class = "img-thumbnail"})  
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName)

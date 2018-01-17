@@ -11,7 +11,7 @@ namespace Temporary_Prison.Data.Services
         void DeletePrisoner(int id);
         void ReleaseOfPrisoner(ReleaseOfPrisoner release);
         Prisoner GetPrisonerById(int id);
-        IReadOnlyList<Prisoner> GetPrisonersForPagedList(int skip, int rowSize, out int totalCount);
+        IReadOnlyList<Prisoner> GetPrisonersForPagedList(int skip, int rowSize, out int totalCount, DateTime? filterByDetainedDate, DateTime? filterByReleasedDate);
         IReadOnlyList<Prisoner> SearchFilter(DateTime? dateOfDetention, string name, string address);
         void RegisterDetention(RegistDetention registDetention);
         IReadOnlyList<DetentionPagedList> GetDetentionsByPrisonerIdForPagedList(int Id, int skip, int rowSize, out int totalCount);

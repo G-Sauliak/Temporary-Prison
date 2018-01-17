@@ -4,13 +4,21 @@ using log4net;
 using Temporary_Prison.Common.Models;
 using Temporary_Prison.Data.Clients;
 using Temporary_Prison.Data.UserService;
+using Temporary_Prison.Data.MapperProfile;
+
 namespace Temporary_Prison.Data.Services
 {
     public class UserDataService : IUserDataService
     {
         private readonly ILog log = LogManager.GetLogger("LOGGER");
         private readonly IUserClient userClient;
-        public UserDataService() { }
+        public UserDataService():this (new UserClient())
+        {
+            Mapper.Initialize(cfg =>
+            {
+                cfg.AddProfile(new DataMapper());
+            });
+        } 
 
         public UserDataService(IUserClient userClient)
         {
@@ -27,7 +35,6 @@ namespace Temporary_Prison.Data.Services
             var userDto = default(UserDto);
             try
             {
-                
                 userDto = Mapper.Map<User, UserDto>(user);
             }
             catch (AutoMapperMappingException me)
@@ -92,14 +99,12 @@ namespace Temporary_Prison.Data.Services
 
         public bool IsExistLogin(string userName)
         {
-            return new UserServiceClient().Execute(client =>
-            client.IsExistsByLogin(userName));
+            return new UserServiceClient().Execute(client => client.IsExistsByLogin(userName));
         }
 
         public bool IsExistsByEmail(string email)
         {
-            return new UserServiceClient().Execute(client =>
-            client.IsExistsByEmail(email));
+            return new UserServiceClient().Execute(client => client.IsExistsByEmail(email));
         }
 
         public bool IsValidLogin(string userName, string password)
@@ -109,8 +114,7 @@ namespace Temporary_Prison.Data.Services
 
         public void RemoveFromRoles(string userName, string roleName)
         {
-            new UserServiceClient().Execute(client =>
-            client.RemoveFromRoles(userName,roleName));
+            new UserServiceClient().Execute(client => client.RemoveFromRoles(userName,roleName));
         }
     }
 }

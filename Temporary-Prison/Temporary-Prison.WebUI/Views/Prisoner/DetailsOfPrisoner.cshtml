@@ -10,7 +10,7 @@
                         <div class="box-body">
                             <div class="col-sm-6">
                                 <div align="center">
-                                    @Html.Photo(Model.Photo, new { @class = "img-thumbnail", @width = 300, @height = 400})
+                                    @Html.Photo(Model.Photo, new { @class = "img-thumbnail"})
                                     <input id="profile-image-upload" class="hidden" type="file">
                                 </div>
 
@@ -49,15 +49,19 @@
                             <div class="col-sm-5 col-xs-6 tital ">@Html.LabelFor(model => model.Address)</div>
                             <div class="col-sm-7">@Html.DisplayFor(model => model.Address)</div>
                             <div class="clearfix"></div>
-                            <div class="col-sm-5 col-xs-6 tital ">@Html.LabelFor(model => model.AdditionalInformation)</div>
+                            <div class="col-sm-5 col-xs-6 tital  ">@Html.LabelFor(model => model.AdditionalInformation)</div>
                             <div class="col-sm-7" style="overflow-y: auto">@Html.DisplayFor(model => model.AdditionalInformation)</div>
                         </div>
+                        @Html.ActionLink("Edit", "EditPrisoner", "Editor", new { id = Model.PrisonerId }, new { @class = "btn btn-default col-lg-offset-11" })
                     </div>
                 </div>
             </div>
+           
         </div>
     </div>
+   
 </div>
+
 @if (Model.DetentionPagedList != null)
 {
     <div class="container" id="ListDetentions">

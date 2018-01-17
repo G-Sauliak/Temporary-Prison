@@ -6,6 +6,8 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="skip" type="xs:int" />
         <xs:element minOccurs="0" name="rowSize" type="xs:int" />
+        <xs:element minOccurs="0" name="filterByDetainedDate" nillable="true" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="filterByReleasedDate" nillable="true" type="xs:dateTime" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

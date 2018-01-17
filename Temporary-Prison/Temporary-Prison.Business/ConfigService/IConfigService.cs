@@ -4,7 +4,7 @@
     {
         string PhotoPath { get; set; }
         string AvatarPath { get; set; }
-        string DefaultPhotoOfPrisonerPath { get; set; }
+        string DefaultPhotoOfPrisoner { get; set; }
         int AvatarHeight { get; set; }
         int AvatarWidth { get; set; }
         int PhotoHeight { get; set; }

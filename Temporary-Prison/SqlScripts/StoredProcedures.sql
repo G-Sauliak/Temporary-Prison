@@ -37,12 +37,20 @@ WHERE ph.PrisonerID = pr.PrisonerId AND ph.PrisonerID = @prisonerId
 ---------------------GetPrisonersForPageList--------------------
 ---------------------------------------------------------------
 GO
+
 CREATE PROC [dbo].[GetPrisonersToPagedList]
 @skip int,
 @rowSize int,
+@filterByDetainedDate date = null,
+@filterByReleasedDate date = null,
 @TotalCount int output
 AS
-SELECT PrisonerId,Photo,FirstName,LastName,Surname,BirthDate FROM Prisoners p
+SELECT p.PrisonerId,Photo,FirstName,LastName,Surname,BirthDate 
+FROM Prisoners p 
+LEFT OUTER JOIN 
+ListOfDetentions l ON p.PrisonerId = l.PrisonerID
+WHERE (@filterByDetainedDate IS NULL OR l.DateOfDetention = @filterByDetainedDate) AND
+(@filterByReleasedDate IS NULL OR l.DateOfRelease = @filterByReleasedDate)
 ORDER BY p.FirstName 
 OFFSET @skip ROWS 
 FETCH NEXT @rowSize ROWS ONLY;
@@ -328,6 +336,7 @@ BEGIN
      VALUES(@employeeID);
      set @DeliveryProceduresID = SCOPE_IDENTITY();
 END
+GO
 --------------------[RegistrationOfDetention]-------------------------
 ----------------------------------------------------------------------
 CREATE PROC [dbo].[RegistrationOfDetention] 

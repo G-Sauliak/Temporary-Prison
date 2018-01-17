@@ -12,12 +12,12 @@ namespace Temporary_Prison.Data.Clients
                 .Execute(client => client.GetPrisonerById(Id));
         }
 
-        public IReadOnlyList<PrisonerDto> GetPrisonersForPagedList(int skip, int rowSize, out int totalCount)
+        public IReadOnlyList<PrisonerDto> GetPrisonersForPagedList(int skip, int rowSize, out int totalCount, DateTime? filterByDetainedDate, DateTime? filterByReleasedDate)
         {
             int totalCountPrisoners = default(int);
 
             var prisoners = new PrisonerServiceClient()
-                .Execute(client => client.GetPrisonersForPagedList(skip, rowSize, out totalCountPrisoners));
+                .Execute(client => client.GetPrisonersForPagedList(skip, rowSize, filterByDetainedDate, filterByReleasedDate, out totalCountPrisoners));
 
             totalCount = totalCountPrisoners;
 
