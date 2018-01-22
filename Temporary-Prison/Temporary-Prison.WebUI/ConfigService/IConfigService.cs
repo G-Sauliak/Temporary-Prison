@@ -1,4 +1,4 @@
-﻿namespace Temporary_Prison.Business.SiteConfigService
+﻿namespace Temporary_Prison.WebUI.SiteConfigService
 {
     public interface IConfigService
     {
@@ -9,7 +9,7 @@
         int AvatarWidth { get; set; }
         int PhotoHeight { get; set; }
         int PhotoWidth { get; set; }
-        int MaxPhotoSize { get; set; }
+        int ImageMaxSize { get; set; }
         string AllowedPhotoTypes { get; set; }
         int PrisonerPagedSize { get; set; }
         int UserPagedSize { get; set; }

@@ -1,6 +1,7 @@
-﻿using System.Web.Routing;
+﻿using System.Web.Mvc;
+using System.Web.Routing;
 
-namespace System.Web.Mvc
+namespace Temporary_Prison.HtmlHelpers
 {
     public static class PhotoHelper
     {

@@ -6,7 +6,7 @@ namespace Temporary_Prison.Data.Services
 {
     public interface IPrisonerDataService
     {
-        bool AddPrisoner(Prisoner prisoner, out int newId);
+        void AddPrisoner(Prisoner prisoner);
         void EditPrisoner(Prisoner prisoner);
         void DeletePrisoner(int id);
         void ReleaseOfPrisoner(ReleaseOfPrisoner release);

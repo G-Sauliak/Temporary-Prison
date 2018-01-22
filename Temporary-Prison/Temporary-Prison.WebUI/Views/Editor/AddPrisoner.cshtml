@@ -93,6 +93,7 @@
         </div>
 
         <div class="form-group">
+            @if (Model.PhoneNumbers == null && Model.PhoneNumbers.Count <= 0) { Model.PhoneNumbers = new string[] { string.Empty }; }
             @Html.LabelFor(model => model.PhoneNumbers, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <p class="number" id="0">

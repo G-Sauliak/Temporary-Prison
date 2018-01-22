@@ -1,12 +1,13 @@
 ﻿using Temporary_Prison.Common.Models;
 using System.Web;
+using System.IO;
 
 namespace Temporary_Prison.Business.PrisonManager
 {
     public interface IPrisonManager
     {
-        void AddPrisoner(Prisoner prisoner, HttpPostedFileBase postImage, out int newId);
-        void EditPrisoner(Prisoner prisoner, HttpPostedFileBase postImage);
+        void AddPrisoner(Prisoner prisoner);
+        void EditPrisoner(Prisoner prisoner);
         void DeletePrisoner(int id);
         void ReleaseOfPrisoner(ReleaseOfPrisoner release);
         void RegisterDetention(RegistDetention registDetention);

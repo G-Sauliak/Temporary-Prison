@@ -23,6 +23,7 @@ namespace Temporary_Prison.Data.Clients
             {
                 log.Error(e.Message);
                 client.Abort();
+                throw;
             }
             catch (CommunicationException e)
             {

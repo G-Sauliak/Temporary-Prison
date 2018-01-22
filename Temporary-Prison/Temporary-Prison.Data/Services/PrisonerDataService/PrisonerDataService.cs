@@ -52,15 +52,12 @@ namespace Temporary_Prison.Data.Services
             return default(IReadOnlyList<Prisoner>);
         }
 
-        public bool AddPrisoner(Prisoner prisoner, out int newId)
+        public void AddPrisoner(Prisoner prisoner)
         {
-            if (prisoner != null)
-            {
-                var prisonerDto = Mapper.Map<Prisoner, PrisonerDto>(prisoner);
-                return prisonerClient.AddPrisoner(prisonerDto, out newId);
-            }
-            newId = default(int);
-            return default(bool);
+          
+            var prisonerDto = Mapper.Map<Prisoner, PrisonerDto>(prisoner);
+            prisonerClient.AddPrisoner(prisonerDto);
+            
         }
 
       

@@ -109,9 +109,6 @@
     <None Include="Connected Services\PrisonService\PrisonService3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\PrisonService\Temporary_Prison.Data.PrisonService.AddPrisonerResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Connected Services\PrisonService\Temporary_Prison.Data.PrisonService.DetentionDto.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -164,10 +161,6 @@
     <ProjectReference Include="..\Temporary-Prison.Common\Temporary-Prison.Common.csproj">
       <Project>{f226af5b-ceb7-461a-9f1e-694a5676fa05}</Project>
       <Name>Temporary-Prison.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Temporary-Prison.Service.Contracts\Temporary-Prison.Service.Contracts.csproj">
-      <Project>{7AF6D9C5-D316-41F9-B944-F055DEBBC151}</Project>
-      <Name>Temporary-Prison.Service.Contracts</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

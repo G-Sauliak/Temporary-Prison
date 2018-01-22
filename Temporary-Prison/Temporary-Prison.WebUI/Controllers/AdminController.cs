@@ -8,13 +8,12 @@ using Temporary_Prison.Business.Exceptions;
 using Temporary_Prison.Business.Providers;
 using Temporary_Prison.Business.UserManagers;
 using Temporary_Prison.Common.Models;
-using Temporary_Prison.Dependencies.MapperRegistry;
 using Temporary_Prison.WebMapperProfile;
 using Temporary_Prison.Models;
 using X.PagedList;
-using Temporary_Prison.Business.SiteConfigService;
+using Temporary_Prison.WebUI.SiteConfigService;
 using System.Web;
-using Temporary_Prison.Business.Extensions;
+using Temporary_Prison.Extensions;
 using System;
 using System.Drawing;
 using System.IO;
@@ -301,18 +300,14 @@ namespace Temporary_Prison.Controllers
                         {
                             var newDefaultAvatar = Image.FromStream(postAvatarImage.InputStream);
 
-                            if (ImageHelper.IsSupportedFormat(postAvatarImage, model.AllowedPhotoTypes ?? siteConfigService.AllowedPhotoTypes))
+                            if (ImageHelper.IsSupportedFormat(postAvatarImage.ContentType, model.AllowedPhotoTypes ?? siteConfigService.AllowedPhotoTypes))
                             {
                                 var avatarSavePath = Path
                                  .Combine(Server.MapPath($"~/{siteConfigService.ContentPath}/{newDefaultAvatarPath ?? siteConfigService.AvatarPath}"), avatarName);
 
                                 newDefaultAvatar.ResizeProportional(new Size( 
-                                (model.AvatarWidth.HasValue)
-                                ? model.AvatarWidth.Value
-                                : siteConfigService.AvatarWidth,
-                                (model.AvatarHeight.HasValue)
-                                ? model.AvatarHeight.Value
-                                : siteConfigService.AvatarHeight
+                                 model.AvatarWidth ?? siteConfigService.AvatarWidth,
+                                 model.AvatarHeight ?? siteConfigService.AvatarHeight
                                 ))
                                 .SaveToFolder(avatarSavePath);
                                 model.DefaultNoAvatar = avatarName;

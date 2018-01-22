@@ -1,18 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using Temporary_Prison.Data.PrisonService;
 
 namespace Temporary_Prison.Data.Clients
 {
     public class PrisonerClient : IPrisonerClient
     {
+      
         public PrisonerDto GetPrisonerById(int Id)
         {
             return new PrisonerServiceClient()
                 .Execute(client => client.GetPrisonerById(Id));
         }
 
-        public IReadOnlyList<PrisonerDto> GetPrisonersForPagedList(int skip, int rowSize, out int totalCount, DateTime? filterByDetainedDate, DateTime? filterByReleasedDate)
+        public PrisonerDto[] GetPrisonersForPagedList(int skip, int rowSize, out int totalCount, DateTime? filterByDetainedDate, DateTime? filterByReleasedDate)
         {
             int totalCountPrisoners = default(int);
 
@@ -24,13 +24,10 @@ namespace Temporary_Prison.Data.Clients
             return prisoners;
         }
 
-        public bool AddPrisoner(PrisonerDto prisoner, out int newId)
+        public void AddPrisoner(PrisonerDto prisoner)
         {
-            int _newId = default(int);
-            var result = new PrisonerServiceClient()
-                .Execute(client => client.AddPrisoner(prisoner, out _newId));
-            newId = _newId;
-            return result;
+            new PrisonerServiceClient()
+                .Execute(client => client.AddPrisoner(prisoner));
         }
 
         public void RegisterDetention(RegistrationOfDetentionDto registrationOfDetention)
@@ -78,11 +75,12 @@ namespace Temporary_Prison.Data.Clients
                  .Execute(client => client.DeleteDetention(id));
         }
 
-        public IReadOnlyList<PrisonerDto> SearchFilter(DateTime? dateOfDetention, string name, string address)
+        public PrisonerDto[] SearchFilter(DateTime? dateOfDetention, string name, string address)
         {
             return new PrisonerServiceClient()
                 .Execute(client => client.SearchFilter(dateOfDetention, name, address));
         }
+
     }
 }
 

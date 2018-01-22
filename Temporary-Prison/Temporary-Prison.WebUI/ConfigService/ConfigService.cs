@@ -1,7 +1,7 @@
 ﻿using System.Configuration;
 using Temporary_Prison.Business.Infrastructure;
 
-namespace Temporary_Prison.Business.SiteConfigService
+namespace Temporary_Prison.WebUI.SiteConfigService
 {
     public class ConfigService : IConfigService
     {
@@ -24,7 +24,7 @@ namespace Temporary_Prison.Business.SiteConfigService
             }
         }
 
-        public int MaxPhotoSize
+        public int ImageMaxSize
         {
             get
             {

@@ -10,6 +10,9 @@ using Temporary_Prison.Models;
 using Temporary_Prison.Business.PrisonManager;
 using log4net;
 using Temporary_Prison.Enums;
+using System.IO;
+using Temporary_Prison.WebUI.SiteConfigService;
+using Temporary_Prison.Services.FileService;
 
 namespace Temporary_Prison.Controllers
 {
@@ -19,8 +22,15 @@ namespace Temporary_Prison.Controllers
         private readonly ILog log = LogManager.GetLogger("LOGGER");
         private readonly IPrisonerProvider prisonerProvider;
         private readonly IPrisonManager prisonManager;
+        private readonly IConfigService siteConfigService;
+        private readonly IFileService uploader;
 
-        public EditorController() : this(new PrisonerProvider(), new PrisonManager())
+        public EditorController() :
+            this(new PrisonerProvider(),
+            new PrisonManager(), 
+            new ConfigService(), 
+            new PrisonFileService(new ConfigService()
+                ))
         {
             Mapper.Initialize(cfg =>
             {
@@ -28,10 +38,13 @@ namespace Temporary_Prison.Controllers
             });
         }
 
-        public EditorController(IPrisonerProvider prisonerProvider, IPrisonManager prisonManager)
+        public EditorController(IPrisonerProvider prisonerProvider,
+            IPrisonManager prisonManager,IConfigService siteConfigService, IFileService uploader)
         {
             this.prisonManager = prisonManager;
             this.prisonerProvider = prisonerProvider;
+            this.siteConfigService = siteConfigService;
+            this.uploader = uploader;
         }
 
         // GET: Editor/AddPrisoner
@@ -50,16 +63,27 @@ namespace Temporary_Prison.Controllers
         {
             if (!ModelState.IsValid)
             {
-                if (model.PhoneNumbers.Count < 1) model.PhoneNumbers = new string[] { string.Empty };
                 return View(model);
             }
 
             var prisoner = Mapper.Map<CreateOrUpdatePrisonerViewModel, Prisoner>(model);
 
-            var newID = default(int);
             try
             {
-                prisonManager.AddPrisoner(prisoner,postImage, out newID);
+                if (postImage != null && postImage.ContentLength > 0)
+                {
+                    var photoExtensions = Path.GetExtension(postImage.FileName);
+                    var photoName = string.Concat(DateTime.Now.Ticks, photoExtensions);
+
+                    if (uploader.UploadFile(postImage, photoName))
+                    {
+                        prisoner.Photo = photoName;
+                    }
+
+                    if (prisoner.BirthDate.Date > DateTime.Now.Date)
+                }
+
+                
             }
             catch (ArgumentException ae)
             {
@@ -67,8 +91,13 @@ namespace Temporary_Prison.Controllers
                 log.Error(ae.Message);
                 return View(model);
             }
-
-            return RedirectToAction("CreateDetention", "Editor", new { prisonerId = newID });
+            catch (CreateOrUpdatePrisonerException ce)
+            {
+                ModelState.AddModelError(string.Empty, ce.Message);
+                log.Error(ae.Message);
+                return View(model);
+            }
+            return View(model);
         }
 
         //GET: Editor/EditPriosner
@@ -100,10 +129,27 @@ namespace Temporary_Prison.Controllers
                 return View(model);
             }
             var updatedPrisoner = Mapper.Map<CreateOrUpdatePrisonerViewModel, Prisoner>(model);
+            var oldPrisoner = prisonerProvider.GetPrisonerById(model.PrisonerID);
 
             try
             {
-                prisonManager.EditPrisoner(updatedPrisoner, postImage);
+                if (updatedPrisoner.Photo != oldPrisoner.Photo)
+                {
+                    uploader.RemoveFile(oldPrisoner.Photo);
+                }
+
+                if (postImage != null && postImage.ContentLength > 0)
+                {
+                    var photoExtensions = Path.GetExtension(postImage.FileName);
+                    var photoName = string.Concat(DateTime.Now.Ticks, photoExtensions);
+
+                    if (uploader.UploadFile(postImage, photoName))
+                    {
+                        updatedPrisoner.Photo = photoName;
+                    }
+                }
+               
+                prisonManager.EditPrisoner(updatedPrisoner);
             }
             catch (ArgumentException ae)
             {
@@ -124,6 +170,10 @@ namespace Temporary_Prison.Controllers
                 if (prisoner != null)
                 {
                     prisonManager.DeletePrisoner(id.Value);
+                    if (prisoner.Photo != null)
+                    {
+                        uploader.RemoveFile(prisoner.Photo);
+                    }
                 }
             }
 

@@ -1,6 +1,6 @@
 ﻿using Temporary_Prison.Business.LogInState;
 
-namespace Temporary_Prison.Business.Services
+namespace Temporary_Prison.WebUI
 {
     public interface ILoginService
     {

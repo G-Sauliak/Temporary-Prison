@@ -5,27 +5,27 @@ namespace Temporary_Prison.Business.Exceptions
 {
     public class CreateOrUpdateUserException : Exception
     {
-        public CreateOrUpdateUserException(UserCreateStatus statusCode)
+        public CreateOrUpdateUserException(CreateOrUpdateUserCodeStatus statusCode)
                     : base(GetMessageFromStatusCode(statusCode))
         {
             _StatusCode = statusCode;
         }
 
-        public UserCreateStatus _StatusCode { get; private set; }
+        public CreateOrUpdateUserCodeStatus _StatusCode { get; private set; }
 
 
-        private static string GetMessageFromStatusCode(UserCreateStatus statusCode)
+        private static string GetMessageFromStatusCode(CreateOrUpdateUserCodeStatus statusCode)
         {
             switch (statusCode)
             {
 
-                case UserCreateStatus.InvalidEmail:
+                case CreateOrUpdateUserCodeStatus.InvalidEmail:
                     return "e-mail address provided is invalid.";
 
-                case UserCreateStatus.DuplicateUserName:
+                case CreateOrUpdateUserCodeStatus.DuplicateUserName:
                     return "User name already exists.";
 
-                case UserCreateStatus.DuplicateEmail:
+                case CreateOrUpdateUserCodeStatus.DuplicateEmail:
                     return "A user name for that e-mail address already exists.";
 
             }

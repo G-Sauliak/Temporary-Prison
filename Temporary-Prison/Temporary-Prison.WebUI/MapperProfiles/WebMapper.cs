@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Temporary_Prison.Models;
 using Temporary_Prison.Common.Models;
-using Temporary_Prison.Business.SiteConfigService;
 using System.IO;
+using Temporary_Prison.WebUI.SiteConfigService;
 
 namespace Temporary_Prison.WebMapperProfile
 {

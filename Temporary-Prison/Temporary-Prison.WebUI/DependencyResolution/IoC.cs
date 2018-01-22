@@ -18,13 +18,20 @@
 
 namespace Temporary_Prison.DependencyResolution {
     using StructureMap;
+
     using Temporary_Prison.Dependencies.Registries;
+    using Temporary_Prison.Services.FileService;
+    using Temporary_Prison.WebUI;
+    using Temporary_Prison.WebUI.SiteConfigService;
 
     public static class IoC {
         public static IContainer Initialize() {
             return new Container(c =>
             {
               c.AddRegistry<CommonRegistry>();
+              c.For<ILoginService>().Use<LoginService>();
+              c.For<IConfigService>().Use<ConfigService>();
+              c.For<IFileService>().Use<PrisonFileService>();
             });
         }
     }

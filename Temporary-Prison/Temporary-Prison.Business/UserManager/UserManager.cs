@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Temporary_Prison.Business.Enums;
 using Temporary_Prison.Business.Exceptions;
@@ -28,11 +27,11 @@ namespace Temporary_Prison.Business.UserManagers
 
             if (userProvider.IsExistsByLogin(user.UserName))
             {
-                throw new CreateOrUpdateUserException(UserCreateStatus.DuplicateUserName);
+                throw new CreateOrUpdateUserException(CreateOrUpdateUserCodeStatus.DuplicateUserName);
             }
             if (userProvider.IsExistsByEmail(user.Email))
             {
-                throw new CreateOrUpdateUserException(UserCreateStatus.DuplicateEmail);
+                throw new CreateOrUpdateUserException(CreateOrUpdateUserCodeStatus.DuplicateEmail);
             }
     
             userDataService.AddUser(user);
@@ -46,7 +45,7 @@ namespace Temporary_Prison.Business.UserManagers
 
             if (userProvider.IsExistsByEmail(updatedUser.Email) && currentUser.Email != updatedUser.Email)
             {
-                throw new CreateOrUpdateUserException(UserCreateStatus.DuplicateEmail);
+                throw new CreateOrUpdateUserException(CreateOrUpdateUserCodeStatus.DuplicateEmail);
             }
 
             userDataService.EditUser(updatedUser);

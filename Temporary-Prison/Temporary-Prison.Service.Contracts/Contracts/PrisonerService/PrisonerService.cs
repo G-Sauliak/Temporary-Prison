@@ -50,7 +50,7 @@ namespace Temporary_Prison.Service.Contracts.Contracts
             return default(PrisonerDto[]);
         }
 
-        public bool AddPrisoner(PrisonerDto prisoner, out int newId)
+        public void AddPrisoner(PrisonerDto prisoner)
         {
             if (prisoner != null)
             {
@@ -68,21 +68,9 @@ namespace Temporary_Prison.Service.Contracts.Contracts
                         };
                     }
                     dataService.ExecNonQuery("dbo.InsertPhoneNumbers", phones);
-                    newId = lasID;
-                    return true;
+                 
                 }
             }
-            newId = default(int);
-            return default(bool);
-        }
-
-        public PrisonerDto[] FindPrisonersByName(string search)
-        {
-            if (!string.IsNullOrEmpty(search))
-            {
-                return dataService.ExecProcGetModels<PrisonerDto>("FindPrisonersByName", new SqlParameter(@"search", search));
-            }
-            return default(PrisonerDto[]);
         }
 
         public void DeletePrisoner(int id)

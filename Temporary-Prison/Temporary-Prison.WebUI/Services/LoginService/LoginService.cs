@@ -5,7 +5,7 @@ using System.Web.Security;
 using Temporary_Prison.Business.LogInState;
 using Temporary_Prison.Business.Providers;
 
-namespace Temporary_Prison.Business.Services
+namespace Temporary_Prison.WebUI
 {
     public class LoginService : ILoginService
     {

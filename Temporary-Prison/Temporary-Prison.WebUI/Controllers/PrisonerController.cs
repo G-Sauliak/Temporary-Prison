@@ -8,11 +8,10 @@ using System.Web.Mvc;
 using Temporary_Prison.Attributes;
 using Temporary_Prison.Business.Providers;
 using Temporary_Prison.Common.Models;
-using Temporary_Prison.Dependencies.MapperRegistry;
 using Temporary_Prison.WebMapperProfile;
 using Temporary_Prison.Models;
 using X.PagedList;
-using Temporary_Prison.Business.SiteConfigService;
+using Temporary_Prison.WebUI.SiteConfigService;
 
 namespace Temporary_Prison.Controllers
 {

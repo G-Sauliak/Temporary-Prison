@@ -173,6 +173,11 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigService\ConfigService.cs" />
+    <Compile Include="ConfigService\IConfigService.cs" />
+    <Compile Include="Enums\LogInStatus.cs" />
+    <Compile Include="Enums\MembershipCreateStatus.cs" />
+    <Compile Include="Extensions\ImageHelper.cs" />
     <Compile Include="HtmlHelpers\LinkHelper.cs" />
     <Compile Include="HttpModules\ApplicationError.cs" />
     <Compile Include="HttpModules\Auth.cs" />
@@ -195,6 +200,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HtmlHelpers\PhotoHelper.cs" />
+    <Compile Include="Infrastructure\DefaultConfig.cs" />
     <Compile Include="MapperProfiles\WebMapper.cs" />
     <Compile Include="Models\AccountVIewModels\AccountViewModels.cs" />
     <Compile Include="Models\AdminViewModels\CreateUserViewModel.cs" />
@@ -212,6 +218,12 @@
     <Compile Include="Models\PrisonerViewModels\SearchFilterViewModel.cs" />
     <Compile Include="Models\AdminViewModels\SiteConfigViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SecurityPrincipal\UserIdentity.cs" />
+    <Compile Include="SecurityPrincipal\UserPrincipal.cs" />
+    <Compile Include="Services\LoginService\ILoginService.cs" />
+    <Compile Include="Services\LoginService\LoginService.cs" />
+    <Compile Include="Services\FileService\IFileService.cs" />
+    <Compile Include="Services\FileService\PrisonFileService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -246,6 +258,7 @@
     <Content Include="Views\Prisoner\InmateSearches.cshtml" />
     <Content Include="Views\Prisoner\SearchResultOfInmatesPartial.cshtml" />
     <Content Include="Views\Admin\SiteConfig.cshtml" />
+    <Content Include="Views\ErrorPages\Http500.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
